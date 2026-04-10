@@ -83,26 +83,46 @@ def citation_validity(sources_used: List[str], evidence_bundle: Dict[str, Any]) 
     """
     Fraction of cited sources that actually exist in the evidence bundle.
     A citation is valid if it references a source category that has evidence.
+
+    Handles multiple naming conventions:
+      - documents / vector / doc
+      - sql / sql_results / structured_operational_data / data
+      - rules / rule
+      - graph / graph_reasoning / knowledge_graph
     """
     if not sources_used:
         return 1.0
 
+    # Normalize a source string to its canonical category
+    def _normalize(src: str) -> str:
+        s = src.lower().strip().replace(" ", "_")
+        if any(k in s for k in ("document", "vector", "handbook", "report", "doc")):
+            return "documents"
+        if any(k in s for k in ("sql", "structured", "operational_data",
+                                 "database", "table")):
+            return "sql"
+        if "rule" in s or "polic" in s or "threshold" in s:
+            return "rules"
+        if "graph" in s or "reasoning_path" in s or "knowledge_graph" in s:
+            return "graph"
+        return s  # unknown — pass through, will be counted as invalid
+
     available = set()
     if evidence_bundle.get("documents"):
         available.add("documents")
-        available.add("vector")
-    if evidence_bundle.get("sql_results"):
+    sql_results = evidence_bundle.get("sql_results") or []
+    if any(isinstance(r, dict) and r.get("execution_ok") for r in sql_results) or sql_results:
         available.add("sql")
-        available.add("sql_results")
-    rules = evidence_bundle.get("rules", {})
-    if rules and (rules.get("matched_rules") or []):
+    rules = evidence_bundle.get("rules", {}) or {}
+    if rules.get("matched_rules"):
         available.add("rules")
-    graph = evidence_bundle.get("graph", {})
-    if graph and (graph.get("reasoning_paths") or []):
+    graph = evidence_bundle.get("graph", {}) or {}
+    if graph.get("reasoning_paths"):
         available.add("graph")
 
-    valid = sum(1 for s in sources_used if s.lower() in available)
-    return valid / len(sources_used)
+    normalized_citations = [_normalize(s) for s in sources_used]
+    valid = sum(1 for s in normalized_citations if s in available)
+    return valid / len(normalized_citations) if normalized_citations else 1.0
 
 
 def numerical_accuracy(

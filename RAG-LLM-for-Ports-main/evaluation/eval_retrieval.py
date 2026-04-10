@@ -96,8 +96,11 @@ def evaluate_vector(
 
     Each result dict should have:
         - id: matching the golden id
-        - retrieved_chunk_ids: list of chunk_ids returned (post-rerank)
-        - (optional) pre_rerank_chunk_ids: chunks before reranking
+        - retrieved_chunk_ids: list of chunk_ids returned (post-rerank, top-5)
+        - pre_rerank_chunk_ids: chunks before reranking (top-20)
+
+    Metrics @5 use post-rerank output; metrics @20 use pre-rerank output
+    (otherwise recall@20 is bounded by post-rerank size).
     """
     golden_by_id = {g["id"]: g for g in golden}
 
@@ -112,12 +115,16 @@ def evaluate_vector(
         if not relevant:
             continue
 
-        retrieved = r.get("retrieved_chunk_ids", [])
-        r5 += recall_at_k(retrieved, relevant, 5)
-        r20 += recall_at_k(retrieved, relevant, 20)
-        p5 += precision_at_k(retrieved, relevant, 5)
-        mrr_total += mrr(retrieved, relevant)
-        ndcg10 += ndcg_at_k(retrieved, relevant, 10)
+        post = r.get("retrieved_chunk_ids", [])
+        pre = r.get("pre_rerank_chunk_ids", []) or post  # fallback
+
+        # @5 metrics from reranked output
+        r5 += recall_at_k(post, relevant, 5)
+        p5 += precision_at_k(post, relevant, 5)
+        mrr_total += mrr(post, relevant)
+        # @10 / @20 metrics from pre-rerank (larger candidate pool)
+        ndcg10 += ndcg_at_k(pre, relevant, 10)
+        r20 += recall_at_k(pre, relevant, 20)
         count += 1
 
     if count == 0:
@@ -200,8 +207,10 @@ def evaluate_sql(
     """
     golden_by_id = {g["id"]: g for g in golden}
     table_f1 = 0.0
+    table_f1_count = 0
     exec_ok_count = 0
     row_count_reasonable = 0
+    row_count_total = 0  # denominator fix: only count samples that have expected_row_count
     count = 0
 
     for r in results:
@@ -220,13 +229,15 @@ def evaluate_sql(
             rec = tp / (tp + fn) if (tp + fn) > 0 else 0.0
             f1 = 2 * p * rec / (p + rec) if (p + rec) > 0 else 0.0
             table_f1 += f1
+            table_f1_count += 1
 
         if r.get("execution_ok"):
             exec_ok_count += 1
 
-        # Expected row count (if specified)
+        # Expected row count (only counted when specified in golden)
         expected_rc = gs.get("expected_row_count")
         if expected_rc is not None:
+            row_count_total += 1
             actual_rc = r.get("row_count", -1)
             if expected_rc == 0 and actual_rc == 0:
                 row_count_reasonable += 1
@@ -238,12 +249,16 @@ def evaluate_sql(
     if count == 0:
         return {"count": 0}
 
-    return {
-        "table_f1": round(table_f1 / count, 4),
+    result: Dict[str, float] = {
+        "table_f1": round(table_f1 / max(table_f1_count, 1), 4),
         "execution_ok_rate": round(exec_ok_count / count, 4),
-        "row_count_reasonable": round(row_count_reasonable / count, 4),
         "count": count,
     }
+    # Only report row_count metric when at least one sample has the annotation
+    if row_count_total > 0:
+        result["row_count_reasonable"] = round(row_count_reasonable / row_count_total, 4)
+        result["row_count_annotated"] = row_count_total
+    return result
 
 
 def evaluate_rules(

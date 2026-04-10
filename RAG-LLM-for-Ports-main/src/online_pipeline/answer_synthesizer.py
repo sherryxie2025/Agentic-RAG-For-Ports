@@ -1002,13 +1002,18 @@ Rules:
         rule_results: Dict[str, Any],
         graph_results: Dict[str, Any],
     ) -> List[str]:
+        """
+        Return canonical source labels that match the evidence bundle keys.
+        These labels are consumed by downstream evaluation (citation_validity)
+        and UI, so they must be stable.
+        """
         sources = []
 
         if docs:
             sources.append("documents")
 
         if sql_results and sql_results[0].get("execution_ok"):
-            sources.append("structured_operational_data")
+            sources.append("sql")  # canonical label (was: structured_operational_data)
 
         if rule_results and rule_results.get("matched_rules"):
             sources.append("rules")
