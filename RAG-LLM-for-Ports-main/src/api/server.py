@@ -179,6 +179,7 @@ async def ask_question(request: QueryRequest):
 class AgentRequest(BaseModel):
     """Request for the Plan-and-Execute agent."""
     query: str = Field(..., description="User question about port operations")
+    session_id: Optional[str] = Field(None, description="Session ID for multi-turn conversation. Omit for single-turn.")
 
 
 class AgentResponse(BaseModel):
@@ -190,70 +191,109 @@ class AgentResponse(BaseModel):
     plan_steps: List[Dict[str, Any]] = []
     iterations: int = 0
     reasoning_trace: List[str] = []
+    observations: List[Dict[str, Any]] = []
     evidence_sufficient: bool = True
+    session_id: Optional[str] = None
     timestamp: str = ""
     execution_time: float = 0.0
 
 
-# Global agent instance
+# Global agent system singletons
 _agent_graph = None
+_session_manager = None
+_memory_manager = None
 
 
-def _get_agent_graph():
-    """Lazy-initialize the agent graph."""
-    global _agent_graph
+def _get_agent_system():
+    """Lazy-initialize the agent graph, memory manager, and session manager."""
+    global _agent_graph, _session_manager, _memory_manager
     if _agent_graph is None:
         from pathlib import Path
         from ..online_pipeline.agent_graph import build_agent_graph
+        from ..online_pipeline.agent_memory import MemoryManager
+        from ..online_pipeline.session_manager import SessionManager
+
         project_root = Path(__file__).resolve().parents[2]
         _agent_graph = build_agent_graph(
             project_root=project_root,
             use_llm_sql_planner=True,
+            enable_react_observations=True,
         )
-    return _agent_graph
+        _memory_manager = MemoryManager(project_root)
+        _session_manager = SessionManager(_memory_manager)
+    return _agent_graph, _session_manager
 
 
 @app.post("/ask_agent", response_model=AgentResponse)
 async def ask_agent(request: AgentRequest):
     """
-    Plan-and-Execute Agent endpoint.
+    Plan-and-Execute Agent endpoint with multi-turn conversation support.
 
     The agent autonomously:
-    1. Plans which tools to use (document search, SQL, rules, graph reasoning)
-    2. Executes the tools in parallel
-    3. Evaluates if evidence is sufficient
-    4. Re-plans if needed (up to 3 iterations)
+    1. Resolves follow-up queries using conversation history
+    2. Plans which tools to use (document search, SQL, rules, graph reasoning)
+    3. Executes tools with ReAct-style observation (can adapt mid-execution)
+    4. Evaluates if evidence is sufficient, re-plans if needed (up to 3 iterations)
     5. Synthesizes a grounded answer
+
+    Pass session_id to enable multi-turn conversation. Omit for single-turn.
     """
     import time as _time
     t0 = _time.time()
     try:
-        agent = _get_agent_graph()
+        agent, session_mgr = _get_agent_system()
         logger.info(f"Processing agent query: {request.query[:50]}...")
 
+        # 1. Session management: get or create session
+        session_id, _short_term = session_mgr.get_or_create(request.session_id)
+
+        # 2. Resolve follow-up queries (multi-turn)
+        resolved_query = session_mgr.resolve_query(session_id, request.query)
+
+        # 3. Build memory context for state injection
+        state_extras = session_mgr.build_agent_state_extras(session_id, resolved_query)
+
+        # 4. Invoke agent with enriched state
         loop = asyncio.get_event_loop()
+        base_state = {
+            "user_query": resolved_query,
+            "original_query": request.query,
+            "reasoning_trace": [],
+            "warnings": [],
+            "tool_results": [],
+            "observations": [],
+            **state_extras,
+        }
         state = await loop.run_in_executor(
             None,
-            lambda: agent.invoke({
-                "user_query": request.query,
-                "reasoning_trace": [],
-                "warnings": [],
-                "tool_results": [],
-            }),
+            lambda: agent.invoke(base_state),
         )
 
+        # 5. Record turns in session memory
         final = state.get("final_answer", {})
+        answer_text = final.get("answer", "") if isinstance(final, dict) else str(final)
+
+        tool_summaries = [
+            f"{tr.get('tool_name', '?')}: {tr.get('input_query', '')[:50]}"
+            for tr in state.get("tool_results", [])
+            if tr.get("success")
+        ]
+        session_mgr.record_turn(session_id, "user", request.query)
+        session_mgr.record_turn(session_id, "assistant", answer_text, tool_summaries)
+
         elapsed = _time.time() - t0
 
         return AgentResponse(
             query=request.query,
-            answer=final.get("answer", "No answer available") if isinstance(final, dict) else str(final),
+            answer=answer_text if answer_text else "No answer available",
             confidence=final.get("confidence") if isinstance(final, dict) else None,
             sources_used=final.get("sources_used", []) if isinstance(final, dict) else [],
             plan_steps=state.get("plan", []),
             iterations=state.get("iteration", 0),
             reasoning_trace=state.get("reasoning_trace", []),
+            observations=state.get("observations", []),
             evidence_sufficient=state.get("evidence_sufficient", True),
+            session_id=session_id,
             timestamp=datetime.now().isoformat(),
             execution_time=round(elapsed, 2),
         )
@@ -261,6 +301,32 @@ async def ask_agent(request: AgentRequest):
     except Exception as e:
         logger.error(f"Error in agent query: {e}")
         raise HTTPException(status_code=500, detail=f"Agent processing failed: {str(e)}")
+
+
+@app.post("/session/{session_id}/end")
+async def end_session(session_id: str):
+    """End a conversation session and persist summary to long-term memory."""
+    try:
+        _, session_mgr = _get_agent_system()
+        session_mgr.end_session(session_id)
+        return {"message": f"Session {session_id} ended", "timestamp": datetime.now().isoformat()}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/session/{session_id}/info")
+async def get_session_info(session_id: str):
+    """Get session metadata and conversation history summary."""
+    try:
+        _, session_mgr = _get_agent_system()
+        info = session_mgr.get_session_info(session_id)
+        if not info:
+            raise HTTPException(status_code=404, detail=f"Session {session_id} not found")
+        return {"session": info, "timestamp": datetime.now().isoformat()}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.post("/ask_graph", response_model=WorkflowResponse)

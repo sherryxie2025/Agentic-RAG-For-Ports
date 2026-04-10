@@ -150,6 +150,75 @@ Provide your answer directly without preamble.
 
 
 # ---------------------------------------------------------------------------
+# Query resolution prompt — for multi-turn follow-up queries
+# ---------------------------------------------------------------------------
+
+QUERY_RESOLUTION_PROMPT = """\
+You are resolving a follow-up question in a port decision-support conversation.
+
+## Conversation Context
+{conversation_context}
+
+## Current User Message
+{current_query}
+
+## Instructions
+If the current message references previous context (pronouns like "that", "it",
+"those", references like "the same berth", "and the rules?", "what about X?"),
+rewrite it as a standalone question that includes all necessary context from the
+conversation history.
+
+If the message is already self-contained, return it unchanged.
+
+Return ONLY the rewritten query, nothing else.
+"""
+
+
+# ---------------------------------------------------------------------------
+# ReAct tool observation prompt — observe after each tool execution
+# ---------------------------------------------------------------------------
+
+TOOL_OBSERVATION_PROMPT = """\
+You are observing a tool result in a port decision-support agent.
+
+## Overall User Query
+{user_query}
+
+## Current Plan Step
+Tool: {tool_name}
+Query: {tool_query}
+Purpose: {step_purpose}
+
+## Tool Result
+{tool_result_summary}
+
+## Remaining Plan Steps
+{remaining_steps}
+
+## Instructions
+Analyze this tool result and decide:
+1. "continue" — result is useful, proceed with next planned step as-is
+2. "modify_next" — result suggests the next step's query should be adjusted
+   (e.g., SQL returned data about a specific berth, so the next rule_lookup
+   should focus on that berth's constraints)
+3. "abort_replan" — result reveals the plan is fundamentally wrong
+   (e.g., the queried table has no data, a key assumption was wrong)
+
+Return JSON:
+```json
+{{
+  "action": "continue" | "modify_next" | "abort_replan",
+  "observation": "<what you learned from this result>",
+  "modified_query": "<new query for next step, only if action=modify_next>",
+  "reasoning": "<why you chose this action>"
+}}
+```
+
+Only output JSON, no other text.
+"""
+
+
+# ---------------------------------------------------------------------------
 # Helper: format tool descriptions for prompts
 # ---------------------------------------------------------------------------
 

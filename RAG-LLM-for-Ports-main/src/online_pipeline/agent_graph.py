@@ -1,17 +1,19 @@
 # src/online_pipeline/agent_graph.py
 """
-Plan-and-Execute Agent built on LangGraph.
+Plan-and-Execute Agent built on LangGraph with ReAct-style observations.
 
 Architecture:
     START -> plan_node -> execute_tools_node -> evaluate_evidence_node
-                ^                                     |
-                |_____ [insufficient] ________________|
-                                                      |
+                ^              (ReAct loop)              |
+                |_____ [insufficient] ___________________|
+                                                         |
                               [sufficient] -> synthesize_node -> END
 
 Key agentic features:
 - LLM-driven planning (tool selection + sub-query generation)
-- Parallel tool execution
+- Multi-turn conversation context injection
+- Short-term + long-term memory integration
+- ReAct-style per-tool observation (Think-Act-Observe within execute_tools)
 - Self-evaluation with adaptive re-planning (up to 3 iterations)
 - Evidence-grounded answer synthesis
 """
@@ -30,17 +32,21 @@ from .agent_prompts import (
     EVALUATE_EVIDENCE_PROMPT,
     PLAN_SYSTEM_PROMPT,
     REPLAN_SYSTEM_PROMPT,
+    TOOL_OBSERVATION_PROMPT,
     format_tools_for_prompt,
 )
 from .agent_state import AgentState
 from .agent_tools import AgentToolkit, ToolDescriptor
 from .answer_synthesizer import AnswerSynthesizer
 from .llm_client import llm_chat_json
-from .state_schema import PlanStep
+from .state_schema import ObservationResult, PlanStep
 
 logger = logging.getLogger("online_pipeline.agent_graph")
 
 MAX_ITERATIONS = 3
+
+# Tools that skip ReAct observation (too simple or always last)
+_SKIP_OBSERVATION_TOOLS = {"query_rewrite", "evidence_conflict_check"}
 
 
 # ---------------------------------------------------------------------------
@@ -50,9 +56,14 @@ MAX_ITERATIONS = 3
 class AgentNodes:
     """Encapsulates all node logic; holds references to toolkit + synthesizer."""
 
-    def __init__(self, toolkit: AgentToolkit) -> None:
+    def __init__(
+        self,
+        toolkit: AgentToolkit,
+        enable_react_observations: bool = True,
+    ) -> None:
         self.toolkit = toolkit
         self.synthesizer = AnswerSynthesizer(use_llm_fallback=True)
+        self.enable_react = enable_react_observations
 
     # ---- Node 1: Plan ----
 
@@ -63,23 +74,39 @@ class AgentNodes:
 
         tools_desc = format_tools_for_prompt(self.toolkit.tools)
 
+        # Build optional conversation context block
+        context_block = self._build_context_block(state)
+
         if iteration == 0:
             # First pass: plan from scratch
             prompt = PLAN_SYSTEM_PROMPT.format(tools_description=tools_desc)
+            if context_block:
+                prompt += f"\n\n## Conversation Context\n{context_block}"
             messages = [
                 {"role": "system", "content": prompt},
                 {"role": "user", "content": user_query},
             ]
         else:
-            # Re-plan: incorporate evidence gaps
+            # Re-plan: incorporate evidence gaps + observations
             evidence_summary = self._summarize_evidence(state)
             evidence_gaps = state.get("evidence_gaps", [])
+
+            # Include ReAct observations in replan context
+            observations = state.get("observations", [])
+            obs_text = ""
+            if observations:
+                obs_lines = [f"- {o.get('tool_name', '?')}: {o.get('observation', '')[:100]}"
+                             for o in observations[-5:]]
+                obs_text = "\n\n## Tool Observations\n" + "\n".join(obs_lines)
+
             prompt = REPLAN_SYSTEM_PROMPT.format(
                 user_query=user_query,
-                evidence_summary=evidence_summary,
+                evidence_summary=evidence_summary + obs_text,
                 evidence_gaps="\n".join(f"- {g}" for g in evidence_gaps),
                 tools_description=tools_desc,
             )
+            if context_block:
+                prompt += f"\n\n## Conversation Context\n{context_block}"
             messages = [
                 {"role": "system", "content": prompt},
                 {"role": "user", "content": f"Fill these evidence gaps for: {user_query}"},
@@ -104,7 +131,7 @@ class AgentNodes:
             ],
         }
 
-    # ---- Node 2: Execute Tools ----
+    # ---- Node 2: Execute Tools (with ReAct observation loop) ----
 
     def execute_tools_node(self, state: AgentState) -> Dict[str, Any]:
         t0 = time.time()
@@ -112,13 +139,14 @@ class AgentNodes:
         pending = [s for s in plan if s.get("status") == "pending"]
 
         tool_results = []
+        observations = []
         retrieved_docs = state.get("retrieved_docs", [])
         sql_results = state.get("sql_results", [])
         rule_results = state.get("rule_results", {})
         graph_results = state.get("graph_results", {})
         trace = []
 
-        for step in pending:
+        for step_idx, step in enumerate(pending):
             tool_name = step.get("tool_name", "")
             query = step.get("query", "")
             tool = self.toolkit.tool_map.get(tool_name)
@@ -141,6 +169,7 @@ class AgentNodes:
             else:
                 kwargs = {"query": query}
 
+            # ---- ACT: invoke the tool ----
             result = tool.invoke(**kwargs)
             tool_results.append(result)
 
@@ -166,16 +195,48 @@ class AgentNodes:
                 elif tool_name == "query_rewrite":
                     rewritten = output.get("rewritten_query", query)
                     step["result_summary"] = f"Rewritten: {rewritten[:80]}"
-                    # Update remaining pending steps with rewritten query
-                    for s in plan:
-                        if s.get("status") == "pending" and s.get("tool_name") != "query_rewrite":
-                            s["query"] = s["query"]  # keep original; rewrite is for doc_search
                 elif tool_name == "evidence_conflict_check":
                     step["result_summary"] = f"{output.get('conflict_count', 0)} conflicts detected"
                 else:
                     step["result_summary"] = "completed"
 
                 trace.append(f"execute_tools: {tool_name} => {step.get('result_summary', 'ok')}")
+
+                # ---- OBSERVE: ReAct observation after each tool ----
+                remaining = [s for s in pending[step_idx + 1:] if s.get("status") == "pending"]
+                if (self.enable_react
+                        and remaining
+                        and tool_name not in _SKIP_OBSERVATION_TOOLS):
+                    observation = self._observe_tool_result(
+                        user_query=state.get("user_query", ""),
+                        step=step,
+                        tool_result_summary=step.get("result_summary", ""),
+                        remaining_steps=remaining,
+                    )
+                    observations.append(observation)
+
+                    action = observation.get("action", "continue")
+
+                    if action == "abort_replan":
+                        # Mark remaining steps as skipped, break loop
+                        for s in remaining:
+                            s["status"] = "skipped"
+                        trace.append(
+                            f"react_observe: ABORT after {tool_name} — "
+                            f"{observation.get('reasoning', '?')[:80]}"
+                        )
+                        break
+
+                    elif action == "modify_next" and remaining:
+                        modified_q = observation.get("modified_query")
+                        if modified_q:
+                            remaining[0]["query"] = modified_q
+                            trace.append(
+                                f"react_observe: modified next step "
+                                f"({remaining[0].get('tool_name', '?')}) query"
+                            )
+                    # else: continue as planned
+
             else:
                 step["status"] = "failed"
                 trace.append(f"execute_tools: {tool_name} FAILED: {result.get('error', '?')}")
@@ -186,6 +247,7 @@ class AgentNodes:
         return {
             "plan": plan,
             "tool_results": tool_results,
+            "observations": observations,
             "retrieved_docs": retrieved_docs,
             "sql_results": sql_results,
             "rule_results": rule_results,
@@ -258,7 +320,14 @@ class AgentNodes:
 
     def synthesize_node(self, state: AgentState) -> Dict[str, Any]:
         t0 = time.time()
-        final_answer = self.synthesizer.synthesize(state)
+
+        # Inject conversation context into synthesizer state if available
+        synth_state = dict(state)
+        context_block = self._build_context_block(state)
+        if context_block:
+            synth_state["_conversation_context"] = context_block
+
+        final_answer = self.synthesizer.synthesize(synth_state)
         elapsed = time.time() - t0
         logger.info("SYNTHESIZE_NODE: %.2fs", elapsed)
         return {
@@ -276,7 +345,94 @@ class AgentNodes:
             return "synthesize"
         return "re_plan"
 
+    # ---- ReAct: Tool observation ----
+
+    def _observe_tool_result(
+        self,
+        user_query: str,
+        step: Dict[str, Any],
+        tool_result_summary: str,
+        remaining_steps: List[Dict[str, Any]],
+    ) -> ObservationResult:
+        """
+        ReAct observation: LLM analyzes a tool result and decides whether to
+        continue, modify the next step, or abort and replan.
+        """
+        remaining_desc = "\n".join(
+            f"  {i+1}. {s.get('tool_name', '?')}: {s.get('query', '')[:80]}"
+            for i, s in enumerate(remaining_steps)
+        )
+
+        prompt = TOOL_OBSERVATION_PROMPT.format(
+            user_query=user_query,
+            tool_name=step.get("tool_name", ""),
+            tool_query=step.get("query", ""),
+            step_purpose=step.get("purpose", ""),
+            tool_result_summary=tool_result_summary,
+            remaining_steps=remaining_desc or "(none)",
+        )
+
+        result = llm_chat_json(
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": "Observe and decide next action."},
+            ],
+            temperature=0.0,
+            timeout=30,
+        )
+
+        if result and isinstance(result, dict):
+            obs = ObservationResult(
+                step_id=step.get("step_id", 0),
+                tool_name=step.get("tool_name", ""),
+                observation=result.get("observation", ""),
+                action=result.get("action", "continue"),
+                modified_query=result.get("modified_query"),
+                reasoning=result.get("reasoning", ""),
+            )
+            logger.info(
+                "REACT_OBSERVE: %s -> action=%s",
+                step.get("tool_name", "?"), obs.get("action"),
+            )
+            return obs
+
+        # Default: continue if LLM fails
+        return ObservationResult(
+            step_id=step.get("step_id", 0),
+            tool_name=step.get("tool_name", ""),
+            observation="(observation failed, continuing)",
+            action="continue",
+            reasoning="LLM observation failed, defaulting to continue",
+        )
+
     # ---- Helpers ----
+
+    @staticmethod
+    def _build_context_block(state: AgentState) -> str:
+        """Build conversation + memory context block for prompt injection."""
+        parts = []
+
+        # Memory context (from MemoryManager)
+        memory_ctx = state.get("memory_context")
+        if memory_ctx:
+            parts.append(memory_ctx)
+
+        # Conversation summary (compressed older turns)
+        summary = state.get("conversation_summary")
+        if summary and not memory_ctx:  # avoid duplication if memory_ctx already includes it
+            parts.append(f"[Conversation summary]: {summary}")
+
+        # Recent conversation turns (not already in memory_ctx)
+        history = state.get("conversation_history", [])
+        if history and not memory_ctx:
+            turn_lines = []
+            for t in history[-4:]:
+                role = t.get("role", "?")
+                content = t.get("content", "")[:200]
+                turn_lines.append(f"  {role}: {content}")
+            parts.append("[Recent conversation]:\n" + "\n".join(turn_lines))
+
+        return "\n\n".join(parts)
 
     @staticmethod
     def _summarize_evidence(state: AgentState) -> str:
@@ -366,6 +522,7 @@ class AgentGraphBuilder:
         chroma_collection_name: str | None = None,
         use_llm_sql_planner: bool = False,
         sql_model_name: str | None = None,
+        enable_react_observations: bool = True,
     ) -> None:
         self.toolkit = AgentToolkit(
             project_root=project_root,
@@ -373,7 +530,10 @@ class AgentGraphBuilder:
             use_llm_sql_planner=use_llm_sql_planner,
             sql_model_name=sql_model_name,
         )
-        self.nodes = AgentNodes(toolkit=self.toolkit)
+        self.nodes = AgentNodes(
+            toolkit=self.toolkit,
+            enable_react_observations=enable_react_observations,
+        )
 
     def build(self):
         graph = StateGraph(AgentState)
@@ -413,17 +573,24 @@ def build_agent_graph(
     chroma_collection_name: str | None = None,
     use_llm_sql_planner: bool = False,
     sql_model_name: str | None = None,
+    enable_react_observations: bool = True,
 ):
     """
     Build and compile the Plan-and-Execute agent graph.
 
     Returns a compiled LangGraph that accepts AgentState with at minimum
     {"user_query": "..."} and returns the full AgentState with final_answer.
+
+    Args:
+        enable_react_observations: If True, adds ReAct-style per-tool
+            observation loop. Each tool result is analyzed by the LLM which
+            can continue, modify the next step, or abort and trigger replan.
     """
     builder = AgentGraphBuilder(
         project_root=project_root,
         chroma_collection_name=chroma_collection_name,
         use_llm_sql_planner=use_llm_sql_planner,
         sql_model_name=sql_model_name,
+        enable_react_observations=enable_react_observations,
     )
     return builder.build()

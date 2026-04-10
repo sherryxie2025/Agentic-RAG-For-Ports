@@ -161,6 +161,42 @@ class ToolResult(TypedDict, total=False):
     error: Optional[str]
 
 
+# ---------------------------------------------------------------------------
+# Multi-turn conversation types
+# ---------------------------------------------------------------------------
+
+class ConversationTurn(TypedDict, total=False):
+    """A single turn in the conversation history."""
+    role: str                                   # "user" | "assistant"
+    content: str                                # message text
+    timestamp: str                              # ISO-8601
+    turn_id: int
+    tool_results_summary: Optional[List[str]]   # brief tool summaries
+    entities_mentioned: Optional[List[str]]     # extracted domain entities
+
+
+class ConversationSummary(TypedDict, total=False):
+    """Compressed summary of older conversation turns."""
+    summary_text: str
+    turns_covered: List[int]        # which turn_ids this covers
+    key_entities: List[str]
+    key_facts: List[str]            # factual claims established
+
+
+# ---------------------------------------------------------------------------
+# ReAct observation types
+# ---------------------------------------------------------------------------
+
+class ObservationResult(TypedDict, total=False):
+    """LLM observation after a tool execution (ReAct pattern)."""
+    step_id: int
+    tool_name: str
+    observation: str                # what the LLM learned from the result
+    action: str                     # "continue" | "modify_next" | "abort_replan"
+    modified_query: Optional[str]   # revised query if action == "modify_next"
+    reasoning: str                  # why the LLM chose this action
+
+
 class PortQAState(TypedDict, total=False):
     user_query: str
 
