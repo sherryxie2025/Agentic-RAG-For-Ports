@@ -137,6 +137,30 @@ class FinalAnswer(TypedDict, total=False):
     knowledge_fallback_notes: List[str]
 
 
+# ---------------------------------------------------------------------------
+# Agent-specific types (Plan-and-Execute architecture)
+# ---------------------------------------------------------------------------
+
+class PlanStep(TypedDict, total=False):
+    """A single step in the agent's execution plan."""
+    step_id: int
+    tool_name: str          # "document_search", "sql_query", "rule_lookup", "graph_reason", etc.
+    query: str              # The sub-query for this tool
+    purpose: str            # Why this step is needed
+    status: str             # "pending", "running", "completed", "failed"
+    result_summary: str     # Brief summary of result after execution
+
+
+class ToolResult(TypedDict, total=False):
+    """Record of a single tool invocation."""
+    tool_name: str
+    input_query: str
+    output: Any
+    execution_time_s: float
+    success: bool
+    error: Optional[str]
+
+
 class PortQAState(TypedDict, total=False):
     user_query: str
 

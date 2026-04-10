@@ -39,7 +39,7 @@ load_dotenv()
 
 _API_KEY: str = os.getenv("OPENAI_API_KEY", "")
 _BASE_URL: str = os.getenv("OPENAI_BASE_URL", "")
-_MODEL_NAME: str = os.getenv("OPENAI_MODEL", "qwen3.5-35b-a3b")
+_MODEL_NAME: str = os.getenv("OPENAI_MODEL", "qwen3.5-flash")
 
 _openai_client: Optional[OpenAI] = None
 
@@ -138,6 +138,62 @@ def llm_chat_json(
         except json.JSONDecodeError:
             pass
     return None
+
+
+def llm_chat_with_tools(
+    messages: List[Dict[str, str]],
+    tools: List[Dict[str, Any]],
+    temperature: float = 0.1,
+    model: str | None = None,
+    timeout: int = 120,
+) -> Dict[str, Any]:
+    """
+    LLM chat with OpenAI-style function/tool calling support.
+    Returns the assistant message as a dict with 'content' and optional 'tool_calls'.
+    Falls back to llm_chat_json if tool calling is not supported by the endpoint.
+    """
+    client = get_openai_client()
+    kwargs: Dict[str, Any] = dict(
+        model=model or _MODEL_NAME,
+        messages=messages,
+        tools=tools,
+        tool_choice="auto",
+        temperature=temperature,
+        timeout=timeout,
+    )
+    t0 = time.time()
+    try:
+        resp = client.chat.completions.create(**kwargs)
+        elapsed = time.time() - t0
+        msg = resp.choices[0].message
+        logger.info("LLM_TOOL_CALL: model=%s %.1fs", kwargs["model"], elapsed)
+        result = {"content": msg.content or ""}
+        if hasattr(msg, "tool_calls") and msg.tool_calls:
+            result["tool_calls"] = [
+                {
+                    "function": {
+                        "name": tc.function.name,
+                        "arguments": tc.function.arguments,
+                    }
+                }
+                for tc in msg.tool_calls
+            ]
+        return result
+    except Exception as e:
+        elapsed = time.time() - t0
+        logger.warning(
+            "LLM_TOOL_CALL not supported (%.1fs, %s), falling back to llm_chat_json",
+            elapsed, e,
+        )
+        # Fallback: use structured JSON output instead of native tool calling
+        fallback_msg = (
+            "You have these tools available:\n"
+            + json.dumps([t.get("function", t) for t in tools], indent=2)
+            + "\n\nRespond with a JSON object containing your plan."
+        )
+        messages_with_tools = [messages[0]] + [{"role": "system", "content": fallback_msg}] + messages[1:]
+        result_json = llm_chat_json(messages_with_tools, temperature=temperature, model=model)
+        return {"content": json.dumps(result_json) if result_json else "", "tool_calls": None}
 
 
 def llm_chat_raw_post(

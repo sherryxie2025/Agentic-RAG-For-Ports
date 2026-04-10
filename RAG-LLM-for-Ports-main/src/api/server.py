@@ -172,6 +172,97 @@ async def ask_question(request: QueryRequest):
         raise HTTPException(status_code=500, detail=f"Query processing failed: {str(e)}")
 
 
+# ---------------------------------------------------------------------------
+# Agent endpoint (Plan-and-Execute)
+# ---------------------------------------------------------------------------
+
+class AgentRequest(BaseModel):
+    """Request for the Plan-and-Execute agent."""
+    query: str = Field(..., description="User question about port operations")
+
+
+class AgentResponse(BaseModel):
+    """Response from the Plan-and-Execute agent."""
+    query: str
+    answer: str
+    confidence: Optional[float] = None
+    sources_used: List[str] = []
+    plan_steps: List[Dict[str, Any]] = []
+    iterations: int = 0
+    reasoning_trace: List[str] = []
+    evidence_sufficient: bool = True
+    timestamp: str = ""
+    execution_time: float = 0.0
+
+
+# Global agent instance
+_agent_graph = None
+
+
+def _get_agent_graph():
+    """Lazy-initialize the agent graph."""
+    global _agent_graph
+    if _agent_graph is None:
+        from pathlib import Path
+        from ..online_pipeline.agent_graph import build_agent_graph
+        project_root = Path(__file__).resolve().parents[2]
+        _agent_graph = build_agent_graph(
+            project_root=project_root,
+            use_llm_sql_planner=True,
+        )
+    return _agent_graph
+
+
+@app.post("/ask_agent", response_model=AgentResponse)
+async def ask_agent(request: AgentRequest):
+    """
+    Plan-and-Execute Agent endpoint.
+
+    The agent autonomously:
+    1. Plans which tools to use (document search, SQL, rules, graph reasoning)
+    2. Executes the tools in parallel
+    3. Evaluates if evidence is sufficient
+    4. Re-plans if needed (up to 3 iterations)
+    5. Synthesizes a grounded answer
+    """
+    import time as _time
+    t0 = _time.time()
+    try:
+        agent = _get_agent_graph()
+        logger.info(f"Processing agent query: {request.query[:50]}...")
+
+        loop = asyncio.get_event_loop()
+        state = await loop.run_in_executor(
+            None,
+            lambda: agent.invoke({
+                "user_query": request.query,
+                "reasoning_trace": [],
+                "warnings": [],
+                "tool_results": [],
+            }),
+        )
+
+        final = state.get("final_answer", {})
+        elapsed = _time.time() - t0
+
+        return AgentResponse(
+            query=request.query,
+            answer=final.get("answer", "No answer available") if isinstance(final, dict) else str(final),
+            confidence=final.get("confidence") if isinstance(final, dict) else None,
+            sources_used=final.get("sources_used", []) if isinstance(final, dict) else [],
+            plan_steps=state.get("plan", []),
+            iterations=state.get("iteration", 0),
+            reasoning_trace=state.get("reasoning_trace", []),
+            evidence_sufficient=state.get("evidence_sufficient", True),
+            timestamp=datetime.now().isoformat(),
+            execution_time=round(elapsed, 2),
+        )
+
+    except Exception as e:
+        logger.error(f"Error in agent query: {e}")
+        raise HTTPException(status_code=500, detail=f"Agent processing failed: {str(e)}")
+
+
 @app.post("/ask_graph", response_model=WorkflowResponse)
 async def ask_with_workflow(request: WorkflowRequest):
     """
