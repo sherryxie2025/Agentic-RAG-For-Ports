@@ -30,6 +30,7 @@ from langgraph.graph import END, START, StateGraph
 
 from .agent_prompts import (
     EVALUATE_EVIDENCE_PROMPT,
+    OOD_DETECTION_PROMPT,
     PLAN_SYSTEM_PROMPT,
     REPLAN_SYSTEM_PROMPT,
     TOOL_OBSERVATION_PROMPT,
@@ -43,7 +44,10 @@ from .state_schema import ObservationResult, PlanStep
 
 logger = logging.getLogger("online_pipeline.agent_graph")
 
-MAX_ITERATIONS = 3
+# Reduced from 3 to 2: observation from eval showed 56% of queries hit max=3
+# but extra iterations rarely added meaningful evidence. Most "real" work
+# completes in 1-2 iterations.
+MAX_ITERATIONS = 2
 
 # Tools that skip ReAct observation (too simple or always last)
 _SKIP_OBSERVATION_TOOLS = {"query_rewrite", "evidence_conflict_check"}
@@ -64,6 +68,87 @@ class AgentNodes:
         self.toolkit = toolkit
         self.synthesizer = AnswerSynthesizer(use_llm_fallback=True)
         self.enable_react = enable_react_observations
+
+    # ---- Node 0: OOD Gate ----
+
+    def ood_check_node(self, state: AgentState) -> Dict[str, Any]:
+        """
+        Pre-plan gate: classifies the query as in-domain / out-of-domain /
+        false_premise / too_vague. Sets ood_verdict in state and, if not
+        in-domain, builds a refusal FinalAnswer that bypasses the rest of
+        the pipeline.
+        """
+        t0 = time.time()
+        user_query = state.get("user_query", "")
+
+        prompt = OOD_DETECTION_PROMPT.format(query=user_query)
+        result = llm_chat_json(
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": "Classify this query."},
+            ],
+            temperature=0.0,
+            timeout=30,
+        )
+
+        elapsed = time.time() - t0
+
+        classification = "in_domain"
+        refusal_message = ""
+        reasoning = ""
+        if isinstance(result, dict):
+            classification = result.get("classification", "in_domain")
+            refusal_message = result.get("refusal_message", "")
+            reasoning = result.get("reasoning", "")
+
+        logger.info(
+            "OOD_CHECK: %.2fs classification=%s confidence=%s",
+            elapsed, classification,
+            (result or {}).get("confidence", "?"),
+        )
+
+        update: Dict[str, Any] = {
+            "ood_verdict": classification,
+            "stage_timings": {"ood_check_node": round(elapsed, 4)},
+            "reasoning_trace": [
+                f"ood_check: verdict={classification} ({reasoning[:80]})"
+            ],
+        }
+
+        # If out-of-domain / false premise / too vague, short-circuit with a
+        # refusal and skip the expensive pipeline.
+        if classification != "in_domain":
+            if not refusal_message:
+                refusal_message = (
+                    "I'm focused on port operations, maritime regulations, and "
+                    "sustainability reports. That question falls outside my scope."
+                )
+            update["final_answer"] = {
+                "answer": refusal_message,
+                "confidence": 0.95,
+                "sources_used": [],
+                "reasoning_summary": [f"Query classified as {classification}: {reasoning}"],
+                "caveats": [],
+                "grounding_status": "refused_ood",
+                "llm_answer_used": False,
+                "knowledge_fallback_used": False,
+                "knowledge_fallback_notes": [],
+            }
+            update["evidence_sufficient"] = True  # skip re-plan
+            update["evidence_bundle"] = {
+                "documents": [], "sql_results": [],
+                "rules": {}, "graph": {},
+            }
+
+        return update
+
+    @staticmethod
+    def route_after_ood(state: AgentState) -> str:
+        """Bypass plan/execute if OOD refusal triggered."""
+        verdict = state.get("ood_verdict", "in_domain")
+        if verdict != "in_domain" and state.get("final_answer"):
+            return "end"
+        return "plan"
 
     # ---- Node 1: Plan ----
 
@@ -580,13 +665,22 @@ class AgentGraphBuilder:
         graph = StateGraph(AgentState)
 
         # Add nodes
+        graph.add_node("ood_check", self.nodes.ood_check_node)
         graph.add_node("plan", self.nodes.plan_node)
         graph.add_node("execute_tools", self.nodes.execute_tools_node)
         graph.add_node("evaluate_evidence", self.nodes.evaluate_evidence_node)
         graph.add_node("synthesize", self.nodes.synthesize_node)
 
-        # Edges: linear flow with re-plan loop
-        graph.add_edge(START, "plan")
+        # Flow: ood_check -> [in_domain: plan | ood: END]
+        graph.add_edge(START, "ood_check")
+        graph.add_conditional_edges(
+            "ood_check",
+            AgentNodes.route_after_ood,
+            {
+                "plan": "plan",
+                "end": END,  # short-circuit on OOD refusal
+            },
+        )
         graph.add_edge("plan", "execute_tools")
         graph.add_edge("execute_tools", "evaluate_evidence")
 

@@ -51,6 +51,9 @@ class AgentState(TypedDict, total=False):
     user_query: str
     original_query: str
 
+    # -- OOD gate --
+    ood_verdict: str  # "in_domain" | "out_of_domain" | "false_premise" | "too_vague" | "ambiguous"
+
     # -- Multi-turn conversation --
     session_id: Optional[str]
     conversation_history: List[ConversationTurn]     # recent turns injected from memory
