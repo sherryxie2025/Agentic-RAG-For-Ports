@@ -189,7 +189,7 @@ def run_agent_on_samples(
                 "total_time": total_time,
                 "iteration": state.get("iteration", 1),
                 "observations": state.get("observations", []),
-                "stage_timings": {},  # populated if node-level timing is available
+                "stage_timings": state.get("stage_timings", {}),
             }
             results.append(result)
             print(f"  [{i+1}/{len(samples)}] {sample_id}: {total_time:.1f}s")

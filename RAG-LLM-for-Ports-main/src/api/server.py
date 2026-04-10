@@ -194,6 +194,7 @@ class AgentResponse(BaseModel):
     observations: List[Dict[str, Any]] = []
     evidence_sufficient: bool = True
     session_id: Optional[str] = None
+    stage_timings: Dict[str, float] = {}
     timestamp: str = ""
     execution_time: float = 0.0
 
@@ -294,6 +295,7 @@ async def ask_agent(request: AgentRequest):
             observations=state.get("observations", []),
             evidence_sufficient=state.get("evidence_sufficient", True),
             session_id=session_id,
+            stage_timings=state.get("stage_timings", {}),
             timestamp=datetime.now().isoformat(),
             execution_time=round(elapsed, 2),
         )

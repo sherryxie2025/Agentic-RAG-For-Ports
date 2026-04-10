@@ -31,6 +31,21 @@ from .state_schema import (
 )
 
 
+def _merge_timings(a: Dict[str, float], b: Dict[str, float]) -> Dict[str, float]:
+    """
+    Reducer for stage_timings: merge two dicts, summing values for duplicate keys.
+    Summing handles re-plan iterations where the same node runs multiple times.
+    """
+    if not a:
+        return dict(b) if b else {}
+    if not b:
+        return dict(a)
+    merged = dict(a)
+    for k, v in b.items():
+        merged[k] = merged.get(k, 0.0) + v
+    return merged
+
+
 class AgentState(TypedDict, total=False):
     # -- Input --
     user_query: str
@@ -53,9 +68,13 @@ class AgentState(TypedDict, total=False):
     # -- Tool results (append-only across iterations) --
     tool_results: Annotated[List[ToolResult], add]
     retrieved_docs: List[RetrievedDocument]
+    pre_rerank_docs: List[RetrievedDocument]   # before cross-encoder rerank (for lift metrics)
     sql_results: List[SQLExecutionResult]
     rule_results: RuleEngineResult
     graph_results: GraphReasoningResult
+
+    # -- Per-stage latency tracking --
+    stage_timings: Annotated[Dict[str, float], _merge_timings]
 
     # -- ReAct observations (append-only) --
     observations: Annotated[List[ObservationResult], add]

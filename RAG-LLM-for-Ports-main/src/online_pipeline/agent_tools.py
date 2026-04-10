@@ -159,6 +159,7 @@ class AgentToolkit:
         reranked = self._reranker.rerank(query, docs, top_k=top_k)
         return {
             "documents": reranked,
+            "pre_rerank_documents": docs,   # for rerank lift evaluation
             "count": len(reranked),
             "source": "hybrid_retrieval+reranker",
         }

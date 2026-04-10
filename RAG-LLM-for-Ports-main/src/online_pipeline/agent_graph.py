@@ -125,6 +125,7 @@ class AgentNodes:
         return {
             "plan": merged_plan,
             "iteration": iteration + 1,
+            "stage_timings": {"plan_node": round(elapsed, 4)},
             "reasoning_trace": [
                 f"plan_node (iter={iteration + 1}): {len(steps)} new steps — "
                 + ", ".join(s.get("tool_name", "?") for s in steps)
@@ -141,10 +142,15 @@ class AgentNodes:
         tool_results = []
         observations = []
         retrieved_docs = state.get("retrieved_docs", [])
+        pre_rerank_docs = state.get("pre_rerank_docs", [])
         sql_results = state.get("sql_results", [])
         rule_results = state.get("rule_results", {})
         graph_results = state.get("graph_results", {})
         trace = []
+
+        # Per-tool timing breakdown (observation calls also counted)
+        tool_time_sum = 0.0
+        observe_time_sum = 0.0
 
         for step_idx, step in enumerate(pending):
             tool_name = step.get("tool_name", "")
@@ -170,7 +176,10 @@ class AgentNodes:
                 kwargs = {"query": query}
 
             # ---- ACT: invoke the tool ----
+            tool_t0 = time.time()
             result = tool.invoke(**kwargs)
+            tool_elapsed = time.time() - tool_t0
+            tool_time_sum += tool_elapsed
             tool_results.append(result)
 
             if result.get("success"):
@@ -180,6 +189,8 @@ class AgentNodes:
                 # Route output to the appropriate state field
                 if tool_name == "document_search":
                     retrieved_docs = output.get("documents", [])
+                    # Capture pre-rerank docs for rerank lift evaluation
+                    pre_rerank_docs = output.get("pre_rerank_documents", retrieved_docs)
                     step["result_summary"] = f"{output.get('count', 0)} documents retrieved"
                 elif tool_name == "sql_query":
                     sql_results = [output] if output else []
@@ -207,12 +218,14 @@ class AgentNodes:
                 if (self.enable_react
                         and remaining
                         and tool_name not in _SKIP_OBSERVATION_TOOLS):
+                    obs_t0 = time.time()
                     observation = self._observe_tool_result(
                         user_query=state.get("user_query", ""),
                         step=step,
                         tool_result_summary=step.get("result_summary", ""),
                         remaining_steps=remaining,
                     )
+                    observe_time_sum += time.time() - obs_t0
                     observations.append(observation)
 
                     action = observation.get("action", "continue")
@@ -242,16 +255,25 @@ class AgentNodes:
                 trace.append(f"execute_tools: {tool_name} FAILED: {result.get('error', '?')}")
 
         elapsed = time.time() - t0
-        logger.info("EXECUTE_TOOLS_NODE: %.2fs, %d tools run", elapsed, len(pending))
+        logger.info(
+            "EXECUTE_TOOLS_NODE: %.2fs (tools=%.2fs, observe=%.2fs), %d tools run",
+            elapsed, tool_time_sum, observe_time_sum, len(pending),
+        )
 
         return {
             "plan": plan,
             "tool_results": tool_results,
             "observations": observations,
             "retrieved_docs": retrieved_docs,
+            "pre_rerank_docs": pre_rerank_docs,
             "sql_results": sql_results,
             "rule_results": rule_results,
             "graph_results": graph_results,
+            "stage_timings": {
+                "execute_tools_node": round(elapsed, 4),
+                "tools_total": round(tool_time_sum, 4),
+                "react_observations": round(observe_time_sum, 4),
+            },
             "reasoning_trace": trace,
         }
 
@@ -288,11 +310,13 @@ class AgentNodes:
 
         # If max iterations reached, skip evaluation — go straight to synthesis
         if iteration >= MAX_ITERATIONS:
+            elapsed = time.time() - t0
             logger.info("EVALUATE_NODE: max iterations reached, proceeding to synthesis")
             return {
                 "evidence_sufficient": True,
                 "evidence_gaps": [],
                 "evidence_bundle": evidence_bundle,
+                "stage_timings": {"evaluate_evidence_node": round(elapsed, 4)},
                 "reasoning_trace": [
                     f"evaluate_evidence (iter={iteration}): max iterations reached, forcing synthesis"
                 ],
@@ -325,6 +349,7 @@ class AgentNodes:
             "evidence_sufficient": sufficient,
             "evidence_gaps": gaps,
             "evidence_bundle": evidence_bundle,
+            "stage_timings": {"evaluate_evidence_node": round(elapsed, 4)},
             "reasoning_trace": [
                 f"evaluate_evidence (iter={iteration}): sufficient={sufficient}, "
                 f"gaps={gaps}"
@@ -347,6 +372,7 @@ class AgentNodes:
         logger.info("SYNTHESIZE_NODE: %.2fs", elapsed)
         return {
             "final_answer": final_answer,
+            "stage_timings": {"synthesize_node": round(elapsed, 4)},
             "reasoning_trace": [f"synthesize_node: produced final answer in {elapsed:.2f}s"],
         }
 
