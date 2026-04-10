@@ -154,25 +154,43 @@ class RuleRetriever:
 
     @staticmethod
     def _score_rule(query_keywords: List[str], rule: Dict[str, Any]) -> float:
-        search_text = rule.get("search_text", "")
-        score = 0.0
+        """
+        Score a rule against the query keywords.
 
-        for kw in query_keywords:
-            if kw in search_text:
-                score += 1.0
+        Uses query-length-normalized keyword overlap (fraction of query keywords
+        matched), so scores are comparable across query lengths. Short structural
+        bonuses are ADDITIVE after the normalization to nudge grounded rules.
+        """
+        search_text = rule.get("search_text", "") or ""
+        if not query_keywords:
+            return 0.0
 
-        # small boosts for better-structured grounded rules
+        # Count how many query keywords appear in the rule text (fraction of query)
+        matches = sum(1 for kw in query_keywords if kw in search_text)
+        if matches == 0:
+            return 0.0
+
+        # Coverage = fraction of query keywords hit (0..1)
+        coverage = matches / len(query_keywords)
+
+        # Bonus: stronger when the rule hits a VARIABLE keyword (e.g. "wind",
+        # "crane") since those are more specific than filler words.
+        variable_field = (rule.get("variable") or rule.get("sql_variable") or "").lower()
+        variable_hit = any(kw in variable_field for kw in query_keywords if len(kw) > 2)
+
+        score = coverage
+        if variable_hit:
+            score += 0.3
         if rule.get("source_type") == "grounded":
-            score += 0.2
-
+            score += 0.05
         if rule.get("sql_variable"):
-            score += 0.1
-
+            score += 0.03
         if rule.get("operator") is not None:
-            score += 0.1
-
-        if rule.get("value") is not None or rule.get("value_min") is not None or rule.get("value_max") is not None:
-            score += 0.1
+            score += 0.02
+        if (rule.get("value") is not None
+                or rule.get("value_min") is not None
+                or rule.get("value_max") is not None):
+            score += 0.02
 
         return round(score, 4)
 
@@ -180,7 +198,7 @@ class RuleRetriever:
         self,
         query: str,
         top_k: int = 5,
-        min_score: float = 0.5,
+        min_score: float = 0.35,   # normalized score: require >=35% coverage OR variable hit
     ) -> List[RuleMatch]:
         normalized_query = self._normalize_query(query)
         query_keywords = self._extract_query_keywords(normalized_query)
