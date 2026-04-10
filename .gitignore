@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.python-version
+data/
+
+# Large binary files (too big for GitHub)
+**/storage/chroma/
+**/storage/sql/*.duckdb
+**/storage/models/*.pkl
+*.zip

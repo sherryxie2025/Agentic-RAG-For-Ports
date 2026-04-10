@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG Evaluation Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --card: #0f3460;
+    --accent: #e94560;
+    --accent2: #00d2ff;
+    --accent3: #53bf9d;
+    --text: #e0e0e0;
+    --text-dim: #8892a4;
+    --border: #2a3a5c;
+    --green: #4caf50;
+    --yellow: #ffc107;
+    --red: #f44336;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+  }
+  .legend-bar {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+  }
+  .legend-swatch {
+    width: 14px; height: 14px; border-radius: 3px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto 24px;
+  }
+  .grid-full {
+    grid-column: 1 / -1;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .card h2 {
+    font-size: 1.05rem;
+    margin-bottom: 14px;
+    color: var(--accent2);
+  }
+  .card canvas {
+    max-height: 360px;
+  }
+  /* Summary KPI strip */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    max-width: 1400px;
+    margin: 0 auto 24px;
+  }
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .kpi .label { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 4px; }
+  .kpi .value { font-size: 1.5rem; font-weight: 700; }
+  .kpi .delta { font-size: 0.78rem; margin-top: 2px; }
+  .delta.up { color: var(--green); }
+  .delta.down { color: var(--red); }
+
+  /* Traffic light table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  th, td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+  th {
+    background: var(--card);
+    color: var(--accent2);
+    position: sticky;
+    top: 0;
+    font-weight: 600;
+  }
+  tr:hover { background: rgba(255,255,255,0.03); }
+  .tl-cell {
+    border-radius: 4px;
+    padding: 4px 8px;
+    text-align: center;
+    font-weight: 600;
+    color: #fff;
+  }
+  .tl-green  { background: var(--green); }
+  .tl-yellow { background: var(--yellow); color: #333; }
+  .tl-red    { background: var(--red); }
+
+  .table-scroll {
+    max-height: 520px;
+    overflow-y: auto;
+  }
+  .table-scroll::-webkit-scrollbar { width: 6px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .loading { text-align: center; color: var(--text-dim); padding: 40px; }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>RAG Evaluation Dashboard</h1>
+<p class="subtitle">Port Information Retrieval System -- Multi-Round Comparison</p>
+
+<div class="legend-bar">
+  <div class="legend-item"><div class="legend-swatch" style="background:#e94560"></div>R2: qwen3.5-flash (baseline)</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#00d2ff"></div>R3: qwen3.5-35b-a3b (arch opt)</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#53bf9d"></div>R4: qwen3.5-35b-a3b (P0/P1)</div>
+</div>
+
+<!-- KPI strip for Round 3 vs Round 2 delta -->
+<div class="kpi-strip" id="kpiStrip"></div>
+
+<div class="grid">
+  <!-- Bar chart: aggregate metrics -->
+  <div class="card grid-full">
+    <h2>Aggregate Metrics Comparison</h2>
+    <canvas id="barChart"></canvas>
+  </div>
+
+  <!-- Radar: per-intent evidence recall -->
+  <div class="card">
+    <h2>Per-Intent Evidence Recall</h2>
+    <canvas id="radarRecall"></canvas>
+  </div>
+
+  <!-- Radar: per-intent faithfulness -->
+  <div class="card">
+    <h2>Per-Intent Faithfulness</h2>
+    <canvas id="radarFaith"></canvas>
+  </div>
+
+  <!-- Radar: per-intent routing F1 -->
+  <div class="card">
+    <h2>Per-Intent Routing F1</h2>
+    <canvas id="radarRouting"></canvas>
+  </div>
+
+  <!-- Delta improvement chart -->
+  <div class="card">
+    <h2>R2 -> R3 Improvement (%)</h2>
+    <canvas id="deltaChart"></canvas>
+  </div>
+
+  <!-- Per-query traffic light -->
+  <div class="card grid-full">
+    <h2>Per-Query Traffic Light (from evaluation_report.json)</h2>
+    <div id="trafficLightContainer"><p class="loading">Loading evaluation_report.json ...</p></div>
+  </div>
+
+  <!-- Latency table -->
+  <div class="card grid-full">
+    <h2>Per-Query Latency (from evaluation_report.json)</h2>
+    <div id="latencyContainer"><p class="loading">Loading evaluation_report.json ...</p></div>
+  </div>
+</div>
+
+<script>
+// ====== Hardcoded data ======
+const COLORS = {
+  r2: '#e94560',
+  r3: '#00d2ff',
+  r4: '#53bf9d'
+};
+
+const R2 = {
+  label: 'R2: qwen3.5-flash (baseline)',
+  aggregate: {
+    'Answer Rate': 0.712,
+    'Evidence Recall': 0.4498,
+    'Routing F1': 0.5746,
+    'Faithfulness': 0.1654,
+    'Semantic Sim': 0.5984,
+    'MRR': 0.1375,
+    'NDCG@5': 0.1505,
+    'Claim Citation': 0.14,
+    'Claim Grounding': 0.1706
+  },
+  intents: {
+    document_lookup:   { recall: 0.491, f1: 0.531, faith: 0.275 },
+    structured_data:   { recall: 0.461, f1: 0.800, faith: 0.096 },
+    policy_rule:       { recall: 0.778, f1: 0.667, faith: 0.318 },
+    hybrid_reasoning:  { recall: 0.464, f1: 0.617, faith: 0.156 },
+    causal_multihop:   { recall: 0.000, f1: 0.000, faith: 0.000 }
+  }
+};
+
+const R3 = {
+  label: 'R3: qwen3.5-35b-a3b (arch opt)',
+  aggregate: {
+    'Answer Rate': 1.0,
+    'Evidence Recall': 0.6009,
+    'Routing F1': 0.8423,
+    'Faithfulness': 0.3865,
+    'Semantic Sim': 0.8810,
+    'MRR': 0.3635,
+    'NDCG@5': 0.4074,
+    'Claim Citation': 0.5599,
+    'Claim Grounding': 0.4253
+  },
+  intents: {
+    document_lookup:   { recall: 0.831, f1: 0.885, faith: 0.692 },
+    structured_data:   { recall: 0.411, f1: 0.950, faith: 0.109 },
+    policy_rule:       { recall: 0.778, f1: 0.733, faith: 0.709 },
+    hybrid_reasoning:  { recall: 0.576, f1: 0.823, faith: 0.344 },
+    causal_multihop:   { recall: 0.494, f1: 0.712, faith: 0.231 }
+  }
+};
+
+// R4 placeholder -- filled from JSON
+let R4 = null;
+
+// ====== KPI Strip ======
+function renderKPI() {
+  const strip = document.getElementById('kpiStrip');
+  const metrics = Object.keys(R2.aggregate);
+  let html = '';
+  metrics.forEach(m => {
+    const v2 = R2.aggregate[m];
+    const v3 = R3.aggregate[m];
+    const delta = ((v3 - v2) / (v2 || 0.001) * 100);
+    const cls = delta >= 0 ? 'up' : 'down';
+    const sign = delta >= 0 ? '+' : '';
+    html += `<div class="kpi">
+      <div class="label">${m}</div>
+      <div class="value">${(v3 * 100).toFixed(1)}%</div>
+      <div class="delta ${cls}">${sign}${delta.toFixed(1)}% vs R2</div>
+    </div>`;
+  });
+  strip.innerHTML = html;
+}
+
+// ====== Bar Chart ======
+function renderBarChart() {
+  const labels = Object.keys(R2.aggregate);
+  const datasets = [
+    { label: R2.label, data: labels.map(l => R2.aggregate[l]), backgroundColor: COLORS.r2 + 'cc', borderColor: COLORS.r2, borderWidth: 1 },
+    { label: R3.label, data: labels.map(l => R3.aggregate[l]), backgroundColor: COLORS.r3 + 'cc', borderColor: COLORS.r3, borderWidth: 1 }
+  ];
+  if (R4) {
+    datasets.push({
+      label: 'R4: qwen3.5-35b-a3b (P0/P1)',
+      data: labels.map(l => R4.aggregate[l] ?? null),
+      backgroundColor: COLORS.r4 + 'cc', borderColor: COLORS.r4, borderWidth: 1
+    });
+  }
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: '#e0e0e0' } } },
+      scales: {
+        x: { ticks: { color: '#8892a4', maxRotation: 45 }, grid: { color: '#2a3a5c33' } },
+        y: { min: 0, max: 1, ticks: { color: '#8892a4', callback: v => (v * 100) + '%' }, grid: { color: '#2a3a5c55' } }
+      }
+    }
+  });
+}
+
+// ====== Radar Charts ======
+function makeRadar(canvasId, field) {
+  const intentLabels = Object.keys(R2.intents);
+  const datasets = [
+    { label: 'R2', data: intentLabels.map(i => R2.intents[i][field]), borderColor: COLORS.r2, backgroundColor: COLORS.r2 + '33', pointBackgroundColor: COLORS.r2 },
+    { label: 'R3', data: intentLabels.map(i => R3.intents[i][field]), borderColor: COLORS.r3, backgroundColor: COLORS.r3 + '33', pointBackgroundColor: COLORS.r3 }
+  ];
+  if (R4) {
+    datasets.push({
+      label: 'R4', data: intentLabels.map(i => R4.intents[i]?.[field] ?? 0),
+      borderColor: COLORS.r4, backgroundColor: COLORS.r4 + '33', pointBackgroundColor: COLORS.r4
+    });
+  }
+  new Chart(document.getElementById(canvasId), {
+    type: 'radar',
+    data: { labels: intentLabels, datasets },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: '#e0e0e0' } } },
+      scales: {
+        r: {
+          min: 0, max: 1,
+          ticks: { color: '#8892a4', backdropColor: 'transparent', stepSize: 0.2 },
+          grid: { color: '#2a3a5c88' },
+          pointLabels: { color: '#e0e0e0', font: { size: 11 } }
+        }
+      }
+    }
+  });
+}
+
+// ====== Delta Chart ======
+function renderDeltaChart() {
+  const labels = Object.keys(R2.aggregate);
+  const deltas = labels.map(l => {
+    const v2 = R2.aggregate[l];
+    const v3 = R3.aggregate[l];
+    return v2 > 0 ? ((v3 - v2) / v2 * 100) : (v3 > 0 ? 100 : 0);
+  });
+  const colors = deltas.map(d => d >= 0 ? COLORS.r4 + 'cc' : COLORS.r2 + 'cc');
+  new Chart(document.getElementById('deltaChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label: 'Improvement %', data: deltas, backgroundColor: colors, borderWidth: 0 }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#8892a4', callback: v => v + '%' }, grid: { color: '#2a3a5c55' } },
+        y: { ticks: { color: '#e0e0e0', font: { size: 10 } }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+// ====== Traffic light table ======
+function tlClass(v) {
+  if (v >= 0.6) return 'tl-green';
+  if (v >= 0.3) return 'tl-yellow';
+  return 'tl-red';
+}
+
+function renderTrafficLight(data) {
+  const queries = data.per_query_results || [];
+  if (!queries.length) {
+    document.getElementById('trafficLightContainer').innerHTML = '<p class="loading">No per_query_results found.</p>';
+    return;
+  }
+  const cols = [
+    { key: 'evidence_keyword_recall', label: 'Evidence Recall' },
+    { key: 'answer_faithfulness', label: 'Faithfulness' },
+    { key: 'semantic_similarity', label: 'Semantic Sim' },
+    { key: 'source_routing.f1', label: 'Routing F1' },
+    { key: 'claim_grounding_rate', label: 'Grounding' }
+  ];
+
+  let html = '<div class="table-scroll"><table><thead><tr>';
+  html += '<th>ID</th><th>Intent</th><th>Difficulty</th>';
+  cols.forEach(c => html += `<th>${c.label}</th>`);
+  html += '</tr></thead><tbody>';
+
+  queries.forEach(q => {
+    html += '<tr>';
+    html += `<td>${q.id}</td><td>${q.intent_type}</td><td>${q.difficulty || '-'}</td>`;
+    cols.forEach(c => {
+      let v;
+      if (c.key === 'source_routing.f1') {
+        v = q.source_routing ? q.source_routing.f1 : null;
+      } else {
+        v = q[c.key];
+      }
+      if (v == null) {
+        html += '<td>-</td>';
+      } else {
+        html += `<td><span class="tl-cell ${tlClass(v)}">${(v * 100).toFixed(1)}%</span></td>`;
+      }
+    });
+    html += '</tr>';
+  });
+
+  html += '</tbody></table></div>';
+  document.getElementById('trafficLightContainer').innerHTML = html;
+}
+
+// ====== Latency table ======
+function renderLatency(data) {
+  const queries = data.per_query_results || [];
+  if (!queries.length) {
+    document.getElementById('latencyContainer').innerHTML = '<p class="loading">No data.</p>';
+    return;
+  }
+
+  // Sort by elapsed descending
+  const sorted = [...queries].sort((a, b) => (b.elapsed_s || 0) - (a.elapsed_s || 0));
+  const avg = sorted.reduce((s, q) => s + (q.elapsed_s || 0), 0) / sorted.length;
+  const p50 = sorted[Math.floor(sorted.length * 0.5)]?.elapsed_s || 0;
+  const p90 = sorted[Math.floor(sorted.length * 0.1)]?.elapsed_s || 0;
+
+  let html = `<p style="margin-bottom:10px;color:var(--text-dim)">Avg: <b>${avg.toFixed(1)}s</b> | P50: <b>${p50.toFixed(1)}s</b> | P90: <b>${p90.toFixed(1)}s</b> | Total queries: ${sorted.length}</p>`;
+  html += '<div class="table-scroll"><table><thead><tr>';
+  html += '<th>ID</th><th>Intent</th><th>Difficulty</th><th>Elapsed (s)</th><th>Bar</th><th>Error</th>';
+  html += '</tr></thead><tbody>';
+
+  const maxT = sorted[0]?.elapsed_s || 1;
+  sorted.forEach(q => {
+    const t = q.elapsed_s || 0;
+    const pct = (t / maxT * 100).toFixed(0);
+    const barColor = t > 120 ? 'var(--red)' : t > 80 ? 'var(--yellow)' : 'var(--green)';
+    html += `<tr>
+      <td>${q.id}</td><td>${q.intent_type}</td><td>${q.difficulty || '-'}</td>
+      <td>${t.toFixed(1)}</td>
+      <td><div style="background:${barColor};height:8px;border-radius:4px;width:${pct}%"></div></td>
+      <td style="color:var(--red)">${q.error || ''}</td>
+    </tr>`;
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('latencyContainer').innerHTML = html;
+}
+
+// ====== Try loading R4 from evaluation_report.json ======
+function extractR4(data) {
+  // Map JSON aggregate to our format
+  return {
+    aggregate: {
+      'Answer Rate': data.answer_rate ?? null,
+      'Evidence Recall': data.aggregate_metrics?.avg_evidence_keyword_recall ?? null,
+      'Routing F1': data.aggregate_metrics?.avg_source_routing_f1 ?? null,
+      'Faithfulness': data.aggregate_metrics?.avg_answer_faithfulness ?? null,
+      'Semantic Sim': data.aggregate_metrics?.avg_semantic_similarity ?? null,
+      'MRR': data.aggregate_metrics?.avg_mrr ?? null,
+      'NDCG@5': data.aggregate_metrics?.avg_ndcg_at_5 ?? null,
+      'Claim Citation': data.aggregate_metrics?.avg_claim_citation_rate ?? null,
+      'Claim Grounding': data.aggregate_metrics?.avg_claim_grounding_rate ?? null
+    },
+    intents: Object.fromEntries(
+      Object.entries(data.per_intent_type || {}).map(([k, v]) => [k, {
+        recall: v.avg_evidence_recall ?? 0,
+        f1: v.avg_routing_f1 ?? 0,
+        faith: v.avg_faithfulness ?? 0
+      }])
+    )
+  };
+}
+
+// ====== Init ======
+async function init() {
+  renderKPI();
+
+  try {
+    const resp = await fetch('evaluation_report.json');
+    if (resp.ok) {
+      const data = await resp.json();
+      // Only load as R4 if model_name differs from R3 or if we want to show it as R4
+      // For now, the current JSON IS R3 data, so only use it for traffic light / latency
+      // R4 placeholder: if the JSON has different timestamp or explicit round marker, treat as R4
+      // Since user says R4 is placeholder, we check if data looks different from R3 hardcoded
+      const isNewRound = data.model_name && data.timestamp &&
+        Math.abs((data.aggregate_metrics?.avg_answer_faithfulness || 0) - 0.3865) > 0.01;
+      if (isNewRound) {
+        R4 = extractR4(data);
+      }
+      renderTrafficLight(data);
+      renderLatency(data);
+    }
+  } catch (e) {
+    console.warn('Could not load evaluation_report.json:', e);
+    document.getElementById('trafficLightContainer').innerHTML =
+      '<p class="loading">Could not load evaluation_report.json. Place it in the same directory.</p>';
+    document.getElementById('latencyContainer').innerHTML =
+      '<p class="loading">Could not load evaluation_report.json.</p>';
+  }
+
+  renderBarChart();
+  makeRadar('radarRecall', 'recall');
+  makeRadar('radarFaith', 'faith');
+  makeRadar('radarRouting', 'f1');
+  renderDeltaChart();
+}
+
+init();
+</script>
+</body>
+</html>

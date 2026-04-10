@@ -1,0 +1,114 @@
+Loading LangGraph workflow from C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main ... [WITH reranker]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 105/105 [00:00<00:00, 6709.66it/s]
+[1mBertForSequenceClassification LOAD REPORT[0m from: cross-encoder/ms-marco-MiniLM-L-6-v2
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+
+Running evaluation on 20 queries ...
+
+====================================================================================================
+
+[1/20] DOC_001: What are the key environmental sustainability initiatives described in port annu...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 4137.44it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-small-en
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+  OK | conf=0.55 | sem_sim=0.82 | mrr=1.00 | ndcg=0.91 | evidence_recall=0.75 | 7.0s
+
+[2/20] DOC_002: What does the Port Operating Handbook say about vessel entry requirements?...
+  OK | conf=0.73 | sem_sim=0.79 | mrr=0.33 | ndcg=0.73 | evidence_recall=1.00 | 2.8s
+
+[3/20] DOC_003: What cybersecurity guidelines exist for port facilities?...
+  OK | conf=0.40 | sem_sim=0.87 | mrr=1.00 | ndcg=0.98 | evidence_recall=1.00 | 3.9s
+
+[4/20] DOC_004: What green infrastructure design standards are recommended for ports?...
+  OK | conf=0.25 | sem_sim=0.72 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 1.7s
+
+[5/20] DOC_005: Describe the risk and resilience guidelines published for port operations....
+  OK | conf=0.40 | sem_sim=0.85 | mrr=1.00 | ndcg=1.00 | evidence_recall=1.00 | 2.8s
+
+[6/20] DOC_006: What decarbonisation strategies are outlined in maritime blueprints?...
+  OK | conf=0.25 | sem_sim=0.71 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 2.1s
+
+[7/20] DOC_007: What best management practices are recommended for port environmental management...
+  OK | conf=0.45 | sem_sim=0.72 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 2.8s
+
+[8/20] DOC_008: What information does the Container Port Performance Index report provide?...
+  OK | conf=0.40 | sem_sim=0.84 | mrr=1.00 | ndcg=1.00 | evidence_recall=0.60 | 3.8s
+
+[9/20] DOC_009: What are the pilot boarding and disembarkation procedures at ports?...
+  OK | conf=0.25 | sem_sim=0.71 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 1.6s
+
+[10/20] DOC_010: What strategic planning goals are outlined in port long-term plans?...
+  OK | conf=0.25 | sem_sim=0.68 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 1.9s
+
+[11/20] SQL_001: What was the average crane productivity in moves per hour in 2015?...
+  OK | conf=0.45 | sem_sim=0.78 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.50 | 7.3s
+
+[12/20] SQL_002: What was the average wave height recorded in 2015?...
+  OK | conf=0.45 | sem_sim=0.82 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.50 | 1.6s
+
+[13/20] SQL_003: Which vessels had the highest arrival delays in 2015?...
+  OK | conf=0.45 | sem_sim=0.88 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.33 | 1.6s
+
+[14/20] SQL_004: What was the average berth productivity across all terminals in 2015?...
+  OK | conf=0.45 | sem_sim=0.90 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.67 | 2.0s
+
+[15/20] SQL_005: How many vessel calls were recorded in 2015?...
+  ERROR: Couldn't connect to 127.0.0.1:7687 (resolved to ('127.0.0.1: | conf=0.00 | sem_sim=0.00 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 3.1s
+
+[16/20] SQL_006: What was the average truck turn time at the gate in 2015?...
+  OK | conf=0.45 | sem_sim=0.75 | mrr=0.00 | ndcg=0.00 | evidence_recall=1.00 | 1.5s
+
+[17/20] SQL_007: What was the peak yard occupancy percentage in 2015?...
+  OK | conf=0.45 | sem_sim=0.78 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.67 | 2.0s
+
+[18/20] SQL_008: What was the average wind speed during storm events in the environmental data?...
+  OK | conf=0.45 | sem_sim=0.87 | mrr=0.00 | ndcg=0.00 | evidence_recall=1.00 | 2.2s
+
+[19/20] SQL_009: Compare crane productivity between PCT and TTI terminals....
+  OK | conf=0.45 | sem_sim=0.78 | mrr=0.00 | ndcg=0.00 | evidence_recall=1.00 | 2.0s
+
+[20/20] SQL_010: What is the trend in average berth delays by month in 2015?...
+  OK | conf=0.45 | sem_sim=0.88 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.50 | 2.8s
+
+====================================================================================================
+EVALUATION REPORT SUMMARY
+====================================================================================================
+Total queries:             20
+Answered:                  19 (95.0%)
+Avg Evidence Keyword Recall: 0.5258
+Avg Source Routing F1:       0.6583
+Avg Answer Faithfulness:     0.1604
+Avg Semantic Similarity:     0.7565
+Avg MRR:                     0.2167
+Avg NDCG@5:                  0.2308
+Avg Claim Citation Rate:     0.0000
+Avg Claim Grounding Rate:    0.1396
+Avg Answer Confidence:       0.3990
+Avg Routing Precision:       0.6417
+Avg Routing Recall:          0.7000
+
+Per Intent Type:
+  document_lookup           n=10 | evidence_recall=0.435 | routing_f1=0.417 | faithfulness=0.175 | confidence=0.393
+  structured_data           n=10 | evidence_recall=0.617 | routing_f1=0.900 | faithfulness=0.146 | confidence=0.405
+
+Per-Source Retrieval Stats:
+  Source       | Expected | Actual |   TP | Precision | Recall
+  -------------+----------+--------+------+-----------+-------
+  documents    |       10 |      5 |    5 |     1.000 |  0.500
+  sql          |       10 |     12 |    9 |     0.750 |  0.900
+  rules        |        0 |      1 |    0 |     0.000 |  0.000
+  graph        |        0 |      0 |    0 |     0.000 |  0.000
+
+Full report saved to: C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\evaluation_report.json
+Markdown report saved to: C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\EVALUATION_REPORT.md

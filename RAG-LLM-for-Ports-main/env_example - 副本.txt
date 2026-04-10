@@ -1,0 +1,53 @@
+# AI Port Decision-Support System - Environment Configuration
+# Copy this file to .env and fill in your actual values
+
+# OpenAI Configuration
+OPENAI_API_KEY=sk-7db2c2013ad14abaa6291abe31a52eaa
+OPENAI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+OPENAI_MODEL=qwen3.5-flash
+
+# Database Configuration (PostgreSQL)
+DATABASE_URL=postgresql://username:password@localhost:5432/port_database
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=port_database
+DB_USER=your_db_username
+DB_PASSWORD=your_db_password
+
+# ChromaDB Configuration
+CHROMA_PERSIST_DIRECTORY=./port_chroma_db
+CHROMA_COLLECTION_NAME=port_documents
+
+# API Configuration
+API_HOST=0.0.0.0
+API_PORT=8000
+API_VERSION=v1
+
+# Security Configuration
+SECRET_KEY=your_secret_key_here
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+# Logging Configuration
+LOG_LEVEL=INFO
+LOG_FILE=./logs/port_system.log
+
+# Port Operations Configuration
+PORT_NAME=Your Port Name
+PORT_CODE=YPN
+TIMEZONE=UTC
+
+# Data Processing Configuration
+MAX_DOCUMENT_SIZE_MB=50
+CHUNK_SIZE=1000
+CHUNK_OVERLAP=200
+MAX_DOCUMENTS_PER_QUERY=10
+
+# Security and Redaction
+ENABLE_DATA_REDACTION=true
+REDACTION_PATTERNS_FILE=./config/redaction_patterns.json
+
+# External Services
+WEATHER_API_KEY=your_weather_api_key
+AIS_API_KEY=your_ais_api_key
+TOS_API_ENDPOINT=https://your-tos-system.com/api

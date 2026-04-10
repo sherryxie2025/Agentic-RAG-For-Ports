@@ -1,0 +1,328 @@
+Loading LangGraph workflow from C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main ... [WITH reranker]
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 105/105 [00:00<00:00, 4735.56it/s]
+[1mBertForSequenceClassification LOAD REPORT[0m from: cross-encoder/ms-marco-MiniLM-L-6-v2
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+
+Running evaluation on 80 queries ...
+
+====================================================================================================
+
+[1/80] DOC_001: What are the key environmental sustainability initiatives described in port annu...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  89%|¨€¨€¨€¨€¨€¨€¨€¨€¨ | 178/199 [00:00<00:00, 1683.66it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 1830.46it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-small-en
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+  OK | conf=0.55 | sem_sim=0.89 | mrr=1.00 | ndcg=0.95 | sql_acc=N/A | evidence_recall=1.00 | 134.3s
+
+[2/80] DOC_002: What does the Port Operating Handbook say about vessel entry requirements?...
+  OK | conf=0.73 | sem_sim=0.86 | mrr=1.00 | ndcg=1.00 | sql_acc=N/A | evidence_recall=0.80 | 121.8s
+
+[3/80] DOC_003: What cybersecurity guidelines exist for port facilities?...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 2725.24it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-small-en
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+  OK | conf=0.45 | sem_sim=0.79 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 90.1s
+
+[4/80] DOC_004: What green infrastructure design standards are recommended for ports?...
+  OK | conf=0.45 | sem_sim=0.81 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.20 | 86.3s
+
+[5/80] DOC_005: Describe the risk and resilience guidelines published for port operations....
+  OK | conf=0.45 | sem_sim=0.81 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 92.9s
+
+[6/80] DOC_006: What decarbonisation strategies are outlined in maritime blueprints?...
+  OK | conf=0.45 | sem_sim=0.83 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 85.2s
+
+[7/80] DOC_007: What best management practices are recommended for port environmental management...
+  OK | conf=0.45 | sem_sim=0.80 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 89.9s
+
+[8/80] DOC_008: What information does the Container Port Performance Index report provide?...
+  OK | conf=0.45 | sem_sim=0.81 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 105.3s
+
+[9/80] DOC_009: What are the pilot boarding and disembarkation procedures at ports?...
+  OK | conf=0.45 | sem_sim=0.79 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.25 | 89.6s
+
+[10/80] DOC_010: What strategic planning goals are outlined in port long-term plans?...
+  OK | conf=0.45 | sem_sim=0.80 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 90.7s
+
+[11/80] SQL_001: What was the average crane productivity in moves per hour in 2015?...
+  OK | conf=0.45 | sem_sim=0.89 | mrr=N/A | ndcg=N/A | sql_acc=0.50 | evidence_recall=0.00 | 104.4s
+
+[12/80] SQL_002: What was the average wave height recorded in 2015?...
+  OK | conf=0.45 | sem_sim=0.92 | mrr=N/A | ndcg=N/A | sql_acc=0.50 | evidence_recall=0.50 | 111.2s
+
+[13/80] SQL_003: Which vessels had the highest arrival delays in 2015?...
+  OK | conf=0.45 | sem_sim=0.82 | mrr=N/A | ndcg=N/A | sql_acc=0.00 | evidence_recall=0.67 | 91.4s
+
+[14/80] SQL_004: What was the average berth productivity across all terminals in 2015?...
+  OK | conf=0.45 | sem_sim=0.89 | mrr=N/A | ndcg=N/A | sql_acc=0.33 | evidence_recall=0.33 | 115.3s
+
+[15/80] SQL_005: How many vessel calls were recorded in 2015?...
+  OK | conf=0.45 | sem_sim=0.92 | mrr=N/A | ndcg=N/A | sql_acc=1.00 | evidence_recall=0.33 | 57.1s
+
+[16/80] SQL_006: What was the average truck turn time at the gate in 2015?...
+  OK | conf=0.45 | sem_sim=0.89 | mrr=N/A | ndcg=N/A | sql_acc=0.50 | evidence_recall=0.00 | 89.6s
+
+[17/80] SQL_007: What was the peak yard occupancy percentage in 2015?...
+  OK | conf=0.45 | sem_sim=0.86 | mrr=N/A | ndcg=N/A | sql_acc=0.67 | evidence_recall=0.33 | 68.2s
+
+[18/80] SQL_008: What was the average wind speed during storm events in the environmental data?...
+  OK | conf=0.45 | sem_sim=0.91 | mrr=N/A | ndcg=N/A | sql_acc=0.33 | evidence_recall=0.00 | 89.1s
+
+[19/80] SQL_009: Compare crane productivity between PCT and TTI terminals....
+  OK | conf=0.45 | sem_sim=0.88 | mrr=N/A | ndcg=N/A | sql_acc=0.75 | evidence_recall=0.50 | 101.7s
+
+[20/80] SQL_010: What is the trend in average berth delays by month in 2015?...
+  OK | conf=0.45 | sem_sim=0.86 | mrr=N/A | ndcg=N/A | sql_acc=0.50 | evidence_recall=0.50 | 106.3s
+
+[21/80] SQL_011: Which shipping lines had the most vessel calls at POLB in 2015?...
+  OK | conf=0.45 | sem_sim=0.86 | mrr=N/A | ndcg=N/A | sql_acc=0.33 | evidence_recall=0.00 | 50.2s
+
+[22/80] SQL_012: What was the total TEU throughput handled in 2015?...
+  OK | conf=0.45 | sem_sim=0.93 | mrr=N/A | ndcg=N/A | sql_acc=0.67 | evidence_recall=0.67 | 59.7s
+
+[23/80] SQL_013: What is the average crane breakdown time in minutes?...
+  OK | conf=0.45 | sem_sim=0.90 | mrr=N/A | ndcg=N/A | sql_acc=0.67 | evidence_recall=0.33 | 81.7s
+
+[24/80] SQL_014: How does vessel size category affect berth productivity?...
+  OK | conf=0.45 | sem_sim=0.89 | mrr=N/A | ndcg=N/A | sql_acc=0.00 | evidence_recall=0.00 | 97.2s
+
+[25/80] SQL_015: What are the busiest days of the week for gate operations?...
+  OK | conf=0.45 | sem_sim=0.85 | mrr=N/A | ndcg=N/A | sql_acc=0.33 | evidence_recall=0.33 | 215.9s
+
+[26/80] RULE_001: What are the wind speed restrictions for vessel entry?...
+  OK | conf=0.63 | sem_sim=0.88 | mrr=N/A | ndcg=N/A | sql_acc=N/A | evidence_recall=0.83 | 79.5s
+
+[27/80] RULE_002: What must a vessel master do when given a direction by the Harbour Master?...
+  OK | conf=0.45 | sem_sim=0.80 | mrr=N/A | ndcg=N/A | sql_acc=N/A | evidence_recall=0.00 | 76.9s
+
+[28/80] RULE_003: What are the tug requirements for vessel operations in port?...
+  OK | conf=0.45 | sem_sim=0.88 | mrr=N/A | ndcg=N/A | sql_acc=N/A | evidence_recall=0.00 | 71.0s
+
+[29/80] RULE_004: What are the rules regarding hazardous cargo handling at the port?...
+  OK | conf=0.45 | sem_sim=0.80 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 70.1s
+
+[30/80] RULE_005: What notification requirements exist before a vessel enters port?...
+  OK | conf=0.45 | sem_sim=0.85 | mrr=N/A | ndcg=N/A | sql_acc=N/A | evidence_recall=0.20 | 66.2s
+
+[31/80] RULE_006: Under what conditions must vessel operations be suspended?...
+  OK | conf=0.63 | sem_sim=0.81 | mrr=N/A | ndcg=N/A | sql_acc=N/A | evidence_recall=0.00 | 90.0s
+
+[32/80] RULE_007: What are the maximum vessel draft restrictions?...
+  OK | conf=0.63 | sem_sim=0.86 | mrr=N/A | ndcg=N/A | sql_acc=N/A | evidence_recall=0.50 | 91.7s
+
+[33/80] RULE_008: What VHF channel must vessels monitor while in port?...
+  OK | conf=0.45 | sem_sim=0.85 | mrr=N/A | ndcg=N/A | sql_acc=N/A | evidence_recall=0.00 | 121.4s
+
+[34/80] RULE_009: What are the speed limits for vessels navigating within port waters?...
+  OK | conf=0.45 | sem_sim=0.82 | mrr=N/A | ndcg=N/A | sql_acc=N/A | evidence_recall=0.20 | 79.6s
+
+[35/80] RULE_010: What are the rules for anchoring vessels in port areas?...
+  OK | conf=0.45 | sem_sim=0.80 | mrr=N/A | ndcg=N/A | sql_acc=N/A | evidence_recall=0.25 | 110.2s
+
+[36/80] HYB_001: Based on the current wind speed data and port rules, should vessel entry be rest...
+  OK | conf=0.63 | sem_sim=0.90 | mrr=N/A | ndcg=N/A | sql_acc=0.80 | evidence_recall=0.80 | 73.5s
+
+[37/80] HYB_002: How do wave height conditions relate to berth productivity performance?...
+  OK | conf=0.45 | sem_sim=0.87 | mrr=0.00 | ndcg=0.00 | sql_acc=0.00 | evidence_recall=0.00 | 138.9s
+
+[38/80] HYB_003: What operational thresholds exist for crane operations and are they being met ba...
+  OK | conf=0.63 | sem_sim=0.86 | mrr=N/A | ndcg=N/A | sql_acc=0.75 | evidence_recall=0.75 | 245.3s
+
+[39/80] HYB_004: Based on yard occupancy levels, should additional container storage capacity be ...
+  OK | conf=0.35 | sem_sim=0.86 | mrr=0.00 | ndcg=0.00 | sql_acc=1.00 | evidence_recall=0.40 | 116.8s
+
+[40/80] HYB_005: Compare the environmental performance metrics with sustainability targets from p...
+  OK | conf=0.55 | sem_sim=0.89 | mrr=1.00 | ndcg=0.89 | sql_acc=0.75 | evidence_recall=0.75 | 114.3s
+
+[41/80] HYB_006: Based on berth delays and weather data, which weather conditions most impact ber...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  84%|¨€¨€¨€¨€¨€¨€¨€¨€¨… | 168/199 [00:00<00:00, 1679.33it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 1911.48it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-small-en
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+  OK | conf=0.40 | sem_sim=0.92 | mrr=0.00 | ndcg=0.00 | sql_acc=0.83 | evidence_recall=0.00 | 127.9s
+
+[42/80] HYB_007: Do current gate operations meet the performance standards described in port stra...
+  OK | conf=0.55 | sem_sim=0.87 | mrr=0.00 | ndcg=1.00 | sql_acc=0.80 | evidence_recall=0.40 | 120.3s
+
+[43/80] HYB_008: What is the relationship between vessel size and terminal congestion, and what p...
+  OK | conf=0.68 | sem_sim=0.94 | mrr=1.00 | ndcg=0.96 | sql_acc=1.00 | evidence_recall=0.80 | 157.9s
+
+[44/80] HYB_009: Are crane breakdown rates within acceptable limits according to port operations ...
+  OK | conf=0.73 | sem_sim=0.88 | mrr=0.00 | ndcg=1.00 | sql_acc=1.00 | evidence_recall=0.60 | 134.0s
+
+[45/80] HYB_010: How do high tide events affect vessel scheduling efficiency?...
+  OK | conf=0.45 | sem_sim=0.87 | mrr=0.00 | ndcg=0.00 | sql_acc=0.60 | evidence_recall=0.00 | 90.6s
+
+[46/80] CAUSAL_001: Why might berth delays be related to weather conditions and crane slowdown?...
+  OK | conf=0.40 | sem_sim=0.94 | mrr=0.00 | ndcg=0.00 | sql_acc=0.83 | evidence_recall=0.00 | 80.6s
+
+[47/80] CAUSAL_002: Explain the causal relationship between wind speed and port operational efficien...
+  OK | conf=0.40 | sem_sim=0.90 | mrr=N/A | ndcg=N/A | sql_acc=0.83 | evidence_recall=0.00 | 84.0s
+
+[48/80] CAUSAL_003: How does crane productivity impact overall terminal throughput?...
+  OK | conf=0.40 | sem_sim=0.82 | mrr=N/A | ndcg=N/A | sql_acc=0.80 | evidence_recall=0.00 | 112.0s
+
+[49/80] CAUSAL_004: Why might gate congestion be connected to yard occupancy levels?...
+  OK | conf=0.40 | sem_sim=0.89 | mrr=N/A | ndcg=N/A | sql_acc=0.80 | evidence_recall=0.80 | 79.2s
+
+[50/80] CAUSAL_005: Explain how storm events cascade through port operations from vessel approach to...
+  OK | conf=0.40 | sem_sim=0.87 | mrr=0.00 | ndcg=0.00 | sql_acc=0.71 | evidence_recall=0.00 | 106.3s
+
+[51/80] CAUSAL_006: What drives the relationship between vessel capacity and berth delay?...
+  OK | conf=0.40 | sem_sim=0.83 | mrr=N/A | ndcg=N/A | sql_acc=1.00 | evidence_recall=0.60 | 83.0s
+
+[52/80] CAUSAL_007: How do crane breakdowns affect the entire port logistics chain?...
+  OK | conf=0.40 | sem_sim=0.90 | mrr=N/A | ndcg=N/A | sql_acc=1.00 | evidence_recall=0.20 | 78.5s
+
+[53/80] CAUSAL_008: Why do arrival delays tend to increase during periods of high wind and high tide...
+  OK | conf=0.40 | sem_sim=0.94 | mrr=N/A | ndcg=N/A | sql_acc=0.80 | evidence_recall=0.80 | 73.7s
+
+[54/80] CAUSAL_009: What is the impact chain from environmental conditions to container dwell times?...
+  OK | conf=0.40 | sem_sim=0.85 | mrr=N/A | ndcg=N/A | sql_acc=0.80 | evidence_recall=0.20 | 79.3s
+
+[55/80] CAUSAL_010: How does tidal range influence berth operations scheduling?...
+  OK | conf=0.45 | sem_sim=0.89 | mrr=N/A | ndcg=N/A | sql_acc=0.40 | evidence_recall=0.20 | 94.6s
+
+[56/80] DEC_001: Should crane operations be paused given current wind conditions?...
+  OK | conf=0.63 | sem_sim=0.93 | mrr=N/A | ndcg=N/A | sql_acc=1.00 | evidence_recall=0.60 | 79.9s
+
+[57/80] DEC_002: Is the current berth productivity level satisfactory compared to industry benchm...
+  OK | conf=0.45 | sem_sim=0.91 | mrr=0.00 | ndcg=0.00 | sql_acc=0.75 | evidence_recall=0.50 | 88.1s
+
+[58/80] DEC_003: Should additional tugs be deployed based on forecasted weather conditions?...
+  OK | conf=0.35 | sem_sim=0.89 | mrr=N/A | ndcg=N/A | sql_acc=1.00 | evidence_recall=0.40 | 76.8s
+
+[59/80] DEC_004: Determine whether yard operations can handle incoming vessel cargo based on curr...
+  OK | conf=0.35 | sem_sim=0.87 | mrr=N/A | ndcg=N/A | sql_acc=1.00 | evidence_recall=0.40 | 80.5s
+
+[60/80] DEC_005: Can a Neo-Panamax vessel safely enter port under current tidal conditions?...
+  OK | conf=0.35 | sem_sim=0.86 | mrr=N/A | ndcg=N/A | sql_acc=1.00 | evidence_recall=0.00 | 80.6s
+
+[61/80] COMP_001: Compare berth productivity across different terminal operators....
+  OK | conf=0.45 | sem_sim=0.89 | mrr=N/A | ndcg=N/A | sql_acc=0.00 | evidence_recall=0.50 | 95.7s
+
+[62/80] COMP_002: How do Neo-Panamax vessels compare to Panamax vessels in terms of berth duration...
+  OK | conf=0.45 | sem_sim=0.71 | mrr=N/A | ndcg=N/A | sql_acc=0.00 | evidence_recall=0.80 | 3020.5s
+
+[63/80] COMP_003: Compare gate throughput between weekdays and weekends....
+  OK | conf=0.45 | sem_sim=0.80 | mrr=N/A | ndcg=N/A | sql_acc=0.00 | evidence_recall=0.40 | 10485.4s
+
+[64/80] COMP_004: Compare wind conditions in summer versus winter months....
+  OK | conf=0.45 | sem_sim=0.86 | mrr=N/A | ndcg=N/A | sql_acc=0.40 | evidence_recall=0.40 | 4.1s
+
+[65/80] COMP_005: How does crane utilization differ between high-volume and low-volume calls?...
+  OK | conf=0.45 | sem_sim=0.82 | mrr=N/A | ndcg=N/A | sql_acc=0.00 | evidence_recall=0.75 | 3.8s
+
+[66/80] MIX_001: What does port documentation say about GHG emissions reduction and how do enviro...
+  OK | conf=0.55 | sem_sim=0.81 | mrr=1.00 | ndcg=1.00 | sql_acc=0.40 | evidence_recall=0.60 | 8.7s
+
+[67/80] MIX_002: According to both documentation and operational data, what are the main causes o...
+  OK | conf=0.50 | sem_sim=0.85 | mrr=1.00 | ndcg=0.99 | sql_acc=0.00 | evidence_recall=0.67 | 46084.7s
+
+[68/80] MIX_003: What security requirements apply to port facilities and how are they implemented...
+  OK | conf=0.45 | sem_sim=0.74 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 4.1s
+
+[69/80] MIX_004: What technology innovations are being adopted at ports according to recent repor...
+  OK | conf=0.45 | sem_sim=0.77 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.20 | 3.7s
+
+[70/80] MIX_005: What governance structures oversee port operations according to authority report...
+  OK | conf=0.45 | sem_sim=0.82 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 32.4s
+
+[71/80] MIX_006: How do port rules and actual operations align regarding crane safety during high...
+  OK | conf=0.63 | sem_sim=0.91 | mrr=0.00 | ndcg=0.00 | sql_acc=0.67 | evidence_recall=0.67 | 83.5s
+
+[72/80] MIX_007: What financial performance indicators are reported by port authorities?...
+  OK | conf=0.45 | sem_sim=0.86 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 75.3s
+
+[73/80] MIX_008: Based on environmental data and documentation, assess the port's weather resilie...
+  OK | conf=0.35 | sem_sim=0.86 | mrr=0.00 | ndcg=0.00 | sql_acc=0.40 | evidence_recall=0.00 | 85.0s
+
+[74/80] MIX_009: What training and qualification requirements exist for port personnel?...
+  OK | conf=0.45 | sem_sim=0.81 | mrr=0.00 | ndcg=0.00 | sql_acc=N/A | evidence_recall=0.00 | 61.6s
+
+[75/80] MIX_010: What community engagement programs are described in port sustainability reports?...
+  OK | conf=0.40 | sem_sim=0.89 | mrr=1.00 | ndcg=0.95 | sql_acc=N/A | evidence_recall=1.00 | 52.7s
+
+[76/80] CONFLICT_001: Is the current average wind speed exceeding the vessel entry restriction thresho...
+  OK | conf=0.63 | sem_sim=0.87 | mrr=N/A | ndcg=N/A | sql_acc=0.40 | evidence_recall=0.60 | 72.0s
+
+[77/80] CONFLICT_002: Does the recorded wave height exceed the safe crane operation limit?...
+  OK | conf=0.45 | sem_sim=0.88 | mrr=N/A | ndcg=N/A | sql_acc=0.60 | evidence_recall=0.20 | 74.3s
+
+[78/80] CONFLICT_003: Are current crane breakdown times within the acceptable maintenance dispatch thr...
+  OK | conf=0.45 | sem_sim=0.86 | mrr=N/A | ndcg=N/A | sql_acc=0.50 | evidence_recall=0.00 | 77.3s
+
+[79/80] CONFLICT_004: Is berth productivity above or below the operational review trigger threshold?...
+  OK | conf=0.63 | sem_sim=0.89 | mrr=N/A | ndcg=N/A | sql_acc=0.75 | evidence_recall=0.50 | 90.0s
+
+[80/80] CONFLICT_005: Is current yard occupancy exceeding the overflow protocol activation threshold?...
+  OK | conf=0.35 | sem_sim=0.92 | mrr=N/A | ndcg=N/A | sql_acc=0.75 | evidence_recall=0.75 | 86.3s
+
+====================================================================================================
+EVALUATION REPORT SUMMARY
+====================================================================================================
+Total queries:             80
+Answered:                  80 (100.0%)
+Avg Evidence Keyword Recall: 0.3246
+Avg Source Routing F1:       0.5933
+Avg Answer Faithfulness:     0.3171
+Avg Semantic Similarity:     0.8600
+Avg MRR (doc queries):       0.2188
+Avg NDCG@5 (doc queries):    0.2731
+Avg SQL Result Accuracy:     0.5966
+Avg Claim Citation Rate:     0.5303
+Avg Claim Grounding Rate:    0.3628
+Avg Answer Confidence:       0.4714
+Avg Routing Precision:       0.6667
+Avg Routing Recall:          0.5771
+
+Per Intent Type:
+  document_lookup           n=16 | evidence_recall=0.216 | routing_f1=0.135 | faithfulness=0.456 | confidence=0.471
+  structured_data           n=20 | evidence_recall=0.367 | routing_f1=1.000 | faithfulness=0.329 | confidence=0.450
+  policy_rule               n=10 | evidence_recall=0.198 | routing_f1=0.200 | faithfulness=0.326 | confidence=0.504
+  hybrid_reasoning          n=24 | evidence_recall=0.433 | routing_f1=0.790 | faithfulness=0.302 | confidence=0.504
+  causal_multihop           n=10 | evidence_recall=0.280 | routing_f1=0.433 | faithfulness=0.098 | confidence=0.405
+
+Per-Source Retrieval Stats:
+  Source       | Expected | Actual |   TP | Precision | Recall
+  -------------+----------+--------+------+-----------+-------
+  documents    |       32 |      9 |    9 |     1.000 |  0.281
+  sql          |       54 |     74 |   50 |     0.676 |  0.926
+  rules        |       28 |     12 |   11 |     0.917 |  0.393
+  graph        |       10 |      0 |    0 |     0.000 |  0.000
+
+Per-Node Latency Profile:
+  Node                      | Count |  P50 (s) |  P95 (s) | Mean (s)
+  --------------------------+-------+----------+----------+---------
+  merge_evidence            |    88 |     0.00 |     0.00 |     0.00
+  planner                   |    80 |    17.48 |    52.67 |    18.90
+  query_rewrite             |    80 |    24.55 |    43.24 |    24.26
+  rerank_documents          |     9 |     0.33 | 27647.69 |  5120.23
+  retrieve_documents        |     9 |     2.61 |     4.40 |     2.86
+  retrieve_rules            |    12 |     0.00 |     0.01 |     0.00
+  route_query               |    80 |     0.01 |     0.06 |     0.04
+  run_graph_reasoner        |    15 |     2.09 |     3.40 |     2.36
+  run_sql                   |    79 |     4.72 |    11.24 |     6.02
+  synthesize_answer         |    88 |    32.56 |    59.78 |   185.88
+
+Full report saved to: C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\evaluation_report.json
+Markdown report saved to: C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\EVALUATION_REPORT.md

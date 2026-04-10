@@ -1,0 +1,3146 @@
+[
+  {
+    "query": "What are the key environmental sustainability initiatives described in port annual reports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What does the Port Operating Handbook say about vessel entry requirements?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What cybersecurity guidelines exist for port facilities?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What green infrastructure design standards are recommended for ports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Describe the risk and resilience guidelines published for port operations.",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What decarbonisation strategies are outlined in maritime blueprints?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What best management practices are recommended for port environmental management?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What information does the Container Port Performance Index report provide?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What are the pilot boarding and disembarkation procedures at ports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What strategic planning goals are outlined in port long-term plans?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What was the average crane productivity in moves per hour in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the average wave height recorded in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Which vessels had the highest arrival delays in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the average berth productivity across all terminals in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How many vessel calls were recorded in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the average truck turn time at the gate in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the peak yard occupancy percentage in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the average wind speed during storm events in the environmental data?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Compare crane productivity between PCT and TTI terminals.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the trend in average berth delays by month in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Which shipping lines had the most vessel calls at POLB in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the total TEU throughput handled in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the average crane breakdown time in minutes?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How does vessel size category affect berth productivity?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What are the busiest days of the week for gate operations?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What are the wind speed restrictions for vessel entry?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What must a vessel master do when given a direction by the Harbour Master?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the tug requirements for vessel operations in port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the rules regarding hazardous cargo handling at the port?",
+    "sources": [
+      "documents",
+      "rules"
+    ]
+  },
+  {
+    "query": "What notification requirements exist before a vessel enters port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Under what conditions must vessel operations be suspended?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the maximum vessel draft restrictions?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What VHF channel must vessels monitor while in port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the speed limits for vessels navigating within port waters?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the rules for anchoring vessels in port areas?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Based on the current wind speed data and port rules, should vessel entry be restricted?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "How do wave height conditions relate to berth productivity performance?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "What operational thresholds exist for crane operations and are they being met based on historical data?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Based on yard occupancy levels, should additional container storage capacity be allocated?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Compare the environmental performance metrics with sustainability targets from port reports.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Based on berth delays and weather data, which weather conditions most impact berth scheduling?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Do current gate operations meet the performance standards described in port strategic plans?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "What is the relationship between vessel size and terminal congestion, and what policies address this?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Are crane breakdown rates within acceptable limits according to port operations standards?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "How do high tide events affect vessel scheduling efficiency?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Why might berth delays be related to weather conditions and crane slowdown?",
+    "sources": [
+      "graph",
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Explain the causal relationship between wind speed and port operational efficiency.",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "How does crane productivity impact overall terminal throughput?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Why might gate congestion be connected to yard occupancy levels?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Explain how storm events cascade through port operations from vessel approach to cargo delivery.",
+    "sources": [
+      "graph",
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "What drives the relationship between vessel capacity and berth delay?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "How do crane breakdowns affect the entire port logistics chain?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Why do arrival delays tend to increase during periods of high wind and high tide?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "What is the impact chain from environmental conditions to container dwell times?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "How does tidal range influence berth operations scheduling?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Should crane operations be paused given current wind conditions?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is the current berth productivity level satisfactory compared to industry benchmarks?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Should additional tugs be deployed based on forecasted weather conditions?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Determine whether yard operations can handle incoming vessel cargo based on current occupancy.",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Can a Neo-Panamax vessel safely enter port under current tidal conditions?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Compare berth productivity across different terminal operators.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How do Neo-Panamax vessels compare to Panamax vessels in terms of berth duration?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Compare gate throughput between weekdays and weekends.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Compare wind conditions in summer versus winter months.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How does crane utilization differ between high-volume and low-volume calls?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What does port documentation say about GHG emissions reduction and how do environmental metrics support this?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "According to both documentation and operational data, what are the main causes of vessel delays?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "What security requirements apply to port facilities and how are they implemented?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What technology innovations are being adopted at ports according to recent reports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What governance structures oversee port operations according to authority reports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "How do port rules and actual operations align regarding crane safety during high wind events?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "What financial performance indicators are reported by port authorities?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Based on environmental data and documentation, assess the port's weather resilience capabilities.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "What training and qualification requirements exist for port personnel?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What community engagement programs are described in port sustainability reports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Is the current average wind speed exceeding the vessel entry restriction threshold?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Does the recorded wave height exceed the safe crane operation limit?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Are current crane breakdown times within the acceptable maintenance dispatch threshold?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is berth productivity above or below the operational review trigger threshold?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is current yard occupancy exceeding the overflow protocol activation threshold?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "What major sustainability projects are highlighted in yearly port documentation?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which environmental programs do port annual reviews typically feature?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Could you list the primary eco-friendly measures outlined in port annual reports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "In port annual publications, what significant sustainability efforts are described?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What key green initiatives are documented in the yearly reports of ports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "According to the Port Operating Handbook, what are the rules for vessels entering?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Can you tell me what the Port Operating Handbook specifies regarding vessel entry?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What guidelines does the Port Operating Handbook set out for ships coming into the port?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Could you outline the vessel entry requirements found in the Port Operating Handbook?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "How does the Port Operating Handbook define the requirements for a vessel to enter the port?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which cybersecurity standards apply to port infrastructure?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Are there specific digital security protocols mandated for seaports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What regulatory frameworks guide cybersecurity at port facilities?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Could you outline the best practices for protecting port systems from cyber threats?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What rules govern information security within port operations?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What sustainable design guidelines are suggested for port infrastructure?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which eco-friendly standards should guide port facility design?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Are there recommended best practices for integrating green infrastructure into ports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What environmental benchmarks are recommended for port system development?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Can you outline the standard protocols for green design in port construction?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What are the official guidelines concerning risk and resilience that have been issued for port operations?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Please provide an overview of the published risk and resilience standards for ports.",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Can you summarize the risk management and resilience directives applicable to port operations?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "I am looking for a description of the established protocols on risk and resilience within port operations.",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Explain the guidelines that were released regarding resilience and risk for port facilities.",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which carbon reduction strategies are included in maritime industry roadmaps?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What emission control measures are specified in official maritime blueprints?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "How do current maritime strategic documents address decarbonisation goals?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which low-emission pathways are outlined in maritime sector planning?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What specific green policies for maritime transport are detailed in blueprints?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What are the top recommended strategies for handling environmental issues in port operations?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which environmental management guidelines are considered best practice for ports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Could you provide information on optimal environmental protocols for port facilities?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What measures are advised for ensuring environmental compliance and management at ports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Are there specific industry standards for sustainable environmental management in ports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What details are included in the Container Port Performance Index report?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What specific metrics does the Container Port Performance Index report cover?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Can you tell me what the Container Port Performance Index report contains?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What insights are offered by the Container Port Performance Index publication?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What does the Container Port Performance Index report reveal about port operations?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "How does the procedure work for pilot boarding and disembarkation at different ports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What steps are involved in pilot embarkation and debarkation within port areas?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Could you explain the protocols for pilots entering and leaving vessels at harbor locations?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What governs the process of pilots transferring onto and off ships at port terminals?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Please provide details on the rules for pilot boarding and exiting operations in ports.",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What strategic objectives are specified within the port's long-range planning documents?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which long-term goals are identified in the port's strategic roadmap?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What future aims are set out in the port's multi-year development plans?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Could you describe the strategic priorities found in the port's long-term vision?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What long-range strategic targets are detailed in official port planning schedules?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What was the average hourly output for port cranes in 2015, measured in moves?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you tell me the average crane efficiency in moves per hour for the year 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "In 2015, what was the typical crane performance expressed as moves per hour?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How many moves per hour did port cranes process on average in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "I am looking for the average crane throughput in moves per hour for 2015.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the mean wave height documented in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you retrieve the average wave height statistics for 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "For the year 2015, what is the recorded average wave height?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How high were the waves on average during 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What average wave measurements were logged in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What vessels experienced the greatest arrival delays during 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Which ships had the longest wait times upon arrival in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you identify the vessels with the most significant late arrivals in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "In 2015, which shipping vessels recorded the highest levels of arrival delay?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Tell me about the ships that suffered the worst arrival delays in 2015.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the mean productivity per berth across all terminals in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you tell me the average berth productivity for all terminals during 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "For 2015, what was the overall average productivity of berths across every terminal?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What figure represents the average berth productivity across all terminals in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "I would like to know the average berth productivity across all terminals for the year 2015.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the total number of vessel arrivals logged in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you provide the count of vessel calls made during 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "For the year 2015, what is the tally of recorded vessel calls?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How many times did vessels make port calls in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the figure for vessel calls recorded in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How much time did trucks typically spend turning at the gate during 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you tell me the average gate turnaround duration for trucks in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the mean processing time per truck at the gate for the year 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "In 2015, what represented the average truck turn time at the terminal gate?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Please provide the average gate turn time statistics for trucks from 2015.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the maximum yard occupancy percentage reached in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you identify the highest yard utilization rate for the year 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "For 2015, what is the top percentage of yard capacity that was filled?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the record high for yard occupancy percentage during 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Please specify the peak yard occupancy rate percentage in 2015.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Could you provide the average wind speed values for storm events found in the environmental data?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the mean wind velocity during storm occurrences according to the environmental records?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "In the environmental dataset, what are the average wind speeds measured during storm incidents?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Please retrieve the average wind intensity during storm periods from the environmental data.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What does the environmental data show regarding average wind speed during storm events?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How does crane efficiency compare between the PCT and TTI terminals?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Provide a side-by-side analysis of crane productivity at PCT and TTI.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What are the differences in crane output metrics for PCT versus TTI?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Assess the operational performance of cranes at TTI relative to PCT.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Which terminal demonstrates superior crane throughput, PCT or TTI?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How did average berth delays fluctuate on a monthly basis throughout 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you provide the monthly trend for average vessel berth delays in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the month-over-month trend for average delays at berths during 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "I am looking for the trend in average berth holding times broken down by month for 2015.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Show me the average berth delays recorded each month in the year 2015.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Which shipping companies recorded the highest number of vessel arrivals at POLB in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "In 2015, which carriers made the most frequent stops at POLB?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What are the top-ranked shipping lines by vessel call count at POLB for 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Please provide the list of lines with the most port visits to POLB in 2015.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Which freight operators saw the greatest volume of ship calls at POLB in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What was the aggregate TEU volume processed at the facility in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you provide the total container throughput in TEUs for the year 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How many TEUs were handled overall during the course of 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the total TEU figure for port operations recorded in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Could you tell me the cumulative TEU throughput for the port in 2015?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the typical downtime for port cranes during a breakdown, measured in minutes?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you provide the average duration of port crane failures in minutes?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "On average, how many minutes does a port crane remain non-operational due to breakdowns?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What represents the mean time lost per port crane breakdown event in minutes?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Please state the average length of a port crane malfunction in minutes.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What impact does ship size have on berth efficiency?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How do varying vessel sizes influence the productivity of a berth?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Does the category of a vessel determine how efficiently a berth operates?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What role does vessel size play in determining berth throughput?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How are berth performance metrics influenced by the size class of incoming ships?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Which days of the week experience the highest traffic at the container gates?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "When are port gates most congested throughout the week?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Could you identify the peak operating days for the terminal gates?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "On what days does gate throughput reach its highest levels?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Which weekdays typically see the most activity at the shipping gates?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What are the maximum wind speeds permitted for ships entering the port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Are there wind speed limits that prevent vessel entry?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Under what wind conditions are vessels not allowed to enter?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Could you provide the wind speed guidelines for incoming ships?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the regulatory wind thresholds for vessel access to the port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "How should a vessel master respond to instructions provided by the Harbour Master?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What obligations does a ship captain have when receiving orders from the Harbour Master?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "If the Harbour Master issues a command, what action is required from the vessel master?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "In terms of compliance, what must a vessel master do upon receiving a direction from the Harbour Master?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the mandatory procedures for a vessel master following a directive from the Harbour Master?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the regulations concerning tugboat usage for ships within the port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Which tug assistance mandates apply to vessels conducting operations at port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Could you detail the tugboat specifications required for port vessel movements?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the rules for utilizing tugs during ship operations in the harbor?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "I need information on the mandatory tug services for vessels operating in port.",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What regulations govern the management of dangerous goods at the port?",
+    "sources": [
+      "documents",
+      "rules"
+    ]
+  },
+  {
+    "query": "Could you outline the procedures for handling hazardous materials within port limits?",
+    "sources": [
+      "documents",
+      "rules"
+    ]
+  },
+  {
+    "query": "Are there specific safety protocols for dangerous cargo at the harbor?",
+    "sources": [
+      "documents",
+      "rules"
+    ]
+  },
+  {
+    "query": "I am looking for information on port policies concerning hazardous freight.",
+    "sources": [
+      "documents",
+      "rules"
+    ]
+  },
+  {
+    "query": "How does the port regulate the processing of hazardous shipments?",
+    "sources": [
+      "documents",
+      "rules"
+    ]
+  },
+  {
+    "query": "What information must be submitted prior to a ship arriving at the harbor?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Are there specific advance notice rules for vessels entering port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Which notifications are mandatory before a vessel docks?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Could you outline the pre-arrival reporting obligations for incoming ships?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the protocols for notifying authorities before a ship enters the port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What scenarios mandate that vessel operations be stopped?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "When are ships obligated to halt their operations?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What specific conditions require the suspension of vessel work?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "In what instances must vessel activity come to a halt?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What triggers the mandatory suspension of ship operations?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What is the maximum allowable draft for ships entering the port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Are there specific depth limits for incoming vessels?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What is the deepest draft permitted for a ship here?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Could you provide the draft restrictions for maritime traffic?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What is the limit on vessel draft at this facility?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Which VHF frequency is mandatory for ships to monitor while inside port waters?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What VHF channel do vessels need to maintain contact on when docked?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Can you tell me the required VHF listening channel for vessels in port?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "During port operations, which VHF channel must every ship keep tuned to?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What is the standard VHF channel for vessel monitoring while berthed?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What is the maximum speed permitted for ships operating inside the harbor?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Are there established speed restrictions for vessels moving through port zones?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Can you provide information on speed limits for boats within port waters?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "How fast are ships allowed to travel when navigating within the port boundary?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What are the regulations concerning vessel speed in port areas?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What regulations govern anchoring vessels within port limits?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Can you explain the guidelines for dropping anchor in harbor zones?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Are there specific restrictions on vessel anchoring inside port boundaries?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What procedures must be followed when anchoring a ship at a port facility?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "What requirements apply to anchoring ships in designated port waters?",
+    "sources": [
+      "rules"
+    ]
+  },
+  {
+    "query": "Based on current wind readings and port regulations, is it necessary to restrict ship access?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Do the existing wind speeds and harbor rules mandate limiting vessel entry?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Should we prohibit vessel arrivals given the present wind conditions and port policies?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Considering the wind forecast and port safety protocols, is entry into the port restricted?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is there a requirement to stop incoming ships due to current wind levels and port rules?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "What is the correlation between wave height and berth operational efficiency?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "How do sea conditions impact the productivity levels at port berths?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "To what extent does wave activity influence berth throughput?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "In what manner are port handling rates affected by wave height?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Does increased wave height reduce the overall performance of berth operations?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "What are the established performance benchmarks for port cranes, and does historical data show they are being met?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Based on past records, what are the required limits for crane operations and is the actual performance meeting those standards?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Can you identify the operational standards for crane activities and verify compliance using historical performance logs?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "What criteria define successful crane operations in the port, and have historical metrics satisfied these thresholds?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Looking at historical data, are the defined operational limits for port cranes currently being maintained?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Considering current yard utilization, is there a requirement for additional container storage space?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Do existing yard occupancy metrics suggest that we should allocate more capacity for storing containers?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Is expanding container storage capacity warranted by the current level of yard occupancy?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "With reference to how full the yard is, should we invest in more container storage capacity?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Does the present state of yard occupancy indicate a need for further container storage allocation?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Evaluate alignment between environmental metrics and sustainability targets within port reports.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "How do current environmental performance figures from ports measure up against their sustainability goals?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Cross-check environmental KPIs in port documentation with established sustainability objectives.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Determine the extent to which port environmental results satisfy documented sustainability targets.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Compare sustainability benchmarks found in port reports to actual environmental performance statistics.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Considering historical delay records and meteorological information, what weather patterns cause the most disruption to berth planning?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "How do various weather conditions affect vessel berthing schedules when analyzed alongside delay statistics?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "From an analysis of port delays and climate data, which atmospheric conditions are the primary drivers of berth scheduling issues?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Which environmental factors related to weather significantly hinder berth allocation based on current delay trends?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Using data on operational delays and forecasted weather, what specific weather scenarios most influence how berths are scheduled?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Are current gate functions complying with the performance metrics laid out in the port's strategic plan?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Does the present state of gate operations align with the standards defined in the port strategy?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "How well do current gate activities adhere to the performance benchmarks found in port strategic documentation?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Is the performance of today's gate operations consistent with the goals specified in the port's strategic plans?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "To what extent do existing gate processes fulfill the performance requirements outlined in the port's strategic framework?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "How does increasing vessel size impact terminal congestion, and what management policies exist?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "What is the correlation between ship dimensions and port bottlenecks, and which regulations handle this issue?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Are there specific policies that tackle the effect of large vessels on terminal traffic congestion?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "How do terminal delays relate to the size of incoming ships, and what administrative measures address this?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Regarding port efficiency, what links vessel capacity to congestion levels, and what official guidelines apply?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Do crane failure frequencies comply with established port operational standards?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Is the current rate of crane breakdowns considered acceptable under port industry regulations?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "According to port operations benchmarks, are crane malfunction rates within the permissible range?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Do crane equipment failure rates meet the required thresholds defined by port management protocols?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Have crane breakdown statistics stayed within the acceptable limits mandated by port operational guidelines?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "What is the effect of high tides on ship scheduling efficiency?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "How does high tide influence the effectiveness of vessel timetables?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "In what ways do high tide conditions alter the efficiency of ship scheduling?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "To what extent do high tide events impact vessel planning efficiency?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "How much do high tide events influence the efficiency of managing vessel schedules?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "How might adverse weather and slower crane operations contribute to delays at the berth?",
+    "sources": [
+      "graph",
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "What connects weather conditions and reduced crane speed to waiting times at the dock?",
+    "sources": [
+      "graph",
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Are there links between environmental factors, machinery slowdowns, and berth schedule disruptions?",
+    "sources": [
+      "graph",
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "In what ways do poor weather and inefficient cranes cause problems with berthing?",
+    "sources": [
+      "graph",
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Why are delays at the berth often associated with bad weather and slow crane work?",
+    "sources": [
+      "graph",
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "How does wind velocity impact the efficiency of port operations?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Please describe how wind speed influences port operational effectiveness.",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the effect of wind conditions on port productivity levels?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you detail the effect of wind intensity on port operational performance?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "How do fluctuations in wind speed affect the overall efficiency of port activities?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the relationship between crane efficiency and total terminal throughput?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "In what ways do crane operational speeds affect the overall handling rate of the terminal?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "How significantly does the performance of cranes influence the total volume handled by the terminal?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "To what degree does improving crane productivity change the terminal's overall throughput?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "What effect does the output rate of cranes have on the general throughput of the port terminal?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the relationship between yard occupancy levels and gate congestion?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "How does the amount of available yard space influence traffic at the gates?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Is there a correlation between yard fill rates and delays at the terminal entrance?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "To what degree does yard capacity utilization contribute to gate bottlenecks?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Explain the potential connection between storage yard levels and gate wait times.",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Trace the impact of severe weather on port logistics, from the initial vessel arrival through to final cargo distribution.",
+    "sources": [
+      "graph",
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "How does inclement weather disrupt the supply chain within a port, specifically regarding ships arriving and goods being shipped out?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Provide an overview of the domino effect storms have on port workflows, starting with vessel approach and ending at cargo delivery.",
+    "sources": [
+      "graph",
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "What are the operational consequences of a storm event on a port, covering the timeline from ship docking to cargo release?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Describe the propagation of storm-related delays throughout port activities, from when vessels come into port until cargo reaches the customer.",
+    "sources": [
+      "graph",
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Which factors influence the connection between ship capacity and waiting times at the berth?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "How does vessel size impact the amount of time a ship spends waiting at a berth?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "What are the underlying causes linking a vessel's capacity to its berth delay duration?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "In the context of port logistics, what explains the relationship between ship capacity and berth queues?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "How do changes in vessel capacity correlate with delays observed at port berths?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the ripple effect of crane breakdowns on port logistics?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "How does equipment failure at cranes impact the wider port supply chain?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you explain how crane malfunctions influence overall port operations?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "What are the implications of crane downtime for the entire port logistics network?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "In what manner do crane outages disrupt the flow of port logistics?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "What factors lead to increased vessel arrival delays when wind speeds and tide levels are high?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "During conditions featuring strong winds and high tides, why do ships face more frequent arrival delays?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Can you explain the connection between severe weather elements like high wind and high tide and port arrival delays?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Why are docking times often extended for incoming ships during periods of elevated wind and tide?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "What contributes to the trend of delayed ship arrivals when ports experience high winds combined with high tides?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "How does the chain of effects flow from environmental conditions to final container dwell times?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the relationship between weather patterns and the duration containers stay at port terminals?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you map out the impact pathway from external climate factors to port container holding periods?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "How do environmental variables sequentially influence the time containers spend in storage?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "Through what process do environmental factors extend the time containers remain at port facilities?",
+    "sources": [
+      "graph",
+      "sql"
+    ]
+  },
+  {
+    "query": "What impact do tidal fluctuations have on berth scheduling?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "How does the variation in tide levels affect port operation planning?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "In what ways does tidal range determine vessel docking timetables?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "How are port schedules adjusted according to tidal conditions?",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Explain the effect of tidal range on the management of berth slots.",
+    "sources": [
+      "graph",
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is it necessary to halt crane operations due to the prevailing wind conditions?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Should we suspend crane work given the current weather and wind speeds?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Do the existing wind levels warrant stopping crane activities at this time?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is pausing crane operations advised considering the present wind state?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Given the wind speed, ought we to cease crane operations immediately?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "How does the current efficiency of the berth stack up against typical industry standards?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Do our present berth performance metrics align well with established industry norms?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Is the current operational output at the berth deemed adequate when measured against sector standards?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Does the existing throughput rate at the berth meet competitive industry expectations?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "To what degree does the ongoing berth productivity match standard performance indicators across the industry?",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Do the forecasted weather conditions necessitate deploying more tugs?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Considering the weather forecast, is it advisable to deploy additional tugboats?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Are extra tugs required given the predicted weather patterns?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Should we increase tug deployment in response to the weather outlook?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Based on current weather forecasts, is there a need for supplementary tug services?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Can the current yard space accommodate the cargo from the arriving ship considering how full it is?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Assess the yard's ability to process incoming ship cargo given its present utilization levels.",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is there sufficient capacity in the yard to receive the vessel's load with existing occupancy rates?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Verify if the terminal yard has enough room for the new shipment based on how occupied it currently is.",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Evaluate whether the current yard occupancy allows for the acceptance of the incoming vessel's cargo.",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is it safe for a Neo-Panamax ship to enter the harbor given the current tide levels?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "With the existing tidal conditions, can a Neo-Panamax vessel approach the port safely?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Do the current water levels allow a Neo-Panamax to dock without safety concerns?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Considering the present tide, is a safe port entry possible for a Neo-Panamax vessel?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Can a Neo-Panamax successfully navigate into port given the current tidal situation?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "How does berth efficiency differ among various terminal operators?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Analyze productivity metrics for berths managed by different terminal companies.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Benchmark berth performance across multiple terminal operators.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the variation in berth throughput between different terminal operators?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Assess the utilization efficiency of berths operated by competing terminal firms.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the variance in berth duration between Neo-Panamax and Panamax vessels?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How does the time spent at the berth differ for Neo-Panamax ships versus Panamax ships?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Comparing Neo-Panamax and Panamax vessels, which one has a longer berth duration?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "In terms of port stays, how does berth duration for Neo-Panamax measure up against Panamax?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What are the differences in docking time between Neo-Panamax and Panamax class vessels?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How does terminal gate throughput vary when comparing weekdays to weekends?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Show me a breakdown of port gate volume differences between business days and weekends.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the variance in truck processing numbers at the gates during weekdays versus weekends?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Analyze the weekly pattern of gate traffic, specifically contrasting weekday and weekend performance.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Compare the operational efficiency of the port gates on weekdays against weekends.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How do wind conditions at the port differ between summer and winter seasons?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Contrast the wind patterns found in summer months against those in winter for operations.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the seasonal variation in wind conditions from summer to winter for terminal use?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Compare wind speed and direction data between summer and winter for port planning.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Show a side-by-side analysis of summer versus winter wind weather at the facility.",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "What is the difference in crane utilization between high-volume and low-volume vessel calls?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How does crane efficiency compare when managing high-volume versus low-volume port arrivals?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "Can you explain the variance in crane workload for high-demand calls compared to low-demand calls?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "In what ways does the volume of a port call impact crane utilization rates?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How do crane performance metrics vary between busy shipping calls and those with less volume?",
+    "sources": [
+      "sql"
+    ]
+  },
+  {
+    "query": "How do official port records describe strategies for reducing greenhouse gas emissions, and what function do environmental metrics serve in this process?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "What guidance do port authorities provide on cutting GHG output, and how are environmental measurements utilized to track progress?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "In terms of port regulations, what is stated about lowering carbon footprints, and how do sustainability indicators reinforce these reduction targets?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "Could you clarify the stance taken in port documentation concerning GHG cuts, and explain how environmental data supports these initiatives?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "What policies regarding greenhouse gas reduction are outlined in port manuals, and how do environmental key performance indicators validate these measures?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "What are the primary drivers of vessel delays when combining insights from documentation and operational data?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "Based on official records and real-time operational figures, what typically causes ships to be delayed?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "From the perspective of both written manuals and live performance data, what accounts for the majority of vessel waiting times?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "Which root causes of ship delays are highlighted by cross-referencing documentation with operational logs?",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "Using available documentation and operational statistics, identify the key factors responsible for vessel delays.",
+    "sources": [
+      "documents",
+      "sql"
+    ]
+  },
+  {
+    "query": "What security regulations govern port facilities and what is the process for enforcing them?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "How are security protocols established and carried out within port operations?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What mandatory security standards exist for ports, and how is compliance achieved?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Could you explain the security obligations for port infrastructure and their implementation strategies?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which security rules must be followed at ports, and what mechanisms ensure they are enacted?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "According to recent industry reports, which technological innovations are ports currently implementing?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What new technologies are being integrated into port operations based on the latest updates?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "As per recent findings, what cutting-edge tech is being adopted by ports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which tech advancements are seeing increased adoption in the port sector according to recent studies?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What modern innovations are ports embracing as highlighted in recent documentation?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which governance frameworks manage port operations as detailed in official authority reports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Based on authority reports, what structures are tasked with governing port operations?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "How does official documentation describe the governance systems regulating port activities?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What organizational hierarchies oversee port management according to authority findings?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "According to reports from authorities, which governance models regulate port operations?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Does the practical application of crane safety measures at ports conform to official regulations during periods of high wind?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "When strong winds occur, how closely do daily port crane operations adhere to established safety rules?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Is there consistency between port policy and field execution concerning crane safety amidst high wind scenarios?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "In what ways do actual on-site crane procedures during severe weather align with mandated port safety standards?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Are existing port regulations for crane safety effectively mirrored in operational practices during high wind events?",
+    "sources": [
+      "sql",
+      "rules",
+      "documents"
+    ]
+  },
+  {
+    "query": "Which fiscal metrics are typically disclosed by port authorities?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What economic performance measures do harbor operators publish?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which financial KPIs are tracked and reported by port management teams?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What financial figures are highlighted in official port authority reports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What specific financial stats are released by seaport governing bodies?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Evaluate the port's ability to withstand weather conditions using existing environmental data and records.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Determine the port's weather resilience levels by analyzing relevant environmental documentation and data.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Utilize environmental reports and records to assess how effectively the port manages weather risks.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Review available environmental data and documentation to judge the port's capacity for withstanding weather events.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "Analyze the port's operational stability during weather changes using provided environmental information and documents.",
+    "sources": [
+      "sql",
+      "documents"
+    ]
+  },
+  {
+    "query": "What specific certifications do workers in port operations need?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Are there mandatory training programs for port staff?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What qualifications must be held by employees at a port?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Can you list the required credentials for port facility personnel?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What educational and training standards apply to port workers?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Which community outreach initiatives are highlighted in port sustainability reports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What social engagement activities are detailed in port sustainability documentation?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Can you identify the local community programs mentioned within port sustainability reports?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "What types of community involvement efforts are outlined in port sustainability publications?",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "I want to know what community relations initiatives are found in port sustainability reports.",
+    "sources": [
+      "documents"
+    ]
+  },
+  {
+    "query": "Are current wind speeds above the limit for vessel entry?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Does the current average wind exceed the allowed limit for ship arrivals?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is wind intensity currently above the restriction level for vessel entry?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Have wind measurements gone past the threshold required for port access?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is the present wind condition over the safety cap for incoming ships?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is the measured wave height greater than the maximum limit for safe crane usage?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Have the recorded sea conditions surpassed the thresholds for operating cranes safely?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Do the logged wave measurements exceed the safety boundary for crane work?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is the observed wave level exceeding the permitted limit for crane operation?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Has the recorded wave height breached the safety threshold for crane activities?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is the current duration of crane breakdowns staying within the approved maintenance dispatch limits?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Do the latest crane failure times comply with the set maintenance response thresholds?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Are we maintaining crane outage durations within the allowable maintenance dispatch parameters?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Has the time elapsed for crane repairs remained within the defined maintenance dispatch boundaries?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is the current performance of crane breakdown resolution aligned with the acceptable dispatch criteria?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Does the current berth productivity exceed or fall below the threshold for triggering an operational review?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is the berth's performance higher or lower than the specific limit set for operational reviews?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Have berth productivity rates crossed the line that necessitates an operational review check?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Does current berth productivity sit above or beneath the operational review trigger point?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is the berth's productivity currently above or underneath the trigger value for an operational review?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Have current yard occupancy levels surpassed the limit set for triggering overflow protocols?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Is the yard's present utilization rate high enough to initiate the overflow procedure?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Does the existing space usage in the yard exceed the boundary for activating overflow measures?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Are we currently operating above the yard capacity level that requires overflow protocol activation?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  },
+  {
+    "query": "Has the volume of cargo in the yard reached the point where overflow plans must be engaged?",
+    "sources": [
+      "sql",
+      "rules"
+    ]
+  }
+]

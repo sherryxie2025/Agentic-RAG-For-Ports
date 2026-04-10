@@ -1,0 +1,565 @@
+================================================================
+港口 Agentic RAG 项目 — 面试题回答（基于项目代码）
+================================================================
+
+说明：以下回答基于对项目源码的逐文件分析，结合我们之前的讨论
+（精简后的架构理解：route_query → planner(含字典展开) → 并行检索 → merge → synthesize）。
+标注 [能答] = 有代码/数据支撑  [部分能答] = 有部分依据  [不能答] = 代码中无依据
+
+================================================================
+一、项目背景与整体设计
+================================================================
+
+1. 业务背景：港口场景下用户的典型查询长什么样？为什么需要 Agentic RAG 而不是普通 RAG？
+[能答]
+
+港口场景的查询有三个特点：
+(1) 多源异构——同一个问题可能同时需要文档（handbook说了什么）、结构化数据（2015年平均吊机效率是多少）、
+    规则（风速超过多少要停运）、因果关系（为什么泊位延误和天气有关）
+(2) 领域缩写密集——STS、TEU、LOA、Hs 等港口术语，普通检索匹配不上
+(3) 决策导向——不只是"查到信息"，还要"给出是否应该暂停作业的建议"
+
+普通 RAG 是单路检索+生成，只能查一个数据源。这个场景需要根据 query 意图动态选择
+1-4 个数据源并行检索、汇聚证据后综合生成，所以需要 Agentic 的工作流编排。
+
+典型查询举例（来自 golden_dataset.json）：
+- 单源简单："What was the average crane productivity in moves per hour in 2015?" → 只需 SQL
+- 多源混合："What operational thresholds exist for crane operations and are they being met?" → 需要 rules + SQL
+- 因果推理："Why might berth delays be related to weather conditions and crane slowdown?" → 需要 SQL + graph + vector
+
+
+2. "异构分散"的数据源具体有哪些？
+[能答]
+
+4 个数据源：
+(1) 文档（vector）：PDF 文档（港口手册、年报、政策指南等），切成 130,317 个 chunks，
+    存储在 ChromaDB，用 BGE-small-en 做 dense embedding + BM25 做稀疏检索
+(2) 结构化数据（SQL）：DuckDB 中 7 张表，约 10,000 行
+    - vessel_calls (946行), berth_operations (946行), crane_operations (3148行)
+    - yard_operations (1893行), gate_operations (2190行), environment (2015-2024)
+(3) 规则（rules）：145 条 JSON 规则（124 policy + 21 grounded），包含阈值、操作限制等
+(4) 知识图谱（graph）：Neo4j 中 47 个节点、60 条有向边，4 类实体（metrics/operations/concepts/sources）
+
+
+3. 整个 Agentic 工作流的节点有哪些？画状态图，说明输入输出和跳转条件。
+[能答]
+
+精简后的核心流程（6 个真正有用的控制字段：4×needs_bool + answer_mode + sub_queries）：
+
+START → route_query → planner → [条件分发] → merge_evidence → synthesize_answer → END
+                                    │
+                    ┌───────────────┼───────────────┬──────────────────┐
+                    │ needs_vector  │ needs_sql     │ needs_rules      │ needs_graph
+                    ▼               ▼               ▼                  ▼
+          retrieve_documents    run_sql       retrieve_rules    run_graph_reasoner
+                    │               │               │                  │
+                    ▼               │               │                  │
+          rerank_documents          │               │                  │
+                    └───────────────┴───────────────┴──────────────────┘
+                                    │
+                                    ▼
+                            merge_evidence → synthesize_answer → END
+
+各节点说明：
+- route_query: 输入 user_query → 输出 4个 needs_* 布尔值 + answer_mode
+  （规则关键词匹配 + LLM fallback when confidence < 0.5）
+- planner: 输入 needs_* + query → 内部先做字典缩写展开(0ms)，再为每个激活源生成定制 sub_query
+  → 输出 sub_queries
+- 条件分发: _route_after_planner() 读取 needs_* 返回节点列表，LangGraph 并行执行
+- retrieve_documents + rerank_documents: BM25+Dense+RRF 检索 top-20 → cross-encoder 精排 top-5
+- run_sql: LLM 生成 SQL → DuckDB 执行
+- retrieve_rules: 语义+关键词匹配规则库
+- run_graph_reasoner: LLM 实体抽取 → Neo4j 最短路径遍历(max 4 hops)
+- merge_evidence: 汇聚所有证据 + 规则-数据冲突检测
+- synthesize_answer: 根据 answer_mode 选 prompt 模板，生成带引用标签的最终回答
+
+跳转条件唯一的条件分支在 planner→检索之间：
+  def _route_after_planner(state) -> List[str]:
+      返回所有 needs_*=True 对应的节点名列表，LangGraph 并行执行
+      若全为 False 则直接跳到 merge_evidence
+
+
+4. 为什么选 LangGraph 而不是 LangChain Agent 或自己手写状态机？
+[能答]
+
+三个关键理由：
+
+(1) LangChain ReAct Agent 不适合：ReAct 是 LLM 每步自主选 tool 的串行循环，
+    但本系统在 route 阶段就已确定需要哪些源，且需要并行检索。用 ReAct 会导致：
+    多源不能并行、LLM 可能遗漏某个源、每轮循环额外 LLM 调用增加延迟。
+
+(2) LangGraph 的 add_conditional_edges + 返回列表 = 原生 fan-out 并行：
+    _route_after_planner 返回 List[str]，LangGraph 自动并行调度并在 merge_evidence 汇聚。
+    手写的话需要自己管理 threading/asyncio + 状态合并。
+
+(3) Annotated[List[str], add] reducer：reasoning_trace 和 warnings 用 add reducer，
+    并行分支各自追加日志时 LangGraph 自动合并，不需要锁或手动 merge。
+
+(4) StateGraph + TypedDict 显式状态建模：整个数据流透明可审计，
+    方便做 per-node 延迟分析和 evaluation。
+
+
+5. State 是怎么设计的？
+[能答]
+
+LangGraphPortState(TypedDict, total=False)，total=False 意味着节点只写自己的字段。
+
+精简后真正驱动行为的字段：
+- 全局共享读：user_query / original_query（几乎所有节点读）
+- route_query 写：needs_vector, needs_sql, needs_rules, needs_graph_reasoning, answer_mode
+- planner 写：sub_queries（被 4 个检索节点读）
+- 各检索节点写：retrieved_docs, sql_results, rule_results, graph_results（各写各的，无冲突）
+- merge_evidence 写：evidence_bundle（被 synthesizer 读）
+- synthesize_answer 写：final_answer
+- 累加字段：reasoning_trace, warnings（Annotated[List[str], add]，所有节点追加）
+
+冗余字段（代码里存在但可精简）：
+- question_type：needs_* 的派生标签，无下游消费
+- source_plan：needs_* 的字符串格式转换
+- reasoning_goal：answer_mode 的重命名，synthesizer 内部又转回 answer_mode
+- execution_strategy：无下游消费
+- router_decision：被 needs_* + answer_mode 完全替代
+
+
+================================================================
+二、Query 改写与意图识别
+================================================================
+
+6. "词典化 Query 改写"具体怎么做的？
+[能答]
+
+QueryRewriter 采用两级策略：
+(1) 字典查表（优先）：加载 data/abbreviation_dict.json（85 个港口缩写映射），
+    用预编译正则 \b(STS|TEU|LOA|...)\b 匹配，命中后替换为 "STS (Ship-to-Shore crane)"。
+    延迟 0ms，无 API 成本。按长度降序匹配，避免短缩写抢先匹配。
+(2) LLM fallback：字典无命中时调用 LLM 做缩写展开+同义词补充，延迟约 27-35s。
+
+词典覆盖港口/海事领域缩写：STS、TEU、LOA、Hs、ISPS、VHF 等 85 条。
+维护方式：JSON 文件手工维护，import 时一次性加载。
+
+注意：在精简架构中，这个字典展开逻辑可以合并到 planner 内部作为预处理步骤。
+
+
+7. 改写会不会引入歧义？有没有 bad case 分析？
+[部分能答]
+
+代码中没有显式的 bad case 分析文档。但从设计看，字典展开是追加式的
+（"STS" → "STS (Ship-to-Shore crane)"），保留原始词，风险较低。
+LLM fallback 的 prompt 里明确要求 "Keep the original intent intact"。
+
+潜在风险：LLM fallback 可能过度改写。代码里有 graceful fallback——
+LLM 返回空或解析失败时返回原始 query 不做改写（query_rewriter.py 第 99 行）。
+
+
+8. 意图识别有几类意图？类别怎么定义？多意图怎么处理？
+[能答]
+
+意图识别不是传统的单标签分类，而是 4 个独立的布尔开关：
+- needs_vector (文档检索)
+- needs_sql (结构化查询)
+- needs_rules (规则查询)
+- needs_graph_reasoning (因果推理)
+
+这 4 个开关互不排斥，天然支持多意图——比如 "weather conditions impact on berth delays"
+会同时激活 needs_sql=True + needs_graph=True。
+
+推导逻辑：IntentRouter 对每个开关独立判断，用 7 组关键词库分别匹配
+（document_keywords, sql_keywords, rule_keywords, graph_keywords,
+ operation_keywords, decision_support_keywords, comparison_keywords），
+加上 bigram/trigram 模式匹配。confidence < 0.5 时触发 LLM fallback。
+
+answer_mode 另外推导（5 种：lookup, descriptive, comparison, decision_support, diagnostic），
+控制最终回答的 prompt 模板和输出格式。
+
+
+9. 意图识别的训练数据从哪里来？
+[能答]
+
+严格说不需要"训练数据"——router 主体是规则关键词匹配 + LLM fallback，不是训练出来的模型。
+
+Round 5 曾尝试用 MLP 分类器替代 LLM fallback：
+- 训练数据：从 80 条 golden dataset 用 LLM paraphrase 扩充到 480 条
+  （存储在 evaluation/augmented_intent_data.json）
+- 特征：BGE-small-en embedding (384维)
+- 模型：sklearn MLP (256,128)，5-fold CV
+- 结果：graph 类 F1=0.00（训练样本太少），整体 routing F1 下降 17%
+- 结论：在 <500 样本的场景下 LLM zero-shot 路由优于小规模训练的 MLP
+
+
+================================================================
+三、LLM 路由 vs MLP 分类器（消融实验）
+================================================================
+
+10. 详细讲一下消融实验。
+[能答]
+
+实验设置（Round 5, evaluation/train_intent_classifier.py）：
+- 基线：规则关键词 + LLM fallback（Round 4 配置）
+- 实验组：规则关键词 + MLP 分类器替代 LLM fallback
+- MLP 训练：80 seed queries → LLM paraphrase 6x → 480 samples
+- Embedding：BGE-small-en (384维)
+- 架构：MLP (256, 128)，5-fold CV
+- 标签：多标签（sql, documents, rules, graph）
+
+Per-label CV F1：sql=0.93, documents=0.74, rules=0.58, graph=0.00
+整体结果：Routing F1 从 0.864 下降到约 0.72（-17%），Evidence Recall -27%
+
+关键发现：graph 类训练样本只有 10 条（扩充后约 60 条），MLP 完全学不到这个类。
+
+
+11. 临界点在哪里？多少数据后 MLP 会反超？
+[部分能答]
+
+代码/文档中没有精确的临界点实验。CHANGELOG R5 postmortem 提到：
+"Approximately 2000+ balanced samples needed for reliable classification"
+这是基于经验估算，不是通过系统性实验得出的。
+
+更准确的说法：graph 类需要至少 200-500 条正样本才能学到有意义的特征，
+而当前只有 10 条原始 + 60 条 LLM 扩充。
+
+
+12. LLM 路由延迟和成本问题？蒸馏方案？
+[部分能答]
+
+延迟数据：route_query P50=2.4s, P95=42.1s（P95 高是因为 LLM fallback 只在
+confidence < 0.5 时触发，大多数 query 走规则匹配很快）。
+成本：用的 Qwen API（DashScope），具体价格代码中未记录。
+
+蒸馏方案：代码中没有实现。Round 5 的 MLP 实验本质上就是一种蒸馏尝试
+（用 LLM 标注数据训练小模型），但因为数据量不足失败了。
+
+
+13. Routing F1=0.86，剩下 14% 的错误归因？
+[部分能答]
+
+从 eval 日志的 per-source 分析：
+- documents: precision=0.829, recall=0.906 → 召回高但精度偏低（over-trigger）
+- sql: precision=0.740, recall=0.685 → 召回偏低（miss）
+- rules: precision=0.552, recall=0.571 → 精度和召回都偏低
+- graph: precision=1.000, recall=0.900 → 精度完美但偶尔 miss
+
+主要错误类型：
+(1) rules 的精度最差(0.552)：router 的 rule_keywords 过于宽泛，
+    "policy"、"should" 等词容易误触发
+(2) sql 召回偏低(0.685)：某些隐含数据查询的 query 没被关键词捕获
+(3) 多源 query 中漏选某个源（hybrid_reasoning 类）
+
+
+================================================================
+四、混合检索
+================================================================
+
+14. 为什么选 BGE-small-en？港口文档是中文还是英文？
+[能答]
+
+港口文档是英文（Port of Long Beach 数据 + 国际海事组织指南等）。
+选 BGE-small-en 的理由：384 维向量，轻量快速，适合 130K chunks 的规模。
+代码中没有对比 BGE-large 的实验记录。
+
+
+15. RRF 的超参数 k 怎么调的？
+[能答]
+
+RRF 公式：score = sum(1.0 / (rrf_k + rank + 1))
+rrf_k = 60（hybrid_retriever.py 中的默认值）。
+代码中没有 k 值调参实验记录，60 是 RRF 论文的标准默认值。
+没有对比 CombSUM 或学习式融合的实验。
+
+RRF 的优势：不需要对 BM25 和 Dense 的分数做归一化，
+直接基于排名融合，对异质分数分布鲁棒。
+
+
+16. BM25 实现和分词器？
+[能答]
+
+用 rank_bm25 库的 BM25Okapi。
+分词：简单的 lowercase + 空格 split（hybrid_retriever.py）。
+对港口术语不友好——缩写（STS、TEU）不会被特殊处理。
+这也是 query_rewrite 存在的价值之一：先展开缩写再送检索。
+
+
+17. ChromaDB 规模性能？为什么不用 FAISS/Milvus？
+[部分能答]
+
+ChromaDB 存储 130,317 个 384 维向量。在这个规模下 ChromaDB 是够用的
+（10 万级别不是瓶颈）。代码中没有选型对比文档。
+推测原因：ChromaDB 开箱即用，支持 metadata 过滤，API 简单，
+适合原型/研究项目。百万级以上才需要考虑 FAISS/Milvus。
+
+
+18. Recall=0.8 是怎么测的？
+[能答]
+
+Recall 是 Evidence Keyword Recall：检查系统返回的 evidence 中是否包含
+golden_dataset 标注的 expected_evidence_keywords。
+分母是每条 query 标注的关键词数，分子是实际命中的关键词数。
+不是传统 IR 的 document-level recall。
+top_k：hybrid retriever 返回 top-20，reranker 精排到 top-5。
+
+
+================================================================
+五、Cross-Encoder 精排
+================================================================
+
+19. Cross-Encoder 选的哪个模型？有没有微调？
+[能答]
+
+模型：cross-encoder/ms-marco-MiniLM-L-6-v2（约 80MB）。
+没有在港口领域数据上微调，直接用预训练权重。
+
+
+20. 精排前后指标提升？
+[能答]
+
+CHANGELOG R2 记录了 reranker ablation 实验（--no-reranker flag）：
+"showed +105% recall improvement with reranker"。
+精排候选集：top-20 → top-5。
+P50 延迟仅 0.2s，不是瓶颈。
+
+
+21. 延迟瓶颈？ColBERT？
+[能答]
+
+Cross-encoder 延迟 P50=0.2s, P95=0.3s，20 个候选只需对 20 对做 inference，
+在这个规模下不是瓶颈。
+代码中没有考虑 ColBERT。如果候选集扩大到 100+，ColBERT 的晚交互会更有优势。
+
+
+================================================================
+六、知识图谱与多跳推理
+================================================================
+
+22. "4类48节点"具体是哪4类？
+[能答]（实际是 47 节点）
+
+4 类实体：
+(1) Metrics (16 个)：wind_speed_ms, wave_height_m, crane_productivity_mph,
+    arrival_delay_hours, breakdown_minutes, yard_occupancy_pct 等
+(2) Operations (11 个)：vessel_entry, berth_operations, crane_operations,
+    yard_operations, gate_operations, operational_pause 等
+(3) Concepts (13 个)：weather_conditions, wind_restriction, crane_slowdown,
+    operational_disruption, congestion, safety, compliance 等
+(4) Sources (7 个)：environment, berth_operations_table, crane_operations_table 等
+
+47 个节点确实很少。覆盖度靠的是：节点代表抽象概念而非具体实例，
+加上 135 个 alias 做模糊匹配（graph_entity_index.py）。
+
+
+23. 图谱怎么构建的？
+[能答]
+
+build_neo4j_graph.py 中是完全硬编码的：60 条关系模板在 Python 代码里手写。
+不是 LLM 抽取的，是人工设计的 schema + 人工定义的边。
+Round 4 扩充了 +5 metric, +3 operation, +7 concept 节点。
+
+
+24. 实体抽取用什么方法？
+[能答]
+
+三级 fallback：
+(1) LLM 实体抽取：给 LLM 完整的 47 节点列表 + 5 个 few-shot examples，
+    要求从 query 中抽取出图谱中存在的实体
+(2) Embedding cosine 匹配：GraphEntityIndex 存了 135 个 alias embedding，
+    对 query 中的 noun phrases 做向量相似度匹配
+(3) 规则关键词匹配：34 个 alias 的字符串包含匹配
+
+准确率/召回率：graph recall=0.900 (在 10 条 causal_multihop 上)，
+但样本太少无法得出可靠结论。
+
+
+25. Cypher 是 LLM 生成的还是模板化的？
+[能答]
+
+模板化的。graph_reasoner.py 用固定的 Cypher 模板：
+  MATCH path = shortestPath((a)-[*..4]-(b)) RETURN path LIMIT 5
+实体名由 LLM 抽取后填入模板。不是 LLM 自由生成 Cypher。
+
+
+26. 多跳上限？路径爆炸？
+[能答]
+
+最大 4 跳（Cypher [*..4]），用 shortestPath + LIMIT 5 控制路径数量。
+47 节点 60 条边的图很小，路径爆炸不是问题。
+真正的瓶颈是 LLM 实体抽取的延迟（P50=21.7s）。
+
+
+================================================================
+七、护栏设计
+================================================================
+
+27. "规则缺失时限制 LLM 输出"怎么判断？
+[能答]
+
+answer_synthesizer.py 中的判断逻辑：
+  if state.get("needs_rules") and not rule_summary:
+      caveats.append("Requested rule evidence was not retrieved...")
+
+即：router 判断这个 query 需要 rules（needs_rules=True），但检索后 rule_results 为空。
+此时：
+(1) 加 caveat 警告
+(2) _should_use_knowledge_fallback() 决定是否启用 LLM 知识兜底
+(3) decision_support 类型的 query 会触发额外 guardrail
+
+
+28. 护栏是 prompt 层还是后处理？
+[能答]
+
+两者都有：
+- Prompt 层：synthesizer 的 prompt 里有 forbidden_behaviors 列表：
+  "Do not fabricate policy thresholds"
+  "Do not claim proven causality unless evidence explicitly supports it"
+- 后处理：_infer_grounding_status() 判断回答是 grounded/partial/ungrounded，
+  _estimate_confidence() 在 fallback 时降低置信度
+
+代码中没有记录被绕过的 case。
+
+
+29. 护栏效果怎么衡量？false positive 指标？
+[不能答]
+
+代码中没有专门的护栏评测指标或 false positive 统计。
+这是可以改进的点——可以在 golden_dataset 中标注"这条 query 不应该给操作建议"，
+然后检查系统是否正确拒绝。
+
+
+================================================================
+八、评测体系
+================================================================
+
+30. 80 条评测集怎么构建的？
+[能答]
+
+Claude Code 辅助构建，采用"覆盖驱动 + 分层难度"设计：
+- 5 种 intent_type × 不同 source 组合 × 3 级难度(easy/medium/hard = 32/19/29)
+- 11 种 source 组合（共 15 种可能，缺少 4 种 graph 相关稀疏组合）
+- 每条标注：query, intent_type, answer_mode, expected_sources,
+  expected_evidence_keywords(4-7个), reference_answer, difficulty
+
+局限性：
+- 单人(+LLM)标注，无 inter-annotator agreement
+- LLM 生成的 query 缺少真实用户的口语化/拼写错误/模糊表达
+- 子类别样本不足（causal_multihop=10, policy_rule=10）
+- 没有统计显著性检验（无 bootstrap CI, 无 paired test）
+
+改进建议：加 bootstrap CI（10 行代码）；扩充尾部类别到 30 条；每轮 eval 跑 3 次取方差。
+
+
+31. 检索、排序、生成三个维度分别用什么指标？
+[能答]
+
+检索维度：
+- Evidence Keyword Recall：expected_keywords 在返回证据中的命中率
+- Source Routing F1：预测的 needs_* vs 标注的 expected_sources 的 F1
+- MRR / NDCG@5：文档检索类 query 的排序质量
+
+生成维度：
+- Answer Faithfulness：回答中有多少 claim 能在 evidence 中找到支撑
+- Claim Citation Rate：带 [doc]/[sql]/[rule]/[graph] 标签的 claim 比例
+- Semantic Similarity：BGE cosine 与 reference_answer 的相似度
+
+
+32. 语义相似度 0.88 的局限？为什么不用 LLM-as-a-Judge？
+[部分能答]
+
+用 BGE-small-en 计算 cosine similarity。
+局限：embedding 相似度只衡量表面语义接近，不衡量事实正确性。
+两个都是 LLM 风格的文本可能 cosine 很高但事实相反。
+
+代码中没有实现 LLM-as-a-Judge。推测原因：成本（每条 query 额外调一次 LLM）
+和评测循环依赖（用 LLM 评 LLM）。但 LLM-as-a-Judge 在检测幻觉方面
+确实比 cosine similarity 更有效。
+
+
+33. 做过几轮迭代？哪个改动收益最大？
+[能答]
+
+6 轮迭代（CHANGELOG.md）：
+
+R1：基线 + 7 个 bug fix（系统能跑起来）
+R2：inline citation + SQL routing bigrams + conflict detection
+    → structured_data F1 从 0.00→0.90
+R3：★收益最大★ 模型升级(qwen3.5-flash→qwen3.5-35b-a3b) + LLM fallback router
+    → Answer Rate 71%→100%, Routing F1 +47%, Faithfulness +135%
+    → causal_multihop 从完全失败到可用
+R4：SQL-specific prompt + graph expansion + per-node profiling
+    → Faithfulness +33%, MRR 0.364→0.685
+R5：延迟优化尝试（字典rewrite保留，MLP和embedding实验回退）
+R6：最终配置确认
+
+最大单一改动：R3 的模型升级，贡献了约 40% 的整体提升。
+
+
+================================================================
+九、工程与扩展性
+================================================================
+
+34. DuckDB 的角色？为什么不用 SQLite/Postgres？
+[能答]
+
+DuckDB 做只读分析型查询（OLAP）。7 张表约 10,000 行。
+优势：in-process（无服务器开销）、列存储对聚合查询快、
+内置 schema introspection（SHOW TABLES, DESCRIBE）、Python 集成简单。
+对比 SQLite：SQLite 是行存储，聚合慢；
+对比 Postgres：项目是单机部署的研究原型，不需要 client-server 架构。
+
+
+35. 端到端延迟？最大瓶颈？
+[能答]
+
+Per-node P50 延迟（Round 4 数据）：
+- route_query: 2.4s (P95=42.1s, LLM fallback 时飙高)
+- query_rewrite: 27.4s → 字典优化后约 0s (R5 保留)
+- planner: 15.7s
+- retrieve_documents: 1.9s
+- rerank_documents: 0.2s
+- retrieve_rules: ~0s
+- run_sql: 4.5s
+- run_graph_reasoner: 21.7s (P95=67.4s)
+- merge_evidence: ~0s
+- synthesize_answer: 28.9s
+
+三大瓶颈：synthesize_answer (29s), graph_reasoner (22s), planner (16s)
+——全部是 LLM 调用。检索和规则匹配本身很快。
+
+端到端估算：串行部分(route+rewrite+planner+merge+synthesize) ≈ 47s
++ 并行部分(max of 检索分支) ≈ 22s → 总计约 70s（P50）
+
+
+36. Qwen API 的成本和稳定性？缓存/降级/重试？
+[部分能答]
+
+代码中有重试逻辑：llm_client.py 中 timeout=180s（从初始 30s 提升，R1 fix）。
+没有找到显式的缓存层或降级机制。
+每个 LLM 节点有 rule-based fallback 作为降级方案
+（router有关键词匹配、planner有规则子查询、sql有模板SQL）。
+具体 API 成本数据代码中未记录。
+
+
+37. 重做项目最想改进的三个点？
+[能答 — 基于代码分析的建议]
+
+(1) State 精简 + 节点合并：去掉 question_type/source_plan/reasoning_goal/execution_strategy
+    等冗余字段，把 query_rewrite 合并进 planner，从 10 个节点精简到 7-8 个。
+
+(2) 评测体系加固：加 bootstrap CI、扩充 causal/rule 子集到 30 条、
+    每轮跑 3 次取方差、引入 LLM-as-a-Judge 替代纯 cosine similarity。
+
+(3) 延迟优化：synthesize_answer (29s) 和 graph_reasoner (22s) 是主要瓶颈，
+    可以考虑：streaming 输出、更小的 LLM 做 entity extraction、
+    graph 结果缓存（同一实体组合的路径可以复用）。
+
+
+================================================================
+不能答 / 证据不足的题目
+================================================================
+
+- 改写的 bad case 分析（无文档记录）→ [部分能答]
+- MLP 反超的精确临界点（无系统实验）→ [部分能答]
+- 蒸馏方案（未实现）→ [部分能答]
+- RRF vs CombSUM 对比（未做）→ 知道没做即可
+- ChromaDB vs FAISS 选型理由（无文档）→ [部分能答]
+- 护栏 false positive 指标（未实现）→ [不能答]
+- LLM-as-a-Judge（未实现）→ 知道局限即可
+- API 成本具体数据（未记录）→ [部分能答]
+
+================================================================

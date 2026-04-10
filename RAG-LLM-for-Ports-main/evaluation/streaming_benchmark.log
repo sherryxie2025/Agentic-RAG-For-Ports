@@ -1,0 +1,68 @@
+Loading pipeline...
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 105/105 [00:00<00:00, 4291.79it/s]
+[1mBertForSequenceClassification LOAD REPORT[0m from: cross-encoder/ms-marco-MiniLM-L-6-v2
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+================================================================================
+[DOC] What are the key environmental sustainability initiatives described in...
+  Pipeline:        122.1s
+  Blocking total:  27.1s
+  Streaming TTFT:  19.51s
+  Streaming total: 22.9s
+  TTFT speedup:    1.4x
+
+================================================================================
+[SQL] What was the average crane productivity in moves per hour in 2015?...
+  Pipeline:        227.5s
+  Blocking total:  32.7s
+  Streaming TTFT:  27.22s
+  Streaming total: 27.8s
+  TTFT speedup:    1.2x
+
+================================================================================
+[RULE] What are the wind speed restrictions for vessel entry?...
+  Pipeline:        94.9s
+  Blocking total:  39.3s
+  Streaming TTFT:  31.87s
+  Streaming total: 32.7s
+  TTFT speedup:    1.2x
+
+================================================================================
+[HYB] Based on the current wind speed data and port rules, should vessel ent...
+  Pipeline:        82.8s
+  Blocking total:  40.6s
+  Streaming TTFT:  15.70s
+  Streaming total: 17.7s
+  TTFT speedup:    2.6x
+
+================================================================================
+[CAUSAL] Why might berth delays be related to weather conditions and crane slow...
+  Pipeline:        201.5s
+  Blocking total:  37.4s
+  Streaming TTFT:  13.05s
+  Streaming total: 14.8s
+  TTFT speedup:    2.9x
+
+================================================================================
+STREAMING vs BLOCKING BENCHMARK RESULTS
+================================================================================
+ID       |  Block (s) |  TTFT (s) | Stream (s) |  Speedup | Pipeline (s)
+---------+------------+-----------+------------+----------+-------------
+DOC      |       27.1 |     19.51 |       22.9 |     1.4x |        122.1
+SQL      |       32.7 |     27.22 |       27.8 |     1.2x |        227.5
+RULE     |       39.3 |     31.87 |       32.7 |     1.2x |         94.9
+HYB      |       40.6 |     15.70 |       17.7 |     2.6x |         82.8
+CAUSAL   |       37.4 |     13.05 |       14.8 |     2.9x |        201.5
+---------+------------+-----------+------------+----------+-------------
+AVG      |       35.4 |     21.47 |            |     1.6x |
+
+Key insight: Streaming reduces perceived latency from 35.4s to 21.47s (2x improvement)
+Users see the first token in ~21.5s instead of waiting 35s for the full response.
+
+Results saved to: C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\streaming_benchmark_results.json

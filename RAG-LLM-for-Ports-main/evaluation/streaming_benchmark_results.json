@@ -1,0 +1,65 @@
+{
+  "benchmark_date": "2026-04-07 01:30:02",
+  "queries": [
+    {
+      "id": "DOC",
+      "query": "What are the key environmental sustainability initiatives de",
+      "pipeline_s": 122.1,
+      "block_total_s": 27.1,
+      "stream_ttft_s": 19.51,
+      "stream_total_s": 22.9,
+      "ttft_speedup": 1.4,
+      "block_len": 3211,
+      "stream_len": 3036
+    },
+    {
+      "id": "SQL",
+      "query": "What was the average crane productivity in moves per hour in",
+      "pipeline_s": 227.5,
+      "block_total_s": 32.7,
+      "stream_ttft_s": 27.22,
+      "stream_total_s": 27.8,
+      "ttft_speedup": 1.2,
+      "block_len": 333,
+      "stream_len": 260
+    },
+    {
+      "id": "RULE",
+      "query": "What are the wind speed restrictions for vessel entry?",
+      "pipeline_s": 94.9,
+      "block_total_s": 39.3,
+      "stream_ttft_s": 31.87,
+      "stream_total_s": 32.7,
+      "ttft_speedup": 1.2,
+      "block_len": 587,
+      "stream_len": 408
+    },
+    {
+      "id": "HYB",
+      "query": "Based on the current wind speed data and port rules, should ",
+      "pipeline_s": 82.8,
+      "block_total_s": 40.6,
+      "stream_ttft_s": 15.7,
+      "stream_total_s": 17.7,
+      "ttft_speedup": 2.6,
+      "block_len": 1212,
+      "stream_len": 1620
+    },
+    {
+      "id": "CAUSAL",
+      "query": "Why might berth delays be related to weather conditions and ",
+      "pipeline_s": 201.5,
+      "block_total_s": 37.4,
+      "stream_ttft_s": 13.05,
+      "stream_total_s": 14.8,
+      "ttft_speedup": 2.9,
+      "block_len": 1765,
+      "stream_len": 1513
+    }
+  ],
+  "summary": {
+    "avg_blocking_total_s": 35.42,
+    "avg_streaming_ttft_s": 21.47,
+    "avg_ttft_speedup": 1.6
+  }
+}

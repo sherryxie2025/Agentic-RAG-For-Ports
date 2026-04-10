@@ -1,0 +1,84 @@
+Loading LangGraph workflow from C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main ... [WITHOUT reranker (ablation)]
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 105/105 [00:00<00:00, 4989.03it/s]
+[1mBertForSequenceClassification LOAD REPORT[0m from: cross-encoder/ms-marco-MiniLM-L-6-v2
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+  [ABLATION] Reranker disabled - using hybrid top-5 directly
+
+Running evaluation on 10 queries ...
+
+====================================================================================================
+
+[1/10] DOC_001: What are the key environmental sustainability initiatives described in port annu...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 7881.87it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-small-en
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+  OK | conf=0.55 | sem_sim=0.88 | mrr=0.25 | ndcg=0.81 | evidence_recall=0.50 | 88.5s
+
+[2/10] DOC_002: What does the Port Operating Handbook say about vessel entry requirements?...
+  OK | conf=0.73 | sem_sim=0.72 | mrr=0.00 | ndcg=0.88 | evidence_recall=0.80 | 9.3s
+
+[3/10] DOC_003: What cybersecurity guidelines exist for port facilities?...
+  OK | conf=0.40 | sem_sim=0.73 | mrr=1.00 | ndcg=0.72 | evidence_recall=1.00 | 3.5s
+
+[4/10] DOC_004: What green infrastructure design standards are recommended for ports?...
+  OK | conf=0.25 | sem_sim=0.72 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 1.4s
+
+[5/10] DOC_005: Describe the risk and resilience guidelines published for port operations....
+  OK | conf=0.40 | sem_sim=0.85 | mrr=0.20 | ndcg=0.69 | evidence_recall=1.00 | 3.4s
+
+[6/10] DOC_006: What decarbonisation strategies are outlined in maritime blueprints?...
+  OK | conf=0.25 | sem_sim=0.71 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 2.2s
+
+[7/10] DOC_007: What best management practices are recommended for port environmental management...
+  OK | conf=0.45 | sem_sim=0.72 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 3.2s
+
+[8/10] DOC_008: What information does the Container Port Performance Index report provide?...
+  OK | conf=0.40 | sem_sim=0.84 | mrr=1.00 | ndcg=0.97 | evidence_recall=0.60 | 3.3s
+
+[9/10] DOC_009: What are the pilot boarding and disembarkation procedures at ports?...
+  OK | conf=0.25 | sem_sim=0.71 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 1.6s
+
+[10/10] DOC_010: What strategic planning goals are outlined in port long-term plans?...
+  OK | conf=0.25 | sem_sim=0.68 | mrr=0.00 | ndcg=0.00 | evidence_recall=0.00 | 2.1s
+
+====================================================================================================
+EVALUATION REPORT SUMMARY
+====================================================================================================
+Total queries:             10
+Answered:                  10 (100.0%)
+Avg Evidence Keyword Recall: 0.3900
+Avg Source Routing F1:       0.4167
+Avg Answer Faithfulness:     0.1107
+Avg Semantic Similarity:     0.7544
+Avg MRR:                     0.2450
+Avg NDCG@5:                  0.4068
+Avg Claim Citation Rate:     0.0429
+Avg Claim Grounding Rate:    0.1083
+Avg Answer Confidence:       0.3930
+Avg Routing Precision:       0.3833
+Avg Routing Recall:          0.5000
+
+Per Intent Type:
+  document_lookup           n=10 | evidence_recall=0.390 | routing_f1=0.417 | faithfulness=0.111 | confidence=0.393
+
+Per-Source Retrieval Stats:
+  Source       | Expected | Actual |   TP | Precision | Recall
+  -------------+----------+--------+------+-----------+-------
+  documents    |       10 |      5 |    5 |     1.000 |  0.500
+  sql          |        0 |      3 |    0 |     0.000 |  0.000
+  rules        |        0 |      1 |    0 |     0.000 |  0.000
+  graph        |        0 |      0 |    0 |     0.000 |  0.000
+
+Full report saved to: C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\evaluation_report.json
+Markdown report saved to: C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\EVALUATION_REPORT.md

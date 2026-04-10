@@ -1,0 +1,6135 @@
+{
+  "timestamp": "2026-04-09T02:35:56.563725",
+  "model_name": "qwen3.5-35b-a3b",
+  "total_queries": 101,
+  "answered": 101,
+  "answer_rate": 1.0,
+  "aggregate_metrics": {
+    "avg_evidence_keyword_recall": 0.6331,
+    "avg_source_routing_precision": 0.7814,
+    "avg_source_routing_recall": 0.9035,
+    "avg_source_routing_f1": 0.8151,
+    "avg_answer_faithfulness": 0.511,
+    "avg_answer_confidence": 0.5617,
+    "avg_semantic_similarity": 0.8672,
+    "avg_pre_rerank_mrr_doc_only": 0.3434,
+    "avg_pre_rerank_ndcg_at_20_doc_only": 0.6686,
+    "avg_recall_at_20_doc_only": 0.0636,
+    "avg_mrr_doc_only": 0.6262,
+    "avg_ndcg_at_5_doc_only": 0.8808,
+    "avg_recall_at_5_doc_only": 0.0471,
+    "avg_sql_result_accuracy": 0.6519,
+    "avg_claim_citation_rate": 0.6535,
+    "avg_claim_grounding_rate": 0.5782
+  },
+  "per_source_retrieval": {
+    "vector": {
+      "n_queries": 33,
+      "avg_recall_at_20": 0.0636,
+      "avg_recall_at_5": 0.0471,
+      "avg_pre_rerank_mrr": 0.3434,
+      "avg_post_rerank_mrr": 0.6262
+    },
+    "sql": {
+      "n_queries": 54,
+      "avg_table_recall": 0.8673,
+      "avg_table_f1": 0.8284
+    },
+    "rules": {
+      "n_queries": 39,
+      "avg_variable_recall": 0.6368
+    },
+    "graph": {
+      "n_queries": 20,
+      "avg_entity_recall": 0.92
+    }
+  },
+  "guardrail_evaluation": {
+    "total_guardrail_queries": 8,
+    "guardrail_pass_count": 6,
+    "guardrail_pass_rate": 0.75,
+    "per_query": [
+      {
+        "id": "GUARD_EMPTY_001",
+        "type": "no_source_fallback",
+        "pass": true,
+        "detail": "grounding=fallback_augmented kb_fallback=True"
+      },
+      {
+        "id": "GUARD_EMPTY_002",
+        "type": "no_source_fallback",
+        "pass": true,
+        "detail": "grounding=weakly_grounded kb_fallback=False"
+      },
+      {
+        "id": "GUARD_DS_NORULE_001",
+        "type": "decision_support_no_rules",
+        "pass": true,
+        "detail": "no forbidden phrases found"
+      },
+      {
+        "id": "GUARD_DS_NORULE_002",
+        "type": "decision_support_no_rules",
+        "pass": false,
+        "detail": "violations=['operations must be suspended']"
+      },
+      {
+        "id": "GUARD_DS_WITHRULE_001",
+        "type": "decision_support_with_rules",
+        "pass": true,
+        "detail": "has_recommendation=True"
+      },
+      {
+        "id": "GUARD_DIAG_NOGRAPH_001",
+        "type": "diagnostic_without_graph",
+        "pass": true,
+        "detail": "knowledge_fallback_used=True"
+      },
+      {
+        "id": "GUARD_DESC_NODOC_001",
+        "type": "descriptive_without_docs",
+        "pass": false,
+        "detail": "knowledge_fallback_used=False"
+      },
+      {
+        "id": "GUARD_FALLBACK_001",
+        "type": "knowledge_fallback_test",
+        "pass": true,
+        "detail": "kb_fallback=False sources=['documents', 'structured_operational_data', 'rules', 'graph']"
+      }
+    ]
+  },
+  "per_intent_type": {
+    "document_lookup": {
+      "count": 19,
+      "avg_evidence_recall": 0.6474,
+      "avg_routing_f1": 0.9123,
+      "avg_faithfulness": 0.6458,
+      "avg_confidence": 0.42,
+      "avg_semantic_similarity": 0.8528,
+      "avg_mrr_doc_only": 0.7237,
+      "avg_ndcg_doc_only": 0.8776,
+      "avg_sql_accuracy": 0.0
+    },
+    "structured_data": {
+      "count": 23,
+      "avg_evidence_recall": 0.4797,
+      "avg_routing_f1": 0.887,
+      "avg_faithfulness": 0.3612,
+      "avg_confidence": 0.4904,
+      "avg_semantic_similarity": 0.8733,
+      "avg_mrr_doc_only": 0.0,
+      "avg_ndcg_doc_only": 0.0,
+      "avg_sql_accuracy": 0.5399
+    },
+    "policy_rule": {
+      "count": 15,
+      "avg_evidence_recall": 0.7033,
+      "avg_routing_f1": 0.6667,
+      "avg_faithfulness": 0.6706,
+      "avg_confidence": 0.58,
+      "avg_semantic_similarity": 0.8765,
+      "avg_mrr_doc_only": 0.0,
+      "avg_ndcg_doc_only": 0.0,
+      "avg_sql_accuracy": 0.0
+    },
+    "hybrid_reasoning": {
+      "count": 22,
+      "avg_evidence_recall": 0.6258,
+      "avg_routing_f1": 0.903,
+      "avg_faithfulness": 0.4969,
+      "avg_confidence": 0.6445,
+      "avg_semantic_similarity": 0.8619,
+      "avg_mrr_doc_only": 0.55,
+      "avg_ndcg_doc_only": 0.8776,
+      "avg_sql_accuracy": 0.6395
+    },
+    "causal_multihop": {
+      "count": 20,
+      "avg_evidence_recall": 0.7146,
+      "avg_routing_f1": 0.7362,
+      "avg_faithfulness": 0.5023,
+      "avg_confidence": 0.702,
+      "avg_semantic_similarity": 0.8723,
+      "avg_mrr_doc_only": 0.4444,
+      "avg_ndcg_doc_only": 0.8959,
+      "avg_sql_accuracy": 0.8865
+    },
+    "out_of_domain": {
+      "count": 2,
+      "avg_evidence_recall": 1.0,
+      "avg_routing_f1": 0.0,
+      "avg_faithfulness": 0.0,
+      "avg_confidence": 0.275,
+      "avg_semantic_similarity": 0.8703,
+      "avg_mrr_doc_only": 0.0,
+      "avg_ndcg_doc_only": 0.0,
+      "avg_sql_accuracy": 0.0
+    }
+  },
+  "per_query_results": [
+    {
+      "id": "VEC_001",
+      "query": "What sustainability commitments has the Port of Virginia made regarding emissions reduction?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 85.26,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe Port of Virginia has publicly committed to advancing Net-Zero sustainability goals regarding greenhouse gas emissions [doc]. Current documentation states the agency is on track to reach",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 1922,
+      "answer_faithfulness": 0.7272727272727273,
+      "semantic_similarity": 0.8443,
+      "pre_rerank_mrr": 0.1667,
+      "pre_rerank_ndcg_at_20": 0.5824,
+      "recall_at_20": 0.2,
+      "mrr": 1.0,
+      "ndcg_at_5": 0.9261,
+      "recall_at_5": 0.2,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9091,
+      "claim_grounding_rate": 0.7273,
+      "claim_total": 11,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_002",
+      "query": "What is the Port of Long Beach's Green Port Policy?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 83.06,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe Green Port Policy represents the Port of Long Beach’s formal commitment to consistently evaluate environmental impacts across all organizational decisions [doc]. This framework applies",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 1932,
+      "answer_faithfulness": 0.6666666666666666,
+      "semantic_similarity": 0.886,
+      "pre_rerank_mrr": 0.3333,
+      "pre_rerank_ndcg_at_20": 0.7397,
+      "recall_at_20": 0.1,
+      "mrr": 1.0,
+      "ndcg_at_5": 0.9275,
+      "recall_at_5": 0.1,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9167,
+      "claim_grounding_rate": 0.75,
+      "claim_total": 12,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_003",
+      "query": "What cybersecurity threats do ports face and what guidelines exist?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 141.35,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nPort facilities and maritime terminals face significant digital security threats that require coordinated management strategies [doc]. Regulatory frameworks mandate that organizations deve",
+      "confidence": 0.58,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.25,
+      "evidence_length": 2540,
+      "answer_faithfulness": 0.8636363636363636,
+      "semantic_similarity": 0.908,
+      "pre_rerank_mrr": 0.0,
+      "pre_rerank_ndcg_at_20": 0.4201,
+      "recall_at_20": 0.0,
+      "mrr": 0.0,
+      "ndcg_at_5": 0.4307,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.7727,
+      "claim_grounding_rate": 0.8636,
+      "claim_total": 22,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_004",
+      "query": "What are the IAPH guidelines for port risk management and resilience?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 74.13,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe International Association of Ports and Harbors (IAPH) establishes guidelines centered on a structured process for defining and inventorying risk [doc]. This framework prioritizes manag",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 1637,
+      "answer_faithfulness": 0.6923076923076923,
+      "semantic_similarity": 0.9306,
+      "pre_rerank_mrr": 0.1429,
+      "pre_rerank_ndcg_at_20": 0.5506,
+      "recall_at_20": 0.2,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.1,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9231,
+      "claim_grounding_rate": 0.6923,
+      "claim_total": 13,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_005",
+      "query": "What does the Container Port Performance Index measure and what trends does it show?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 123.49,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe Container Port Performance Index (CPPI) serves as a globally consistent metric for assessing container port performance [doc]. It specifically measures the time container ships spend i",
+      "confidence": 0.55,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 6577,
+      "answer_faithfulness": 0.6285714285714286,
+      "semantic_similarity": 0.8932,
+      "pre_rerank_mrr": 1.0,
+      "pre_rerank_ndcg_at_20": 0.8581,
+      "recall_at_20": 0.2,
+      "mrr": 1.0,
+      "ndcg_at_5": 0.9948,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.6176,
+      "claim_grounding_rate": 0.6471,
+      "claim_total": 34,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_006",
+      "query": "What green infrastructure design practices are recommended for port facilities?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 66.02,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe retrieved documentation identifies a formalized framework for sustainable infrastructure rather than detailing specific technical engineering metrics [doc]. Within the Port Authority o",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 1734,
+      "answer_faithfulness": 0.4666666666666667,
+      "semantic_similarity": 0.8394,
+      "pre_rerank_mrr": 0.1429,
+      "pre_rerank_ndcg_at_20": 0.5048,
+      "recall_at_20": 0.0,
+      "mrr": 0.25,
+      "ndcg_at_5": 0.8558,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.8,
+      "claim_grounding_rate": 0.5333,
+      "claim_total": 15,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_007",
+      "query": "What is Singapore's maritime decarbonisation strategy?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 63.31,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nSingapore's maritime shipping decarbonisation strategy is anchored in its commitment to the 2023 International Maritime Organization (IMO) Strategy on Reduction of GHG Emissions from Ships",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 1898,
+      "answer_faithfulness": 0.8,
+      "semantic_similarity": 0.8441,
+      "pre_rerank_mrr": 1.0,
+      "pre_rerank_ndcg_at_20": 0.9359,
+      "recall_at_20": 0.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9,
+      "claim_grounding_rate": 0.8,
+      "claim_total": 10,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_008",
+      "query": "What does the 2023 GHG emissions inventory show for the Port Authority?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 88.76,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe 2023 GHG emissions inventory for the Port Authority reports biogenic emissions separately in conformance with the GHG Protocol [doc]. Significant methodological improvements were implem",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 1852,
+      "answer_faithfulness": 0.9166666666666666,
+      "semantic_similarity": 0.8784,
+      "pre_rerank_mrr": 0.5,
+      "pre_rerank_ndcg_at_20": 0.8089,
+      "recall_at_20": 0.3,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.3,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9167,
+      "claim_grounding_rate": 0.9167,
+      "claim_total": 12,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_009",
+      "query": "What are the top environmental priorities identified by European ports?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 79.48,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe European Sea Ports Organisation (ESPO) Environmental Report 2023 identifies the primary environmental priorities for European ports through a monitored Top 10 ranking system. [doc] In ",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 1813,
+      "answer_faithfulness": 0.9285714285714286,
+      "semantic_similarity": 0.901,
+      "pre_rerank_mrr": 0.25,
+      "pre_rerank_ndcg_at_20": 0.7723,
+      "recall_at_20": 0.1,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.4286,
+      "claim_grounding_rate": 0.9286,
+      "claim_total": 14,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_010",
+      "query": "What are the key highlights from the Port of Rotterdam's 2024 annual report?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 108.2,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe search results confirm the existence of the \"Highlights Annual Report 2024\" for the Port of Rotterdam Authority within the document repository [doc]. However, the specific text snippet",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 730,
+      "answer_faithfulness": 0.25,
+      "semantic_similarity": 0.8592,
+      "pre_rerank_mrr": 0.25,
+      "pre_rerank_ndcg_at_20": 0.522,
+      "recall_at_20": 0.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 0.9641,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.75,
+      "claim_grounding_rate": 0.5833,
+      "claim_total": 12,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_001",
+      "query": "What was the average crane productivity in moves per hour?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 71.54,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe system reports an aggregate average crane productivity of 25.27 movements per hour [sql].\n\n### Supporting Evidence\nAggregated operational data indicates an average equipment utilization",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.3333333333333333,
+      "evidence_length": 148,
+      "answer_faithfulness": 0.2222222222222222,
+      "semantic_similarity": 0.8818,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.3333,
+      "claim_citation_rate": 0.5556,
+      "claim_grounding_rate": 0.3333,
+      "claim_total": 9,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_002",
+      "query": "What was the average wave height in meters?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 96.06,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe recorded average mean wave height is 0.852 meters [sql].\n\n### Supporting Evidence\nThis metric is derived from operational environmental records stored in the system [sql]. Statistical p",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 52,
+      "answer_faithfulness": 0.2222222222222222,
+      "semantic_similarity": 0.8887,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.5,
+      "claim_citation_rate": 0.6667,
+      "claim_grounding_rate": 0.2222,
+      "claim_total": 9,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_003",
+      "query": "What was the average gate turn time in minutes?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 122.03,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe average gate turn time was 39.87050228310508 [sql] minutes [sql].\n\n### Data Details\nThe calculation processed 1 [sql] row using mean aggregation [sql].\n\n### Notes\nNo execution errors or",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 60,
+      "answer_faithfulness": 0.6,
+      "semantic_similarity": 0.9143,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.5,
+      "claim_citation_rate": 0.6,
+      "claim_grounding_rate": 0.6,
+      "claim_total": 5,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_004",
+      "query": "What is the maximum wind speed recorded in the environment data?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 86.74,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe maximum wind speed recorded in the environmental weather data is 16.56838770000991[sql] meters per second.\n\n### Data Details\nAdditional maximums from the environment table include a win",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.6666666666666666,
+      "evidence_length": 167,
+      "answer_faithfulness": 0.375,
+      "semantic_similarity": 0.8953,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.6667,
+      "claim_citation_rate": 0.5,
+      "claim_grounding_rate": 0.625,
+      "claim_total": 8,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_005",
+      "query": "What was the average yard dwell time in days?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 63.99,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe average container yard dwell time was 4.737506603275222 [sql] days.\n\n### Data Details\nThe total TEU received was 941944.0 [sql], and the average peak occupancy percentage was 79.7659799",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.0,
+      "evidence_length": 125,
+      "answer_faithfulness": 0.7142857142857143,
+      "semantic_similarity": 0.8814,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.5,
+      "claim_citation_rate": 0.4286,
+      "claim_grounding_rate": 0.7143,
+      "claim_total": 7,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_006",
+      "query": "What are the top 5 highest arrival delay cases?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "medium",
+      "elapsed_s": 74.89,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nBased on the operational data, the top five vessel arrival delay incidents all recorded a waiting time of 4.0 hours [sql]. The vessels involved are MONTREAL EXPRESS, EVER GENTLE, MAERSK AT",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.3333333333333333,
+      "evidence_length": 730,
+      "answer_faithfulness": 0.2857142857142857,
+      "semantic_similarity": 0.8752,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.3333,
+      "claim_citation_rate": 0.75,
+      "claim_grounding_rate": 0.3333,
+      "claim_total": 12,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_007",
+      "query": "How many total crane operations are recorded in the dataset?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "medium",
+      "elapsed_s": 85.31,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe dataset currently records a total of 3,148 crane quay crane STS operations [sql].\n\n### Supporting Evidence\nThis count was derived from the `crane_operations` table within the structured",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.6666666666666666,
+      "evidence_length": 43,
+      "answer_faithfulness": 0.14285714285714285,
+      "semantic_similarity": 0.8949,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.8571,
+      "claim_grounding_rate": 0.2857,
+      "claim_total": 7,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_008",
+      "query": "Compare berth productivity across different terminals.",
+      "intent_type": "structured_data",
+      "answer_mode": "comparison",
+      "difficulty": "medium",
+      "elapsed_s": 85.33,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nLong Beach Container Terminal achieved the highest average berth productivity at 27.45[sql] moves per hour among the reported terminals. The dataset includes 6[sql] terminals ordered by des",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.6666666666666666,
+      "evidence_length": 1949,
+      "answer_faithfulness": 0.6,
+      "semantic_similarity": 0.8544,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.0,
+      "claim_citation_rate": 0.5556,
+      "claim_grounding_rate": 0.6667,
+      "claim_total": 9,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_009",
+      "query": "What is the average crane breakdown time in minutes?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "medium",
+      "elapsed_s": 81.83,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe average crane quay crane STS breakdown failure downtime is 2.4529860228716647 minutes [sql].\n\n### Data Details\nThis value represents the mean aggregation of breakdown minutes from the c",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.6666666666666666,
+      "evidence_length": 62,
+      "answer_faithfulness": 0.5,
+      "semantic_similarity": 0.8814,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.6667,
+      "claim_citation_rate": 0.6667,
+      "claim_grounding_rate": 0.5,
+      "claim_total": 6,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_010",
+      "query": "What is the average peak yard occupancy percentage?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "medium",
+      "elapsed_s": 100.21,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe average peak yard container storage yard occupancy utilization is 79.77% [sql].\n\n### Supporting Evidence\nThis metric is derived from the `yard_operations` table [sql].\nThe system calcul",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.3333333333333333,
+      "evidence_length": 56,
+      "answer_faithfulness": 0.057692307692307696,
+      "semantic_similarity": 0.8342,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.5149,
+      "claim_grounding_rate": 0.099,
+      "claim_total": 101,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_011",
+      "query": "Which terminal has the highest average berth productivity?",
+      "intent_type": "structured_data",
+      "answer_mode": "comparison",
+      "difficulty": "medium",
+      "elapsed_s": 73.02,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nLong Beach Container Terminal [sql] has the highest average berth wharf quay productivity [sql].\n\n### Data Details\nThe average berth productivity value is 27.454444444444437 mph [sql].\n\n###",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.0,
+      "evidence_length": 107,
+      "answer_faithfulness": 0.8,
+      "semantic_similarity": 0.8941,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.3333,
+      "claim_citation_rate": 0.6,
+      "claim_grounding_rate": 0.8,
+      "claim_total": 5,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_012",
+      "query": "How many vessel calls are in the dataset?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 94.76,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThere are 946[sql] vessel calls in the dataset.\n\n### Data Details\nThe count aggregates data from the vessel_calls table.\n\n### Notes\nNo caveats apply to this result.",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 38,
+      "answer_faithfulness": 0.75,
+      "semantic_similarity": 0.8992,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.25,
+      "claim_grounding_rate": 0.75,
+      "claim_total": 4,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_013",
+      "query": "What was the average number of containers handled per berth call?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "medium",
+      "elapsed_s": 97.32,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe average number of containers handled per berth wharf quay call visit is approximately 953 [sql]. Specifically, the mean actual container volume per visit was recorded at 953.31 [sql]. ",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.3333333333333333,
+      "evidence_length": 100,
+      "answer_faithfulness": 0.1,
+      "semantic_similarity": 0.9307,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.6667,
+      "claim_citation_rate": 0.7,
+      "claim_grounding_rate": 0.2,
+      "claim_total": 10,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_014",
+      "query": "What is the relationship between arrival delay and berth productivity?",
+      "intent_type": "structured_data",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 120.62,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe relationship between arrival delay waiting time and berth wharf quay productivity is characterized by direct measurement correlations in operational logs [sql]. It is also defined by s",
+      "confidence": 0.62,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.6666666666666666,
+      "evidence_length": 2380,
+      "answer_faithfulness": 0.42857142857142855,
+      "semantic_similarity": 0.9433,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.3333,
+      "claim_citation_rate": 0.6429,
+      "claim_grounding_rate": 0.6429,
+      "claim_total": 14,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_015",
+      "query": "What are the average daily gate transactions?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "medium",
+      "elapsed_s": 113.62,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nTerminal gate operations demonstrate significant variability in daily throughput, with average transaction volumes ranging from 282.0 to 581.33 trucks per day [sql]. Operational efficiency",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.0,
+      "evidence_length": 3759,
+      "answer_faithfulness": 0.25,
+      "semantic_similarity": 0.8516,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.6667,
+      "claim_citation_rate": 0.55,
+      "claim_grounding_rate": 0.4,
+      "claim_total": 20,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_001",
+      "query": "What is the maximum wind speed limit for vessel entry at Point Richards?",
+      "intent_type": "policy_rule",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 198.28,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe maximum wind speed limit permitted for a vessel entry approach at Point Richards is 30-35 knots [doc]. This threshold applies specifically to steady wind conditions [doc]. For comparis",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 2322,
+      "answer_faithfulness": 0.7272727272727273,
+      "semantic_similarity": 0.9334,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9091,
+      "claim_grounding_rate": 0.8182,
+      "claim_total": 11,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_002",
+      "query": "At what wave height should external crane operations be suspended?",
+      "intent_type": "policy_rule",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 92.33,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nExternal crane quay crane STS operations should be suspended when the significant wave height exceeds 2.5 meters [rule]. While port documentation provides detailed specifications for crane",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 2078,
+      "answer_faithfulness": 0.46153846153846156,
+      "semantic_similarity": 0.8809,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.75,
+      "claim_grounding_rate": 0.5833,
+      "claim_total": 12,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_003",
+      "query": "What pressure threshold triggers storm watch procedures?",
+      "intent_type": "policy_rule",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 118.03,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nBased on the active operational rules, storm watch severe weather alert procedures are triggered when atmospheric pressure falls below 980 hectopascals [rule]. This threshold is specifical",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 2148,
+      "answer_faithfulness": 0.6,
+      "semantic_similarity": 0.8557,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.8,
+      "claim_grounding_rate": 0.6,
+      "claim_total": 15,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_004",
+      "query": "What are the tug requirements during high wind conditions?",
+      "intent_type": "policy_rule",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 108.34,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nTowing operations must adhere to the Minimum Towage Table, which is calibrated for steady winds of up to 15 knots [doc]. If wind speeds exceed this baseline, a formal risk assessment is ma",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 2210,
+      "answer_faithfulness": 0.7368421052631579,
+      "semantic_similarity": 0.8553,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.7895,
+      "claim_grounding_rate": 0.7895,
+      "claim_total": 19,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_005",
+      "query": "What wind speed limit applies for Geelong departures?",
+      "intent_type": "policy_rule",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 125.05,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe maximum wind speed limit permitted for a Geelong departure is 25-30 knots [doc]. This restriction applies specifically to steady wind conditions [doc].\n\n### Supporting Evidence\nThis ope",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 2315,
+      "answer_faithfulness": 0.5555555555555556,
+      "semantic_similarity": 0.9284,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.8889,
+      "claim_grounding_rate": 0.6667,
+      "claim_total": 9,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_006",
+      "query": "What are the rules regarding VHF communication requirements for vessels?",
+      "intent_type": "policy_rule",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 59.96,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nVessels operating within the pilotage district are generally required to be fitted with a VHF radio-telephone that is in good working condition [doc]. This equipment must be capable of com",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 2474,
+      "answer_faithfulness": 0.88,
+      "semantic_similarity": 0.892,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.72,
+      "claim_grounding_rate": 0.88,
+      "claim_total": 25,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 0.5,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_007",
+      "query": "What rules govern hazardous cargo handling in port terminals?",
+      "intent_type": "policy_rule",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 91.8,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nHazardous cargo and dangerous goods handling operations in port terminals are subject to a framework of Federal and Local regulations, supplemented by international maritime codes. Carrier",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 2747,
+      "answer_faithfulness": 0.7857142857142857,
+      "semantic_similarity": 0.84,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.6429,
+      "claim_grounding_rate": 0.7857,
+      "claim_total": 14,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_008",
+      "query": "What are the ISPS compliance requirements for port facilities?",
+      "intent_type": "policy_rule",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 94.42,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nRetrieved records indicate that ISPS compliance requires adherence to defined security levels and strict access enforcement protocols [doc]. The International Ship and Port Facility Securi",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 2437,
+      "answer_faithfulness": 0.7692307692307693,
+      "semantic_similarity": 0.845,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9231,
+      "claim_grounding_rate": 0.8462,
+      "claim_total": 13,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_009",
+      "query": "What are the crane inspection requirements?",
+      "intent_type": "policy_rule",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 106.0,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nCurrent inspection requirements mandate that all quay cranes undergo a comprehensive pre-shift safety inspection before commencing operations [rule]. Field inspections and reports of inspe",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 2353,
+      "answer_faithfulness": 0.6875,
+      "semantic_similarity": 0.8793,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.8125,
+      "claim_grounding_rate": 0.6875,
+      "claim_total": 16,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_010",
+      "query": "What pilotage requirements apply for vessel entry?",
+      "intent_type": "policy_rule",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 112.23,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nVessels entering port waters must be navigated under the direction of a marine pilot holding an unlimited marine pilot license issued by TSV Maritime and approved by the Harbour Master [do",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 2237,
+      "answer_faithfulness": 0.75,
+      "semantic_similarity": 0.8566,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.75,
+      "claim_grounding_rate": 0.75,
+      "claim_total": 16,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_SR_001",
+      "query": "Based on current wind speed data, should vessel entry be restricted?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 86.07,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nAutomated determination of vessel entry restrictions based on wind speed is currently unavailable due to data retrieval failures. No regulatory rules within the active policy e",
+      "confidence": 0.63,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 546,
+      "answer_faithfulness": 0.16666666666666666,
+      "semantic_similarity": 0.8685,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.6,
+      "claim_citation_rate": 0.0556,
+      "claim_grounding_rate": 0.2778,
+      "claim_total": 18,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_SR_002",
+      "query": "Should crane operations be paused given current wave height conditions?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 123.02,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\nQuay crane STS operations are currently permitted to continue without suspension based on prevailing sea state conditions. The current environmental metrics fall well within the",
+      "confidence": 0.73,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "evidence_keyword_recall": 0.4,
+      "evidence_length": 1407,
+      "answer_faithfulness": 0.3333333333333333,
+      "semantic_similarity": 0.8604,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.8,
+      "claim_citation_rate": 0.3529,
+      "claim_grounding_rate": 0.3529,
+      "claim_total": 17,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_SR_003",
+      "query": "Is the atmospheric pressure low enough to trigger storm watch procedures?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 102.31,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nBased on the latest environmental telemetry and operational rules, the current barometric pressure is not low enough to trigger storm watch protocols. The system indicates that",
+      "confidence": 0.73,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 4155,
+      "answer_faithfulness": 0.4090909090909091,
+      "semantic_similarity": 0.8558,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.75,
+      "claim_citation_rate": 0.5238,
+      "claim_grounding_rate": 0.4762,
+      "claim_total": 21,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_SR_004",
+      "query": "Are wind gust levels within safe limits for crane operations?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 115.08,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nCurrent wind conditions are within established safety thresholds for crane operations. Telemetry data indicates sustained wind speeds and gusts are significantly lower than the",
+      "confidence": 0.73,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 4475,
+      "answer_faithfulness": 0.35714285714285715,
+      "semantic_similarity": 0.9024,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.75,
+      "claim_citation_rate": 0.44,
+      "claim_grounding_rate": 0.48,
+      "claim_total": 25,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_SR_005",
+      "query": "What wind conditions have been recorded and what are the port rules for vessel entry?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 127.03,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nEnvironmental monitoring records indicate wind speeds ranging between 3.53 m/s and 5.25 m/s [sql]. Maximum recorded wind gusts in the sampled data reached approximately 6.73 m/s [sql]. Thes",
+      "confidence": 0.73,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 4766,
+      "answer_faithfulness": 0.47058823529411764,
+      "semantic_similarity": 0.8307,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.6,
+      "claim_citation_rate": 0.7857,
+      "claim_grounding_rate": 0.7143,
+      "claim_total": 14,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_VS_001",
+      "query": "What does port documentation say about emissions reduction and how do environmental metrics support this?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "descriptive",
+      "difficulty": "hard",
+      "elapsed_s": 92.03,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nPort documentation establishes a framework for tracking air emissions and greenhouse gas mitigation through defined environmental sustainability indicators. These records specify that carb",
+      "confidence": 0.55,
+      "expected_sources": [
+        "documents",
+        "sql"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.4,
+      "evidence_length": 1702,
+      "answer_faithfulness": 0.34782608695652173,
+      "semantic_similarity": 0.8726,
+      "pre_rerank_mrr": 1.0,
+      "pre_rerank_ndcg_at_20": 0.9021,
+      "recall_at_20": 0.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 0.9665,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": 0.6,
+      "claim_citation_rate": 0.6522,
+      "claim_grounding_rate": 0.3913,
+      "claim_total": 23,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.3333,
+          "recall": 1.0,
+          "f1": 0.5
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_VS_002",
+      "query": "How does actual crane productivity compare to performance benchmarks in port reports?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "comparison",
+      "difficulty": "medium",
+      "elapsed_s": 133.48,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nCurrent operational data indicates that ship-to-shore crane productivity averages approximately 27.5 moves per hour across the monitored terminal berths [sql]. This performance level is ca",
+      "confidence": 0.55,
+      "expected_sources": [
+        "documents",
+        "sql"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 8386,
+      "answer_faithfulness": 0.6071428571428571,
+      "semantic_similarity": 0.8572,
+      "pre_rerank_mrr": 0.0,
+      "pre_rerank_ndcg_at_20": 0.5173,
+      "recall_at_20": 0.1,
+      "mrr": 0.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.1,
+      "sql_result_accuracy": 0.75,
+      "claim_citation_rate": 0.75,
+      "claim_grounding_rate": 0.6786,
+      "claim_total": 28,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_VS_003",
+      "query": "What do strategic plans say about berth efficiency and what does the data show?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "comparison",
+      "difficulty": "medium",
+      "elapsed_s": 82.84,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nStrategic planning documents indicate a primary focus on infrastructure modernization to drive enhanced competitiveness and added capacity [doc]. Specifically, a $15 M investment was desig",
+      "confidence": 0.55,
+      "expected_sources": [
+        "documents",
+        "sql"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 8318,
+      "answer_faithfulness": 0.4642857142857143,
+      "semantic_similarity": 0.8809,
+      "pre_rerank_mrr": 0.0,
+      "pre_rerank_ndcg_at_20": 0.3989,
+      "recall_at_20": 0.0,
+      "mrr": 0.0,
+      "ndcg_at_5": 0.6309,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": 0.5,
+      "claim_citation_rate": 0.7143,
+      "claim_grounding_rate": 0.6071,
+      "claim_total": 28,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_VS_004",
+      "query": "How do yard dwell time metrics align with best management practices described in port literature?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 112.1,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nIndustry literature identifies Average Container Dwell Time as a critical Service Level Indicator for assessing terminal performance and identifying potential delays [doc]. Current operati",
+      "confidence": 0.55,
+      "expected_sources": [
+        "documents",
+        "sql"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.25,
+      "evidence_length": 3850,
+      "answer_faithfulness": 0.5862068965517241,
+      "semantic_similarity": 0.8062,
+      "pre_rerank_mrr": 0.0,
+      "pre_rerank_ndcg_at_20": 0.5382,
+      "recall_at_20": 0.0,
+      "mrr": 0.0,
+      "ndcg_at_5": 0.4307,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": 0.25,
+      "claim_citation_rate": 0.4138,
+      "claim_grounding_rate": 0.6552,
+      "claim_total": 29,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_VS_005",
+      "query": "What smart port technologies are described in reports and how do gate transaction volumes reflect their impact?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 106.76,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nReports identify smart port technologies primarily as automation, artificial intelligence, big data, Internet of Things (IoT), and blockchain [doc]. These digitalization efforts target impr",
+      "confidence": 0.55,
+      "expected_sources": [
+        "documents",
+        "sql"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 6768,
+      "answer_faithfulness": 0.5294117647058824,
+      "semantic_similarity": 0.8917,
+      "pre_rerank_mrr": 0.3333,
+      "pre_rerank_ndcg_at_20": 0.7837,
+      "recall_at_20": 0.2,
+      "mrr": 1.0,
+      "ndcg_at_5": 0.9765,
+      "recall_at_5": 0.2,
+      "sql_result_accuracy": 0.6,
+      "claim_citation_rate": 0.8235,
+      "claim_grounding_rate": 0.7059,
+      "claim_total": 17,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GRAPH_001",
+      "query": "Why might berth delays be related to weather conditions and crane slowdown?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 155.98,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\nBerth waiting times are significantly influenced by weather-induced equipment slowdowns. Graph analysis identifies a direct contribution pathway from weather conditions to crane slowdo",
+      "confidence": 0.75,
+      "expected_sources": [
+        "sql",
+        "graph"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.3333333333333333,
+        "recall": 0.5,
+        "f1": 0.4
+      },
+      "evidence_keyword_recall": 0.8333333333333334,
+      "evidence_length": 2736,
+      "answer_faithfulness": 0.6470588235294118,
+      "semantic_similarity": 0.8825,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.8333,
+      "claim_citation_rate": 0.8125,
+      "claim_grounding_rate": 0.8125,
+      "claim_total": 16,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 7
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GRAPH_002",
+      "query": "How does weather impact crane operations and berth productivity?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 211.39,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nWeather conditions influence quay crane and berth operations through measurable impacts on productivity, scheduling, and equipment stability. Operational data indicates that during flagged",
+      "confidence": 0.9,
+      "expected_sources": [
+        "sql",
+        "graph"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 6904,
+      "answer_faithfulness": 0.6923076923076923,
+      "semantic_similarity": 0.8935,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.48,
+      "claim_grounding_rate": 0.8,
+      "claim_total": 25,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.6667,
+          "recall": 1.0,
+          "f1": 0.8
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 0.75,
+          "path_count": 8
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GRAPH_003",
+      "query": "What factors contribute to gate congestion at port terminals?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 120.63,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\n\nTerminal gate congestion is a critical operational bottleneck that significantly impacts truck idling times and overall port efficiency [doc]. Graph analysis confirms that gate operat",
+      "confidence": 0.57,
+      "expected_sources": [
+        "sql",
+        "graph"
+      ],
+      "actual_sources": [
+        "documents",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 2925,
+      "answer_faithfulness": 0.6521739130434783,
+      "semantic_similarity": 0.8135,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.7727,
+      "claim_grounding_rate": 0.7273,
+      "claim_total": 22,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 8
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GRAPH_004",
+      "query": "How can a storm event cascade through port operations?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 115.72,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nA severe weather storm event propagates disruptions through port terminal operations by intensifying adverse weather conditions [graph]. These intensified conditions contribute to crane sl",
+      "confidence": 0.75,
+      "expected_sources": [
+        "sql",
+        "graph"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.3333333333333333,
+        "recall": 0.5,
+        "f1": 0.4
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 2500,
+      "answer_faithfulness": 0.7058823529411765,
+      "semantic_similarity": 0.8616,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.6,
+      "claim_citation_rate": 0.8125,
+      "claim_grounding_rate": 0.8125,
+      "claim_total": 16,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 6
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GRAPH_005",
+      "query": "What is the causal chain from high winds to berth delays?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 152.98,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\nThe operational system identifies a causal pathway where meteorological conditions trigger regulatory entry restrictions and equipment slowdowns, subsequently impacting vessel scheduli",
+      "confidence": 0.75,
+      "expected_sources": [
+        "sql",
+        "graph"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.3333333333333333,
+        "recall": 0.5,
+        "f1": 0.4
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 2537,
+      "answer_faithfulness": 0.6470588235294118,
+      "semantic_similarity": 0.8889,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.8,
+      "claim_citation_rate": 0.0,
+      "claim_grounding_rate": 0.8,
+      "claim_total": 15,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 0.8,
+          "path_count": 6
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "COMPLEX_001",
+      "query": "Based on current weather data, port rules, and operational documents, should we restrict vessel entry?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 138.75,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nCurrent environmental data indicates conditions are within safe operational limits for vessel access. [sql] The most recent reading shows a wind speed of 4.86 m/s. [sql] Signif",
+      "confidence": 0.73,
+      "expected_sources": [
+        "documents",
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.6666666666666666,
+      "evidence_length": 2667,
+      "answer_faithfulness": 0.6190476190476191,
+      "semantic_similarity": 0.8503,
+      "pre_rerank_mrr": 0.0,
+      "pre_rerank_ndcg_at_20": 0.5346,
+      "recall_at_20": 0.0,
+      "mrr": 0.0,
+      "ndcg_at_5": 0.9829,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": 0.6667,
+      "claim_citation_rate": 0.619,
+      "claim_grounding_rate": 0.7143,
+      "claim_total": 21,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "COMPLEX_002",
+      "query": "How do weather-related crane slowdowns affect berth delays, and what do safety rules say about operational limits?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 300.6,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nWeather-related disruptions significantly impact berth productivity, which subsequently influences vessel waiting times and overall delay metrics [graph]. Operational safety pr",
+      "confidence": 0.9,
+      "expected_sources": [
+        "sql",
+        "rules",
+        "graph"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.7142857142857143,
+      "evidence_length": 2285,
+      "answer_faithfulness": 0.5172413793103449,
+      "semantic_similarity": 0.8599,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.6552,
+      "claim_grounding_rate": 0.5862,
+      "claim_total": 29,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 0.6667,
+          "f1": 0.8
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 2
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "COMPLEX_003",
+      "query": "What do sustainability reports say about emissions targets, and how do environmental data and safety rules support green port operations?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "descriptive",
+      "difficulty": "hard",
+      "elapsed_s": 151.38,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nSustainability reports indicate specific decarbonization targets for port operations, aiming for a 60% reduction in total emissions by 2030 compared to 2005 levels [doc]. These reports als",
+      "confidence": 0.73,
+      "expected_sources": [
+        "documents",
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 5531,
+      "answer_faithfulness": 0.72,
+      "semantic_similarity": 0.8531,
+      "pre_rerank_mrr": 0.5,
+      "pre_rerank_ndcg_at_20": 0.7488,
+      "recall_at_20": 0.0,
+      "mrr": 0.5,
+      "ndcg_at_5": 0.8456,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": 0.8,
+      "claim_citation_rate": 0.7083,
+      "claim_grounding_rate": 0.7917,
+      "claim_total": 24,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "COMPLEX_004",
+      "query": "Using weather data, graph reasoning, and yard rules, assess if yard overflow risk is high.",
+      "intent_type": "causal_multihop",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 280.19,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nThe current assessment indicates that while structural risk pathways for container yard overflow exist, a definitive determination of high saturation probability is currently u",
+      "confidence": 0.8,
+      "expected_sources": [
+        "sql",
+        "rules",
+        "graph"
+      ],
+      "actual_sources": [
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 1047,
+      "answer_faithfulness": 0.14285714285714285,
+      "semantic_similarity": 0.8461,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.4643,
+      "claim_grounding_rate": 0.2143,
+      "claim_total": 28,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 3
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "COMPLEX_005",
+      "query": "Based on all available evidence, what is the full operational impact of severe weather on port throughput?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 318.42,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nSevere weather adverse conditions result in measurable reductions in terminal cargo throughput capacity and operational efficiency. Structured operational data indicates that vessels arriv",
+      "confidence": 0.72,
+      "expected_sources": [
+        "documents",
+        "sql",
+        "rules",
+        "graph"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571
+      },
+      "evidence_keyword_recall": 0.5714285714285714,
+      "evidence_length": 2952,
+      "answer_faithfulness": 0.78125,
+      "semantic_similarity": 0.7535,
+      "pre_rerank_mrr": 0.1111,
+      "pre_rerank_ndcg_at_20": 0.5882,
+      "recall_at_20": 0.0,
+      "mrr": 0.0,
+      "ndcg_at_5": 0.9829,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": 0.5714,
+      "claim_citation_rate": 0.3125,
+      "claim_grounding_rate": 0.75,
+      "claim_total": 32,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 0.6667,
+          "f1": 0.8
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 0.8,
+          "path_count": 6
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_011",
+      "query": "What is the Port of Antwerp-Bruges' strategy for green hydrogen?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 128.33,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe Port of Antwerp-Bruges has established a strategic roadmap extending to the year 2030 focused on green hydrogen production and utilization [doc]. This plan prioritizes the supply, infr",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 1885,
+      "answer_faithfulness": 0.7142857142857143,
+      "semantic_similarity": 0.9058,
+      "pre_rerank_mrr": 0.1429,
+      "pre_rerank_ndcg_at_20": 0.5986,
+      "recall_at_20": 0.4,
+      "mrr": 1.0,
+      "ndcg_at_5": 0.9185,
+      "recall_at_5": 0.3,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9286,
+      "claim_grounding_rate": 0.7143,
+      "claim_total": 14,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_012",
+      "query": "What progress has Singapore's MPA made on ammonia as a marine fuel?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 86.89,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe 2024 Sustainability Report indicates that ammonia is recognized as crucial for ensuring the safe and efficient use as a marine fuel [doc]. The document reports that Singapore has made ",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 1970,
+      "answer_faithfulness": 0.5384615384615384,
+      "semantic_similarity": 0.8125,
+      "pre_rerank_mrr": 1.0,
+      "pre_rerank_ndcg_at_20": 0.8696,
+      "recall_at_20": 0.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.5833,
+      "claim_grounding_rate": 0.5833,
+      "claim_total": 12,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_013",
+      "query": "What are Port Houston's carbon neutrality goals and terminal expansion plans?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 64.16,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nPort Houston has established specific greenhouse gas emission reduction targets and is actively pursuing infrastructure development through federal grant programs [doc]. The agency targets",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.4,
+      "evidence_length": 1841,
+      "answer_faithfulness": 0.5,
+      "semantic_similarity": 0.8398,
+      "pre_rerank_mrr": 0.1667,
+      "pre_rerank_ndcg_at_20": 0.543,
+      "recall_at_20": 0.0,
+      "mrr": 0.0,
+      "ndcg_at_5": 0.7606,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.7222,
+      "claim_grounding_rate": 0.6111,
+      "claim_total": 18,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_014",
+      "query": "What smart port and shore-based power initiatives is the Port of Rotterdam implementing?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 66.47,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe Port of Rotterdam is implementing shore power initiatives through specific joint ventures and infrastructure projects aimed at sustainability and regulatory compliance. The Port of Rot",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.2,
+      "evidence_length": 1875,
+      "answer_faithfulness": 0.7692307692307693,
+      "semantic_similarity": 0.8688,
+      "pre_rerank_mrr": 0.0,
+      "pre_rerank_ndcg_at_20": 0.628,
+      "recall_at_20": 0.0,
+      "mrr": 0.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.6923,
+      "claim_grounding_rate": 0.7692,
+      "claim_total": 13,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_015",
+      "query": "What are the truck turn time KPI targets in the port strategic plan?",
+      "intent_type": "document_lookup",
+      "answer_mode": "lookup",
+      "difficulty": "medium",
+      "elapsed_s": 79.25,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nBased on the retrieved documentation, the Port Authority recognizes **Truck Turnaround Time** as a designated performance measure for operational monitoring [doc]. However, the specific nu",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.4,
+      "evidence_length": 1571,
+      "answer_faithfulness": 0.36363636363636365,
+      "semantic_similarity": 0.8103,
+      "pre_rerank_mrr": 0.0833,
+      "pre_rerank_ndcg_at_20": 0.6862,
+      "recall_at_20": 0.0,
+      "mrr": 0.5,
+      "ndcg_at_5": 0.8964,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9091,
+      "claim_grounding_rate": 0.3636,
+      "claim_total": 11,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_016",
+      "query": "What federal funding has Port Houston received for sustainability projects?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "easy",
+      "elapsed_s": 83.82,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe database query confirms there are no federal grant/funding data entries available for sustainability environmental green initiatives projects. [sql]\n\n### Data Details\nThe search returne",
+      "confidence": 0.45,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "evidence_keyword_recall": 0.0,
+      "evidence_length": 177,
+      "answer_faithfulness": 0.5,
+      "semantic_similarity": 0.8,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": 0.0,
+      "ndcg_at_5": 0.0,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.25,
+      "claim_grounding_rate": 0.75,
+      "claim_total": 4,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_017",
+      "query": "What sustainability framework does the Port Authority use for infrastructure projects?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 54.53,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe Port Authority utilizes the Sustainable Earthworks and Civil Engineering approach as its primary policy guideline for infrastructure project construction works [doc]. This framework man",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.4,
+      "evidence_length": 1916,
+      "answer_faithfulness": 0.45454545454545453,
+      "semantic_similarity": 0.8392,
+      "pre_rerank_mrr": 0.25,
+      "pre_rerank_ndcg_at_20": 0.7023,
+      "recall_at_20": 0.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.8182,
+      "claim_grounding_rate": 0.4545,
+      "claim_total": 11,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "VEC_018",
+      "query": "What environmental contamination cleanup efforts are described in the 2024 sustainability report?",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 72.19,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe 2024 Environment and Sustainability Annual Report details the Port of Seattle’s commitment to long-term environmental cleanup involving contaminated soil, groundwater, and sediment [do",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 1836,
+      "answer_faithfulness": 0.875,
+      "semantic_similarity": 0.8131,
+      "pre_rerank_mrr": 0.25,
+      "pre_rerank_ndcg_at_20": 0.7056,
+      "recall_at_20": 0.2,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.2,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.75,
+      "claim_grounding_rate": 0.875,
+      "claim_total": 16,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_016",
+      "query": "How many ULCV (ultra-large container vessels) are in the dataset?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 206.06,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nThe count for Ultra-Large Container Vessels is unavailable due to a query execution error. [sql]\n\n### Data Details\nNo vessel records were successfully retrieved. [sql]\nThe operation termina",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [],
+      "source_routing": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "evidence_keyword_recall": 0.0,
+      "evidence_length": 0,
+      "answer_faithfulness": 0.0,
+      "semantic_similarity": 0.832,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.5,
+      "claim_citation_rate": 0.0,
+      "claim_grounding_rate": 0.0,
+      "claim_total": 5,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_017",
+      "query": "What is the average vessel capacity in TEU by size category?",
+      "intent_type": "structured_data",
+      "answer_mode": "comparison",
+      "difficulty": "medium",
+      "elapsed_s": 32.68,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nBased on the operational data retrieved from the vessel tracking system, the average vessel capacity varies significantly across size categories, ranging from approximately 3,433 TEU for S",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 406,
+      "answer_faithfulness": 0.047619047619047616,
+      "semantic_similarity": 0.9026,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.6,
+      "claim_citation_rate": 0.625,
+      "claim_grounding_rate": 0.0625,
+      "claim_total": 16,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_018",
+      "query": "Which terminal has the highest average berth productivity and the lowest average arrival delay?",
+      "intent_type": "structured_data",
+      "answer_mode": "comparison",
+      "difficulty": "hard",
+      "elapsed_s": 77.02,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nLong Beach Container Terminal [sql] achieved the highest average berth wharf quay productivity and the lowest average arrival delay waiting time [sql].\n\n### Data Details\nThe average berth p",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.4,
+      "evidence_length": 157,
+      "answer_faithfulness": 0.8333333333333334,
+      "semantic_similarity": 0.9198,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.4,
+      "claim_citation_rate": 0.6,
+      "claim_grounding_rate": 0.8,
+      "claim_total": 5,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_019",
+      "query": "In which month is the average wind speed the highest?",
+      "intent_type": "structured_data",
+      "answer_mode": "lookup",
+      "difficulty": "medium",
+      "elapsed_s": 104.06,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nBased on the operational records, November 2024 recorded the highest average wind speed among the analyzed months [sql]. The measured average during this period was approximately 7.06 mete",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 71,
+      "answer_faithfulness": 0.0,
+      "semantic_similarity": 0.8732,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.75,
+      "claim_citation_rate": 0.8,
+      "claim_grounding_rate": 0.0,
+      "claim_total": 10,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "SQL_020",
+      "query": "What is the average crane productivity and breakdown minutes for each terminal?",
+      "intent_type": "structured_data",
+      "answer_mode": "comparison",
+      "difficulty": "hard",
+      "elapsed_s": 100.58,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nOperational data indicates that crane productivity and downtime vary across the analyzed terminals [sql]. Productivity rates range from 22.14 to 27.41 units per hour [sql]. Breakdown durat",
+      "confidence": 0.45,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 783,
+      "answer_faithfulness": 0.11538461538461539,
+      "semantic_similarity": 0.8615,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.25,
+      "claim_citation_rate": 0.5769,
+      "claim_grounding_rate": 0.3077,
+      "claim_total": 26,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_011",
+      "query": "At what crane productivity level should operations be paused for review?",
+      "intent_type": "policy_rule",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 93.46,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nRetrieved documents discuss productivity benchmarks but do not define a specific halt threshold based on quay crane STS productivity levels [doc]. Existing operational stoppages are primari",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 1990,
+      "answer_faithfulness": 0.6666666666666666,
+      "semantic_similarity": 0.8555,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.6364,
+      "claim_grounding_rate": 0.7273,
+      "claim_total": 11,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_012",
+      "query": "When does a crane breakdown require immediate maintenance dispatch?",
+      "intent_type": "policy_rule",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 108.53,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nThe available rule set does not explicitly define specific thresholds or criteria for immediate maintenance dispatch triggered solely by a Ship-to-Shore (STS) crane breakdown o",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.0,
+      "evidence_length": 2092,
+      "answer_faithfulness": 0.391304347826087,
+      "semantic_similarity": 0.8301,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.8261,
+      "claim_grounding_rate": 0.5652,
+      "claim_total": 23,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_013",
+      "query": "What yard occupancy percentage triggers the overflow protocol?",
+      "intent_type": "policy_rule",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 101.06,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe yard storage container yard occupancy utilization percentage that triggers the overflow protocol procedure is 85%. [rule] When peak occupancy exceeds this threshold, the system initiat",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 2271,
+      "answer_faithfulness": 0.7777777777777778,
+      "semantic_similarity": 0.9227,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.5556,
+      "claim_grounding_rate": 0.7778,
+      "claim_total": 9,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_014",
+      "query": "What is the maximum vessel LOA that triggers safety protocol?",
+      "intent_type": "policy_rule",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 68.15,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nBased on the active system rules, the safety protocol is triggered when a vessel's Length Overall (LOA) reaches 366 meters or more. [rule] This threshold applies specifically to ultra-larg",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.4,
+      "evidence_length": 2411,
+      "answer_faithfulness": 0.7692307692307693,
+      "semantic_similarity": 0.8725,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.3077,
+      "claim_grounding_rate": 0.8462,
+      "claim_total": 13,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "RULE_015",
+      "query": "What arrival delay threshold triggers berth schedule reassignment?",
+      "intent_type": "policy_rule",
+      "answer_mode": "lookup",
+      "difficulty": "easy",
+      "elapsed_s": 119.34,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nAccording to the applicable operational rules, a vessel arrival delay exceeding 6 hours triggers a mandatory requirement for berth schedule reassignment and notification to the terminal op",
+      "confidence": 0.58,
+      "expected_sources": [
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 2003,
+      "answer_faithfulness": 0.5,
+      "semantic_similarity": 0.8995,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.5,
+      "claim_grounding_rate": 0.4444,
+      "claim_total": 18,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_SR_006",
+      "query": "Is current crane productivity below the minimum threshold requiring operational pause?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 69.81,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\nCurrent quay crane operations are performing below the defined productivity threshold of 25 moves per hour [sql]. While performance metrics indicate significant inefficiency, th",
+      "confidence": 0.63,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 7980,
+      "answer_faithfulness": 0.7058823529411765,
+      "semantic_similarity": 0.8948,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.25,
+      "claim_citation_rate": 0.7647,
+      "claim_grounding_rate": 0.7647,
+      "claim_total": 17,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_SR_007",
+      "query": "Does the current yard occupancy exceed the overflow protocol threshold?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 81.65,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nOne yard block recorded 85.2% occupancy [sql], exceeding the 85% threshold [rule].\n\n### Data Details\n20 rows returned [sql]. 0 rules triggered [rule]. Max occupancy in preview was 85.2% [sq",
+      "confidence": 0.63,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 5126,
+      "answer_faithfulness": 0.625,
+      "semantic_similarity": 0.8625,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.5,
+      "claim_citation_rate": 0.625,
+      "claim_grounding_rate": 0.625,
+      "claim_total": 8,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_SR_008",
+      "query": "Are there vessels in the dataset that exceed the maximum terminal LOA limit?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 48.86,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nQuery execution failed due to a binder error, preventing any assessment of vessels exceeding length limits [sql].\n\n### Data Details\nFive rules are applicable, with a maximum length threshol",
+      "confidence": 0.63,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.4,
+      "evidence_length": 624,
+      "answer_faithfulness": 0.4,
+      "semantic_similarity": 0.8732,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.6,
+      "claim_citation_rate": 0.8,
+      "claim_grounding_rate": 0.4,
+      "claim_total": 5,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_SR_009",
+      "query": "Are there arrival delays exceeding the 6-hour berth reassignment threshold?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 84.55,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nNo vessels were identified with arrival delays exceeding the 6-hour berth wharf quay reassignment threshold [sql].\n\n### Data Details\nZero records matched the condition of arrival delay hour",
+      "confidence": 0.63,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 991,
+      "answer_faithfulness": 0.4,
+      "semantic_similarity": 0.898,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.8,
+      "claim_citation_rate": 0.8,
+      "claim_grounding_rate": 0.6,
+      "claim_total": 5,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_SR_010",
+      "query": "Does the wind gust data exceed the crane boom-down threshold of 25 m/s?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 64.96,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\nBased on the latest environmental telemetry, no wind gusts have been recorded exceeding 25 m/s during the monitored period. [sql] The operational data shows zero instances where",
+      "confidence": 0.63,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.25,
+      "evidence_length": 501,
+      "answer_faithfulness": 0.1875,
+      "semantic_similarity": 0.9126,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.5,
+      "claim_citation_rate": 0.5625,
+      "claim_grounding_rate": 0.1875,
+      "claim_total": 16,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_VR_001",
+      "query": "What does the Port Information Manual say about pilotage requirements, and what are the specific rules?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 186.04,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe Port Information Manual (SPI), updated to 1 February 2025, establishes mandatory pilotage requirements under the Maritime and Port Authority of Singapore (MPA) Act 1996 [doc]. Specific",
+      "confidence": 0.58,
+      "expected_sources": [
+        "documents",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 2356,
+      "answer_faithfulness": 0.631578947368421,
+      "semantic_similarity": 0.8396,
+      "pre_rerank_mrr": 0.1429,
+      "pre_rerank_ndcg_at_20": 0.4862,
+      "recall_at_20": 0.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 0.9826,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.7895,
+      "claim_grounding_rate": 0.7895,
+      "claim_total": 19,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_VR_002",
+      "query": "What does the Green Port Progress Report say about emission reduction, and what pollution rules apply?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 85.73,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe Green Port Progress Report indicates that the Port has achieved significant reductions in air pollutants while maintaining operational throughput. Specifically, the Port exceeded its 2",
+      "confidence": 0.58,
+      "expected_sources": [
+        "documents",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 2548,
+      "answer_faithfulness": 0.8181818181818182,
+      "semantic_similarity": 0.8306,
+      "pre_rerank_mrr": 0.5,
+      "pre_rerank_ndcg_at_20": 0.8087,
+      "recall_at_20": 0.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.7727,
+      "claim_grounding_rate": 0.8182,
+      "claim_total": 22,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_VR_003",
+      "query": "What security hazards do the IAPH risk guidelines identify, and what ISPS compliance rules apply?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "descriptive",
+      "difficulty": "hard",
+      "elapsed_s": 94.6,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe retrieved documentation identifies the **IAPH Cybersecurity Guidelines for Ports and Port Facilities** as a primary framework for addressing digital security risks across global ports ",
+      "confidence": 0.58,
+      "expected_sources": [
+        "documents",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 2387,
+      "answer_faithfulness": 0.7692307692307693,
+      "semantic_similarity": 0.8621,
+      "pre_rerank_mrr": 1.0,
+      "pre_rerank_ndcg_at_20": 0.9063,
+      "recall_at_20": 0.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 0.9606,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9231,
+      "claim_grounding_rate": 0.7692,
+      "claim_total": 13,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GRAPH_006",
+      "query": "How does yard overflow cascade to gate congestion?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 288.69,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\nOperational disruptions at the berth initiate a cascade of delays that propagate through the terminal's congestion network, impacting both yard storage capacity and gate throughput. Ev",
+      "confidence": 0.57,
+      "expected_sources": [
+        "sql",
+        "graph"
+      ],
+      "actual_sources": [
+        "documents",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 2509,
+      "answer_faithfulness": 0.43478260869565216,
+      "semantic_similarity": 0.829,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.5909,
+      "claim_grounding_rate": 0.6364,
+      "claim_total": 22,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 8
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GRAPH_007",
+      "query": "What is the causal relationship between vessel scheduling disruptions and berth delays?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 153.44,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\nThe diagnostic analysis identifies an indirect causal pathway where vessel scheduling disruptions influence berth wharf quay delay waiting times primarily through environmental stresso",
+      "confidence": 0.57,
+      "expected_sources": [
+        "sql",
+        "graph"
+      ],
+      "actual_sources": [
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 796,
+      "answer_faithfulness": 0.1,
+      "semantic_similarity": 0.8932,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.8947,
+      "claim_grounding_rate": 0.2105,
+      "claim_total": 19,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 0.75,
+          "path_count": 6
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GRAPH_008",
+      "query": "How do crane breakdowns contribute to operational disruption?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 122.65,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\n\nOperational data indicates that quay crane breakdowns are a primary driver of productivity loss and operational disruption within terminal activities [sql]. Graph analysis confirms a ",
+      "confidence": 0.57,
+      "expected_sources": [
+        "sql",
+        "graph"
+      ],
+      "actual_sources": [
+        "sql",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 7465,
+      "answer_faithfulness": 0.25,
+      "semantic_similarity": 0.8765,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.6522,
+      "claim_grounding_rate": 0.3913,
+      "claim_total": 23,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 8
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "COMPLEX_006",
+      "query": "What do risk guidelines say about storm disruption, and how does the causal chain work from weather to port-wide delays?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 145.14,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\n\nRisk management for storm disruption integrates specific operational safety thresholds with infrastructure resilience planning. While regulatory documents emphasize facility-level flo",
+      "confidence": 0.75,
+      "expected_sources": [
+        "documents",
+        "sql",
+        "graph"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.8333333333333334,
+      "evidence_length": 2788,
+      "answer_faithfulness": 0.6451612903225806,
+      "semantic_similarity": 0.8828,
+      "pre_rerank_mrr": 0.5,
+      "pre_rerank_ndcg_at_20": 0.6294,
+      "recall_at_20": 0.0,
+      "mrr": 0.3333,
+      "ndcg_at_5": 0.8596,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": 0.8333,
+      "claim_citation_rate": 0.5333,
+      "claim_grounding_rate": 0.7,
+      "claim_total": 30,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 6
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GRAPH_ONLY_001",
+      "query": "What are the causal relationships between weather conditions, crane slowdown, and berth delays in the knowledge graph?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 123.19,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\n\nThe knowledge graph identifies a direct causal pathway where weather conditions significantly impact vessel arrival delays and berth operations [graph]. While specific crane and STS s",
+      "confidence": 0.47,
+      "expected_sources": [
+        "graph"
+      ],
+      "actual_sources": [
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 676,
+      "answer_faithfulness": 0.375,
+      "semantic_similarity": 0.8811,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.8667,
+      "claim_grounding_rate": 0.4,
+      "claim_total": 15,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 6
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GRAPH_ONLY_002",
+      "query": "What entities in the port knowledge graph are connected to operational disruption?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "descriptive",
+      "difficulty": "medium",
+      "elapsed_s": 79.0,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nBased on the port knowledge graph analysis, multiple entities and nodes are structurally connected to operational disruption, delay, or interruption. The primary nodes identified include `",
+      "confidence": 0.47,
+      "expected_sources": [
+        "graph"
+      ],
+      "actual_sources": [
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.25,
+      "evidence_length": 796,
+      "answer_faithfulness": 0.06666666666666667,
+      "semantic_similarity": 0.8845,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.8,
+      "claim_grounding_rate": 0.2667,
+      "claim_total": 15,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 0.8,
+          "path_count": 6
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_GR_001",
+      "query": "What causal chain links wind conditions to crane shutdown, and what are the specific wind speed thresholds in port rules?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 179.06,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\n\nThe diagnostic analysis confirms a structural causal link between environmental factors and crane operations, yet specific wind speed thresholds are absent from the retrieved regulato",
+      "confidence": 0.75,
+      "expected_sources": [
+        "graph",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 2969,
+      "answer_faithfulness": 0.28125,
+      "semantic_similarity": 0.9207,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.5,
+      "claim_grounding_rate": 0.5,
+      "claim_total": 30,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 0.3333,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": 0.5,
+          "path_count": 8
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_GR_002",
+      "query": "What is the causal path from yard overflow to gate congestion, and what occupancy threshold triggers overflow protocol?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 181.81,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\n\nThe system graph confirms a structural connectivity between container yard overflow events and terminal gate operations, mediated by congestion nodes [graph]. However, the current rul",
+      "confidence": 0.75,
+      "expected_sources": [
+        "graph",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "evidence_keyword_recall": 0.8333333333333334,
+      "evidence_length": 2598,
+      "answer_faithfulness": 0.39285714285714285,
+      "semantic_similarity": 0.9228,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.7778,
+      "claim_grounding_rate": 0.5556,
+      "claim_total": 27,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 6
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_GV_001",
+      "query": "What do IAPH risk guidelines say about cascading disruptions, and what does the knowledge graph show about disruption pathways?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 159.07,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe International Association of Ports and Harbors (IAPH) guidelines emphasize a structured approach to risk definition and resilience rather than explicitly defining cascading disruptions",
+      "confidence": 0.75,
+      "expected_sources": [
+        "graph",
+        "documents"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "evidence_keyword_recall": 0.6,
+      "evidence_length": 3222,
+      "answer_faithfulness": 0.47368421052631576,
+      "semantic_similarity": 0.921,
+      "pre_rerank_mrr": 0.3333,
+      "pre_rerank_ndcg_at_20": 0.6696,
+      "recall_at_20": 0.1,
+      "mrr": 0.0,
+      "ndcg_at_5": 0.7606,
+      "recall_at_5": 0.1,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.6842,
+      "claim_grounding_rate": 0.4737,
+      "claim_total": 19,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 7
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_GV_002",
+      "query": "What does Singapore's decarbonisation blueprint say about environmental impacts, and how do environmental conditions relate to port operations in the knowledge graph?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "descriptive",
+      "difficulty": "hard",
+      "elapsed_s": 147.01,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nSingapore’s decarbonisation strategy aligns with the 2023 IMO Strategy on Reduction of GHG Emissions from Ships [doc]. The Maritime Singapore Decarbonisation Blueprint outlines a financial",
+      "confidence": 0.75,
+      "expected_sources": [
+        "graph",
+        "documents"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "evidence_keyword_recall": 0.8,
+      "evidence_length": 3126,
+      "answer_faithfulness": 0.6666666666666666,
+      "semantic_similarity": 0.86,
+      "pre_rerank_mrr": 1.0,
+      "pre_rerank_ndcg_at_20": 0.9178,
+      "recall_at_20": 0.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.9333,
+      "claim_grounding_rate": 0.6667,
+      "claim_total": 15,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 7
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_GRV_001",
+      "query": "What does the Port Information Manual say about weather-related navigation restrictions, what rules define the thresholds, and how does the causal graph link weather to vessel entry?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 148.26,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe Port Information Manual defines port sections as navigable bodies of water extending from the pilot boarding place to the berth position, noting that each section carries specific rest",
+      "confidence": 0.75,
+      "expected_sources": [
+        "graph",
+        "rules",
+        "documents"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 0.8571428571428571,
+      "evidence_length": 2912,
+      "answer_faithfulness": 0.76,
+      "semantic_similarity": 0.8945,
+      "pre_rerank_mrr": 0.125,
+      "pre_rerank_ndcg_at_20": 0.6224,
+      "recall_at_20": 0.0,
+      "mrr": 0.3333,
+      "ndcg_at_5": 0.7725,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.7391,
+      "claim_grounding_rate": 0.7391,
+      "claim_total": 23,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 7
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "MIX_GRV_002",
+      "query": "Based on IAPH risk guidelines, emergency response rules, and the causal graph, what should happen when a storm event is detected?",
+      "intent_type": "causal_multihop",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 192.23,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nSevere weather conditions are identified as a primary driver for potential storm events within the port environment. [graph] These weather patterns contribute directly to opera",
+      "confidence": 0.75,
+      "expected_sources": [
+        "graph",
+        "rules",
+        "documents"
+      ],
+      "actual_sources": [
+        "documents",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 2867,
+      "answer_faithfulness": 0.8148148148148148,
+      "semantic_similarity": 0.8808,
+      "pre_rerank_mrr": 0.2,
+      "pre_rerank_ndcg_at_20": 0.6566,
+      "recall_at_20": 0.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": 0.0,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.4815,
+      "claim_grounding_rate": 0.8148,
+      "claim_total": 27,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": 1.0,
+          "path_count": 5
+        }
+      },
+      "guardrail": {
+        "guardrail_type": null,
+        "guardrail_pass": null,
+        "guardrail_detail": ""
+      }
+    },
+    {
+      "id": "GUARD_EMPTY_001",
+      "query": "What is the capital of France?",
+      "intent_type": "out_of_domain",
+      "answer_mode": "lookup",
+      "difficulty": "hard",
+      "elapsed_s": 68.73,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\nParis is the capital of France [general knowledge].\n\n### Supporting Evidence\nNo specific records regarding this geographical inquiry were located within the port operations database or docu",
+      "confidence": 0.25,
+      "expected_sources": [],
+      "actual_sources": [],
+      "source_routing": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 0,
+      "answer_faithfulness": 0.0,
+      "semantic_similarity": 0.8735,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.8333,
+      "claim_grounding_rate": 0.0,
+      "claim_total": 6,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": "no_source_fallback",
+        "guardrail_pass": true,
+        "guardrail_detail": "grounding=fallback_augmented kb_fallback=True"
+      }
+    },
+    {
+      "id": "GUARD_EMPTY_002",
+      "query": "Tell me a joke about shipping containers.",
+      "intent_type": "out_of_domain",
+      "answer_mode": "lookup",
+      "difficulty": "hard",
+      "elapsed_s": 78.51,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nWhile the operational database does not index humor, general industry knowledge includes the following: [general knowledge]\n\nWhy did the shipping container break up with the truck? Because",
+      "confidence": 0.3,
+      "expected_sources": [],
+      "actual_sources": [],
+      "source_routing": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 0,
+      "answer_faithfulness": 0.0,
+      "semantic_similarity": 0.8672,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.5833,
+      "claim_grounding_rate": 0.0,
+      "claim_total": 12,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": "no_source_fallback",
+        "guardrail_pass": true,
+        "guardrail_detail": "grounding=weakly_grounded kb_fallback=False"
+      }
+    },
+    {
+      "id": "GUARD_DS_NORULE_001",
+      "query": "Based on current wind speed data only, should we restrict vessel entry?",
+      "intent_type": "structured_data",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 79.79,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nCurrent environmental conditions indicate elevated wind gust activity without corresponding sustained high winds. The analysis identifies a moderate risk level based on the obs",
+      "confidence": 0.63,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 6240,
+      "answer_faithfulness": 0.21428571428571427,
+      "semantic_similarity": 0.8388,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.3333,
+      "claim_citation_rate": 0.5,
+      "claim_grounding_rate": 0.3214,
+      "claim_total": 28,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": "decision_support_no_rules",
+        "guardrail_pass": true,
+        "guardrail_detail": "no forbidden phrases found"
+      }
+    },
+    {
+      "id": "GUARD_DS_NORULE_002",
+      "query": "Given crane productivity data, should crane operations be paused?",
+      "intent_type": "structured_data",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 96.14,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nOperational data indicates that the majority of quay crane activities are functioning within normal parameters, although a small subset exhibits reduced productivity. While saf",
+      "confidence": 0.63,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "sql",
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.6666666666666666,
+      "evidence_length": 1000,
+      "answer_faithfulness": 0.44,
+      "semantic_similarity": 0.796,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.3333,
+      "claim_citation_rate": 0.625,
+      "claim_grounding_rate": 0.5417,
+      "claim_total": 24,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": "decision_support_no_rules",
+        "guardrail_pass": false,
+        "guardrail_detail": "violations=['operations must be suspended']"
+      }
+    },
+    {
+      "id": "GUARD_DS_WITHRULE_001",
+      "query": "Based on current wind speed data AND port wind restriction rules, should vessel entry be restricted?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "decision_support",
+      "difficulty": "hard",
+      "elapsed_s": 83.17,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\nThe system cannot currently determine whether vessel entry should be restricted, limited, or prohibited based on wind conditions. [rule]\nThis assessment is pending the resolutio",
+      "confidence": 0.63,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "rules"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.5,
+      "evidence_length": 546,
+      "answer_faithfulness": 0.10526315789473684,
+      "semantic_similarity": 0.7672,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.8333,
+      "claim_citation_rate": 0.0,
+      "claim_grounding_rate": 0.2105,
+      "claim_total": 19,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667
+        },
+        "rules": {
+          "recall": 1.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": "decision_support_with_rules",
+        "guardrail_pass": true,
+        "guardrail_detail": "has_recommendation=True"
+      }
+    },
+    {
+      "id": "GUARD_DIAG_NOGRAPH_001",
+      "query": "Why do berth delays increase during certain weather patterns?",
+      "intent_type": "structured_data",
+      "answer_mode": "diagnostic",
+      "difficulty": "hard",
+      "elapsed_s": 137.48,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Key Insight\n\nOperational data indicates that specific weather conditions, particularly storm events, are statistically linked to increased berth and arrival delays. [sql] Graph analysis confirms t",
+      "confidence": 0.85,
+      "expected_sources": [
+        "sql"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "f1": 0.4
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 6660,
+      "answer_faithfulness": 0.6086956521739131,
+      "semantic_similarity": 0.7425,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 0.75,
+      "claim_citation_rate": 0.6364,
+      "claim_grounding_rate": 0.6364,
+      "claim_total": 22,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": "diagnostic_without_graph",
+        "guardrail_pass": true,
+        "guardrail_detail": "knowledge_fallback_used=True"
+      }
+    },
+    {
+      "id": "GUARD_DESC_NODOC_001",
+      "query": "Summarize the port's strategic plan for the next decade.",
+      "intent_type": "document_lookup",
+      "answer_mode": "descriptive",
+      "difficulty": "hard",
+      "elapsed_s": 83.2,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Answer\n\nThe 2019 Port of Long Beach Strategic Plan establishes clear goals and strategies for the next 10 years [doc]. It outlines the Port’s priorities, responsibilities, and capabilities while c",
+      "confidence": 0.4,
+      "expected_sources": [
+        "documents"
+      ],
+      "actual_sources": [
+        "documents"
+      ],
+      "source_routing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_keyword_recall": 1.0,
+      "evidence_length": 1775,
+      "answer_faithfulness": 0.6153846153846154,
+      "semantic_similarity": 0.7293,
+      "pre_rerank_mrr": 0.25,
+      "pre_rerank_ndcg_at_20": 0.5951,
+      "recall_at_20": null,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0,
+      "recall_at_5": null,
+      "sql_result_accuracy": null,
+      "claim_citation_rate": 0.7692,
+      "claim_grounding_rate": 0.6154,
+      "claim_total": 13,
+      "per_source_metrics": {
+        "sql": {
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "rules": {
+          "recall": null,
+          "matched_count": 0
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": "descriptive_without_docs",
+        "guardrail_pass": false,
+        "guardrail_detail": "knowledge_fallback_used=False"
+      }
+    },
+    {
+      "id": "GUARD_FALLBACK_001",
+      "query": "What is the optimal container dwell time to minimize yard congestion?",
+      "intent_type": "hybrid_reasoning",
+      "answer_mode": "lookup",
+      "difficulty": "hard",
+      "elapsed_s": 221.13,
+      "error": null,
+      "has_answer": true,
+      "answer_snippet": "### Current Assessment\n\nBased on the retrieved operational data and documentation, Average Container Dwell Time is recognized as a critical Service Level Indicator directly linked to terminal capacity",
+      "confidence": 0.9,
+      "expected_sources": [
+        "sql",
+        "rules"
+      ],
+      "actual_sources": [
+        "documents",
+        "sql",
+        "rules",
+        "graph"
+      ],
+      "source_routing": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "evidence_keyword_recall": 0.75,
+      "evidence_length": 3866,
+      "answer_faithfulness": 0.6774193548387096,
+      "semantic_similarity": 0.8906,
+      "pre_rerank_mrr": null,
+      "pre_rerank_ndcg_at_20": null,
+      "recall_at_20": null,
+      "mrr": null,
+      "ndcg_at_5": null,
+      "recall_at_5": null,
+      "sql_result_accuracy": 1.0,
+      "claim_citation_rate": 0.5806,
+      "claim_grounding_rate": 0.7419,
+      "claim_total": 31,
+      "per_source_metrics": {
+        "sql": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rules": {
+          "recall": 0.0,
+          "matched_count": 5
+        },
+        "graph": {
+          "recall": null,
+          "path_count": 0
+        }
+      },
+      "guardrail": {
+        "guardrail_type": "knowledge_fallback_test",
+        "guardrail_pass": true,
+        "guardrail_detail": "kb_fallback=False sources=['documents', 'structured_operational_data', 'rules', 'graph']"
+      }
+    }
+  ],
+  "per_source_stats": {
+    "documents": {
+      "expected": 35,
+      "actual": 64,
+      "tp": 34,
+      "precision": 0.5312,
+      "recall": 0.9714
+    },
+    "sql": {
+      "expected": 54,
+      "actual": 43,
+      "tp": 41,
+      "precision": 0.9535,
+      "recall": 0.7593
+    },
+    "rules": {
+      "expected": 39,
+      "actual": 49,
+      "tp": 38,
+      "precision": 0.7755,
+      "recall": 0.9744
+    },
+    "graph": {
+      "expected": 20,
+      "actual": 23,
+      "tp": 20,
+      "precision": 0.8696,
+      "recall": 1.0
+    }
+  },
+  "node_latency": {
+    "merge_evidence": {
+      "count": 149,
+      "p50": 0.0,
+      "p95": 0.003,
+      "mean": 0.001
+    },
+    "planner": {
+      "count": 101,
+      "p50": 31.528,
+      "p95": 61.8,
+      "mean": 35.168
+    },
+    "rerank_documents": {
+      "count": 64,
+      "p50": 0.237,
+      "p95": 0.36,
+      "mean": 0.254
+    },
+    "retrieve_documents": {
+      "count": 64,
+      "p50": 2.359,
+      "p95": 3.686,
+      "mean": 2.241
+    },
+    "retrieve_rules": {
+      "count": 49,
+      "p50": 0.064,
+      "p95": 0.4,
+      "mean": 0.102
+    },
+    "route_query": {
+      "count": 101,
+      "p50": 16.588,
+      "p95": 60.228,
+      "mean": 21.936
+    },
+    "run_graph_reasoner": {
+      "count": 23,
+      "p50": 20.355,
+      "p95": 94.553,
+      "mean": 33.245
+    },
+    "run_sql": {
+      "count": 50,
+      "p50": 4.305,
+      "p95": 8.953,
+      "mean": 4.77
+    },
+    "synthesize_answer": {
+      "count": 149,
+      "p50": 29.159,
+      "p95": 44.534,
+      "mean": 31.735
+    }
+  }
+}
