@@ -1,40 +1,44 @@
 # src/offline_pipeline/semantic_chunker_v2.py
 """
-Semantic Chunker v2: optimized for port domain PDFs.
+Semantic Chunker v2: optimized for port domain PDFs with Small-to-Big retrieval.
 
 Key improvements over v1 (chunk_documents.py) and v1.5 (semantic_chunker.py):
 
-1. **Structural chunking**: splits by numbered section headers (e.g., "2.1.4 Tides")
+1. **Small-to-Big (Parent-Child) architecture**:
+   - Child chunks (~250 words): precise retrieval units → goes into vector DB
+   - Parent chunks (~1500 words): rich context → used for answer generation
+   - Each child links to its parent via parent_id
+
+2. **Structural chunking**: splits by numbered section headers (e.g., "2.1.4 Tides")
    rather than blind fixed-size splits. Preserves logical boundaries.
 
-2. **Cross-page aggregation**: concatenates pages per document FIRST, then splits,
+3. **Cross-page aggregation**: concatenates pages per document FIRST, then splits,
    so content flowing across pages is not broken.
 
-3. **Larger chunks**: target 500-800 words (vs 50-80 in v1) giving embedding
-   models enough context to capture semantics.
+4. **Enriched metadata**:
+   - Publish year (extracted from filename)
+   - Category (from directory structure: operations/environment/etc.)
+   - Document type (handbook/policy/sustainability_report/...)
+   - Section number, section title
+   - is_table flag
+   - parent_id for small-to-big lookup
 
-4. **Table extraction**: uses pdfplumber to extract tables as markdown and
-   stores them as dedicated chunks with `is_table=True`.
+5. **Table extraction**: uses pdfplumber to extract tables as markdown and
+   stores them as dedicated chunks with is_table=True.
 
-5. **Text cleaning**: fixes common PDF extraction artifacts:
-   - Broken words ("differ ent" → "different")
-   - Excess whitespace
+6. **Text cleaning**: fixes common PDF extraction artifacts:
+   - Broken words ("differ ent" -> "different")
    - `?` substitution for spaces in some fonts
    - Page headers/footers (repeated across pages)
 
-6. **Noise filtering**: drops chunks that are purely junk:
-   - "This page intentionally left blank"
-   - Pure page numbers
-   - Very short (< 30 chars) chunks
-   - TOC-only chunks (high ratio of numbers and periods)
+7. **Noise filtering**: drops "intentionally left blank", page numbers, etc.
 
-7. **Rich metadata**: section_title, section_number, doc_type, is_table,
-   word_count, char_count.
+Output:
+    data/chunks/chunks_v2_children.json  (small chunks, go into vector DB)
+    data/chunks/chunks_v2_parents.json   (big chunks, fetched for generation)
 
 Usage:
     python -m src.offline_pipeline.semantic_chunker_v2
-
-Output: data/chunks/chunks_v2.json
 
 Then re-build embeddings:
     python -m src.offline_pipeline.build_embeddings_v2
@@ -61,11 +65,17 @@ logger = logging.getLogger("offline_pipeline.semantic_chunker_v2")
 DATA_PATH = "data/raw_documents"
 OUTPUT_PATH = "data/chunks"
 
-# Target chunk size in WORDS (not chars)
-TARGET_WORDS = 600          # aim for this
-MIN_WORDS = 150             # drop smaller chunks or merge with neighbor
-MAX_WORDS = 1000            # split if exceeded
-OVERLAP_WORDS = 100         # 15-20% overlap
+# --- Parent chunk (big, for generation context) ---
+PARENT_TARGET_WORDS = 1500  # ~3 paragraphs / 1 full section
+PARENT_MIN_WORDS = 400
+PARENT_MAX_WORDS = 2500
+PARENT_OVERLAP = 200
+
+# --- Child chunk (small, for precise retrieval) ---
+CHILD_TARGET_WORDS = 250    # 1-2 paragraphs / single idea
+CHILD_MIN_WORDS = 60
+CHILD_MAX_WORDS = 400
+CHILD_OVERLAP = 50
 
 # Section header regex (matches "2.1", "2.1.4", "3.2.1.1", etc.)
 _SECTION_HEADER_RE = re.compile(
@@ -79,15 +89,18 @@ _ALL_CAPS_HEADING_RE = re.compile(
     re.MULTILINE,
 )
 
-# Noise patterns (case-insensitive)
+# Noise patterns (case-insensitive; MULTILINE so ^$ match per line)
 _NOISE_PATTERNS = [
-    r"(?i)this page (is )?intentionally left blank",
-    r"(?i)^\s*page\s+\d+\s*(of\s+\d+)?\s*$",
-    r"(?i)^\s*\d+\s*$",                           # just a page number
-    r"(?i)^\s*©.*all rights reserved.*$",
-    r"(?i)^\s*printed\s+(on|by).*$",
+    r"this page (is )?intentionally left blank",
+    r"^\s*page\s+\d+\s*(of\s+\d+)?\s*$",
+    r"^\s*\d+\s*$",                           # just a page number
+    r"^\s*(?:\u00a9|\(c\)).*all rights reserved.*$",
+    r"^\s*printed\s+(on|by).*$",
 ]
-_NOISE_RE = re.compile("|".join(_NOISE_PATTERNS), re.MULTILINE)
+_NOISE_RE = re.compile(
+    "|".join(_NOISE_PATTERNS),
+    re.MULTILINE | re.IGNORECASE,
+)
 
 # Broken word pattern: lower + space + lower (e.g., "differ ent", "L owest")
 # Only fix when the second half is short (< 5 chars) to avoid false positives
@@ -198,9 +211,9 @@ def detect_sections(text: str) -> List[Dict[str, Any]]:
 
 def split_long_section(
     section: Dict[str, Any],
-    target_words: int = TARGET_WORDS,
-    max_words: int = MAX_WORDS,
-    overlap: int = OVERLAP_WORDS,
+    target_words: int,
+    max_words: int,
+    overlap: int,
 ) -> List[Dict[str, Any]]:
     """
     Split an oversized section into sub-chunks with overlap, preserving metadata.
@@ -231,9 +244,50 @@ def split_long_section(
     return sub_chunks
 
 
+def split_parent_into_children(
+    parent_text: str,
+    target_words: int = CHILD_TARGET_WORDS,
+    overlap: int = CHILD_OVERLAP,
+    min_words: int = CHILD_MIN_WORDS,
+) -> List[str]:
+    """
+    Split a parent chunk into child chunks for precise retrieval.
+
+    Uses sentence-boundary-aware sliding window: targets `target_words` per
+    child with `overlap` word overlap, but tries to cut at sentence boundaries
+    when possible.
+    """
+    words = parent_text.split()
+    if len(words) <= min_words:
+        return [parent_text] if parent_text.strip() else []
+
+    # Simple approach: sliding window on words, adjust to nearest sentence end
+    children = []
+    start = 0
+    while start < len(words):
+        end = min(start + target_words, len(words))
+
+        # Try to extend to next sentence boundary (up to +30 words)
+        if end < len(words):
+            for look in range(min(30, len(words) - end)):
+                if words[end + look].endswith((".", "!", "?", ":")):
+                    end = end + look + 1
+                    break
+
+        sub = " ".join(words[start:end]).strip()
+        if len(sub.split()) >= min_words or not children:
+            children.append(sub)
+
+        if end >= len(words):
+            break
+        start = end - overlap
+
+    return children
+
+
 def merge_small_sections(
     sections: List[Dict[str, Any]],
-    min_words: int = MIN_WORDS,
+    min_words: int = PARENT_MIN_WORDS,
 ) -> List[Dict[str, Any]]:
     """
     Merge tiny sections into their neighbors.
@@ -342,8 +396,64 @@ def _table_to_markdown(rows: List[List[Any]]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Document type detection
+# Metadata extraction
 # ---------------------------------------------------------------------------
+
+# Year patterns — prefer 4-digit year in filename
+_FILENAME_YEAR_RE = re.compile(r"(?<!\d)(19\d{2}|20[0-3]\d)(?!\d)")
+
+# Month pattern in filename
+_FILENAME_MONTH_RE = re.compile(
+    r"(?:^|[-_])(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|"
+    r"january|february|march|april|june|july|august|september|october|november|december)(?:[-_]|$)",
+    re.IGNORECASE,
+)
+
+# Category mapping from the raw_documents directory structure
+_DIR_TO_CATEGORY = {
+    "operations": "operations",
+    "environment_infrastructure": "environment",
+    "management_governance": "management",
+    "high_tech": "technology",
+    "_duplicates": "unknown",
+}
+
+
+def extract_publish_year(filename: str, first_page_text: str = "") -> Optional[int]:
+    """
+    Extract publication year: prefer filename, fall back to first-page text.
+    Ignores years in the future.
+    """
+    import datetime
+    current_year = datetime.datetime.now().year
+
+    # 1. Try filename first (most reliable)
+    candidates = [int(m.group(1)) for m in _FILENAME_YEAR_RE.finditer(filename)]
+    candidates = [y for y in candidates if 1990 <= y <= current_year]
+
+    if candidates:
+        return max(candidates)  # most recent year in filename
+
+    # 2. Fall back to first-page text (look for "2023", "Report 2023", etc.)
+    text_candidates = [int(m.group(1)) for m in _FILENAME_YEAR_RE.finditer(first_page_text[:1500])]
+    text_candidates = [y for y in text_candidates if 1990 <= y <= current_year]
+
+    if text_candidates:
+        # Most common year in first page (Counter max)
+        c = Counter(text_candidates).most_common(1)
+        return c[0][0]
+
+    return None
+
+
+def extract_category(path: str) -> str:
+    """Extract category from directory structure."""
+    path_lower = path.replace("\\", "/").lower()
+    for dir_name, category in _DIR_TO_CATEGORY.items():
+        if f"/{dir_name}/" in path_lower or path_lower.endswith(f"/{dir_name}"):
+            return category
+    return "unknown"
+
 
 def detect_doc_type(filename: str, first_page_text: str) -> str:
     """Heuristic document type classification from filename + first page."""
@@ -380,13 +490,21 @@ def load_pdf_paths(root: str) -> List[str]:
     return pdf_files
 
 
-def chunk_one_document(doc_id: int, path: str) -> List[Dict[str, Any]]:
-    """Process a single PDF into optimized chunks."""
+def chunk_one_document(
+    doc_id: int, path: str
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """
+    Process a single PDF into parent and child chunks.
+
+    Returns:
+        (parents, children) — two lists of chunk dicts.
+        Each child has parent_id pointing to its parent.
+    """
     filename = os.path.basename(path)
     pages_text, tables = extract_pdf_text_and_tables(path)
 
     if not pages_text:
-        return []
+        return [], []
 
     # Detect and remove repeated headers/footers
     repeated = detect_repeated_headers_footers(pages_text)
@@ -396,9 +514,19 @@ def chunk_one_document(doc_id: int, path: str) -> List[Dict[str, Any]]:
     # Clean each page
     cleaned_pages = [clean_text(t) for t in pages_text]
 
-    # Detect doc type from first non-empty page
+    # Metadata extraction
     first_text = next((t for t in cleaned_pages if t), "")
     doc_type = detect_doc_type(filename, first_text)
+    publish_year = extract_publish_year(filename, first_text)
+    category = extract_category(path)
+
+    base_metadata = {
+        "doc_id": doc_id,
+        "source_file": filename,
+        "doc_type": doc_type,
+        "publish_year": publish_year,
+        "category": category,
+    }
 
     # Concatenate all pages with page markers (for traceability)
     full_text_parts = []
@@ -413,23 +541,27 @@ def chunk_one_document(doc_id: int, path: str) -> List[Dict[str, Any]]:
 
     # Section-based splitting
     sections = detect_sections(full_text)
+    sections = merge_small_sections(sections, min_words=PARENT_MIN_WORDS)
 
-    # Merge tiny sections
-    sections = merge_small_sections(sections)
-
-    # Split oversized sections
-    expanded: List[Dict[str, Any]] = []
+    # Split oversized sections into parent-sized chunks
+    parent_sections: List[Dict[str, Any]] = []
     for sec in sections:
-        expanded.extend(split_long_section(sec))
+        parent_sections.extend(
+            split_long_section(
+                sec,
+                target_words=PARENT_TARGET_WORDS,
+                max_words=PARENT_MAX_WORDS,
+                overlap=PARENT_OVERLAP,
+            )
+        )
 
-    # Build chunk records
-    chunks: List[Dict[str, Any]] = []
-    for i, sec in enumerate(expanded):
+    parents: List[Dict[str, Any]] = []
+    children: List[Dict[str, Any]] = []
+
+    for p_idx, sec in enumerate(parent_sections):
         text = sec["text"].strip()
-        if not text or len(text) < 50:
+        if not text or len(text) < 100:
             continue
-
-        wc = len(text.split())
 
         # Find which page this section starts on
         start_char = sec.get("start", 0)
@@ -440,90 +572,152 @@ def chunk_one_document(doc_id: int, path: str) -> List[Dict[str, Any]]:
             else:
                 break
 
-        chunk_id = f"{doc_id}_{sec.get('number', '') or 'p' + str(page_num)}_{i}"
-        # Replace dots in section number for a cleaner id
-        chunk_id = chunk_id.replace(".", "-")
+        section_num = sec.get("number", "") or f"p{page_num}"
+        parent_id = f"{doc_id}__p__{section_num.replace('.', '-')}__{p_idx}"
 
-        chunks.append({
-            "chunk_id": chunk_id,
-            "doc_id": doc_id,
-            "source_file": filename,
+        parent_chunk = {
+            "chunk_id": parent_id,
+            "parent_id": None,
+            "chunk_type": "parent",
             "page": page_num,
             "text": text,
             "section_number": sec.get("number", ""),
             "section_title": sec.get("title", ""),
-            "doc_type": doc_type,
             "is_table": False,
-            "word_count": wc,
+            "word_count": len(text.split()),
             "char_count": len(text),
-        })
+            **base_metadata,
+        }
+        parents.append(parent_chunk)
 
-    # Add table chunks
+        # Split parent into child chunks
+        child_texts = split_parent_into_children(text)
+        for c_idx, child_text in enumerate(child_texts):
+            if len(child_text.split()) < CHILD_MIN_WORDS and len(child_texts) > 1:
+                continue
+
+            child_id = f"{doc_id}__c__{section_num.replace('.', '-')}__{p_idx}__{c_idx}"
+            children.append({
+                "chunk_id": child_id,
+                "parent_id": parent_id,
+                "chunk_type": "child",
+                "page": page_num,
+                "text": child_text,
+                "section_number": sec.get("number", ""),
+                "section_title": sec.get("title", ""),
+                "is_table": False,
+                "word_count": len(child_text.split()),
+                "char_count": len(child_text),
+                **base_metadata,
+            })
+
+    # Add table chunks (tables are atomic — stored as BOTH parent and child)
     for t_idx, tbl in enumerate(tables):
-        chunk_id = f"{doc_id}_t{tbl['page']}_{t_idx}"
-        chunks.append({
-            "chunk_id": chunk_id,
-            "doc_id": doc_id,
-            "source_file": filename,
+        table_id = f"{doc_id}__t__{tbl['page']}__{t_idx}"
+        table_chunk = {
+            "chunk_id": table_id,
+            "parent_id": None,
+            "chunk_type": "parent",
             "page": tbl["page"],
             "text": tbl["markdown"],
             "section_number": "",
             "section_title": f"Table (page {tbl['page']})",
-            "doc_type": doc_type,
             "is_table": True,
             "word_count": len(tbl["markdown"].split()),
             "char_count": len(tbl["markdown"]),
-        })
+            **base_metadata,
+        }
+        parents.append(table_chunk)
+        # Also store as child (for retrieval) since tables are indivisible
+        child_table = dict(table_chunk)
+        child_table["chunk_id"] = f"{doc_id}__tc__{tbl['page']}__{t_idx}"
+        child_table["parent_id"] = table_id
+        child_table["chunk_type"] = "child"
+        children.append(child_table)
 
-    return chunks
+    return parents, children
 
 
 def run(data_path: str = DATA_PATH, output_path: str = OUTPUT_PATH) -> None:
-    """Main entry point."""
+    """Main entry point: produces parent and child chunk files."""
     os.makedirs(output_path, exist_ok=True)
 
     pdf_paths = load_pdf_paths(data_path)
     print(f"\nFound {len(pdf_paths)} PDFs under {data_path}")
 
-    all_chunks: List[Dict[str, Any]] = []
+    all_parents: List[Dict[str, Any]] = []
+    all_children: List[Dict[str, Any]] = []
     doc_type_counts: Counter = Counter()
+    category_counts: Counter = Counter()
+    year_counts: Counter = Counter()
     failed: List[str] = []
 
     for doc_id, path in enumerate(tqdm(pdf_paths, desc="Chunking PDFs")):
         try:
-            chunks = chunk_one_document(doc_id, path)
-            if chunks:
-                all_chunks.extend(chunks)
-                doc_type_counts[chunks[0]["doc_type"]] += 1
+            parents, children = chunk_one_document(doc_id, path)
+            if parents:
+                all_parents.extend(parents)
+                all_children.extend(children)
+                doc_type_counts[parents[0]["doc_type"]] += 1
+                category_counts[parents[0].get("category", "unknown")] += 1
+                yr = parents[0].get("publish_year")
+                if yr:
+                    year_counts[yr] += 1
         except Exception as e:
             logger.warning(f"FAILED {os.path.basename(path)}: {e}")
             failed.append(os.path.basename(path))
 
-    output_file = Path(output_path) / "chunks_v2.json"
-    with open(output_file, "w", encoding="utf-8") as f:
-        json.dump(all_chunks, f, indent=2, ensure_ascii=False)
+    parents_file = Path(output_path) / "chunks_v2_parents.json"
+    children_file = Path(output_path) / "chunks_v2_children.json"
+
+    with open(parents_file, "w", encoding="utf-8") as f:
+        json.dump(all_parents, f, indent=2, ensure_ascii=False)
+    with open(children_file, "w", encoding="utf-8") as f:
+        json.dump(all_children, f, indent=2, ensure_ascii=False)
+
+    # Back-compat: also write chunks_v2.json with the children (for BM25)
+    # so existing code reading chunks_v2.json still works
+    backcompat_file = Path(output_path) / "chunks_v2.json"
+    with open(backcompat_file, "w", encoding="utf-8") as f:
+        json.dump(all_children, f, indent=2, ensure_ascii=False)
 
     # Statistics
-    total = len(all_chunks)
-    word_counts = [c["word_count"] for c in all_chunks]
-    avg_wc = sum(word_counts) / max(total, 1)
-    table_count = sum(1 for c in all_chunks if c.get("is_table"))
+    pt = len(all_parents)
+    ct = len(all_children)
+    parent_wcs = [c["word_count"] for c in all_parents]
+    child_wcs = [c["word_count"] for c in all_children]
+    parent_tables = sum(1 for c in all_parents if c.get("is_table"))
 
     print("\n" + "=" * 60)
-    print("Chunking v2 — Complete")
+    print("Chunking v2 (Small-to-Big) — Complete")
     print("=" * 60)
-    print(f"Total chunks:    {total}")
-    print(f"Text chunks:     {total - table_count}")
-    print(f"Table chunks:    {table_count}")
-    print(f"Avg word count:  {avg_wc:.0f}")
-    print(f"Median words:    {sorted(word_counts)[len(word_counts) // 2] if word_counts else 0}")
-    print(f"Failed PDFs:     {len(failed)}")
+    print(f"Parent chunks:     {pt}  (for generation context)")
+    print(f"Child chunks:      {ct}  (for precise retrieval)")
+    print(f"Table chunks:      {parent_tables}")
+    print(f"Parent avg words:  {sum(parent_wcs) / max(pt, 1):.0f}")
+    print(f"Parent median:     {sorted(parent_wcs)[len(parent_wcs) // 2] if parent_wcs else 0}")
+    print(f"Child avg words:   {sum(child_wcs) / max(ct, 1):.0f}")
+    print(f"Child median:      {sorted(child_wcs)[len(child_wcs) // 2] if child_wcs else 0}")
+    print(f"Failed PDFs:       {len(failed)}")
     if failed[:5]:
         print(f"  First failures: {failed[:5]}")
+
     print(f"\nDocument types:")
     for dtype, cnt in doc_type_counts.most_common():
         print(f"  {dtype:<25} {cnt}")
-    print(f"\nOutput: {output_file}")
+
+    print(f"\nCategories (from directory):")
+    for cat, cnt in category_counts.most_common():
+        print(f"  {cat:<25} {cnt}")
+
+    print(f"\nPublish years (top 10):")
+    for yr, cnt in year_counts.most_common(10):
+        print(f"  {yr}: {cnt}")
+
+    print(f"\nOutputs:")
+    print(f"  parents:  {parents_file}")
+    print(f"  children: {children_file}")
+    print(f"  (compat): {backcompat_file}")
 
 
 if __name__ == "__main__":

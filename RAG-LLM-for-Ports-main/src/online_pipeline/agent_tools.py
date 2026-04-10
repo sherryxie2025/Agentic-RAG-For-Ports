@@ -154,14 +154,37 @@ class AgentToolkit:
     # -----------------------------------------------------------------------
 
     def _document_search(self, query: str, top_k: int = 5) -> Dict[str, Any]:
-        """Hybrid BM25+dense retrieval with cross-encoder reranking."""
-        docs = self._hybrid_retriever.retrieve(query=query, top_k=20)
-        reranked = self._reranker.rerank(query, docs, top_k=top_k)
+        """
+        Hybrid BM25+dense retrieval with cross-encoder reranking.
+
+        Small-to-Big:
+        1. Retrieve top-20 children for precise matching
+        2. Rerank to top-k children
+        3. Replace children with their parent chunks for generation context
+           (if parent_store is loaded; falls back to children otherwise)
+        """
+        # Step 1: retrieve children (precise units)
+        children = self._hybrid_retriever.retrieve(
+            query=query, top_k=20, return_parents=False
+        )
+
+        # Step 2: rerank children
+        reranked_children = self._reranker.rerank(query, children, top_k=top_k)
+
+        # Step 3: Small-to-Big — swap reranked children for their parent context
+        if self._hybrid_retriever.parent_store is not None:
+            documents_for_generation = self._hybrid_retriever._children_to_parents(
+                reranked_children
+            )
+        else:
+            documents_for_generation = reranked_children
+
         return {
-            "documents": reranked,
-            "pre_rerank_documents": docs,   # for rerank lift evaluation
-            "count": len(reranked),
-            "source": "hybrid_retrieval+reranker",
+            "documents": documents_for_generation,   # parents (big) for generation
+            "children": reranked_children,           # kept for evaluation + debugging
+            "pre_rerank_documents": children,        # top-20 children for rerank lift eval
+            "count": len(documents_for_generation),
+            "source": "hybrid_retrieval+reranker+small_to_big",
         }
 
     def _sql_query(self, query: str) -> Dict[str, Any]:
@@ -187,6 +210,61 @@ class AgentToolkit:
     def _query_rewrite(self, query: str) -> Dict[str, Any]:
         """Expand abbreviations and rewrite query for better retrieval."""
         return self._query_rewriter.rewrite(query)
+
+    def _hyde_search(self, query: str, top_k: int = 5) -> Dict[str, Any]:
+        """
+        HyDE (Hypothetical Document Embeddings) search.
+
+        1. Ask the LLM to write a hypothetical answer paragraph to the query
+        2. Use that hypothetical answer as the search string (it's closer in
+           vector space to real passages than the short user query is)
+        3. Run the normal hybrid retrieval pipeline on the hypothetical answer
+        4. Return parents (small-to-big) for generation context
+
+        Useful for abstract or vague queries where the user's wording differs
+        significantly from document language.
+        """
+        from .llm_client import llm_chat
+
+        # Step 1: generate hypothetical answer
+        hyde_prompt = (
+            "You are an expert on port operations, maritime logistics, and "
+            "sustainability. Write a short, technical paragraph (3-5 sentences) "
+            "that would directly answer the user's question. Use precise domain "
+            "vocabulary. Do not add disclaimers or meta-commentary — just the answer.\n\n"
+            f"Question: {query}\n\nAnswer:"
+        )
+        hypothetical = llm_chat(
+            messages=[{"role": "user", "content": hyde_prompt}],
+            temperature=0.2,
+            timeout=30,
+            max_tokens=300,
+        )
+
+        if not hypothetical:
+            # Fallback: use original query if LLM fails
+            hypothetical = query
+
+        # Step 2: search using the hypothetical answer
+        children = self._hybrid_retriever.retrieve(
+            query=hypothetical, top_k=20, return_parents=False
+        )
+        reranked = self._reranker.rerank(query, children, top_k=top_k)
+
+        # Step 3: small-to-big for generation context
+        if self._hybrid_retriever.parent_store is not None:
+            documents = self._hybrid_retriever._children_to_parents(reranked)
+        else:
+            documents = reranked
+
+        return {
+            "documents": documents,
+            "children": reranked,
+            "hypothetical_answer": hypothetical,
+            "original_query": query,
+            "count": len(documents),
+            "source": "hyde+hybrid+rerank+small_to_big",
+        }
 
     def _evidence_conflict_check(
         self,
@@ -307,6 +385,34 @@ class AgentToolkit:
                     "required": ["query"],
                 },
                 fn=self._query_rewrite,
+            ),
+            ToolDescriptor(
+                name="hyde_search",
+                description=(
+                    "HyDE (Hypothetical Document Embeddings) search: ask the LLM to "
+                    "write a short hypothetical answer to the query first, then search "
+                    "using that hypothetical answer instead of the raw query. Returns "
+                    "the same document format as document_search. Use for abstract "
+                    "or vague questions where user wording likely differs from the "
+                    "document language (e.g., 'what is the port doing about climate?'). "
+                    "Do NOT use for simple factual lookups — use document_search instead."
+                ),
+                parameters={
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": "Abstract or open-ended question",
+                        },
+                        "top_k": {
+                            "type": "integer",
+                            "description": "Number of top results",
+                            "default": 5,
+                        },
+                    },
+                    "required": ["query"],
+                },
+                fn=self._hyde_search,
             ),
             ToolDescriptor(
                 name="evidence_conflict_check",

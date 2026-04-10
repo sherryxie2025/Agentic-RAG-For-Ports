@@ -28,7 +28,8 @@ from tqdm import tqdm
 
 logger = logging.getLogger("offline_pipeline.build_embeddings_v2")
 
-CHUNK_PATH = "data/chunks/chunks_v2.json"
+CHILDREN_PATH = "data/chunks/chunks_v2_children.json"
+PARENTS_PATH = "data/chunks/chunks_v2_parents.json"
 EMBEDDINGS_PATH = "data/chunks/chunks_v2_with_embeddings.json"
 CHROMA_COLLECTION_NAME = "port_documents_v2"
 
@@ -41,27 +42,42 @@ BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 
 def build_embeddings_v2() -> None:
-    """Embed chunks_v2 and write Chroma collection v2."""
+    """
+    Embed children chunks and write Chroma collection v2.
+
+    Only children go into the vector DB (for precise retrieval). Parents are
+    loaded separately at runtime via parent_id lookup for generation context.
+    """
     from sentence_transformers import SentenceTransformer
     import chromadb
 
-    chunk_file = Path(CHUNK_PATH)
-    if not chunk_file.exists():
+    children_file = Path(CHILDREN_PATH)
+    parents_file = Path(PARENTS_PATH)
+
+    if not children_file.exists():
         raise FileNotFoundError(
-            f"{chunk_file} not found. Run semantic_chunker_v2.py first."
+            f"{children_file} not found. Run semantic_chunker_v2.py first."
         )
 
-    with open(chunk_file, "r", encoding="utf-8") as f:
+    with open(children_file, "r", encoding="utf-8") as f:
         chunks = json.load(f)
-    print(f"Loaded {len(chunks)} chunks from {chunk_file}")
+    print(f"Loaded {len(chunks)} children chunks from {children_file}")
+
+    if parents_file.exists():
+        with open(parents_file, "r", encoding="utf-8") as f:
+            parents = json.load(f)
+        print(f"Loaded {len(parents)} parent chunks from {parents_file}")
+    else:
+        print(f"Warning: {parents_file} not found — parent lookup will be unavailable")
 
     # Load BGE model
     print(f"Loading embedding model: {EMBED_MODEL_NAME}")
     model = SentenceTransformer(EMBED_MODEL_NAME, device="cuda")
     model.max_seq_length = 512  # BGE max
 
-    # Encode passages (no prefix for passages)
-    print("Encoding passages (no prefix)...")
+    # Encode CHILDREN passages (no prefix for passages)
+    # Parents are NOT embedded — they're fetched by parent_id at runtime.
+    print("Encoding children passages (no prefix)...")
     texts = [c["text"] for c in chunks]
     embeddings = model.encode(
         texts,
@@ -97,7 +113,7 @@ def build_embeddings_v2() -> None:
 
     # Add in batches (Chroma has size limits)
     batch_size = 1000
-    print(f"Inserting {len(chunks)} chunks in batches of {batch_size}...")
+    print(f"Inserting {len(chunks)} children chunks in batches of {batch_size}...")
     for i in tqdm(range(0, len(chunks), batch_size)):
         batch = chunks[i:i + batch_size]
         collection.add(
@@ -109,9 +125,12 @@ def build_embeddings_v2() -> None:
                     "doc_id": c.get("doc_id", 0),
                     "source_file": c.get("source_file", ""),
                     "page": c.get("page", 0),
+                    "parent_id": c.get("parent_id") or "",
                     "section_number": c.get("section_number", ""),
                     "section_title": c.get("section_title", ""),
                     "doc_type": c.get("doc_type", "document"),
+                    "category": c.get("category", "unknown"),
+                    "publish_year": int(c.get("publish_year") or 0),
                     "is_table": bool(c.get("is_table", False)),
                     "word_count": int(c.get("word_count", 0)),
                 }
@@ -119,9 +138,10 @@ def build_embeddings_v2() -> None:
             ],
         )
 
-    print(f"\nCollection '{CHROMA_COLLECTION_NAME}' built with {collection.count()} chunks.")
-    print(f"\nNext step: update HybridDocumentRetriever to use collection_name='{CHROMA_COLLECTION_NAME}'")
-    print("and prepend the BGE query prefix when embedding queries.")
+    print(f"\nCollection '{CHROMA_COLLECTION_NAME}' built with {collection.count()} children chunks.")
+    print(f"Parents are loaded from {PARENTS_PATH} at runtime for Small-to-Big lookup.")
+    print(f"\nNext step: update document_retriever.py to use collection_name='{CHROMA_COLLECTION_NAME}'")
+    print("and enable small-to-big parent fetch via ParentChunkStore.")
 
 
 if __name__ == "__main__":
