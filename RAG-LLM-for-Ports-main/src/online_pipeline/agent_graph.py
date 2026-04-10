@@ -271,6 +271,21 @@ class AgentNodes:
             "graph": state.get("graph_results", {}),
         }
 
+        # Enhanced conflict detection (Rule↔SQL, Doc↔SQL, Doc↔Rule, temporal)
+        from .conflict_detector import detect_all_conflicts
+        try:
+            conflicts = detect_all_conflicts(evidence_bundle)
+            evidence_bundle["conflict_annotations"] = conflicts
+            if conflicts:
+                logger.info(
+                    "EVALUATE_NODE: %d conflicts detected (%s)",
+                    len(conflicts),
+                    ", ".join(set(c.get("conflict_type", "?") for c in conflicts)),
+                )
+        except Exception as e:
+            logger.warning("Conflict detection failed: %s", e)
+            evidence_bundle["conflict_annotations"] = []
+
         # If max iterations reached, skip evaluation — go straight to synthesis
         if iteration >= MAX_ITERATIONS:
             logger.info("EVALUATE_NODE: max iterations reached, proceeding to synthesis")
