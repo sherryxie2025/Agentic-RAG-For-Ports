@@ -50,7 +50,11 @@ class HybridDocumentRetriever:
         self.chunks, self.bm25 = self._build_bm25_index()
 
     def _build_bm25_index(self):
-        chunks_path = self.registry.chunks_file
+        # Prefer v2 chunks if they exist (matches new BGE Chroma collection)
+        chunks_v2_path = self.registry.chunks_dir / "chunks_v2.json"
+        chunks_path = chunks_v2_path if chunks_v2_path.exists() else self.registry.chunks_file
+        logger.info("BM25 index source: %s", chunks_path.name)
+
         with open(chunks_path, "r", encoding="utf-8") as f:
             chunks = json.load(f)
 
