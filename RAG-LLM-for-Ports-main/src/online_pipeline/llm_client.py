@@ -57,10 +57,21 @@ def get_model_name() -> str:
 
 
 def get_openai_client() -> OpenAI:
-    """Return a shared OpenAI SDK client (created once, reused)."""
+    """
+    Return a shared OpenAI SDK client (created once, reused).
+
+    IMPORTANT: max_retries=0 because the SDK's default is 2, which triples
+    effective timeout (timeout * 3). We handle our own retries at call sites
+    where needed. Default timeout is also set here as a global fallback.
+    """
     global _openai_client
     if _openai_client is None:
-        _openai_client = OpenAI(api_key=_API_KEY, base_url=_BASE_URL)
+        _openai_client = OpenAI(
+            api_key=_API_KEY,
+            base_url=_BASE_URL,
+            max_retries=0,          # critical: prevent 3x timeout multiplier
+            timeout=60.0,           # default per-call cap, can be overridden
+        )
     return _openai_client
 
 
@@ -72,12 +83,19 @@ def llm_chat(
     messages: List[Dict[str, str]],
     temperature: float = 0.3,
     model: str | None = None,
-    timeout: int = 120,
+    timeout: int = 60,
     max_tokens: int | None = None,
+    max_retries: int = 1,
 ) -> str:
     """
     One-liner LLM chat completion using the OpenAI SDK.
     Returns the assistant message text, or empty string on failure.
+
+    Args:
+        timeout: Per-attempt timeout in seconds. Actual wall-clock worst case
+            is ``timeout * (max_retries + 1)``.
+        max_retries: Additional attempts after a failure. Default 1 (so up
+            to 2 total attempts). Set to 0 to disable retries.
     """
     client = get_openai_client()
     kwargs: Dict[str, Any] = dict(
@@ -90,44 +108,68 @@ def llm_chat(
         kwargs["max_tokens"] = max_tokens
 
     caller = messages[-1].get("content", "")[:60] if messages else "?"
-    t0 = time.time()
-    try:
-        resp = client.chat.completions.create(**kwargs)
-        elapsed = time.time() - t0
-        text = resp.choices[0].message.content
-        # Log token usage if available
-        usage = getattr(resp, "usage", None)
-        if usage:
-            logger.info(
-                "LLM_CALL: model=%s %.1fs tokens(in=%s out=%s) prompt=%.50s",
-                kwargs.get("model"), elapsed,
-                getattr(usage, "prompt_tokens", "?"),
-                getattr(usage, "completion_tokens", "?"),
-                caller,
+    last_error = None
+
+    for attempt in range(max_retries + 1):
+        t0 = time.time()
+        try:
+            resp = client.chat.completions.create(**kwargs)
+            elapsed = time.time() - t0
+            text = resp.choices[0].message.content
+            usage = getattr(resp, "usage", None)
+            if usage:
+                logger.info(
+                    "LLM_CALL: model=%s %.1fs tokens(in=%s out=%s) prompt=%.50s",
+                    kwargs.get("model"), elapsed,
+                    getattr(usage, "prompt_tokens", "?"),
+                    getattr(usage, "completion_tokens", "?"),
+                    caller,
+                )
+            else:
+                logger.info(
+                    "LLM_CALL: model=%s %.1fs resp_len=%d prompt=%.50s",
+                    kwargs.get("model"), elapsed, len(text or ""), caller,
+                )
+            return text.strip() if text else ""
+        except Exception as e:
+            elapsed = time.time() - t0
+            last_error = e
+            err_str = str(e)[:150]
+            # Only retry on transient errors (timeout, connection)
+            is_transient = any(
+                s in err_str.lower()
+                for s in ("timeout", "timed out", "connection", "read", "deadline")
             )
-        else:
-            logger.info(
-                "LLM_CALL: model=%s %.1fs resp_len=%d prompt=%.50s",
-                kwargs.get("model"), elapsed, len(text or ""), caller,
+            if attempt < max_retries and is_transient:
+                logger.warning(
+                    "LLM_CALL retry %d/%d after %.1fs: %s (prompt=%.40s)",
+                    attempt + 1, max_retries, elapsed, err_str, caller,
+                )
+                continue
+            logger.error(
+                "LLM_CALL FAILED (attempt %d): model=%s %.1fs error=%s prompt=%.50s",
+                attempt + 1, kwargs.get("model"), elapsed, err_str, caller,
             )
-        return text.strip() if text else ""
-    except Exception as e:
-        elapsed = time.time() - t0
-        logger.error("LLM_CALL FAILED: model=%s %.1fs error=%s prompt=%.50s", kwargs.get("model"), elapsed, e, caller)
-        return ""
+            return ""
+
+    return ""
 
 
 def llm_chat_json(
     messages: List[Dict[str, str]],
     temperature: float = 0.1,
     model: str | None = None,
-    timeout: int = 120,
+    timeout: int = 60,
+    max_retries: int = 1,
 ) -> Any:
     """
     LLM chat that expects a JSON response.
     Attempts to parse JSON from the response; returns None on failure.
     """
-    text = llm_chat(messages, temperature=temperature, model=model, timeout=timeout)
+    text = llm_chat(
+        messages, temperature=temperature, model=model,
+        timeout=timeout, max_retries=max_retries,
+    )
     if not text:
         return None
     # Try to extract JSON object or array

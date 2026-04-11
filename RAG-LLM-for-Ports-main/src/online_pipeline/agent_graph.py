@@ -24,7 +24,7 @@ import json
 import logging
 import time
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from langgraph.graph import END, START, StateGraph
 
@@ -52,6 +52,48 @@ MAX_ITERATIONS = 2
 # Tools that skip ReAct observation (too simple or always last)
 _SKIP_OBSERVATION_TOOLS = {"query_rewrite", "evidence_conflict_check"}
 
+# --- Fast-path OOD detection ---
+# Keywords that strongly indicate in-domain port questions. If any are present,
+# we skip the LLM OOD check entirely and treat the query as in-domain.
+_IN_DOMAIN_KEYWORDS = {
+    "port", "berth", "crane", "vessel", "ship", "terminal", "cargo",
+    "container", "teu", "tug", "pilot", "wharf", "quay", "dock", "harbour",
+    "harbor", "yard", "gate", "marine", "maritime", "tidal", "tide",
+    "wind speed", "wave height", "sustainability", "emission", "ghg",
+    "weather", "navigation", "anchorage", "channel", "vts",
+    "policy", "rule", "regulation", "threshold", "handbook", "loa", "dwt",
+    "environmental", "pilotage", "bunker", "draft", "draught",
+    "productivity", "moves per hour", "dwell", "turn time", "transit",
+    "operations", "operational",
+}
+
+# Phrases that strongly indicate out-of-domain queries. Fast refusal.
+_OUT_OF_DOMAIN_KEYWORDS = {
+    "recipe", "cooking", "joke", "meme", "movie", "celebrity", "weather forecast",
+    "stock price", "current time", "what time is it", "dating", "lottery",
+    "hello", "how are you",
+}
+
+
+def _fast_ood_check(query: str) -> Optional[str]:
+    """
+    Rule-based fast-path OOD classification.
+
+    Returns:
+        "in_domain" if any in-domain keyword is present (and no OOD phrase)
+        "out_of_domain" if any OOD phrase is present (and no in-domain keyword)
+        None if unclear — caller should fall back to LLM classification
+    """
+    q = query.lower()
+    has_ind = any(kw in q for kw in _IN_DOMAIN_KEYWORDS)
+    has_ood = any(kw in q for kw in _OUT_OF_DOMAIN_KEYWORDS)
+
+    if has_ind and not has_ood:
+        return "in_domain"
+    if has_ood and not has_ind:
+        return "out_of_domain"
+    return None  # ambiguous, escalate to LLM
+
 
 # ---------------------------------------------------------------------------
 # Node implementations
@@ -77,34 +119,57 @@ class AgentNodes:
         false_premise / too_vague. Sets ood_verdict in state and, if not
         in-domain, builds a refusal FinalAnswer that bypasses the rest of
         the pipeline.
+
+        Fast path: rule-based keyword classifier runs first. Only ambiguous
+        queries trigger the LLM call (which saves ~5-15s per in-domain query).
         """
         t0 = time.time()
         user_query = state.get("user_query", "")
 
-        prompt = OOD_DETECTION_PROMPT.format(query=user_query)
-        result = llm_chat_json(
-            messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": "Classify this query."},
-            ],
-            temperature=0.0,
-            timeout=30,
-        )
-
-        elapsed = time.time() - t0
-
+        # -- Fast path: rule-based keyword matching --
+        fast_verdict = _fast_ood_check(user_query)
         classification = "in_domain"
         refusal_message = ""
         reasoning = ""
-        if isinstance(result, dict):
-            classification = result.get("classification", "in_domain")
-            refusal_message = result.get("refusal_message", "")
-            reasoning = result.get("reasoning", "")
+        used_llm = False
+
+        if fast_verdict == "in_domain":
+            classification = "in_domain"
+            reasoning = "Fast path: matched in-domain keywords"
+        elif fast_verdict == "out_of_domain":
+            classification = "out_of_domain"
+            reasoning = "Fast path: matched out-of-domain keywords"
+            refusal_message = (
+                "I'm focused on port operations, maritime regulations, and "
+                "sustainability reports. That question falls outside my scope."
+            )
+        else:
+            # -- Fall back to LLM classifier for ambiguous queries --
+            used_llm = True
+            prompt = OOD_DETECTION_PROMPT.format(query=user_query)
+            result = llm_chat_json(
+                messages=[
+                    {"role": "system", "content": prompt},
+                    {"role": "user", "content": "Classify this query."},
+                ],
+                temperature=0.0,
+                timeout=20,      # fast fail for OOD check
+                max_retries=0,   # no retry — if it fails, default to in_domain
+            )
+            if isinstance(result, dict):
+                classification = result.get("classification", "in_domain")
+                refusal_message = result.get("refusal_message", "")
+                reasoning = result.get("reasoning", "")
+            else:
+                # LLM failed — default to in_domain to avoid blocking real queries
+                classification = "in_domain"
+                reasoning = "LLM classifier failed; defaulting to in_domain"
+
+        elapsed = time.time() - t0
 
         logger.info(
-            "OOD_CHECK: %.2fs classification=%s confidence=%s",
-            elapsed, classification,
-            (result or {}).get("confidence", "?"),
+            "OOD_CHECK: %.2fs classification=%s path=%s",
+            elapsed, classification, "llm" if used_llm else "fast",
         )
 
         update: Dict[str, Any] = {
