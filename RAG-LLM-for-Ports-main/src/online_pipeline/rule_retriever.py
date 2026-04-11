@@ -112,6 +112,8 @@ class RuleRetriever:
         }
 
         normalized["search_text"] = self._build_search_text(normalized)
+        normalized["search_tokens"] = self._tokenize(normalized["search_text"])
+        normalized["search_token_set"] = set(normalized["search_tokens"])
         return normalized
 
     @staticmethod
@@ -158,15 +160,19 @@ class RuleRetriever:
         Score a rule against the query keywords.
 
         Uses query-length-normalized keyword overlap (fraction of query keywords
-        matched), so scores are comparable across query lengths. Short structural
-        bonuses are ADDITIVE after the normalization to nudge grounded rules.
+        matched). CRITICAL: uses tokenized set membership (not substring) so
+        'wind' doesn't match 'windows', 'berth' doesn't match 'berthing', etc.
         """
-        search_text = rule.get("search_text", "") or ""
         if not query_keywords:
             return 0.0
 
-        # Count how many query keywords appear in the rule text (fraction of query)
-        matches = sum(1 for kw in query_keywords if kw in search_text)
+        # Use pre-tokenized set for word-boundary matching (not substring)
+        search_tokens: set = rule.get("search_token_set") or set()
+        if not search_tokens:
+            return 0.0
+
+        # Count how many query keywords appear as whole tokens in rule
+        matches = sum(1 for kw in query_keywords if kw in search_tokens)
         if matches == 0:
             return 0.0
 
@@ -175,8 +181,12 @@ class RuleRetriever:
 
         # Bonus: stronger when the rule hits a VARIABLE keyword (e.g. "wind",
         # "crane") since those are more specific than filler words.
+        # Variable field can be e.g. "wind_speed_ms" — split by non-alnum
         variable_field = (rule.get("variable") or rule.get("sql_variable") or "").lower()
-        variable_hit = any(kw in variable_field for kw in query_keywords if len(kw) > 2)
+        variable_tokens = set(re.split(r"[^a-z0-9]+", variable_field))
+        variable_hit = any(
+            kw in variable_tokens for kw in query_keywords if len(kw) > 2
+        )
 
         score = coverage
         if variable_hit:
@@ -198,7 +208,7 @@ class RuleRetriever:
         self,
         query: str,
         top_k: int = 5,
-        min_score: float = 0.35,   # normalized score: require >=35% coverage OR variable hit
+        min_score: float = 0.4,   # require >=40% coverage OR strong variable hit (0.3 bonus)
     ) -> List[RuleMatch]:
         normalized_query = self._normalize_query(query)
         query_keywords = self._extract_query_keywords(normalized_query)

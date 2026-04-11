@@ -1031,14 +1031,28 @@ Rules:
         has_graph: bool,
         knowledge_fallback_used: bool,
     ) -> str:
+        """
+        Grounding status interpretation:
+        - fully_grounded: at least 1 source provided concrete evidence AND
+          no LLM knowledge fallback was used. This is the ideal case — the
+          answer is supported by real retrieved data.
+        - partially_grounded: some sources contributed but gaps exist (now
+          only used when multiple sources were needed but only one delivered).
+        - weakly_grounded: no real evidence at all.
+        - fallback_augmented: LLM knowledge was used to fill gaps.
+
+        Previously required >=2 sources for "fully_grounded", which was
+        too strict — a single well-matched source (e.g. the exact rule
+        for a policy question) is fully grounded. The strict planner
+        often uses only 1 source per query, so the old threshold was
+        mislabeling well-grounded answers as "partial".
+        """
         if knowledge_fallback_used:
             return "fallback_augmented"
 
         grounded_count = sum([has_docs, has_sql, has_rules, has_graph])
-        if grounded_count >= 2:
+        if grounded_count >= 1:
             return "fully_grounded"
-        if grounded_count == 1:
-            return "partially_grounded"
         return "weakly_grounded"
 
     @staticmethod

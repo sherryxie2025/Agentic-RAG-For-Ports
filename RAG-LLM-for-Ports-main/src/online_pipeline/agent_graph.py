@@ -75,6 +75,44 @@ _OUT_OF_DOMAIN_KEYWORDS = {
 }
 
 
+def _pick_fallback_tool(query: str) -> str:
+    """
+    Keyword-based fallback tool picker. Used when the LLM planner fails.
+    Priority order (first match wins): graph > rules > sql > document.
+    """
+    q = query.lower()
+
+    # 1. Graph indicators (highest priority — "why" questions trump metric words)
+    graph_kw = [
+        "why ", "explain why", "factors", "causes of", "cause of",
+        "root cause", "contributed to", "led to", "impact of",
+        "related to", "how come",
+    ]
+    if any(kw in q for kw in graph_kw):
+        return "graph_reason"
+
+    # 2. Rule indicators: thresholds, limits, allowed/prohibited
+    rule_kw = [
+        "limit", "threshold", "allowed", "permitted", "prohibit",
+        "restrict", "must not", "should not", " rule", " policy",
+        "compliance", "under what conditions", "when should",
+    ]
+    if any(kw in q for kw in rule_kw):
+        return "rule_lookup"
+
+    # 3. SQL indicators: metrics, numbers, statistics, historical data
+    sql_kw = [
+        "average", "avg ", "mean ", "total ", "sum ", "count ", "maximum",
+        "minimum", "how many", "how much", "what was the", "top 5", "top 10",
+        "productivity", "throughput", "moves per hour", "dwell", "turn time",
+    ]
+    if any(kw in q for kw in sql_kw):
+        return "sql_query"
+
+    # 4. Default: document search (works for most factual lookups)
+    return "document_search"
+
+
 def _fast_ood_check(query: str) -> Optional[str]:
     """
     Rule-based fast-path OOD classification.
@@ -265,15 +303,18 @@ class AgentNodes:
         raw_plan = llm_chat_json(messages, temperature=0.1, timeout=30, max_retries=0)
         steps = self._parse_plan(raw_plan, start_id=self._next_step_id(state))
 
-        # Fallback: if LLM failed or produced an empty plan, default to a
-        # single document_search step so we at least retrieve SOMETHING.
+        # Fallback: if LLM failed or produced an empty plan, pick a sensible
+        # default tool based on query keywords (not always document_search).
         if not steps and iteration == 0:
-            logger.warning("PLAN_NODE: LLM plan failed, using document_search fallback")
+            fallback_tool = self._pick_fallback_tool(user_query)
+            logger.warning(
+                "PLAN_NODE: LLM plan failed, using %s fallback", fallback_tool,
+            )
             steps = [PlanStep(
                 step_id=1,
-                tool_name="document_search",
+                tool_name=fallback_tool,
                 query=user_query,
-                purpose="Fallback: LLM planner failed; default to document search",
+                purpose=f"Fallback: LLM planner failed; keyword-based default to {fallback_tool}",
                 status="pending",
                 result_summary="",
             )]
