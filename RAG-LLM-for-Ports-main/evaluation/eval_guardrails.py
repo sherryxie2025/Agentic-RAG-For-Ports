@@ -28,6 +28,9 @@ _OOD_PHRASES = [
     "out of domain", "out of scope", "not a port", "beyond the scope",
     "cannot help", "i don't have", "no information about",
     "not applicable", "not related to port", "outside the scope",
+    "outside my scope", "falls outside", "focused on port", "focus on port",
+    "port operations", "not about port", "port decision-support",
+    "domain gate", "only answer questions", "do not have information",
 ]
 
 # Signal phrases for "no data"

@@ -157,6 +157,11 @@ class RuleDrivenGraphBuilder:
             taxonomy = self._load_taxonomy()
             self._create_metric_nodes(session, taxonomy)
 
+            # Phase 1b: Bridge concept nodes (for backward compat with
+            # graph_reasoner's entity alias map and user queries that use
+            # generic concept names like "weather" or "safety")
+            self._create_bridge_concepts(session)
+
             # Phase 2: Rule-driven edges (threshold relationships + citations)
             grounded_rules = self._load_rules(GROUNDED_RULES_PATH)
             policy_rules = self._load_rules(POLICY_RULES_PATH)
@@ -208,6 +213,95 @@ class RuleDrivenGraphBuilder:
             )
             self.nodes_created += 1
         logger.info("Created %d metric nodes from auto-taxonomy", self.nodes_created)
+
+    def _create_bridge_concepts(self, session) -> None:
+        """
+        Create legacy concept nodes and link them to the metric layer.
+
+        This preserves backward compatibility with graph_reasoner's
+        entity_alias_map, which references concept names like "weather_conditions"
+        and "crane_slowdown". Without these bridges, generic queries
+        ("weather", "safety") can't traverse to the metric nodes.
+
+        Each bridge concept is linked to relevant metrics via AFFECTS /
+        INCLUDES / INDICATES edges, so path-finding can traverse
+        concept -> metric -> action.
+        """
+        bridge_definitions = [
+            # (concept_name, related_metric_names, relationship_type)
+            ("weather_conditions", ["wind_speed_ms", "wind_gust_ms", "wave_height_m",
+                                     "air_temp_c", "pressure_hpa"], "INCLUDES"),
+            ("environmental_conditions", ["water_temp_c", "tide_ft", "pressure_hpa"], "INCLUDES"),
+            ("storm_event", ["wind_gust_ms", "wave_height_m", "pressure_hpa"], "INDICATES"),
+            ("wind_restriction", ["wind_speed_ms", "wind_gust_ms"], "AFFECTS"),
+            ("navigation_restriction", ["tide_ft", "wave_height_m"], "AFFECTS"),
+            ("operational_disruption", ["arrival_delay_hours", "berth_delay_hours",
+                                         "breakdown_minutes"], "INDICATES"),
+            ("crane_slowdown", ["crane_productivity_mph", "breakdown_minutes"], "INDICATES"),
+            ("berth_operations", ["berth_productivity_mph", "arrival_delay_hours"], "INCLUDES"),
+            ("crane_operations", ["crane_productivity_mph", "crane_hours",
+                                   "breakdown_minutes"], "INCLUDES"),
+            ("yard_operations", ["average_dwell_days", "teu_received",
+                                  "peak_occupancy_pct"], "INCLUDES"),
+            ("gate_operations", ["total_transactions", "average_turn_time_minutes"], "INCLUDES"),
+            ("congestion", ["peak_occupancy_pct", "average_turn_time_minutes",
+                             "total_transactions"], "INDICATES"),
+            ("gate_congestion", ["average_turn_time_minutes", "total_transactions"], "INDICATES"),
+            ("yard_overflow", ["peak_occupancy_pct", "average_dwell_days"], "INDICATES"),
+            ("safety", ["wind_gust_ms", "wave_height_m", "breakdown_minutes"], "DEPENDS_ON"),
+            ("compliance", ["wind_speed_ms", "wave_height_m"], "DEPENDS_ON"),
+            ("weather", ["wind_speed_ms", "wave_height_m", "pressure_hpa"], "IS_SAME_AS"),
+        ]
+
+        bridge_created = 0
+        link_created = 0
+        for concept, metrics, rel_type in bridge_definitions:
+            session.run(
+                "MERGE (c:Concept {name: $name})",
+                name=concept,
+            )
+            bridge_created += 1
+            for metric in metrics:
+                session.run(
+                    f"""
+                    MATCH (c:Concept {{name: $concept}})
+                    MATCH (m:Metric {{name: $metric}})
+                    MERGE (c)-[r:{rel_type}]->(m)
+                    """,
+                    concept=concept,
+                    metric=metric,
+                )
+                link_created += 1
+
+        # Connect some concepts to each other (semantic umbrella)
+        concept_links = [
+            ("storm_event", "weather_conditions", "IS_PART_OF"),
+            ("weather_conditions", "environmental_conditions", "IS_PART_OF"),
+            ("wind_restriction", "safety", "ENFORCES"),
+            ("navigation_restriction", "safety", "ENFORCES"),
+            ("crane_slowdown", "operational_disruption", "CONTRIBUTES_TO"),
+            ("gate_congestion", "congestion", "IS_PART_OF"),
+            ("yard_overflow", "congestion", "IS_PART_OF"),
+            ("congestion", "operational_disruption", "CONTRIBUTES_TO"),
+            ("safety", "compliance", "REQUIRES"),
+        ]
+        for start, end, rel in concept_links:
+            session.run(
+                f"""
+                MATCH (a:Concept {{name: $start}})
+                MATCH (b:Concept {{name: $end}})
+                MERGE (a)-[r:{rel}]->(b)
+                """,
+                start=start, end=end,
+            )
+            link_created += 1
+
+        self.nodes_created += bridge_created
+        self.edges_created += link_created
+        logger.info(
+            "Created %d bridge concept nodes with %d concept-metric/concept-concept edges",
+            bridge_created, link_created,
+        )
 
     # -----------------------------------------------------------------------
     # Phase 2: Rule-driven edges

@@ -178,8 +178,9 @@ class AgentNodes:
             classification = "out_of_domain"
             reasoning = "Fast path: matched out-of-domain keywords"
             refusal_message = (
-                "I'm focused on port operations, maritime regulations, and "
-                "sustainability reports. That question falls outside my scope."
+                "That question is out of scope for this system. I'm focused on "
+                "port operations, maritime regulations, and sustainability reports — "
+                "please ask about those topics instead."
             )
         else:
             # -- Fall back to LLM classifier for ambiguous queries --

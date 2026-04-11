@@ -73,6 +73,25 @@ class SQLAgentV2:
 
         execution = self.executor.execute(sql)
 
+        # Auto-fallback: if LLM SQL failed execution, try rule-based as a rescue.
+        # DuckDB errors like GROUP BY / type cast issues are common LLM mistakes
+        # that the deterministic rule-based generator avoids.
+        if not execution.execution_ok and generation_mode == "llm":
+            logger.warning(
+                "SQL_EXEC: LLM SQL failed (%s), falling back to rule-based",
+                (execution.error or "")[:80],
+            )
+            rb_result = self._generate_sql_rule_based(query)
+            fallback_sql = rb_result["sql"]
+            fallback_tables = rb_result["used_tables"]
+            fallback_exec = self.executor.execute(fallback_sql)
+            if fallback_exec.execution_ok:
+                logger.info("SQL_FALLBACK: rule-based rescue succeeded")
+                sql = fallback_sql
+                used_tables = fallback_tables
+                generation_mode = "rule_based_fallback"
+                execution = fallback_exec
+
         if execution.execution_ok:
             logger.info("SQL_EXEC: ok rows=%d", execution.row_count)
         else:
