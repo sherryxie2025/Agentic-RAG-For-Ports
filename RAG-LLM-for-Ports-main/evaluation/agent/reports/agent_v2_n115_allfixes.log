@@ -1,0 +1,352 @@
+======================================================================
+  FULL AGENT EVALUATION
+======================================================================
+
+  Single-turn samples: 115
+  Multi-turn conversations: 5
+
+--- Running agent on single-turn samples ---
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 4794.95it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-base-en-v1.5
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 105/105 [00:00<00:00, 2715.93it/s]
+[1mBertForSequenceClassification LOAD REPORT[0m from: cross-encoder/ms-marco-MiniLM-L-6-v2
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+05:10:58 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What sustainability commitm
+05:10:58 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [1/115] VEC_001: 69.1s
+  [2/115] VEC_002: 50.5s
+  [3/115] VEC_003: 55.4s
+  [4/115] VEC_004: 70.3s
+  [5/115] VEC_005: 45.1s
+  [6/115] VEC_006: 49.6s
+  [7/115] VEC_007: 57.3s
+  [8/115] VEC_008: 95.5s
+  [9/115] VEC_009: 38.5s
+  [10/115] VEC_010: 49.8s
+  [11/115] SQL_001: 66.9s
+  [12/115] SQL_002: 59.1s
+  [13/115] SQL_003: 69.4s
+  [14/115] SQL_004: 57.2s
+  [15/115] SQL_005: 68.2s
+05:25:45 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Binder Error: Referenced column "arrival_time" not found in FROM clause!
+Candida), falling back to rule-based
+  [16/115] SQL_006: 90.7s
+  [17/115] SQL_007: 51.6s
+  [18/115] SQL_008: 72.5s
+  [19/115] SQL_009: 68.4s
+  [20/115] SQL_010: 61.9s
+  [21/115] SQL_011: 52.4s
+  [22/115] SQL_012: 55.8s
+05:33:30 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What was the average number
+05:33:30 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [23/115] SQL_013: 77.3s
+  [24/115] SQL_014: 85.2s
+  [25/115] SQL_015: 55.4s
+  [26/115] RULE_001: 50.9s
+05:37:56 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: At what wave height should 
+05:37:56 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [27/115] RULE_002: 64.6s
+  [28/115] RULE_003: 63.9s
+05:40:03 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What are the tug requiremen
+05:40:03 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [29/115] RULE_004: 64.8s
+  [30/115] RULE_005: 40.5s
+  [31/115] RULE_006: 50.0s
+  [32/115] RULE_007: 45.7s
+  [33/115] RULE_008: 83.9s
+05:44:48 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What are the crane inspecti
+05:44:48 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [34/115] RULE_009: 71.4s
+05:45:59 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What pilotage requirements 
+05:45:59 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [35/115] RULE_010: 69.5s
+05:46:42 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Binder Error: Referenced column "wind_speed" not found in FROM clause!
+Candidate), falling back to rule-based
+05:49:20 | ERROR   | online_pipeline.answer_synthesizer | SYNTH LLM error: APITimeoutError: Request timed out.
+  [36/115] MIX_SR_001: 164.4s
+  [37/115] MIX_SR_002: 68.8s
+05:50:49 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=Classify this query.
+  [38/115] MIX_SR_003: 92.1s
+05:52:47 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: Are wind gust levels within
+05:52:47 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [39/115] MIX_SR_004: 98.4s
+  [40/115] MIX_SR_005: 80.3s
+  [41/115] MIX_VS_001: 59.9s
+  [42/115] MIX_VS_002: 70.4s
+05:57:28 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Binder Error: No function matches the given name and argument types 'date_sub(DA), falling back to rule-based
+05:57:58 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What do strategic plans say
+05:57:58 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [43/115] MIX_VS_003: 79.8s
+05:59:07 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: How do yard dwell time metr
+05:59:07 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [44/115] MIX_VS_004: 77.0s
+06:00:29 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What smart port technologie
+06:00:29 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [45/115] MIX_VS_005: 69.2s
+  [46/115] GRAPH_001: 86.8s
+  [47/115] GRAPH_002: 74.1s
+  [48/115] GRAPH_003: 69.4s
+06:05:20 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How does a storm event cascade through port operat
+06:05:51 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.9s error=Request timed out. prompt=Evaluate evidence for: How can a storm event casca
+06:05:51 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [49/115] GRAPH_004: 101.8s
+06:07:01 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=causal chain from high winds to berth delays
+06:07:01 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['arrival_delay_hours', 'delay', 'wind_speed_ms']
+  [50/115] GRAPH_005: 83.9s
+06:08:35 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: Based on current weather da
+06:08:35 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [51/115] COMPLEX_001: 82.1s
+  [52/115] COMPLEX_002: 81.6s
+  [53/115] COMPLEX_003: 66.2s
+  [54/115] COMPLEX_004: 81.9s
+06:13:22 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Binder Error: column "timestamp" must appear in the GROUP BY clause or must be p), falling back to rule-based
+06:13:56 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=trace causal relationships between severe weather 
+  [55/115] COMPLEX_005: 103.9s
+06:15:22 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What is the Port of Antwerp
+06:15:22 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [56/115] VEC_011: 63.3s
+06:16:25 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What progress has Singapore
+06:16:25 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [57/115] VEC_012: 73.8s
+  [58/115] VEC_013: 61.3s
+06:18:42 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What smart port and shore-b
+06:18:42 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [59/115] VEC_014: 65.8s
+06:19:46 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What are the truck turn tim
+06:19:46 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [60/115] VEC_015: 54.4s
+  [61/115] VEC_016: 59.4s
+  [62/115] VEC_017: 44.4s
+  [63/115] VEC_018: 41.4s
+  [64/115] SQL_016: 86.6s
+  [65/115] SQL_017: 47.8s
+06:25:24 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: Which terminal has the high
+06:25:24 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [66/115] SQL_018: 116.5s
+06:27:17 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: In which month is the avera
+06:27:17 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [67/115] SQL_019: 65.0s
+  [68/115] SQL_020: 82.0s
+  [69/115] RULE_011: 39.7s
+  [70/115] RULE_012: 44.6s
+  [71/115] RULE_013: 25.9s
+06:31:35 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What is the maximum vessel 
+06:31:35 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [72/115] RULE_014: 56.6s
+  [73/115] RULE_015: 46.5s
+06:33:25 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: Is current crane productivi
+06:33:25 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [74/115] MIX_SR_006: 75.8s
+  [75/115] MIX_SR_007: 40.2s
+  [76/115] MIX_SR_008: 79.8s
+06:36:36 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: Are there arrival delays ex
+06:36:36 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [77/115] MIX_SR_009: 62.7s
+  [78/115] MIX_SR_010: 65.8s
+  [79/115] MIX_VR_001: 57.7s
+  [80/115] MIX_VR_002: 54.2s
+  [81/115] MIX_VR_003: 67.9s
+06:41:40 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How does yard overflow cascade to gate congestion?
+  [82/115] GRAPH_006: 92.0s
+06:43:30 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What is the causal relation
+06:43:30 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [83/115] GRAPH_007: 75.4s
+06:44:28 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How do crane breakdowns contribute to operational 
+  [84/115] GRAPH_008: 105.0s
+  [85/115] COMPLEX_006: 97.1s
+  [86/115] GRAPH_ONLY_001: 96.0s
+  [87/115] GRAPH_ONLY_002: 92.4s
+06:51:29 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What causal chain links win
+06:51:29 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [88/115] MIX_GR_001: 92.8s
+  [89/115] MIX_GR_002: 84.1s
+06:53:41 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=Classify this query.
+06:54:22 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=disruption pathways causal relationships port enti
+06:54:23 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['disruption']
+06:54:54 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 31.5s error=Request timed out. prompt=Evaluate evidence for: What do IAPH risk guideline
+06:54:54 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [90/115] MIX_GV_001: 143.2s
+06:56:24 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=environmental conditions port operations relations
+06:56:24 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['environmental_conditions', 'berth_operations']
+06:56:55 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.9s error=Request timed out. prompt=Evaluate evidence for: What does Singapore's decar
+06:56:55 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [91/115] MIX_GV_002: 103.5s
+06:58:13 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=weather conditions impact on vessel entry causalit
+06:58:13 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['weather_conditions', 'vessel_entry', 'berth_operations', 'delay']
+06:58:44 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 31.3s error=Request timed out. prompt=Evaluate evidence for: What does the Port Informat
+06:58:44 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [92/115] MIX_GRV_001: 124.6s
+  [93/115] MIX_GRV_002: 81.0s
+  [94/115] GUARD_EMPTY_001: 13.4s
+07:01:27 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=Classify this query.
+  [95/115] GUARD_EMPTY_002: FAILED ¡ª 'AgentNodes' object has no attribute '_pick_fallback_tool'
+  [96/115] GUARD_DS_NORULE_001: 91.8s
+  [97/115] GUARD_DS_NORULE_002: 76.9s
+  [98/115] GUARD_DS_WITHRULE_001: 89.9s
+07:06:37 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: Why do berth delays increas
+07:06:37 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [99/115] GUARD_DIAG_NOGRAPH_001: 78.7s
+07:07:42 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: Summarize the port's strate
+07:07:42 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [100/115] GUARD_DESC_NODOC_001: 70.3s
+  [101/115] GUARD_FALLBACK_001: 71.8s
+07:10:14 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: Based on wind conditions, b
+07:10:14 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [102/115] GAP_3SRC_001: 97.7s
+  [103/115] GAP_3SRC_002: 108.9s
+  [104/115] GAP_2SRC_001: 65.6s
+  [105/115] GUARD_OOD_001: 0.0s
+  [106/115] GUARD_OOD_002: 0.0s
+  [107/115] GUARD_OOD_003: 0.0s
+  [108/115] GUARD_EMPTY_002: 92.2s
+07:16:12 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: Show me the wind speed reco
+07:16:12 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [109/115] GUARD_EMPTY_003: 85.4s
+07:17:34 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: What does the handbook say 
+07:17:34 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [110/115] GUARD_EMPTY_004: 59.7s
+  [111/115] GUARD_CONFLICT_001: 79.0s
+  [112/115] GUARD_CONFLICT_002: 79.5s
+07:21:20 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: According to the 2018 handb
+07:21:20 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [113/115] GUARD_CONFLICT_003: 75.4s
+07:22:13 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=Classify this query.
+07:22:50 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Evaluate evidence for: Show me the recent delays
+07:22:50 | WARNING | online_pipeline.agent_graph | EVALUATE_NODE: LLM failed, defaulting to sufficient=true
+  [114/115] GUARD_AMBIG_001: 87.5s
+  [115/115] GUARD_HALL_001: 87.9s
+
+--- Computing single-turn metrics ---
+
+======================================================================
+  ROUTING EVALUATION
+======================================================================
+  Samples evaluated: 114
+  Exact-match rate:  75.44%
+  Over-routing:      7.02%  (extra sources activated)
+  Under-routing:     15.79%  (missing sources)
+
+  Question-type accuracy: 0.00%
+  Answer-mode accuracy:   0.00%
+
+  Per-Capability Metrics:
+  Capability          P        R       F1    TP    FP    FN
+  vector          0.833    0.897    0.864    35     7     4
+  sql             1.000    0.774    0.873    48     0    14
+  rules           0.913    0.955    0.933    42     4     2
+  graph           0.913    0.913    0.913    21     2     2
+
+  Micro-avg: P=0.918  R=0.869  F1=0.893
+  Macro-avg: P=0.915  R=0.885  F1=0.896
+
+======================================================================
+  RETRIEVAL EVALUATION
+======================================================================
+
+  VECTOR (36 samples)
+    chunk_recall@5          : 0.0000
+    chunk_recall@20         : 0.0000
+    chunk_precision@5       : 0.0000
+    chunk_mrr               : 0.0000
+    chunk_ndcg@10           : 0.0000
+    chunk_samples           : 34
+    recall@5                : 0.0000
+    recall@20               : 0.0000
+    precision@5             : 0.0000
+    mrr                     : 0.0000
+    ndcg@10                 : 0.0000
+    source_recall@5         : 0.4722
+    source_recall@20        : 0.5417
+    source_precision@5      : 0.3319
+    source_mrr              : 0.4037
+    source_ndcg@10          : 1.2693
+    source_samples          : 36
+
+  SQL (63 samples)
+    table_f1                : 0.6776
+    execution_ok_rate       : 0.7619
+    row_count_reasonable    : 0.7500
+    row_count_annotated     : 4
+
+  RULES (44 samples)
+    variable_recall         : 0.7083
+    variable_precision      : 0.3652
+
+  GRAPH (23 samples)
+    entity_recall           : 0.5667
+    relationship_recall     : 0.0942
+    path_found_rate         : 0.7391
+
+  RERANKING LIFT (31 samples)
+    ndcg@5_lift             : +0.0000
+    recall@5_lift           : +0.0000
+    top1_hit_before         : +0.0000
+    top1_hit_after          : +0.0000
+    top1_lift               : +0.0000
+
+======================================================================
+  ANSWER QUALITY EVALUATION
+======================================================================
+  Samples: 115
+
+  Objective metrics:
+    Keyword coverage:    71.80%
+    Citation validity:   100.00%
+    Numerical accuracy:  70.40%
+
+  Grounding distribution: {'fully_grounded': 109, 'llm_fallback': 1, 'refused_ood': 4, 'unknown': 1}
+
+======================================================================
+  GUARDRAIL EVALUATION
+======================================================================
+  Guardrail Type               Pass Rate  Samples
+  ------------------------------------------------
+  ambiguous_query                  0.00%        1  [FAIL]
+  doc_vs_rule_conflict           100.00%        1  [PASS]
+  doc_vs_sql_conflict              0.00%        1  [FAIL]
+  empty_evidence                  66.67%        3  [WARN]
+  evidence_conflict                0.00%        1  [FAIL]
+  false_premise                    0.00%        1  [FAIL]
+  impossible_query               100.00%        1  [PASS]
+  out_of_domain                  100.00%        3  [PASS]
+
+======================================================================
+  LATENCY EVALUATION
+======================================================================
+  Samples: 115
+
+  Stage                         mean      p50      p95      p99      max  (seconds)
+  ---------------------------------------------------------------------------
+  plan_node                     4.13     3.71     7.08     9.25    10.80
+  execute_tools_node           10.72     4.94    35.12    39.97    45.78
+  evaluate_evidence_node       23.96    25.05    30.02    31.31    31.46
+  synthesize_node              33.51    31.71    49.44    76.46   120.01
+  end_to_end                   70.18    69.44   104.26   140.62   164.38
+
+  Iteration distribution: {1: 107, 2: 8}
+  Re-plan trigger rate:   6.96%
+
+  ReAct observation stats:
+    Total observations:   62
+    Avg per query:        0.54
+    Abort-replan rate:    6.45%
+    Modify-next rate:     0.00%
+Traceback (most recent call last):
+  File "C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\agent\run_full_evaluation.py", line 444, in <module>
+    main()
+  File "C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\agent\run_full_evaluation.py", line 436, in main
+    with open(output_path, "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\25389\\Agent_RAG\\RAG-LLM-for-Ports-main\\evaluation\\agent\\evaluation\\agent\\reports\\agent_v2_n115_allfixes.json'

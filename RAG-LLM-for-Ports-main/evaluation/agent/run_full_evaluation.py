@@ -432,7 +432,21 @@ def main():
         }
 
     # --- Save report ---
-    output_path = EVAL_DIR / args.output
+    # Resolve output path:
+    #   - If user gave an absolute path, honor it as-is.
+    #   - If user gave a path containing "evaluation/", treat it as
+    #     project-relative (since we `os.chdir(PROJECT_ROOT)` at startup).
+    #   - Otherwise, default to evaluation/agent/reports/<name>.
+    from pathlib import Path as _P
+    out_arg = _P(args.output)
+    if out_arg.is_absolute():
+        output_path = out_arg
+    elif "evaluation" in out_arg.parts or out_arg.parts[0] in ("evaluation", "reports"):
+        output_path = _P(PROJECT_ROOT) / out_arg
+    else:
+        output_path = REPORTS_DIR / out_arg
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False, default=str)
 

@@ -307,7 +307,7 @@ class AgentNodes:
         # Fallback: if LLM failed or produced an empty plan, pick a sensible
         # default tool based on query keywords (not always document_search).
         if not steps and iteration == 0:
-            fallback_tool = self._pick_fallback_tool(user_query)
+            fallback_tool = _pick_fallback_tool(user_query)  # module-level function
             logger.warning(
                 "PLAN_NODE: LLM plan failed, using %s fallback", fallback_tool,
             )
