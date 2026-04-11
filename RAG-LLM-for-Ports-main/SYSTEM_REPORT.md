@@ -650,16 +650,16 @@ Per-type pass rate:
 
 ```bash
 # Full run
-python evaluation/run_full_evaluation.py
+python evaluation/agent/run_full_evaluation.py
 
 # Single-turn only (skips multi-turn)
-python evaluation/run_full_evaluation.py --skip-multi
+python evaluation/agent/run_full_evaluation.py --skip-multi
 
 # Skip LLM judge (fast, cheap)
-python evaluation/run_full_evaluation.py --skip-llm-judge
+python evaluation/agent/run_full_evaluation.py --skip-llm-judge
 
 # Smoke test
-python evaluation/run_full_evaluation.py --limit 10 --skip-llm-judge --skip-multi
+python evaluation/agent/run_full_evaluation.py --limit 10 --skip-llm-judge --skip-multi
 ```
 
 Produces one consolidated `evaluation_report_*.json` with all metric dimensions.
@@ -919,22 +919,46 @@ Complete list of bugs discovered and fixed during this session:
 
 ### Evaluation (`evaluation/`)
 
-| File | Purpose |
-|---|---|
-| `golden_dataset.json` | Base 101 samples |
-| `golden_dataset_v3_extras.json` | +12 guardrails + 5 multi-turn + 3 gap-fills |
-| `eval_routing.py` | Multi-label routing P/R/F1 |
-| `eval_retrieval.py` | Per-source retrieval metrics + rerank lift |
-| `eval_answer_quality.py` | Objective + LLM-judge answer scoring |
-| `eval_multi_turn.py` | Resolution, entity tracking, coherence |
-| `eval_guardrails.py` | OOD, conflict, ambiguity, false premise |
-| `eval_latency.py` | Per-stage p50/p95/p99, iteration/ReAct stats |
-| `run_full_evaluation.py` | Unified runner |
-| `EVALUATION_SUMMARY_2026-04-10.md` | v1 n=114 baseline report |
-| `EVALUATION_SUMMARY_v2_FINAL.md` | v2 n=30 report |
-| `evaluation_report_full_single.json` | v1 n=114 raw JSON |
-| `evaluation_report_v2_n10.json` | v2 n=10 intermediate |
-| `evaluation_report_v2_n30.json` | v2 n=30 main v2 result |
+Organized into three zones: shared datasets at root, current agent eval in `agent/`, pre-agent DAG eval archived in `rag_legacy/`.
+
+```
+evaluation/
+├── README.md                                    # Layout + usage guide
+├── golden_dataset.json                          # Shared: 101 base test samples
+├── golden_dataset_v3_extras.json                # Shared: 12 guardrails + 5 multi-turn + 3 gap-fills
+│
+├── agent/                                       # Plan-Execute Agent era
+│   ├── run_full_evaluation.py                  # Unified runner
+│   ├── compare_agent_v1_v2.py                  # v1/v2 agent comparison
+│   ├── eval_routing.py                         # Multi-label routing P/R/F1
+│   ├── eval_retrieval.py                       # Per-source IR + rerank lift
+│   ├── eval_answer_quality.py                  # Objective + LLM-judge
+│   ├── eval_multi_turn.py                      # Resolution / coherence
+│   ├── eval_guardrails.py                      # OOD / conflict / false premise
+│   ├── eval_latency.py                         # Per-stage latency + ReAct stats
+│   ├── AGENT_v1_BASELINE_REPORT.md             # v1 agent baseline write-up
+│   ├── AGENT_v2_FINAL_REPORT.md                # v2 agent final write-up
+│   └── reports/
+│       ├── agent_v1_n114_baseline.json         # v1 full 114-sample eval
+│       ├── agent_v1_n20_buggy.json             # v1 with chunk_id bug
+│       ├── agent_v1_n20_chunkid_fixed.json     # v1 post chunk_id fix
+│       ├── agent_v1_n3_smoke_early.json        # early smoke
+│       ├── agent_v2_n10_smoke.json             # v2 smoke
+│       ├── agent_v2_n30_intermediate.json      # v2 intermediate
+│       └── agent_v2_n115_full.json             # v2 FULL 115-sample eval
+│
+└── rag_legacy/                                  # Pre-agent DAG-based RAG
+    ├── run_evaluation.py                       # Old DAG runner
+    ├── rebuild_golden_dataset.py / expand_*.py # Dataset builders
+    ├── train_intent_classifier.py              # Legacy MLP classifier
+    ├── streaming_benchmark.py                  # Streaming benchmarks
+    ├── dashboard.html                          # Old HTML dashboard
+    ├── CHANGELOG.md / EVALUATION_REPORT.md / R5_postmortem.md
+    ├── reports/
+    │   ├── rag_baseline.json                   # DAG baseline
+    │   └── rag_r5b.json                        # R5b run
+    └── logs/                                    # All legacy .log files
+```
 
 ### Data (`data/`)
 

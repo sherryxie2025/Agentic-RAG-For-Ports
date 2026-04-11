@@ -1,14 +1,18 @@
 """
 Unified Agent Evaluation Driver.
 
-Runs the full evaluation suite:
+Runs the full evaluation suite for the Plan-Execute agent:
 1. Single-turn golden dataset -> routing/retrieval/answer_quality/guardrails/latency
 2. Multi-turn conversations -> multi-turn specific metrics
 3. Aggregates everything into a single JSON report
 
-Usage:
+Usage (from project root):
     cd RAG-LLM-for-Ports-main
-    python evaluation/run_full_evaluation.py [--skip-llm-judge] [--limit N]
+    python evaluation/agent/run_full_evaluation.py [--skip-llm-judge] [--limit N]
+
+Reports are written to evaluation/agent/reports/.
+Shared golden datasets live at evaluation/golden_dataset*.json.
+Legacy pre-agent evaluations are archived in evaluation/rag_legacy/.
 """
 
 from __future__ import annotations
@@ -22,8 +26,14 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-EVAL_DIR = Path(__file__).resolve().parent
+# New layout: this file is at evaluation/agent/run_full_evaluation.py
+# so parents[2] is the project root
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+EVAL_DIR = Path(__file__).resolve().parent           # evaluation/agent
+EVAL_ROOT = EVAL_DIR.parent                          # evaluation/
+REPORTS_DIR = EVAL_DIR / "reports"                   # evaluation/agent/reports/
+REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 sys.path.insert(0, str(EVAL_DIR))
 os.chdir(str(PROJECT_ROOT))
@@ -48,8 +58,9 @@ from eval_latency import evaluate_latency, print_latency_report
 
 def load_golden_dataset() -> Dict[str, Any]:
     """Load base golden dataset + v3 extras (multi-turn + guardrails)."""
-    base_path = EVAL_DIR / "golden_dataset.json"
-    extras_path = EVAL_DIR / "golden_dataset_v3_extras.json"
+    # Shared datasets live at evaluation/ root, not in agent/ subdir
+    base_path = EVAL_ROOT / "golden_dataset.json"
+    extras_path = EVAL_ROOT / "golden_dataset_v3_extras.json"
 
     with open(base_path, "r", encoding="utf-8") as f:
         base = json.load(f)

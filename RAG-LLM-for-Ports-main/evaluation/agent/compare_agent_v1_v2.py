@@ -1,12 +1,20 @@
-"""Quick comparison script for v1 vs v2 evaluation reports."""
+"""
+Comparison script for Plan-Execute agent v1 vs v2 evaluation reports.
+
+- v1 = first-generation agent with original chunking/embedding
+- v2 = agent with Small-to-Big + BGE + OOD gate + strict plan + bug fixes
+
+Usage (from project root):
+    python evaluation/agent/compare_agent_v1_v2.py
+"""
 import json
 from pathlib import Path
 
-BASE = Path(__file__).parent
+REPORTS_DIR = Path(__file__).parent / "reports"
 
-with open(BASE / "evaluation_report_v2_n115.json", encoding="utf-8") as f:
+with open(REPORTS_DIR / "agent_v2_n115_full.json", encoding="utf-8") as f:
     v2 = json.load(f)
-with open(BASE / "evaluation_report_full_single.json", encoding="utf-8") as f:
+with open(REPORTS_DIR / "agent_v1_n114_baseline.json", encoding="utf-8") as f:
     v1 = json.load(f)
 
 v1s = v1["single_turn"]
