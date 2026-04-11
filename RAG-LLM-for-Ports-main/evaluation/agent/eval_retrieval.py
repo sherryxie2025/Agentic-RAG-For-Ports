@@ -305,11 +305,30 @@ def evaluate_sql(
     return result
 
 
+def _canonicalize_rule_var(v: str) -> str:
+    """
+    Normalize a rule variable name so "Wind Speed", "wind_speed",
+    "wind_speed_ms", and "windSpeed" all compare equal at the root level.
+    Strips common unit suffixes (_ms, _kn, _m, _hr, _pct, etc.) and
+    collapses non-alnum to underscores.
+    """
+    import re
+    v = (v or "").lower().strip()
+    v = re.sub(r"[^a-z0-9]+", "_", v).strip("_")
+    # Drop trailing unit suffixes that appear in golden but not in the DB
+    # (or vice versa). This makes "wind_speed" ~ "wind_speed_ms" match.
+    v = re.sub(
+        r"_(ms|m_s|kn|knots|m|ft|hr|hours|hpa|c|f|pct|percent|pts|teu|mph|min|minutes|s)$",
+        "", v,
+    )
+    return v
+
+
 def evaluate_rules(
     results: List[Dict[str, Any]],
     golden: List[Dict[str, Any]],
 ) -> Dict[str, float]:
-    """Evaluate rule retrieval by variable match."""
+    """Evaluate rule retrieval by variable match (alias-tolerant)."""
     golden_by_id = {g["id"]: g for g in golden}
     var_recall = 0.0
     var_precision = 0.0
@@ -320,12 +339,17 @@ def evaluate_rules(
         if not g or not g.get("golden_rules"):
             continue
         expected_vars = set(
-            v.lower() for v in g["golden_rules"].get("expected_rule_variables", [])
+            _canonicalize_rule_var(v)
+            for v in g["golden_rules"].get("expected_rule_variables", [])
         )
+        expected_vars.discard("")
         if not expected_vars:
             continue
 
-        actual_vars = set(v.lower() for v in r.get("rule_variables", []))
+        actual_vars = set(
+            _canonicalize_rule_var(v) for v in r.get("rule_variables", [])
+        )
+        actual_vars.discard("")
         if actual_vars:
             tp = len(expected_vars & actual_vars)
             var_recall += tp / len(expected_vars)

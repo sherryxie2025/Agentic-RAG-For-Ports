@@ -30,32 +30,122 @@ except Exception:
     pass
 
 # LLM routing system prompt
+#
+# Design notes (v2 — tightened for over-routing):
+#   The previous version of this prompt produced 43% over-routing (set a
+#   capability flag to true even when the query had no signal for it).
+#   The core fix is the "Minimum Sufficient Routing" principle: each
+#   capability must be DISABLED by default and only enabled when the
+#   query gives a concrete signal for it. The prompt now includes
+#   per-capability trigger rules, hard NOT-triggers, and a negative
+#   few-shot example set so the LLM sees what "do not route" looks like.
 _LLM_ROUTER_SYSTEM = """You are an intent router for a port operations RAG system.
-Given a user query, determine which data sources are needed.
+Given a user query, output which data sources are needed.
 
 Return ONLY a JSON object with these boolean fields:
 {
   "needs_vector": true/false,    // retrieve from document store (reports, handbooks, policies)
   "needs_sql": true/false,       // query structured operational data (tables, statistics, time-series)
   "needs_rules": true/false,     // look up policy rules, thresholds, restrictions
-  "needs_graph": true/false,     // multi-hop causal reasoning (why X caused Y, factor relationships)
+  "needs_graph": true/false,     // multi-hop causal reasoning across nodes (concept A → metric B → operation C)
   "question_type": "document_lookup|structured_data|policy_rule|hybrid_reasoning|causal_multihop",
   "answer_mode": "lookup|descriptive|comparison|decision_support|diagnostic",
   "confidence": 0.0-1.0
 }
 
-Guidelines:
-- "document_lookup": query about what documents/reports say
-- "structured_data": query about numbers, averages, trends, counts from operational data
-- "policy_rule": query about rules, thresholds, restrictions, allowed/prohibited actions
-- "hybrid_reasoning": needs 2+ sources combined
-- "causal_multihop": asks WHY something happened, what FACTORS caused it, causal chains
-- needs_graph=true when the query asks about causes, factors, relationships, or multi-hop reasoning
-- needs_sql=true when the query asks about statistics, numbers, averages, historical data
-- needs_vector=true when the query references documents, reports, handbooks, policies
-- needs_rules=true when the query asks about rules, thresholds, whether something is allowed
+## CORE PRINCIPLE: MINIMUM SUFFICIENT ROUTING
+Every flag starts as FALSE. Turn a flag to true ONLY if the query gives a
+concrete, textual signal for that capability. If you have to guess whether
+a capability is needed, the answer is FALSE. Over-routing is worse than
+under-routing because each enabled capability costs an expensive retrieval.
 
-Return ONLY valid JSON, no markdown."""
+## Trigger rules (enable flag ONLY if condition holds)
+
+needs_vector = true WHEN AND ONLY WHEN:
+  - query references a specific document/report/handbook/study/policy
+    (e.g. "according to the 2018 handbook", "what does the annual report
+    say", "per the VRCA manual")
+  - query asks for a DEFINITION, NARRATIVE, or DESCRIPTION that lives in
+    prose (e.g. "describe the hurricane response plan")
+  - query mentions a noun that is typically discussed in documents only
+    (e.g. "financial statements", "treatment steps", "procurement basis")
+
+needs_sql = true WHEN AND ONLY WHEN:
+  - query asks for an aggregate / count / average / max / min / sum /
+    total / percentage
+  - query asks for a specific number from operational tables (crane
+    productivity, berth moves, dwell days, vessel transactions, weather
+    readings, containers, gate moves)
+  - query asks about a TREND over time (yearly, monthly, quarterly)
+  - query has explicit "how many / how much / what was the average" phrasing
+  - query filters by a specific year, month, terminal, or vessel AND
+    asks for a numeric value
+
+needs_rules = true WHEN AND ONLY WHEN:
+  - query asks whether something is ALLOWED / PROHIBITED / REQUIRED /
+    PERMITTED / RESTRICTED
+  - query asks about THRESHOLDS, LIMITS, OR SAFETY CONDITIONS
+  - query phrased as "under what conditions should we ... ",
+    "is it allowed to ...", "must operations ...", "when should
+    crane operations stop"
+  - query asks for a policy-defined threshold (e.g. "maximum wind speed")
+
+needs_graph = true WHEN AND ONLY WHEN:
+  - query explicitly asks WHY something happened or what FACTORS/CAUSES
+    contributed to an outcome
+  - query asks to trace a chain of 2+ concept→metric→operation
+    relationships (e.g. "how does high tide affect berth productivity
+    through pilot scheduling")
+  - query requires combining multiple source types to reason about
+    causal effects (not just retrieval)
+
+## HARD NOT-TRIGGERS (the single most common over-routing mistake)
+
+- "What does the handbook say about X?" → needs_vector only. NOT sql,
+  NOT rules (unless X is explicitly a rule/threshold), NOT graph.
+- "What was the average X in 2019?" → needs_sql only. NOT vector, NOT
+  rules, NOT graph.
+- "Under what wind conditions should crane operations stop?" → needs_rules
+  only. NOT sql (no aggregate), NOT vector (not asking for a document
+  quote), NOT graph.
+- "Describe the maintenance schedule for cranes" → needs_vector only.
+- "Who is the port authority chairman?" → needs_vector only.
+- "Why is crane productivity low this week?" → needs_sql + needs_graph
+  (the "why" is causal, the "this week" wants the actual number), NOT
+  vector, NOT rules.
+- Single-sentence factoid lookups → ONE source. Never all four.
+
+## Few-shot examples
+
+Q: "According to the 2018 VRCA handbook, what does it say about crane
+maintenance?"
+A: {"needs_vector": true, "needs_sql": false, "needs_rules": false,
+    "needs_graph": false, "question_type": "document_lookup",
+    "answer_mode": "lookup", "confidence": 0.92}
+
+Q: "What was the average crane productivity in moves per hour in 2019?"
+A: {"needs_vector": false, "needs_sql": true, "needs_rules": false,
+    "needs_graph": false, "question_type": "structured_data",
+    "answer_mode": "lookup", "confidence": 0.95}
+
+Q: "Under what wind conditions should crane operations be suspended?"
+A: {"needs_vector": false, "needs_sql": false, "needs_rules": true,
+    "needs_graph": false, "question_type": "policy_rule",
+    "answer_mode": "decision_support", "confidence": 0.92}
+
+Q: "Why did berth productivity drop in Q3 2019, and how does that
+compare to the operational threshold?"
+A: {"needs_vector": false, "needs_sql": true, "needs_rules": true,
+    "needs_graph": true, "question_type": "causal_multihop",
+    "answer_mode": "diagnostic", "confidence": 0.85}
+
+Q: "What is the relationship between pilot availability, tidal window,
+and berth occupancy?"
+A: {"needs_vector": false, "needs_sql": false, "needs_rules": false,
+    "needs_graph": true, "question_type": "causal_multihop",
+    "answer_mode": "diagnostic", "confidence": 0.78}
+
+Return ONLY valid JSON, no markdown, no prose."""
 
 
 class IntentRouter:

@@ -63,6 +63,111 @@ def load_golden_v3() -> List[Dict[str, Any]]:
 # DAG runner
 # ---------------------------------------------------------------------------
 
+def _truncate_str(s: Any, limit: int = 2000) -> Any:
+    """Truncate long strings so per_sample JSON stays manageable."""
+    if isinstance(s, str) and len(s) > limit:
+        return s[:limit] + f"...[+{len(s) - limit} chars]"
+    return s
+
+
+def _slim_doc(d: Dict[str, Any], text_limit: int = 600) -> Dict[str, Any]:
+    """Keep the fields we want from a retrieved doc, trim the text."""
+    if not isinstance(d, dict):
+        return {"raw": str(d)[:200]}
+    return {
+        "chunk_id": d.get("chunk_id"),
+        "parent_id": d.get("parent_id"),
+        "source_file": d.get("source_file"),
+        "page": d.get("page"),
+        "score": d.get("score"),
+        "rerank_score": d.get("rerank_score"),
+        "text": _truncate_str(d.get("text", ""), text_limit),
+        "metadata": d.get("metadata"),
+    }
+
+
+def _slim_sql_result(r: Dict[str, Any]) -> Dict[str, Any]:
+    """Keep plan + row preview + flags from an SQL result."""
+    if not isinstance(r, dict):
+        return {"raw": str(r)[:200]}
+    plan = r.get("plan", {}) or {}
+    rows = r.get("rows", []) or []
+    return {
+        "sub_query": r.get("sub_query"),
+        "execution_ok": r.get("execution_ok"),
+        "error": r.get("error"),
+        "row_count": r.get("row_count", len(rows)),
+        "columns": r.get("columns"),
+        "rows_preview": rows[:10],
+        "plan": {
+            "target_tables": plan.get("target_tables"),
+            "generated_sql": _truncate_str(plan.get("generated_sql", ""), 2000),
+            "aggregation": plan.get("aggregation"),
+            "filter_terms": plan.get("filter_terms"),
+            "generation_mode": plan.get("generation_mode"),
+        },
+    }
+
+
+def _slim_rule_results(rr: Dict[str, Any]) -> Dict[str, Any]:
+    """Keep matched rules + variables from rule results."""
+    if not isinstance(rr, dict):
+        return {}
+    matched = rr.get("matched_rules", []) or []
+    return {
+        "matched_rule_count": len(matched),
+        "matched_rules": [
+            {
+                "variable": m.get("variable") or m.get("sql_variable"),
+                "rule_text": _truncate_str(m.get("rule_text", ""), 400),
+                "threshold": m.get("threshold"),
+                "operator": m.get("operator"),
+                "source_file": m.get("source_file"),
+                "page": m.get("page"),
+                "score": m.get("score"),
+            }
+            for m in matched[:10]
+        ],
+        "candidate_variables": rr.get("candidate_variables"),
+    }
+
+
+def _slim_graph_results(gr: Dict[str, Any]) -> Dict[str, Any]:
+    """Keep query entities + reasoning paths from graph results."""
+    if not isinstance(gr, dict):
+        return {}
+    paths = gr.get("reasoning_paths", []) or []
+    return {
+        "query_entities": gr.get("query_entities"),
+        "path_count": len(paths),
+        "reasoning_paths": [
+            {
+                "nodes": p.get("path_nodes") or p.get("nodes"),
+                "edges": p.get("path_edges") or p.get("edges"),
+                "score": p.get("score"),
+                "rationale": _truncate_str(p.get("rationale", ""), 400),
+            }
+            for p in paths[:5]
+        ],
+    }
+
+
+def _slim_evidence_bundle(eb: Dict[str, Any]) -> Dict[str, Any]:
+    """Trim evidence bundle for per_sample storage."""
+    if not isinstance(eb, dict):
+        return {}
+    docs = eb.get("documents", []) or []
+    sql = eb.get("sql_results", []) or []
+    return {
+        "documents_count": len(docs),
+        "documents": [_slim_doc(d, text_limit=400) for d in docs[:5]],
+        "sql_results": [_slim_sql_result(r) for r in sql[:3]],
+        "rules": _slim_rule_results(eb.get("rules", {}) or {}),
+        "graph": _slim_graph_results(eb.get("graph", {}) or {}),
+        "conflict_annotations": eb.get("conflict_annotations", []) or [],
+    }
+
+
 def _process_sample(
     workflow,
     sample: Dict[str, Any],
@@ -122,20 +227,43 @@ def _process_sample(
             d.get("source_file", "") for d in pre_rerank_docs if isinstance(d, dict)
         ]
 
+        evidence_bundle_raw = state.get("evidence_bundle", {}) or {}
+
         result = {
+            # --- Identity ---
             "id": sample_id,
-            # Routing
+            "query": query,
+            "gold_needs_vector": sample.get("needs_vector"),
+            "gold_needs_sql": sample.get("needs_sql"),
+            "gold_needs_rules": sample.get("needs_rules"),
+            "gold_needs_graph": sample.get("needs_graph_reasoning") or sample.get("needs_graph"),
+            "gold_answer_mode": sample.get("answer_mode"),
+            "gold_reference_answer": _truncate_str(sample.get("reference_answer", ""), 1500),
+
+            # --- Router decision ---
             "needs_vector": state.get("needs_vector", router_decision.get("needs_vector", False)),
             "needs_sql": state.get("needs_sql", router_decision.get("needs_sql", False)),
             "needs_rules": state.get("needs_rules", router_decision.get("needs_rules", False)),
             "needs_graph": state.get("needs_graph_reasoning", router_decision.get("needs_graph_reasoning", False)),
             "question_type": state.get("question_type"),
             "answer_mode": state.get("answer_mode"),
-            # Retrieval
+            "router_decision": router_decision,
+            "original_query": state.get("original_query"),
+            "source_plan": state.get("source_plan"),
+            "sub_queries": state.get("sub_queries"),
+            "execution_strategy": state.get("execution_strategy"),
+
+            # --- Retrieval (compact) ---
             "retrieved_chunk_ids": retrieved_chunk_ids,
             "retrieved_sources": retrieved_sources_list,
             "pre_rerank_chunk_ids": pre_rerank_ids,
             "pre_rerank_sources": pre_rerank_sources_list,
+
+            # --- Retrieval (raw slimmed) ---
+            "retrieved_docs": [_slim_doc(d) for d in retrieved_docs[:10]],
+            "pre_rerank_docs": [_slim_doc(d, text_limit=200) for d in pre_rerank_docs[:10]],
+
+            # --- SQL ---
             "tables_used": tables_used,
             "execution_ok": any(
                 r.get("execution_ok", False) for r in sql_results_list if isinstance(r, dict)
@@ -143,16 +271,41 @@ def _process_sample(
             "row_count": sum(
                 r.get("row_count", 0) for r in sql_results_list if isinstance(r, dict)
             ),
+            "sql_results": [_slim_sql_result(r) for r in sql_results_list[:3]],
+
+            # --- Rules ---
             "rule_variables": rule_variables,
+            "rule_results": _slim_rule_results(rule_results),
+
+            # --- Graph ---
             "entities": graph_entities,
             "relationships": graph_rels,
             "path_count": len(graph_results.get("reasoning_paths", []) or []),
-            # Answer quality
+            "graph_results": _slim_graph_results(graph_results),
+
+            # --- Answer ---
             "answer_text": final.get("answer", "") if isinstance(final, dict) else str(final),
             "sources_used": final.get("sources_used", []) if isinstance(final, dict) else [],
-            "evidence_bundle": state.get("evidence_bundle", {}),
+            "confidence": final.get("confidence") if isinstance(final, dict) else None,
+            "grounding_status": final.get("grounding_status") if isinstance(final, dict) else None,
+            "knowledge_fallback_used": final.get("knowledge_fallback_used") if isinstance(final, dict) else None,
+            "knowledge_fallback_notes": final.get("knowledge_fallback_notes") if isinstance(final, dict) else None,
+            "llm_answer_used": final.get("llm_answer_used") if isinstance(final, dict) else None,
+            "llm_error": final.get("llm_error") if isinstance(final, dict) else None,
+            "fallback_reason": final.get("fallback_reason") if isinstance(final, dict) else None,
+            "caveats": final.get("caveats") if isinstance(final, dict) else None,
+            "reasoning_summary": final.get("reasoning_summary") if isinstance(final, dict) else None,
             "final_answer": final,
-            # Latency
+
+            # --- Evidence bundle (slimmed) ---
+            "evidence_bundle": _slim_evidence_bundle(evidence_bundle_raw),
+
+            # --- Trace ---
+            "reasoning_trace": (state.get("reasoning_trace") or [])[:30],
+            "warnings": state.get("warnings") or [],
+            "error": state.get("error"),
+
+            # --- Latency ---
             "total_time": total_time,
             "stage_timings": {},
         }
@@ -160,11 +313,14 @@ def _process_sample(
             print(f"  [{idx+1}/{total}] {sample_id}: {total_time:.1f}s", flush=True)
         return result
     except Exception as e:
+        import traceback
         with print_lock:
             print(f"  [{idx+1}/{total}] {sample_id}: FAILED — {e}", flush=True)
         return {
             "id": sample_id,
+            "query": query,
             "error": str(e),
+            "traceback": traceback.format_exc()[:2000],
             "total_time": time.time() - t0,
         }
 
@@ -259,7 +415,7 @@ def main():
     print_guardrail_report(guardrails)
     print_latency_report(latency)
 
-    # Save report
+    # Save report (JSON)
     report = {
         "timestamp": datetime.now().isoformat(),
         "architecture": "Agentic RAG LangGraph DAG",
@@ -267,6 +423,7 @@ def main():
         "golden_dataset": "golden_dataset_v3_rag.json (Opus 4.1 generated, 205 samples)",
         "dataset_size": len(samples),
         "evaluated_samples": len(results),
+        "workers": args.workers,
         "single_turn": {
             "routing": routing.to_dict(),
             "retrieval": retrieval.to_dict(),
@@ -274,12 +431,24 @@ def main():
             "guardrails": guardrails.to_dict(),
             "latency": latency.to_dict(),
         },
+        # Per-sample raw results so later metrics (similarity, re-judge,
+        # etc.) can be computed post-hoc without re-running the DAG.
+        "per_sample_results": results,
     }
 
     out_path = REPORTS_DIR / args.output
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False, default=str)
     print(f"\n>> Wrote {out_path}")
+
+    # Auto-generate a Chinese Markdown summary next to the JSON.
+    try:
+        from evaluation.render_eval_markdown import render_report_md
+        md_path = out_path.with_suffix(".md")
+        render_report_md(report, md_path, source_json=out_path)
+        print(f">> Wrote {md_path}")
+    except Exception as e:
+        print(f"[warn] Markdown rendering failed: {e}")
 
 
 if __name__ == "__main__":

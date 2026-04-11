@@ -64,6 +64,28 @@ class RuleRetriever:
 
         return pool
 
+    # Variable-name aliases used to normalize legacy rule DB names to the
+    # snake_case convention the golden dataset uses. Both forms are kept
+    # as tokens so either spelling in the query can still match.
+    _VARIABLE_ALIASES: Dict[str, List[str]] = {
+        "wind speed": ["wind_speed_ms", "wind_speed", "wind"],
+        "wind_speed": ["wind_speed_ms", "wind_speed", "wind"],
+        "wind_speed_ms": ["wind_speed_ms", "wind_speed", "wind"],
+    }
+
+    @staticmethod
+    def _canonicalize_variable(var: Optional[str]) -> Optional[str]:
+        """
+        Normalize a rule variable name to snake_case, lower case, and
+        strip trailing/leading whitespace. "Wind Speed" -> "wind_speed".
+        Returns None if var is None/empty.
+        """
+        if not var:
+            return None
+        v = str(var).strip().lower()
+        v = re.sub(r"[^a-z0-9]+", "_", v).strip("_")
+        return v or None
+
     def _normalize_rule_record(
         self,
         rule: Dict[str, Any],
@@ -91,16 +113,27 @@ class RuleRetriever:
         if unit_raw is None:
             unit_raw = rule.get("unit")
 
+        raw_variable = rule.get("variable")
+        canonical_variable = self._canonicalize_variable(raw_variable)
+        raw_sql_variable = rule.get("sql_variable")
+        canonical_sql_variable = self._canonicalize_variable(raw_sql_variable)
+
         normalized = {
             "rule_id": rule_id,
             "source_type": source_type,
             "rule_text": rule.get("rule_text", ""),
             "condition": rule.get("condition"),
             "action": rule.get("action"),
-            "variable": rule.get("variable"),
+            # Keep both raw and canonical so downstream code and eval
+            # harness both see consistent names. The canonical form is
+            # what we emit as the "variable" field — the golden v3
+            # dataset uses snake_case names.
+            "variable": canonical_variable or raw_variable,
+            "variable_raw": raw_variable,
             "threshold_raw": threshold_raw,
             "unit_raw": unit_raw,
-            "sql_variable": rule.get("sql_variable"),
+            "sql_variable": canonical_sql_variable or raw_sql_variable,
+            "sql_variable_raw": raw_sql_variable,
             "operator": rule.get("operator"),
             "value": rule.get("value"),
             "value_min": rule.get("value_min"),
@@ -114,6 +147,18 @@ class RuleRetriever:
         normalized["search_text"] = self._build_search_text(normalized)
         normalized["search_tokens"] = self._tokenize(normalized["search_text"])
         normalized["search_token_set"] = set(normalized["search_tokens"])
+        # Pre-compute a set of tokens from the variable name itself so
+        # scoring can give a strong boost when the query directly names
+        # the variable components.
+        var_tokens = set(
+            re.split(r"[^a-z0-9]+", (canonical_variable or "") + " " + (canonical_sql_variable or ""))
+        )
+        # Apply alias expansion
+        for alias_key in list(var_tokens):
+            for alias in self._VARIABLE_ALIASES.get(alias_key, []):
+                var_tokens.update(re.split(r"[^a-z0-9]+", alias))
+        var_tokens.discard("")
+        normalized["variable_token_set"] = var_tokens
         return normalized
 
     @staticmethod
@@ -162,6 +207,14 @@ class RuleRetriever:
         Uses query-length-normalized keyword overlap (fraction of query keywords
         matched). CRITICAL: uses tokenized set membership (not substring) so
         'wind' doesn't match 'windows', 'berth' doesn't match 'berthing', etc.
+
+        v2 changes:
+          - Variable-field matching uses pre-computed variable_token_set
+            (with alias expansion) and gets a larger boost (+0.5 instead
+            of +0.3) to pull variable-targeted queries above min_score.
+          - Any rule whose variable tokens are hit by the query gets a
+            guaranteed floor of 0.45 so min_score=0.4 still lets them
+            through even when the rest of the rule_text is off.
         """
         if not query_keywords:
             return 0.0
@@ -173,24 +226,29 @@ class RuleRetriever:
 
         # Count how many query keywords appear as whole tokens in rule
         matches = sum(1 for kw in query_keywords if kw in search_tokens)
-        if matches == 0:
-            return 0.0
 
         # Coverage = fraction of query keywords hit (0..1)
-        coverage = matches / len(query_keywords)
+        coverage = matches / len(query_keywords) if matches > 0 else 0.0
 
-        # Bonus: stronger when the rule hits a VARIABLE keyword (e.g. "wind",
-        # "crane") since those are more specific than filler words.
-        # Variable field can be e.g. "wind_speed_ms" — split by non-alnum
-        variable_field = (rule.get("variable") or rule.get("sql_variable") or "").lower()
-        variable_tokens = set(re.split(r"[^a-z0-9]+", variable_field))
-        variable_hit = any(
-            kw in variable_tokens for kw in query_keywords if len(kw) > 2
+        # Variable-field hit: compare against pre-computed (alias-expanded)
+        # variable_token_set instead of re-splitting on every call.
+        variable_tokens: set = rule.get("variable_token_set") or set()
+        variable_hit_count = sum(
+            1 for kw in query_keywords
+            if len(kw) > 2 and kw in variable_tokens
         )
+        variable_hit = variable_hit_count > 0
+
+        if matches == 0 and not variable_hit:
+            return 0.0
 
         score = coverage
         if variable_hit:
-            score += 0.3
+            score += 0.5  # large boost — variable-field targeted queries
+            # Floor: a direct variable hit is worth at least 0.45 so it
+            # survives the default min_score filter even when rule_text
+            # keywords are not hit.
+            score = max(score, 0.45 + 0.05 * min(variable_hit_count, 3))
         if rule.get("source_type") == "grounded":
             score += 0.05
         if rule.get("sql_variable"):
@@ -260,8 +318,8 @@ class RuleRetriever:
     def update_state(
         self,
         state: PortQAState,
-        top_k: int = 5,
-        min_score: float = 0.5,
+        top_k: int = 3,
+        min_score: float = 0.4,
     ) -> PortQAState:
         query = state.get("user_query", "")
         matched_rules = self.retrieve(query=query, top_k=top_k, min_score=min_score)

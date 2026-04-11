@@ -28,6 +28,29 @@ try:
 except ImportError:
     llm_chat_json = None
 
+# BGE model for embedding similarity. Loaded lazily on first use so
+# this module stays import-safe for hosts that don't have torch.
+_BGE_MODEL = None
+_BGE_TOKENIZER = None
+
+
+def _get_bge():
+    """Lazy-load BGE-base-en-v1.5 model + tokenizer for similarity scoring."""
+    global _BGE_MODEL, _BGE_TOKENIZER
+    if _BGE_MODEL is not None:
+        return _BGE_MODEL, _BGE_TOKENIZER
+    try:
+        from transformers import AutoModel, AutoTokenizer
+        import torch  # noqa: F401
+        _BGE_TOKENIZER = AutoTokenizer.from_pretrained("BAAI/bge-base-en-v1.5")
+        _BGE_MODEL = AutoModel.from_pretrained("BAAI/bge-base-en-v1.5")
+        _BGE_MODEL.eval()
+    except Exception as e:
+        print(f"[warn] BGE unavailable, similarity disabled: {e}")
+        _BGE_MODEL = False
+        _BGE_TOKENIZER = False
+    return _BGE_MODEL, _BGE_TOKENIZER
+
 
 # ---------------------------------------------------------------------------
 # LLM judge prompt
@@ -163,6 +186,104 @@ def grounding_flag(final_answer: Dict[str, Any]) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Semantic similarity (BGE cosine) + ROUGE-L
+#
+# These are local-only metrics (no API calls). They complement the surface
+# keyword_coverage metric by capturing:
+#   - embedding_similarity: semantic closeness (paraphrase tolerant)
+#   - rougeL_f1:            longest-common-subsequence lexical overlap
+# ---------------------------------------------------------------------------
+
+def _bge_encode(text: str):
+    """Encode a single string to a BGE embedding vector. Returns None on error."""
+    model, tok = _get_bge()
+    if model is False:
+        return None
+    try:
+        import torch
+        # BGE query prefix improves semantic matching for short texts.
+        # For eval we use no prefix — comparing paragraph-to-paragraph.
+        enc = tok(
+            text if text else " ",
+            padding=True, truncation=True,
+            max_length=512, return_tensors="pt",
+        )
+        with torch.no_grad():
+            out = model(**enc)
+        # Mean pooling over token embeddings (mask-aware)
+        mask = enc["attention_mask"].unsqueeze(-1).float()
+        summed = (out.last_hidden_state * mask).sum(dim=1)
+        lens = mask.sum(dim=1).clamp(min=1e-9)
+        pooled = summed / lens
+        # L2 normalize
+        pooled = torch.nn.functional.normalize(pooled, p=2, dim=1)
+        return pooled[0].cpu().numpy()
+    except Exception:
+        return None
+
+
+def embedding_similarity(reference: str, candidate: str) -> Optional[float]:
+    """
+    Cosine similarity between BGE embeddings of reference and candidate.
+    Returns float in [-1, 1], or None if embeddings unavailable.
+    """
+    if not reference or not candidate:
+        return None
+    v_ref = _bge_encode(reference)
+    v_cand = _bge_encode(candidate)
+    if v_ref is None or v_cand is None:
+        return None
+    # Vectors are L2-normalized, so dot == cosine
+    return float((v_ref * v_cand).sum())
+
+
+def _tokenize_for_rouge(text: str) -> List[str]:
+    """Lowercase word tokens, dropping punctuation for ROUGE scoring."""
+    return re.findall(r"[a-z0-9]+", (text or "").lower())
+
+
+def _lcs_length(a: List[str], b: List[str]) -> int:
+    """Classic DP longest common subsequence length."""
+    if not a or not b:
+        return 0
+    la, lb = len(a), len(b)
+    # Use rolling array to keep memory O(min(la, lb))
+    if la < lb:
+        a, b = b, a
+        la, lb = lb, la
+    prev = [0] * (lb + 1)
+    curr = [0] * (lb + 1)
+    for i in range(1, la + 1):
+        ai = a[i - 1]
+        for j in range(1, lb + 1):
+            if ai == b[j - 1]:
+                curr[j] = prev[j - 1] + 1
+            else:
+                curr[j] = max(prev[j], curr[j - 1])
+        prev, curr = curr, prev
+    return prev[lb]
+
+
+def rouge_l_f1(reference: str, candidate: str) -> Optional[float]:
+    """
+    ROUGE-L F1 based on longest common subsequence.
+    Returns float in [0, 1], or None if inputs are empty.
+    """
+    ref_tokens = _tokenize_for_rouge(reference)
+    cand_tokens = _tokenize_for_rouge(candidate)
+    if not ref_tokens or not cand_tokens:
+        return None
+    lcs = _lcs_length(ref_tokens, cand_tokens)
+    if lcs == 0:
+        return 0.0
+    precision = lcs / len(cand_tokens)
+    recall = lcs / len(ref_tokens)
+    if precision + recall == 0:
+        return 0.0
+    return 2 * precision * recall / (precision + recall)
+
+
+# ---------------------------------------------------------------------------
 # LLM judge
 # ---------------------------------------------------------------------------
 
@@ -211,6 +332,11 @@ class AnswerQualityMetrics:
     avg_numerical_accuracy: Optional[float] = None
     grounding_distribution: Dict[str, int] = field(default_factory=dict)
 
+    # Local semantic/lexical overlap (no API cost)
+    avg_embedding_similarity: Optional[float] = None
+    avg_rougeL_f1: Optional[float] = None
+    samples_similarity_scored: int = 0
+
     # LLM judge scores
     avg_faithfulness: float = 0.0
     avg_relevance: float = 0.0
@@ -226,6 +352,13 @@ class AnswerQualityMetrics:
             "avg_numerical_accuracy": (
                 round(self.avg_numerical_accuracy, 4) if self.avg_numerical_accuracy is not None else None
             ),
+            "avg_embedding_similarity": (
+                round(self.avg_embedding_similarity, 4) if self.avg_embedding_similarity is not None else None
+            ),
+            "avg_rougeL_f1": (
+                round(self.avg_rougeL_f1, 4) if self.avg_rougeL_f1 is not None else None
+            ),
+            "samples_similarity_scored": self.samples_similarity_scored,
             "grounding_distribution": self.grounding_distribution,
             "avg_faithfulness": round(self.avg_faithfulness, 3),
             "avg_relevance": round(self.avg_relevance, 3),
@@ -256,6 +389,8 @@ def evaluate_answers(
     kw_total = 0.0
     cite_total = 0.0
     num_scores = []
+    sim_scores: List[float] = []
+    rouge_scores: List[float] = []
     grounding_dist: Dict[str, int] = {}
 
     judge_f, judge_r, judge_c = 0.0, 0.0, 0.0
@@ -270,14 +405,24 @@ def evaluate_answers(
         sources = r.get("sources_used", []) or []
         bundle = r.get("evidence_bundle", {}) or {}
         final = r.get("final_answer", {}) or {}
+        reference = g.get("reference_answer", "") or ""
 
         # Objective metrics
         kw_total += keyword_coverage(g.get("expected_evidence_keywords", []), answer)
         cite_total += citation_validity(sources, bundle)
 
-        num_acc = numerical_accuracy(g.get("reference_answer", ""), answer)
+        num_acc = numerical_accuracy(reference, answer)
         if num_acc is not None:
             num_scores.append(num_acc)
+
+        # Semantic + lexical similarity (local, no API cost)
+        if reference and answer:
+            sim = embedding_similarity(reference, answer)
+            if sim is not None:
+                sim_scores.append(sim)
+            rouge = rouge_l_f1(reference, answer)
+            if rouge is not None:
+                rouge_scores.append(rouge)
 
         grounding = grounding_flag(final)
         grounding_dist[grounding] = grounding_dist.get(grounding, 0) + 1
@@ -287,7 +432,7 @@ def evaluate_answers(
             evidence_summary = _build_evidence_summary(bundle)
             judge = llm_judge(
                 question=g.get("query", ""),
-                reference=g.get("reference_answer", ""),
+                reference=reference,
                 evidence_summary=evidence_summary,
                 candidate_answer=answer,
             )
@@ -302,6 +447,9 @@ def evaluate_answers(
         avg_keyword_coverage=kw_total / total if total else 0.0,
         avg_citation_validity=cite_total / total if total else 0.0,
         avg_numerical_accuracy=sum(num_scores) / len(num_scores) if num_scores else None,
+        avg_embedding_similarity=(sum(sim_scores) / len(sim_scores)) if sim_scores else None,
+        avg_rougeL_f1=(sum(rouge_scores) / len(rouge_scores)) if rouge_scores else None,
+        samples_similarity_scored=len(sim_scores),
         grounding_distribution=grounding_dist,
         avg_faithfulness=judge_f / judged_count if judged_count else 0.0,
         avg_relevance=judge_r / judged_count if judged_count else 0.0,
@@ -345,6 +493,11 @@ def print_answer_report(metrics: AnswerQualityMetrics) -> None:
     print(f"    Citation validity:   {metrics.avg_citation_validity:.2%}")
     if metrics.avg_numerical_accuracy is not None:
         print(f"    Numerical accuracy:  {metrics.avg_numerical_accuracy:.2%}")
+    if metrics.avg_embedding_similarity is not None:
+        print(f"    Embedding cosine:    {metrics.avg_embedding_similarity:.4f}"
+              f"  (n={metrics.samples_similarity_scored})")
+    if metrics.avg_rougeL_f1 is not None:
+        print(f"    ROUGE-L F1:          {metrics.avg_rougeL_f1:.4f}")
     print(f"\n  Grounding distribution: {metrics.grounding_distribution}")
     if metrics.samples_llm_judged > 0:
         print(f"\n  LLM judge scores ({metrics.samples_llm_judged} samples, 1-5 scale):")
