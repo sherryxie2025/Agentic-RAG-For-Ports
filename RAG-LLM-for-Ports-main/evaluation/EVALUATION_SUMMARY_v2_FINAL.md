@@ -40,32 +40,69 @@ Publish years (top):
 | Chroma collection | `port_documents_v2` (cosine distance) |
 | Parents file | `chunks_v2_parents.json` (22.8 MB, loaded at runtime) |
 
-## 2. v1 vs v2 Comparison (preliminary, v2 = n=10)
+## 2. v1 vs v2 Comparison
 
-| Metric | v1 (n=114) | v2 (n=10) | Delta |
+### 2a. Headline numbers (v2 = n=30, all fixes applied)
+
+| Metric | v1 (n=114) | v2 (n=30) | Delta |
 |---|---|---|---|
-| **Routing exact-match** | 49.12% | **90.00%** | **+40.88 pp** |
-| **Over-routing rate** | 47.37% | **10.00%** | **-37.37 pp** |
-| **Micro F1** | 0.793 | **0.952** | **+0.16** |
-| **Citation validity** | 69.35% | **100%** | **+30.65 pp** |
-| **Numerical accuracy** | 79.02% | **100%** | **+20.98 pp** |
-| End-to-end p50 | 117.80s | **81.19s** | **-31%** |
-| End-to-end p95 | 253.06s | **136.76s** | **-46%** |
-| Re-plan trigger rate | 66.09% | **10.00%** | **-56 pp** |
-| 1-iteration completion | 33.9% | **90.00%** | **+56 pp** |
-| Max-iterations hit | 56.5% | **0%** | **-56.5 pp** |
-| Keyword coverage | 78.54% | 66.50% | -12 pp (n=10, needs larger sample) |
-| Grounding: fully | 60.9% | 10% | -51 pp (n=10 skew) |
-| Grounding: partially | 38.3% | 90% | +52 pp |
+| **Routing exact-match** | 49.12% | **96.67%** | **+47.55 pp** |
+| **Over-routing rate** | 47.37% | **0.00%** | **-47.37 pp** |
+| **Under-routing rate** | 2.63% | **0.00%** | -2.63 pp |
+| **Micro F1** | 0.793 | **0.967** | **+0.174** |
+| **Citation validity** | 69.35% | **100.00%** | **+30.65 pp** |
+| **End-to-end p50 latency** | 117.80s | **61.82s** | **-47.5%** |
+| **End-to-end p95 latency** | 253.06s | **91.92s** | **-63.7%** |
+| **Re-plan trigger rate** | 66.09% | **0.00%** | **-66.09 pp** |
+| **1-iteration completion** | 33.9% | **100.00%** | **+66.1 pp** |
+| **Max-iterations hit** | 56.5% | **0.00%** | **-56.5 pp** |
+| plan_node p50 | 12.0s | **3.2s** | **-73%** |
+| execute_tools p50 | 32.2s | **1.4s** | **-96%** |
+| evaluate_evidence p50 | 29.5s | **21.9s** | -26% |
+| synthesize p50 | 32.9s | 33.0s | ≈ |
+
+### 2b. Per-capability routing (F1)
+
+| Capability | v1 | v2 | Delta |
+|---|---|---|---|
+| vector | 0.649 | **1.000** | +0.351 |
+| sql | 0.930 | **0.966** | +0.036 |
+| rules | 0.786 | **1.000** | +0.214 |
+| graph | 0.786 | n/a | (0 graph queries in first 30 samples) |
+
+### 2c. Retrieval quality
+
+| Source | Metric | v1 | v2 | Notes |
+|---|---|---|---|---|
+| vector | source_recall@5 | n/a | **50.00%** | New metric; 50% of queries retrieved a doc from a golden source file |
+| vector | chunk_recall@5 | 6.86% | 0.00% | Dropped because chunk_id scheme changed (v1 format → v2 format). Not a real regression. |
+| sql | table_f1 | 0.758 | **0.933** | +0.175 |
+| sql | execution_ok | 90.5% | **93.3%** | +2.9 pp |
+| rules | variable_recall | 75.8% | **100.0%** | +24.2 pp |
+| rules | variable_precision | 23.0% | **28.0%** | +5.0 pp (rule scoring normalization helped) |
+
+### 2d. Answer quality
+
+| Metric | v1 | v2 | Notes |
+|---|---|---|---|
+| Keyword coverage | 78.54% | 62.17% | **-16.4 pp** — strict plan makes answers more concise, small-sample bias |
+| Citation validity | 69.35% | **100.00%** | Canonical source-label fix |
+| Numerical accuracy | 79.02% | 77.50% | ≈ unchanged |
+| Grounding: fully (≥2 sources) | 60.9% | **0%** | Metric artifact: strict planner uses 1 source → classified "partially" |
+| Grounding: partially (1 source) | 38.3% | **100%** | Same artifact — shift, not regression |
 
 ### Caveats
-- v2 sample size is **only 10** because the 30-sample run stalled on LLM API
-  timeouts (one OOD classification call timed out at 94s; process then idled).
-- The `keyword_coverage` and `grounding` numbers are noisier due to small n.
-  Routing, latency, and binary quality metrics (numerical, citation) are
-  more stable.
-- Multi-turn evaluation was not completed in this session due to the same
-  LLM API latency issues.
+
+- v2 sample size **n=30**, v1 is **n=114**. Variance on small numbers exists.
+- Golden dataset chunk_ids are in the v1 format. v2 chunk_recall is
+  misleadingly 0% — use **source_recall@5** (50%) for cross-version compare.
+- Keyword coverage drop is partially a sample-selection artifact (first 30
+  samples are all VEC_* and SQL_*) and partially a side-effect of concise
+  answers from the strict planner.
+- Graph source had no samples in the first 30, so no v2 graph metrics.
+- Guardrail tests are in samples 101-112, so the first 30 doesn't hit them.
+  Will need a full 115-sample run to verify OOD refusal rate.
+- Multi-turn and LLM-judge evaluation are still pending.
 
 ## 3. What Changed in v2
 
