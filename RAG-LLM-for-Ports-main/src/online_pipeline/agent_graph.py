@@ -262,8 +262,21 @@ class AgentNodes:
                 {"role": "user", "content": f"Fill these evidence gaps for: {user_query}"},
             ]
 
-        raw_plan = llm_chat_json(messages, temperature=0.1)
+        raw_plan = llm_chat_json(messages, temperature=0.1, timeout=30, max_retries=0)
         steps = self._parse_plan(raw_plan, start_id=self._next_step_id(state))
+
+        # Fallback: if LLM failed or produced an empty plan, default to a
+        # single document_search step so we at least retrieve SOMETHING.
+        if not steps and iteration == 0:
+            logger.warning("PLAN_NODE: LLM plan failed, using document_search fallback")
+            steps = [PlanStep(
+                step_id=1,
+                tool_name="document_search",
+                query=user_query,
+                purpose="Fallback: LLM planner failed; default to document search",
+                status="pending",
+                result_summary="",
+            )]
 
         elapsed = time.time() - t0
         logger.info("PLAN_NODE (iter=%d): %.2fs, %d steps", iteration + 1, elapsed, len(steps))
@@ -482,12 +495,18 @@ class AgentNodes:
             {"role": "user", "content": f"Evaluate evidence for: {user_query}"},
         ]
 
-        eval_result = llm_chat_json(messages, temperature=0.0)
+        eval_result = llm_chat_json(
+            messages, temperature=0.0, timeout=30, max_retries=0,
+        )
         sufficient = True
         gaps = []
         if eval_result and isinstance(eval_result, dict):
             sufficient = eval_result.get("sufficient", True)
             gaps = eval_result.get("gaps", [])
+        else:
+            # LLM failed — default to sufficient to avoid wasteful re-plan
+            logger.warning("EVALUATE_NODE: LLM failed, defaulting to sufficient=true")
+            sufficient = True
 
         elapsed = time.time() - t0
         logger.info(

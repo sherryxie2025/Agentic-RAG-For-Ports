@@ -70,7 +70,7 @@ def get_openai_client() -> OpenAI:
             api_key=_API_KEY,
             base_url=_BASE_URL,
             max_retries=0,          # critical: prevent 3x timeout multiplier
-            timeout=60.0,           # default per-call cap, can be overridden
+            timeout=30.0,           # global hard cap; per-call override via kwargs
         )
     return _openai_client
 
@@ -83,9 +83,9 @@ def llm_chat(
     messages: List[Dict[str, str]],
     temperature: float = 0.3,
     model: str | None = None,
-    timeout: int = 60,
+    timeout: int = 30,       # fast-fail default: 30s (was 60s, then 120s)
     max_tokens: int | None = None,
-    max_retries: int = 1,
+    max_retries: int = 0,    # zero-retry default: explicit opt-in only
 ) -> str:
     """
     One-liner LLM chat completion using the OpenAI SDK.
@@ -159,8 +159,8 @@ def llm_chat_json(
     messages: List[Dict[str, str]],
     temperature: float = 0.1,
     model: str | None = None,
-    timeout: int = 60,
-    max_retries: int = 1,
+    timeout: int = 30,       # fast-fail default
+    max_retries: int = 0,    # zero-retry default
 ) -> Any:
     """
     LLM chat that expects a JSON response.
