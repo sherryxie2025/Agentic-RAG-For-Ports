@@ -77,6 +77,10 @@ CHILD_MIN_WORDS = 60
 CHILD_MAX_WORDS = 400
 CHILD_OVERLAP = 50
 
+# --- Performance guards ---
+MAX_PDF_SIZE_MB = 15        # skip PDFs larger than this (pdfplumber slow on huge files)
+DISABLE_TABLE_EXTRACTION = True  # skip per-page table extraction (main slowdown)
+
 # Section header regex (matches "2.1", "2.1.4", "3.2.1.1", etc.)
 _SECTION_HEADER_RE = re.compile(
     r"^\s*(?P<num>\d+(?:\.\d+){0,3})\s+(?P<title>[A-Z][A-Za-z0-9 ,/\-()'\"&]{3,80})\s*$",
@@ -331,6 +335,13 @@ def extract_pdf_text_and_tables(path: str) -> Tuple[List[str], List[Dict[str, An
     """
     Extract per-page text + tables from a PDF.
 
+    Strategy:
+    - Fast text extraction via PyMuPDF (fitz) if available — 10-20x faster
+      than pdfplumber on large PDFs.
+    - Optional table extraction via pdfplumber (disabled by default — very slow
+      on large documents; toggle via DISABLE_TABLE_EXTRACTION).
+    - Fall back to PyPDFLoader if neither is available.
+
     Returns:
         pages_text: list of cleaned page texts
         tables: list of {page, markdown, row_count, col_count}
@@ -338,18 +349,48 @@ def extract_pdf_text_and_tables(path: str) -> Tuple[List[str], List[Dict[str, An
     pages_text: List[str] = []
     tables: List[Dict[str, Any]] = []
 
-    # Try pdfplumber first (best for tables)
+    # --- Fast text extraction (PyMuPDF preferred) ---
+    extracted = False
     try:
-        import pdfplumber
-        with pdfplumber.open(path) as pdf:
-            for page_num, page in enumerate(pdf.pages):
-                text = page.extract_text() or ""
-                pages_text.append(text)
+        import fitz  # PyMuPDF
+        doc = fitz.open(path)
+        for page in doc:
+            pages_text.append(page.get_text() or "")
+        doc.close()
+        extracted = True
+    except ImportError:
+        pass
+    except Exception as e:
+        logger.warning("PyMuPDF failed on %s: %s; will try pdfplumber", path, e)
 
-                # Extract tables
-                try:
-                    page_tables = page.extract_tables()
-                    for t in page_tables or []:
+    if not extracted:
+        try:
+            import pdfplumber
+            with pdfplumber.open(path) as pdf:
+                for page in pdf.pages:
+                    pages_text.append(page.extract_text() or "")
+            extracted = True
+        except ImportError:
+            pass
+
+    if not extracted:
+        # Last resort
+        from langchain_community.document_loaders import PyPDFLoader
+        loader = PyPDFLoader(path)
+        for page in loader.load():
+            pages_text.append(page.page_content or "")
+
+    # --- Optional table extraction (slow on large PDFs) ---
+    if not DISABLE_TABLE_EXTRACTION:
+        try:
+            import pdfplumber
+            with pdfplumber.open(path) as pdf:
+                for page_num, page in enumerate(pdf.pages):
+                    try:
+                        page_tables = page.extract_tables() or []
+                    except Exception:
+                        continue
+                    for t in page_tables:
                         if not t or len(t) < 2:
                             continue
                         md = _table_to_markdown(t)
@@ -360,14 +401,8 @@ def extract_pdf_text_and_tables(path: str) -> Tuple[List[str], List[Dict[str, An
                                 "row_count": len(t),
                                 "col_count": max(len(r) for r in t),
                             })
-                except Exception:
-                    pass
-    except ImportError:
-        # Fall back to PyPDFLoader (what v1 used)
-        from langchain_community.document_loaders import PyPDFLoader
-        loader = PyPDFLoader(path)
-        for page in loader.load():
-            pages_text.append(page.page_content or "")
+        except Exception:
+            pass
 
     return pages_text, tables
 
@@ -481,13 +516,28 @@ def detect_doc_type(filename: str, first_page_text: str) -> str:
 # Main chunking pipeline
 # ---------------------------------------------------------------------------
 
-def load_pdf_paths(root: str) -> List[str]:
-    pdf_files = []
+def load_pdf_paths(root: str) -> Tuple[List[str], List[str]]:
+    """
+    Return (kept_paths, skipped_oversized_paths).
+    PDFs larger than MAX_PDF_SIZE_MB are skipped for performance reasons.
+    """
+    kept = []
+    skipped = []
+    size_limit = MAX_PDF_SIZE_MB * 1024 * 1024
     for dirpath, _dirs, files in os.walk(root):
         for f in sorted(files):
-            if f.lower().endswith(".pdf"):
-                pdf_files.append(os.path.join(dirpath, f))
-    return pdf_files
+            if not f.lower().endswith(".pdf"):
+                continue
+            full = os.path.join(dirpath, f)
+            try:
+                sz = os.path.getsize(full)
+            except OSError:
+                continue
+            if sz > size_limit:
+                skipped.append(full)
+            else:
+                kept.append(full)
+    return kept, skipped
 
 
 def chunk_one_document(
@@ -642,8 +692,13 @@ def run(data_path: str = DATA_PATH, output_path: str = OUTPUT_PATH) -> None:
     """Main entry point: produces parent and child chunk files."""
     os.makedirs(output_path, exist_ok=True)
 
-    pdf_paths = load_pdf_paths(data_path)
+    pdf_paths, skipped = load_pdf_paths(data_path)
     print(f"\nFound {len(pdf_paths)} PDFs under {data_path}")
+    if skipped:
+        print(f"  (skipped {len(skipped)} PDFs > {MAX_PDF_SIZE_MB}MB for performance)")
+        for s in skipped[:5]:
+            sz_mb = os.path.getsize(s) / 1024 / 1024
+            print(f"    - {os.path.basename(s)} ({sz_mb:.1f} MB)")
 
     all_parents: List[Dict[str, Any]] = []
     all_children: List[Dict[str, Any]] = []

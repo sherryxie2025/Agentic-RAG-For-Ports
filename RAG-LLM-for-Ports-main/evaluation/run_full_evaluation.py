@@ -95,6 +95,7 @@ def run_agent_on_samples(
 
     agent = build_agent_graph(
         project_root=PROJECT_ROOT,
+        chroma_collection_name="port_documents_v2",  # BGE + Small-to-Big
         use_llm_sql_planner=True,
         enable_react_observations=True,
     )
@@ -147,28 +148,53 @@ def run_agent_on_samples(
             for p in graph_results.get("reasoning_paths", []) or []:
                 graph_rels.extend(p.get("path_edges", []) or [])
 
-            # Chunk ids retrieved (for IR metrics)
+            # Chunk ids + source files retrieved (for IR metrics)
             retrieved_docs = state.get("retrieved_docs", []) or []
             retrieved_chunk_ids = [
                 d.get("chunk_id", "") for d in retrieved_docs if isinstance(d, dict)
+            ]
+            retrieved_sources_list = [
+                d.get("source_file", "") for d in retrieved_docs if isinstance(d, dict)
             ]
             pre_rerank_docs = state.get("pre_rerank_docs", []) or []
             pre_rerank_ids = [
                 d.get("chunk_id", "") for d in pre_rerank_docs if isinstance(d, dict)
             ]
+            pre_rerank_sources_list = [
+                d.get("source_file", "") for d in pre_rerank_docs if isinstance(d, dict)
+            ]
+
+            # Derive routing decision from plan tool names
+            # (new Plan-Execute agent doesn't set needs_* directly)
+            plan_tools = set(
+                (s.get("tool_name") or "").lower() for s in plan
+            )
+            tool_to_cap = {
+                "document_search": "vector",
+                "sql_query": "sql",
+                "rule_lookup": "rules",
+                "graph_reason": "graph",
+            }
+            activated_caps = set()
+            for tn in plan_tools:
+                cap = tool_to_cap.get(tn)
+                if cap:
+                    activated_caps.add(cap)
 
             result = {
                 "id": sample_id,
-                # For routing eval
-                "needs_vector": state.get("needs_vector", False),
-                "needs_sql": state.get("needs_sql", False),
-                "needs_rules": state.get("needs_rules", False),
-                "needs_graph": state.get("needs_graph_reasoning", False),
+                # For routing eval (derived from plan)
+                "needs_vector": "vector" in activated_caps,
+                "needs_sql": "sql" in activated_caps,
+                "needs_rules": "rules" in activated_caps,
+                "needs_graph": "graph" in activated_caps,
                 "question_type": state.get("question_type"),
                 "answer_mode": state.get("answer_mode"),
                 # For retrieval eval
                 "retrieved_chunk_ids": retrieved_chunk_ids,
+                "retrieved_sources": retrieved_sources_list,
                 "pre_rerank_chunk_ids": pre_rerank_ids,
+                "pre_rerank_sources": pre_rerank_sources_list,
                 "tables_used": tables_used,
                 "execution_ok": any(
                     r.get("execution_ok", False) for r in sql_results_list if isinstance(r, dict)
@@ -221,6 +247,7 @@ def run_multi_turn_conversations(
 
     agent = build_agent_graph(
         project_root=PROJECT_ROOT,
+        chroma_collection_name="port_documents_v2",  # BGE + Small-to-Big
         use_llm_sql_planner=True,
         enable_react_observations=True,
     )

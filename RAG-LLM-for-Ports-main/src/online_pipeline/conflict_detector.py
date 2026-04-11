@@ -370,9 +370,11 @@ def detect_temporal_staleness(
         source = doc.get("source_file", "")
         all_years = [int(m.group()) for m in _YEAR_RE.finditer(text)] + \
                     [int(m.group()) for m in _YEAR_RE.finditer(source)]
-        if not all_years:
+        # Filter to non-future years only
+        valid_years = [y for y in all_years if y <= current_year]
+        if not valid_years:
             continue
-        latest_year = max(y for y in all_years if y <= current_year)
+        latest_year = max(valid_years)
         age = current_year - latest_year
         if age >= stale_threshold_years:
             warnings.append({

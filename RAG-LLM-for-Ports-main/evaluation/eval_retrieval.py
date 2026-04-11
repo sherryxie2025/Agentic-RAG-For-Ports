@@ -92,52 +92,96 @@ def evaluate_vector(
     golden: List[Dict[str, Any]],
 ) -> Dict[str, float]:
     """
-    Evaluate document retrieval.
+    Evaluate document retrieval on TWO levels:
 
-    Each result dict should have:
-        - id: matching the golden id
-        - retrieved_chunk_ids: list of chunk_ids returned (post-rerank, top-5)
-        - pre_rerank_chunk_ids: chunks before reranking (top-20)
+    1. **Chunk-level** (strict): uses golden_vector.relevant_chunk_ids.
+       Only meaningful when the agent and golden share the same chunking
+       scheme. When schemes differ (e.g. v1 chunk_ids vs v2 parent/child
+       ids), this metric will be misleadingly low.
 
-    Metrics @5 use post-rerank output; metrics @20 use pre-rerank output
-    (otherwise recall@20 is bounded by post-rerank size).
+    2. **Source-file-level** (lenient): uses golden_vector.relevant_source_files.
+       Counts a retrieval as a hit if any of its docs comes from a relevant
+       source file. Robust to chunking scheme changes.
+
+    Both are reported so you can diagnose which level is the bottleneck.
     """
     golden_by_id = {g["id"]: g for g in golden}
 
-    r5, r20, p5, mrr_total, ndcg10 = 0.0, 0.0, 0.0, 0.0, 0.0
-    count = 0
+    # Chunk-level
+    cr5, cr20, cp5, cmrr, cndcg10 = 0.0, 0.0, 0.0, 0.0, 0.0
+    chunk_count = 0
+    # Source-file-level
+    sr5, sr20, sp5, smrr, sndcg10 = 0.0, 0.0, 0.0, 0.0, 0.0
+    source_count = 0
 
     for r in results:
         g = golden_by_id.get(r.get("id"))
         if not g or not g.get("golden_vector"):
             continue
-        relevant = set(g["golden_vector"].get("relevant_chunk_ids", []))
-        if not relevant:
-            continue
+
+        gv = g["golden_vector"]
+        relevant_chunks = set(gv.get("relevant_chunk_ids", []))
+        relevant_sources = set(
+            (s or "").lower() for s in gv.get("relevant_source_files", [])
+        )
 
         post = r.get("retrieved_chunk_ids", [])
-        pre = r.get("pre_rerank_chunk_ids", []) or post  # fallback
+        pre = r.get("pre_rerank_chunk_ids", []) or post
 
-        # @5 metrics from reranked output
-        r5 += recall_at_k(post, relevant, 5)
-        p5 += precision_at_k(post, relevant, 5)
-        mrr_total += mrr(post, relevant)
-        # @10 / @20 metrics from pre-rerank (larger candidate pool)
-        ndcg10 += ndcg_at_k(pre, relevant, 10)
-        r20 += recall_at_k(pre, relevant, 20)
-        count += 1
+        # Chunk-level (only if golden has chunk ids)
+        if relevant_chunks:
+            cr5 += recall_at_k(post, relevant_chunks, 5)
+            cp5 += precision_at_k(post, relevant_chunks, 5)
+            cmrr += mrr(post, relevant_chunks)
+            cndcg10 += ndcg_at_k(pre, relevant_chunks, 10)
+            cr20 += recall_at_k(pre, relevant_chunks, 20)
+            chunk_count += 1
 
-    if count == 0:
-        return {"count": 0}
+        # Source-file-level (only if golden has source files)
+        if relevant_sources:
+            post_sources = [
+                (s or "").lower() for s in r.get("retrieved_sources", [])
+            ]
+            pre_sources = [
+                (s or "").lower() for s in r.get("pre_rerank_sources", [])
+            ] or post_sources
 
-    return {
-        "recall@5": round(r5 / count, 4),
-        "recall@20": round(r20 / count, 4),
-        "precision@5": round(p5 / count, 4),
-        "mrr": round(mrr_total / count, 4),
-        "ndcg@10": round(ndcg10 / count, 4),
-        "count": count,
-    }
+            sr5 += recall_at_k(post_sources, relevant_sources, 5)
+            sp5 += precision_at_k(post_sources, relevant_sources, 5)
+            smrr += mrr(post_sources, relevant_sources)
+            sndcg10 += ndcg_at_k(pre_sources, relevant_sources, 10)
+            sr20 += recall_at_k(pre_sources, relevant_sources, 20)
+            source_count += 1
+
+    out: Dict[str, float] = {"count": max(chunk_count, source_count)}
+
+    if chunk_count > 0:
+        out.update({
+            "chunk_recall@5": round(cr5 / chunk_count, 4),
+            "chunk_recall@20": round(cr20 / chunk_count, 4),
+            "chunk_precision@5": round(cp5 / chunk_count, 4),
+            "chunk_mrr": round(cmrr / chunk_count, 4),
+            "chunk_ndcg@10": round(cndcg10 / chunk_count, 4),
+            "chunk_samples": chunk_count,
+        })
+        # Back-compat keys (v1 style)
+        out["recall@5"] = out["chunk_recall@5"]
+        out["recall@20"] = out["chunk_recall@20"]
+        out["precision@5"] = out["chunk_precision@5"]
+        out["mrr"] = out["chunk_mrr"]
+        out["ndcg@10"] = out["chunk_ndcg@10"]
+
+    if source_count > 0:
+        out.update({
+            "source_recall@5": round(sr5 / source_count, 4),
+            "source_recall@20": round(sr20 / source_count, 4),
+            "source_precision@5": round(sp5 / source_count, 4),
+            "source_mrr": round(smrr / source_count, 4),
+            "source_ndcg@10": round(sndcg10 / source_count, 4),
+            "source_samples": source_count,
+        })
+
+    return out
 
 
 def evaluate_reranking_lift(

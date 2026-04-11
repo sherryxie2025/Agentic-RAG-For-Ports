@@ -135,8 +135,13 @@ class ChromaDocumentRetriever:
                 "text": text,
                 "score": self._distance_to_score(distance),
             }
-            # Propagate v2 metadata if present (section info, doc_type, is_table)
-            for key in ("section_number", "section_title", "doc_type", "is_table", "word_count"):
+            # Propagate v2 metadata if present (section info, doc_type, is_table,
+            # parent_id for small-to-big lookup, category + publish_year for filtering)
+            for key in (
+                "parent_id", "section_number", "section_title",
+                "doc_type", "category", "publish_year",
+                "is_table", "word_count",
+            ):
                 if key in metadata:
                     item[key] = metadata[key]
             retrieved.append(item)

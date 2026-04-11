@@ -217,6 +217,7 @@ def _get_agent_system():
         project_root = Path(__file__).resolve().parents[2]
         _agent_graph = build_agent_graph(
             project_root=project_root,
+            chroma_collection_name="port_documents_v2",  # BGE + Small-to-Big
             use_llm_sql_planner=True,
             enable_react_observations=True,
         )
