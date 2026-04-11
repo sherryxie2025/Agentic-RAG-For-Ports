@@ -1,0 +1,362 @@
+[
+  {
+    "task_id": "SQL_001",
+    "sql": "SELECT AVG(\"tide_ft\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2016",
+    "result": "average tide level: 0.027313323818074237",
+    "tables": [
+      "environment"
+    ],
+    "column": "tide_ft",
+    "aggregation": "AVG",
+    "year": "2016",
+    "phrase": "average tide level"
+  },
+  {
+    "task_id": "SQL_002",
+    "sql": "SELECT AVG(\"wind_speed_ms\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2015",
+    "result": "average wind speed: 5.140104526956818",
+    "tables": [
+      "environment"
+    ],
+    "column": "wind_speed_ms",
+    "aggregation": "AVG",
+    "year": "2015",
+    "phrase": "average wind speed"
+  },
+  {
+    "task_id": "SQL_003",
+    "sql": "SELECT SUM(\"teu_received\") as result FROM \"yard_operations\" WHERE EXTRACT(YEAR FROM \"operation_date\") = 2015",
+    "result": "total TEU received: 941944",
+    "tables": [
+      "yard_operations"
+    ],
+    "column": "teu_received",
+    "aggregation": "SUM",
+    "year": "2015",
+    "phrase": "total TEU received"
+  },
+  {
+    "task_id": "SQL_004",
+    "sql": "SELECT MAX(\"peak_occupancy_pct\") as result FROM \"yard_operations\" WHERE EXTRACT(YEAR FROM \"operation_date\") = 2015",
+    "result": "peak yard occupancy: 95.0",
+    "tables": [
+      "yard_operations"
+    ],
+    "column": "peak_occupancy_pct",
+    "aggregation": "MAX",
+    "year": "2015",
+    "phrase": "peak yard occupancy"
+  },
+  {
+    "task_id": "SQL_005",
+    "sql": "SELECT AVG(\"wind_speed_ms\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2015",
+    "result": "average wind speed: 5.140104526956818",
+    "tables": [
+      "environment"
+    ],
+    "column": "wind_speed_ms",
+    "aggregation": "AVG",
+    "year": "2015",
+    "phrase": "average wind speed"
+  },
+  {
+    "task_id": "SQL_006",
+    "sql": "SELECT SUM(\"breakdown_minutes\") as result FROM \"crane_operations\" WHERE EXTRACT(YEAR FROM \"crane_start_time\") = 2015",
+    "result": "total crane breakdown time: 7722",
+    "tables": [
+      "crane_operations"
+    ],
+    "column": "breakdown_minutes",
+    "aggregation": "SUM",
+    "year": "2015",
+    "phrase": "total crane breakdown time"
+  },
+  {
+    "task_id": "SQL_007",
+    "sql": "SELECT MAX(\"arrival_delay_hours\") as result FROM \"berth_operations\" WHERE EXTRACT(YEAR FROM \"ata\") = 2015",
+    "result": "worst arrival delay: 4.0",
+    "tables": [
+      "berth_operations"
+    ],
+    "column": "arrival_delay_hours",
+    "aggregation": "MAX",
+    "year": "2015",
+    "phrase": "worst arrival delay"
+  },
+  {
+    "task_id": "SQL_008",
+    "sql": "SELECT SUM(\"total_transactions\") as result FROM \"gate_operations\" WHERE EXTRACT(YEAR FROM \"gate_date\") = 2015",
+    "result": "total gate transactions: 1550621",
+    "tables": [
+      "gate_operations"
+    ],
+    "column": "total_transactions",
+    "aggregation": "SUM",
+    "year": "2015",
+    "phrase": "total gate transactions"
+  },
+  {
+    "task_id": "SQL_009",
+    "sql": "SELECT AVG(\"tide_ft\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2016",
+    "result": "average tide level: 0.027313323818074237",
+    "tables": [
+      "environment"
+    ],
+    "column": "tide_ft",
+    "aggregation": "AVG",
+    "year": "2016",
+    "phrase": "average tide level"
+  },
+  {
+    "task_id": "SQL_010",
+    "sql": "SELECT AVG(\"tide_ft\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2016",
+    "result": "average tide level: 0.027313323818074237",
+    "tables": [
+      "environment"
+    ],
+    "column": "tide_ft",
+    "aggregation": "AVG",
+    "year": "2016",
+    "phrase": "average tide level"
+  },
+  {
+    "task_id": "SQL_011",
+    "sql": "SELECT AVG(\"wind_speed_ms\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2015",
+    "result": "average wind speed: 5.140104526956818",
+    "tables": [
+      "environment"
+    ],
+    "column": "wind_speed_ms",
+    "aggregation": "AVG",
+    "year": "2015",
+    "phrase": "average wind speed"
+  },
+  {
+    "task_id": "SQL_012",
+    "sql": "SELECT AVG(\"tide_ft\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2016",
+    "result": "average tide level: 0.027313323818074237",
+    "tables": [
+      "environment"
+    ],
+    "column": "tide_ft",
+    "aggregation": "AVG",
+    "year": "2016",
+    "phrase": "average tide level"
+  },
+  {
+    "task_id": "SQL_013",
+    "sql": "SELECT SUM(\"total_transactions\") as result FROM \"gate_operations\" WHERE EXTRACT(YEAR FROM \"gate_date\") = 2015",
+    "result": "total gate transactions: 1550621",
+    "tables": [
+      "gate_operations"
+    ],
+    "column": "total_transactions",
+    "aggregation": "SUM",
+    "year": "2015",
+    "phrase": "total gate transactions"
+  },
+  {
+    "task_id": "SQL_014",
+    "sql": "SELECT MAX(\"peak_occupancy_pct\") as result FROM \"yard_operations\" WHERE EXTRACT(YEAR FROM \"operation_date\") = 2015",
+    "result": "peak yard occupancy: 95.0",
+    "tables": [
+      "yard_operations"
+    ],
+    "column": "peak_occupancy_pct",
+    "aggregation": "MAX",
+    "year": "2015",
+    "phrase": "peak yard occupancy"
+  },
+  {
+    "task_id": "SQL_015",
+    "sql": "SELECT AVG(\"tide_ft\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2016",
+    "result": "average tide level: 0.027313323818074237",
+    "tables": [
+      "environment"
+    ],
+    "column": "tide_ft",
+    "aggregation": "AVG",
+    "year": "2016",
+    "phrase": "average tide level"
+  },
+  {
+    "task_id": "SQL_016",
+    "sql": "SELECT MAX(\"wave_height_m\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2015",
+    "result": "maximum wave height: 2.937463287517595",
+    "tables": [
+      "environment"
+    ],
+    "column": "wave_height_m",
+    "aggregation": "MAX",
+    "year": "2015",
+    "phrase": "maximum wave height"
+  },
+  {
+    "task_id": "SQL_017",
+    "sql": "SELECT AVG(\"wind_speed_ms\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2015",
+    "result": "average wind speed: 5.140104526956818",
+    "tables": [
+      "environment"
+    ],
+    "column": "wind_speed_ms",
+    "aggregation": "AVG",
+    "year": "2015",
+    "phrase": "average wind speed"
+  },
+  {
+    "task_id": "SQL_018",
+    "sql": "SELECT SUM(\"total_transactions\") as result FROM \"gate_operations\" WHERE EXTRACT(YEAR FROM \"gate_date\") = 2015",
+    "result": "total gate transactions: 1550621",
+    "tables": [
+      "gate_operations"
+    ],
+    "column": "total_transactions",
+    "aggregation": "SUM",
+    "year": "2015",
+    "phrase": "total gate transactions"
+  },
+  {
+    "task_id": "SQL_019",
+    "sql": "SELECT AVG(\"tide_ft\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2016",
+    "result": "average tide level: 0.027313323818074237",
+    "tables": [
+      "environment"
+    ],
+    "column": "tide_ft",
+    "aggregation": "AVG",
+    "year": "2016",
+    "phrase": "average tide level"
+  },
+  {
+    "task_id": "SQL_020",
+    "sql": "SELECT MIN(\"pressure_hpa\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2017",
+    "result": "lowest pressure recorded: 996.6723429369033",
+    "tables": [
+      "environment"
+    ],
+    "column": "pressure_hpa",
+    "aggregation": "MIN",
+    "year": "2017",
+    "phrase": "lowest pressure recorded"
+  },
+  {
+    "task_id": "SQL_021",
+    "sql": "SELECT AVG(\"wind_speed_ms\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2015",
+    "result": "average wind speed: 5.140104526956818",
+    "tables": [
+      "environment"
+    ],
+    "column": "wind_speed_ms",
+    "aggregation": "AVG",
+    "year": "2015",
+    "phrase": "average wind speed"
+  },
+  {
+    "task_id": "SQL_022",
+    "sql": "SELECT MIN(\"pressure_hpa\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2017",
+    "result": "lowest pressure recorded: 996.6723429369033",
+    "tables": [
+      "environment"
+    ],
+    "column": "pressure_hpa",
+    "aggregation": "MIN",
+    "year": "2017",
+    "phrase": "lowest pressure recorded"
+  },
+  {
+    "task_id": "SQL_023",
+    "sql": "SELECT AVG(\"tide_ft\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2016",
+    "result": "average tide level: 0.027313323818074237",
+    "tables": [
+      "environment"
+    ],
+    "column": "tide_ft",
+    "aggregation": "AVG",
+    "year": "2016",
+    "phrase": "average tide level"
+  },
+  {
+    "task_id": "SQL_024",
+    "sql": "SELECT AVG(\"wind_speed_ms\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2015",
+    "result": "average wind speed: 5.140104526956818",
+    "tables": [
+      "environment"
+    ],
+    "column": "wind_speed_ms",
+    "aggregation": "AVG",
+    "year": "2015",
+    "phrase": "average wind speed"
+  },
+  {
+    "task_id": "SQL_025",
+    "sql": "SELECT SUM(\"teu_received\") as result FROM \"yard_operations\" WHERE EXTRACT(YEAR FROM \"operation_date\") = 2015",
+    "result": "total TEU received: 941944",
+    "tables": [
+      "yard_operations"
+    ],
+    "column": "teu_received",
+    "aggregation": "SUM",
+    "year": "2015",
+    "phrase": "total TEU received"
+  },
+  {
+    "task_id": "SQL_026",
+    "sql": "SELECT MAX(\"arrival_delay_hours\") as result FROM \"berth_operations\" WHERE EXTRACT(YEAR FROM \"ata\") = 2015",
+    "result": "worst arrival delay: 4.0",
+    "tables": [
+      "berth_operations"
+    ],
+    "column": "arrival_delay_hours",
+    "aggregation": "MAX",
+    "year": "2015",
+    "phrase": "worst arrival delay"
+  },
+  {
+    "task_id": "SQL_027",
+    "sql": "SELECT SUM(\"total_transactions\") as result FROM \"gate_operations\" WHERE EXTRACT(YEAR FROM \"gate_date\") = 2015",
+    "result": "total gate transactions: 1550621",
+    "tables": [
+      "gate_operations"
+    ],
+    "column": "total_transactions",
+    "aggregation": "SUM",
+    "year": "2015",
+    "phrase": "total gate transactions"
+  },
+  {
+    "task_id": "SQL_028",
+    "sql": "SELECT SUM(\"total_transactions\") as result FROM \"gate_operations\" WHERE EXTRACT(YEAR FROM \"gate_date\") = 2015",
+    "result": "total gate transactions: 1550621",
+    "tables": [
+      "gate_operations"
+    ],
+    "column": "total_transactions",
+    "aggregation": "SUM",
+    "year": "2015",
+    "phrase": "total gate transactions"
+  },
+  {
+    "task_id": "SQL_029",
+    "sql": "SELECT SUM(\"total_transactions\") as result FROM \"gate_operations\" WHERE EXTRACT(YEAR FROM \"gate_date\") = 2015",
+    "result": "total gate transactions: 1550621",
+    "tables": [
+      "gate_operations"
+    ],
+    "column": "total_transactions",
+    "aggregation": "SUM",
+    "year": "2015",
+    "phrase": "total gate transactions"
+  },
+  {
+    "task_id": "SQL_030",
+    "sql": "SELECT AVG(\"tide_ft\") as result FROM \"environment\" WHERE EXTRACT(YEAR FROM \"timestamp\") = 2016",
+    "result": "average tide level: 0.027313323818074237",
+    "tables": [
+      "environment"
+    ],
+    "column": "tide_ft",
+    "aggregation": "AVG",
+    "year": "2016",
+    "phrase": "average tide level"
+  }
+]

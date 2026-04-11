@@ -71,11 +71,25 @@ class SQLAgentV2:
         logger.info("SQL_GEN: mode=%s tables=%s", generation_mode, used_tables)
         logger.debug("SQL: %s", sql.strip()[:200])
 
+        # Pre-check: use DuckDB EXPLAIN to catch syntax/GROUP BY/type errors
+        # BEFORE spending execution cost. If EXPLAIN fails and we're in LLM
+        # mode, skip straight to rule-based fallback.
+        if generation_mode == "llm":
+            explain_ok, explain_err = self.executor.explain(sql)
+            if not explain_ok:
+                logger.warning(
+                    "SQL_EXPLAIN: LLM SQL failed pre-check (%s), pre-empting with rule-based",
+                    (explain_err or "")[:80],
+                )
+                rb_result = self._generate_sql_rule_based(query)
+                sql = rb_result["sql"]
+                used_tables = rb_result["used_tables"]
+                generation_mode = "rule_based_preempt"
+
         execution = self.executor.execute(sql)
 
-        # Auto-fallback: if LLM SQL failed execution, try rule-based as a rescue.
-        # DuckDB errors like GROUP BY / type cast issues are common LLM mistakes
-        # that the deterministic rule-based generator avoids.
+        # Auto-fallback: if SQL still failed execution (rule-based SQL can
+        # also fail on edge cases), try rule-based as a second rescue.
         if not execution.execution_ok and generation_mode == "llm":
             logger.warning(
                 "SQL_EXEC: LLM SQL failed (%s), falling back to rule-based",
@@ -219,7 +233,8 @@ Requirements:
                     {"role": "user", "content": query},
                 ],
                 temperature=0.1,
-                timeout=120,
+                timeout=45,
+                max_tokens=600,
             )
 
             text = response.choices[0].message.content.strip()

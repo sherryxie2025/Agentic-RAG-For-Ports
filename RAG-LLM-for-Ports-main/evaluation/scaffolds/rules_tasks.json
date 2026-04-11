@@ -1,0 +1,222 @@
+[
+  {
+    "task_id": "RUL_001",
+    "variable": "wave_height_m",
+    "sql_variable": "wave_height_m",
+    "operator": ">",
+    "value": "2.5",
+    "action": "Immediately halt lifting operations and secure cranes",
+    "rule_text": "Suspend all external crane operations when significant wave height exceeds safety limits.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_002",
+    "variable": "pressure_hpa",
+    "sql_variable": "pressure_hpa",
+    "operator": "<",
+    "value": "980",
+    "action": "Alert port authority and prepare emergency response teams",
+    "rule_text": "Initiate storm watch procedures during rapid atmospheric pressure decline.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_003",
+    "variable": "dominant_period_s",
+    "sql_variable": "dominant_period_s",
+    "operator": ">",
+    "value": "12",
+    "action": "Deny new vessel arrivals until period decreases",
+    "rule_text": "Restrict vessel maneuvering during long swell periods to ensure mooring security.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_004",
+    "variable": "water_temp_c",
+    "sql_variable": "water_temp_c",
+    "operator": "<",
+    "value": "1",
+    "action": "Engage heating systems for critical dockside utilities",
+    "rule_text": "Activate freeze protection systems when water temperature approaches freezing point.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_005",
+    "variable": "air_temp_c",
+    "sql_variable": "air_temp_c",
+    "operator": "<",
+    "value": "-10",
+    "action": "Mandate frequent breaks and provide heated shelters",
+    "rule_text": "Implement extreme cold weather safety protocols for personnel working outdoors.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_006",
+    "variable": "vessel_loa_meters",
+    "sql_variable": "vessel_loa_meters",
+    "operator": ">",
+    "value": "400",
+    "action": "Generate exception report for terminal manager",
+    "rule_text": "Flag vessels exceeding maximum terminal length limits for manual review",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_007",
+    "variable": "vessel_capacity_teu",
+    "sql_variable": "vessel_capacity_teu",
+    "operator": "<",
+    "value": "1000",
+    "action": "Route to Pier B or C based on availability",
+    "rule_text": "Assign small vessels to designated feeder berths automatically",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_008",
+    "variable": "vessel_loa_meters",
+    "sql_variable": "vessel_loa_meters",
+    "operator": ">=",
+    "value": "366",
+    "action": "Require tug escort and pilot supervision",
+    "rule_text": "Trigger safety protocol for ultra-large container vessels",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_009",
+    "variable": "vessel_capacity_teu",
+    "sql_variable": "vessel_capacity_teu",
+    "operator": ">",
+    "value": "24000",
+    "action": "Allocate top-tier gantry cranes immediately",
+    "rule_text": "Escalate handling priority for mega-class vessels",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_010",
+    "variable": "vessel_capacity_teu",
+    "sql_variable": "vessel_capacity_teu",
+    "operator": "<=",
+    "value": "5000",
+    "action": "Redirect to satellite port facility",
+    "rule_text": "Restrict access for vessels below minimum economic size for deep-sea terminals",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_011",
+    "variable": "crane_productivity_mph",
+    "sql_variable": "crane_productivity_mph",
+    "operator": "<",
+    "value": "15",
+    "action": "Pause and investigate crane operations",
+    "rule_text": "Crane operations must be paused when crane productivity drops below 15 moves per hour for more than 2 consecutive hours.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_012",
+    "variable": "breakdown_minutes",
+    "sql_variable": "breakdown_minutes",
+    "operator": ">",
+    "value": "60",
+    "action": "Dispatch maintenance and notify supervisor",
+    "rule_text": "Crane breakdown exceeding 60 minutes requires immediate maintenance dispatch and supervisor notification.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_013",
+    "variable": "berth_productivity_mph",
+    "sql_variable": "berth_productivity_mph",
+    "operator": "<",
+    "value": "20",
+    "action": "Trigger operational review",
+    "rule_text": "Berth productivity falling below 20 moves per hour triggers operational review and resource reallocation.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_014",
+    "variable": "arrival_delay_hours",
+    "sql_variable": "arrival_delay_hours",
+    "operator": ">",
+    "value": "6",
+    "action": "Reassign berth schedule",
+    "rule_text": "Vessel arrival delay exceeding 6 hours requires berth schedule reassignment and notification to terminal operator.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_015",
+    "variable": "peak_occupancy_pct",
+    "sql_variable": "peak_occupancy_pct",
+    "operator": ">",
+    "value": "85",
+    "action": "Activate overflow protocol",
+    "rule_text": "Yard peak occupancy exceeding 85% triggers overflow protocol and diverts containers to secondary storage areas.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_016",
+    "variable": "average_turn_time_minutes",
+    "sql_variable": "average_turn_time_minutes",
+    "operator": ">",
+    "value": "90",
+    "action": "Investigate congestion and reschedule",
+    "rule_text": "Gate truck turn time exceeding 90 minutes requires investigation of congestion causes and possible appointment rescheduling.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_017",
+    "variable": "tide_ft",
+    "sql_variable": "tide_ft",
+    "operator": "<",
+    "value": "2",
+    "action": "Restrict deep-draft vessel entry",
+    "rule_text": "Tide level below 2 feet restricts deep-draft vessel entry until conditions improve.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_018",
+    "variable": "wind_gust_ms",
+    "sql_variable": "wind_gust_ms",
+    "operator": ">",
+    "value": "25",
+    "action": "Boom-down all active cranes",
+    "rule_text": "Wind gust exceeding 25 m/s triggers immediate crane boom-down procedure.",
+    "source_file": "synthetic_rule",
+    "page": 0
+  },
+  {
+    "task_id": "RUL_019",
+    "variable": "Wind Speed",
+    "sql_variable": "wind_speed_ms",
+    "operator": null,
+    "value": null,
+    "action": "Limit wind speed",
+    "rule_text": "Maximum wind speed limit permitted for a Point Richards entry is 30-35 knots based on steady winds.",
+    "source_file": "2018_VRCA_Port_Operating_Handbook_31_5_18.pdf",
+    "page": 22
+  },
+  {
+    "task_id": "RUL_020",
+    "variable": "Wind Speed",
+    "sql_variable": "wind_speed_ms",
+    "operator": null,
+    "value": null,
+    "action": "Limit wind speed",
+    "rule_text": "Maximum wind speed limit permitted for a Geelong departure is 25-30 knots based on steady winds.",
+    "source_file": "2018_VRCA_Port_Operating_Handbook_31_5_18.pdf",
+    "page": 22
+  }
+]

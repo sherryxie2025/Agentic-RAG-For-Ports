@@ -1,0 +1,662 @@
+[
+  {
+    "task_id": "MULTI_001",
+    "expected_sources": [
+      "vector",
+      "sql"
+    ],
+    "anchor_chunk_id": "8__c__p1__18__5",
+    "anchor_parent_id": "8__p__p1__18",
+    "anchor_source_file": "manualbestmanagementports.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "suitability, adequacy and effectiveness of the environmental policy 2. The suitability, adequacy and effectiveness of the environmental objectives and targets (as well as the organization’s current status against these objectives and targets) 3. The overall suitability, adequacy and effectiveness of the EMS reflecting changing circumstances and overall environmental performance 4. The status of corrective and preventive actions 5. The results of any EMS audits and regulatory compliance evaluations conducted since the last Management Review meeting 6. Communications from external interested parties, including complaints 7. Recommendations for improvements 8. The results of any action items from the previous Management Review meeting D. Minutes of the Management Review meeting will be docume"
+  },
+  {
+    "task_id": "MULTI_002",
+    "expected_sources": [
+      "vector",
+      "sql"
+    ],
+    "anchor_chunk_id": "52__c__p1__19__7",
+    "anchor_parent_id": "52__p__p1__19",
+    "anchor_source_file": "panynj-environmental-initiatives-ey2016-report-final.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "sustainability_report",
+    "anchor_text": "Cessna 150 Series LGA C172 CESSNA 172R / LYCOMING IO-360-L2A Cessna 172 Skyhawk LGA C208 Piper PA-42 / PT6A-41 Cessna 208 Caravan LGA C10T 1985 1-ENG VP PROP Cessna 210 Centurion LGA C25A CIT 2/JT15D-4 Cessna 525 CitationJet LGA C25C CIT 2/JT15D-4 Cessna 525C CitationJet LGA C310 BARON 58P/TS10-520-L Cessna 310 LGA C340 BARON 58P/TS10-520-L Cessna 340 LGA C14T BARON 58P/TS10-520-L Cessna 414 LGA C441 CONQUEST II/TPE331-8 Cessna 441 Conquest II LGA C500 CIT 2/JT15D-4 Cessna 500 Citation I LGA C510 510 CITATION MUSTANG CESSNA CITATION 510 LGA C550 CESSNA 550 CITATION BRAVO / PW530A Cessna 550 Citation II LGA"
+  },
+  {
+    "task_id": "MULTI_003",
+    "expected_sources": [
+      "vector",
+      "sql"
+    ],
+    "anchor_chunk_id": "180__c__p1__18__2",
+    "anchor_parent_id": "180__p__p1__18",
+    "anchor_source_file": "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "and Westchester; and the eight northern New Jersey counties of Bergen, Essex, Hudson, Middlesex, Morris, Passaic, Somerset and Union. The following demographic information is provided for this seventeen county region that comprise approximately 3,900 square miles. Total Per-capita Unemployment Population Personal Income Personal Income Employment Rate (2) (3) (2) (3) (4) (5) 2008 (1) 17,198 $961,824,336 $55.93 8,040.7 5.30% 17,170 $919,496,976 $53.55 8,017.2 4.50% 17,178 $834,929,262 $48.60 7,894.2 4.70% 17,181 $781,458,630 $45.48 7,796.8 5.00% 17,143 $749,190,737 $43.70 7,739.5 5.80% 17,089 $699,191,901 $40.91 7,714.4 6.70% 17,021 $687,559,899 $40.39 7,748.1 6.60% 16,941 $690,877,666 $40.79 7,891.9 5.00% 16,789 $674,214,026 $40.16 7,954.1 4.60% 16,674 $622,227,216 $37.32 7,755.7 5.30% 16,"
+  },
+  {
+    "task_id": "MULTI_004",
+    "expected_sources": [
+      "vector",
+      "sql"
+    ],
+    "anchor_chunk_id": "207__c__p1__15__2",
+    "anchor_parent_id": "207__p__p1__15",
+    "anchor_source_file": "panynj-path-2017-path-hourly-ridership-report.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "Avg Weekday Exit Avg Saturday Exit Avg Sunday Exit Avg Holiday Entries Avg Holiday Exits 1,502 2,924 1,147 6,387 1,011 2,043 7,272 1,543 2,466 2,786 1,159 1,139 1,046 1,379 1,208 3,262 1,558 1,855 6,414 2,516 1,242 5,293 1,878 2,241 1,180 1,242 32,213 10,735 8,462 30,042 10,652 8,207 16,170 16,368 2017‐Nov: Page 7 of 14 (Based on November 2017 Turnstile Count) Hour 12:00:00 AM 1:00:00 AM 2:00:00 AM 3:00:00 AM 4:00:00 AM 5:00:00 AM 6:00:00 AM 7:00:00 AM 8:00:00 AM 9:00:00 AM 10:00:00 AM 11:00:00 AM 12:00:00 PM 1:00:00 PM 2:00:00 PM 3:00:00 PM 4:00:00 PM 5:00:00 PM 6:00:00 PM 7:00:00 PM 8:00:00 PM 9:00:00 PM 10:00:00 PM 11:00:00 PM Total Harrison Avg Weekday Entry Avg Saturday Entry Avg Sunday Entry Avg Weekday Exit Avg Saturday Exit Avg Sunday Exit Avg Holiday Entries Avg Holiday Exits 1,97"
+  },
+  {
+    "task_id": "MULTI_005",
+    "expected_sources": [
+      "vector",
+      "sql"
+    ],
+    "anchor_chunk_id": "30__c__p1__3__1",
+    "anchor_parent_id": "30__p__p1__3",
+    "anchor_source_file": "panynj-corporate-capital-plan-2014-2023-20capital-20plan.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "new gates are expected to be open in late 2016, with the new headhouse opening in 2018  The complete, 35‐gate CTB is expected to be in operation by late 2021 ‐ 100,000 200,000 300,000 400,000 500,000 CTB Replacement Project (LGA) Actuals and Planned Spending* * $54 million in cumulative actuals from 2006 to 2013; No anticipated spending post‐2021 LGA Redevelopment Program Total Project Cost $3.6 billion (PA cost limited to $2.2B) Actuals through 2013 $88 million Project Start Date 1Q 2006 Anticipated End Date 3Q 2021 Current Stage Stage I (Design Complete) 16 | P a g e EWR Terminal A Redevelopment Program Purpose: To replace the existing 1973 Terminal A with a new modern facility to meet increased passenger demands. Scope: The program includes construction of a new 33‐gate common use term"
+  },
+  {
+    "task_id": "MULTI_006",
+    "expected_sources": [
+      "vector",
+      "rules"
+    ],
+    "anchor_chunk_id": "271__c__2024__26__2",
+    "anchor_parent_id": "271__p__2024__26",
+    "anchor_source_file": "annual-report-2024.pdf",
+    "anchor_section_title": "Financial Statements Certification (pursuant to Port Authority by-laws)",
+    "anchor_doc_type": "annual_report",
+    "anchor_text": "6,921 33,290 44,602 Mortgage and asset-backed securities — 10,200 20,596 255,753 286,549 Bond mutual funds — — — 11,455 11,455 Total $ 7,245 $ 102,289 $ 195,450 $ 380,516 $ 685,500 The following is a listing of the Trust’s fixed-income investments and related maturity schedule as of December 31, 2023: Investment Type <1 Year 1 to 5 Years 5 to 10 Years 10+ Years Total (In thousands) Corporate bonds $ 1,181 $ 29,677 $ 64,295 $ 31,389 $ 126,542 Foreign bonds — 6,841 10,922 5,448 23,211 U.S. Treasury securities 4,232 28,589 78,528 42,707 154,056 Municipal bonds — 3,691 7,071 24,406 35,168 Mortgage and asset-backed securities — 9,450 13,238 207,410 230,098 Bond mutual funds — — — 10,929 10,929 Total $ 5,413 $ 78,248 $ 174,054 $ 322,289 $ 580,004 Note D – Outstanding Financing Obligations OUTSTA"
+  },
+  {
+    "task_id": "MULTI_007",
+    "expected_sources": [
+      "vector",
+      "rules"
+    ],
+    "anchor_chunk_id": "96__c__2-1-2__13__0",
+    "anchor_parent_id": "96__p__2-1-2__13",
+    "anchor_source_file": "panynj-airports-atr2007.pdf",
+    "anchor_section_title": "Top 50 Worldwide Worldwide Passenger Traffic Airport Comparisons",
+    "anchor_doc_type": "document",
+    "anchor_text": "23,267,860 169,139 389,405 23,826,404 23,362,349 134,971 518,843 24,016,163 26,660,578 141,743 804,424 27,606,745 28,698,928 138,265 799,378 29,636,571 29,821,314 117,395 1,030,142 30,968,851 32,335,548 103,205 1,085,384 33,524,137 Domestic and International YEAR SCHEDULED CHARTER COMMUTER TOTAL Totals 73,042,678 650,340 4,571,448 78,264,466 72,704,003 884,874 4,728,269 78,317,146 75,908,612 802,562 4,990,954 81,702,128 78,742,947 541,186 5,345,797 84,629,930 80,674,279 720,030 5,571,042 86,965,351 83,242,401 609,440 5,768,678 89,620,519 86,091,065 470,033 6,218,148 92,779,246 77,179,844 388,098 5,686,560 83,254,502 73,976,141 185,805 7,212,554 81,374,500 75,684,003 239,598 8,147,011 84,070,612 83,926,909 240,442 10,265,244 94,432,595 88,352,435 188,623 11,717,010 100,258,068 91,260,754 13"
+  },
+  {
+    "task_id": "MULTI_008",
+    "expected_sources": [
+      "vector",
+      "rules"
+    ],
+    "anchor_chunk_id": "73__c__p1__9__3",
+    "anchor_parent_id": "73__p__p1__9",
+    "anchor_source_file": "panynj-studies-reports-newark-airport-terminal-redevelopment-program.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "(C&D) debris generated by demolition and construction activities associated with all of the Proposed New Projects will be recycled to the greatest extent possible. A Port Authority‐wide policy requires that contractors recycle 75% of certain demolition debris items, which currently include steel, asphalt, Portland cement concrete (PCC) and clean soil. The disposal of C&D debris would be done in accordance with the Union County Solid Waste Management Plan, the Essex County Solid Waste Management Plan and with the regulations of the state’s Solid Waste Management Act (N.J.S.A. 13:1 E‐1). Terminal A Redevelopment Program Required Permits and Notificaitons 6. Required Permits and Notifications Various laws, policies and programs impose requirements with which the Proposed New Projects would ne"
+  },
+  {
+    "task_id": "MULTI_009",
+    "expected_sources": [
+      "vector",
+      "rules"
+    ],
+    "anchor_chunk_id": "178__c__p1__2__3",
+    "anchor_parent_id": "178__p__p1__2",
+    "anchor_source_file": "panynj-corporate-financial-statements-financial-statement-2006.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "and (expenses): Interest income $ 90,759 $ 60,629 $ 42,497 Net increase in fair value of investments 47,209 44,950 16,550 Interest expense in connection with bonds and other asset financing (454,134) (422,334) (391,870) Net loss on disposition of assets (3,741) (55) - Net non-operating expenses $(319,907) $(316,810) $(332,823) 2006 vs. 2005 Financial income totaled $138 million in 2006, an increase of $32 million over 2005. The year-to-year increase is primarily due to higher interest rates and higher market valuation adjustments on investment securities, offset by a $23 million decline stemming from a mark to market valuation of three outstanding interest rate exchange contracts that were entered into on a forward basis anticipating the future issuance of three series of versatile structu"
+  },
+  {
+    "task_id": "MULTI_010",
+    "expected_sources": [
+      "vector",
+      "rules"
+    ],
+    "anchor_chunk_id": "181__c__p1__3__2",
+    "anchor_parent_id": "181__p__p1__3",
+    "anchor_source_file": "panynj-corporate-financial-statements-financial-statement-2009.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "to the WTC site as depicted in the following chart: Management’s Discussion and Analysis Allocation of 2010 Planned Capital Expenditures 15% ARC 5% TUNNELS, BRIDGES & TERMINALS 6% PORT COMMERCE 10% PATH 15% AVIATION 1% REGIONAL PROGRAMS 1% DEVELOPMENT 47% WTC SITE Major elements of the 2010 Capital Plan include:  Continued rebuilding of the WTC Site, including the permanent WTC Transportation Hub, One World Trade Center, WTC Retail Redevelopment, the WTC Memorial and certain WTC Site Infrastructure  Planning for the Central Terminal Building at LGA  Advancement of the JFK Flight Delay Reduction Program  Planning for the Modernization of Terminal A at EWR  Continued procurement of new PATH rail cars  New PATH Signal Replacement Program  Continued planning efforts for the modernizatio"
+  },
+  {
+    "task_id": "MULTI_011",
+    "expected_sources": [
+      "vector",
+      "graph"
+    ],
+    "anchor_chunk_id": "229__c__p1__4__1",
+    "anchor_parent_id": "229__p__p1__4",
+    "anchor_source_file": "panynj-port-doing-business-maher-tariff.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "Time, may be placed in public storage at any time thereafter, at the option of MTL and at the risk and expense of the cargo. B. Cargo remaining on the Terminal in excess of 30 days, will be considered as abandoned and sold for collection of Demurrage charges due MTL. At the time of sale, MTL makes no representation of the cargo. All bids are based on a view by the bidders of these contents. All bids are final. Thirty (30) days prior to such sale, a registered receipted letter or e-mail of notice will be sent to either the carrier or the shipper of record. Acknowledgement by the carrier and/or the shipper of record prior to the timeframe mentioned above overrides all mentioned requirements for the sale of the cargo. Any monies received beyond the charges due, will be returned to the shipper"
+  },
+  {
+    "task_id": "MULTI_012",
+    "expected_sources": [
+      "vector",
+      "graph"
+    ],
+    "anchor_chunk_id": "15__c__p1__3__2",
+    "anchor_parent_id": "15__p__p1__3",
+    "anchor_source_file": "panynj-airports-atr2017.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "highway from midtown Manhattan. AVIATION ROLE LaGuardia Airport is one of the nation’s leading domestic gateways for business and leisure travel, and is the primary business/short-haul airport for New York City. LaGuardia Airport served about 29.5 million passengers in 2017, including a record 2.1 million international travelers. Eleven airlines with 73 nonstop destinations at LaGuardia Airport, which relative to its size, holds the distinction of being the most efficient airport in the world, handling more passengers per acre per year than any other airport. EMPLOYMENT AND ECONOMIC IMPACT LaGuardia Airport employs about 12,000 people. The airport contributes more than $18.7 billion in economic activity to the New York-New Jersey metropolitan region, generating about 136,000 total jobs and"
+  },
+  {
+    "task_id": "MULTI_013",
+    "expected_sources": [
+      "vector",
+      "graph"
+    ],
+    "anchor_chunk_id": "95__c__2-1-2__9__4",
+    "anchor_parent_id": "95__p__2-1-2__9",
+    "anchor_source_file": "panynj-airports-atr2006.pdf",
+    "anchor_section_title": "Top 50 Worldwide Airport Comparisons Worldwide Passenger Traffic",
+    "anchor_doc_type": "document",
+    "anchor_text": "Change 2005 to 2006 -2.1% -33.7% 7.9% -0.3% -6.7% 2.2.2 LGA Commercial Passenger Traffic Monthly Totals 2006 Domestic MONTH SCHEDULED CHARTER COMMUTER TOTAL REVENUE PASSENGERS % Change 2005 - 2006 Non-Revenue Passengers Jan 4,749,252 1,343 763,549 5,514,144 9.8% 162,211 Feb 4,320,646 3,169 721,393 5,045,208 3.3% 144,856 Mar 5,436,175 5,965 936,061 6,378,201 4.1% 175,909 Apr 5,471,309 4,328 951,730 6,427,367 6.4% 162,251 May 5,201,108 1,285 1,017,587 6,219,980 2.0% 248,168 Jun 5,320,510 1,030,957 6,352,399 4.0% 182,959 Jul 5,570,392 1,447 1,044,626 6,616,465 1.9% 197,794 Aug 5,571,244 2,060 1,074,785 6,648,089 2.5% 189,640 Sep 4,503,317 1,061 984,473 5,488,851 1.1% 167,487 Oct 5,013,761 2,885 1,096,883 6,113,529 8.5% 182,377 Nov 5,155,378 2,459 1,051,884 6,209,721 4.4% 161,779 Dec 5,178,097"
+  },
+  {
+    "task_id": "MULTI_014",
+    "expected_sources": [
+      "vector",
+      "graph"
+    ],
+    "anchor_chunk_id": "169__c__2010__11__0",
+    "anchor_parent_id": "169__p__2010__11",
+    "anchor_source_file": "panynj-corporate-budgets-budget-2010.pdf",
+    "anchor_section_title": "Budget Schedules",
+    "anchor_doc_type": "document",
+    "anchor_text": "1,214,692 79,819 327,027 188,291 249,465 72,395 321,860 370,991 321,833 Tunnels, Bridges & Terminals Holland Tunnel 120,072 65,419 10,053 18,008 9,466 17,126 17,316 25,135 16,672 Lincoln Tunnel 158,824 81,461 11,670 36,376 17,421 11,896 12,125 19,484 7,978 George Washington Bridge 446,231 91,300 12,779 33,645 21,820 286,687 286,888 286,350 278,129 George Washington Bridge Bus Station 7,542 2,024 - (9,416) (9,402) (10,317) (9,106) Bayonne Bridge 30,101 16,947 2,328 5,875 5,891 (940) (898) 1,142 (7,418) Goethals Bridge 115,938 24,421 3,595 9,830 6,484 71,608 71,664 75,607 79,332 Outerbridge Crossing 111,008 22,580 2,877 11,274 3,460 70,817 70,866 73,110 66,891 Port Authority Bus Terminal 34,877 86,538 10,521 24,941 12,491 (99,614) 4,556 (95,058) (81,073) (99,241) Total - Tunnels, Bridges & T"
+  },
+  {
+    "task_id": "MULTI_015",
+    "expected_sources": [
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "99__c__2-3-1__21__4",
+    "anchor_parent_id": "99__p__2-3-1__21",
+    "anchor_source_file": "panynj-airports-atr2011.pdf",
+    "anchor_section_title": "Annual Totals 1998 to 2011 YEAR JFK EWR LGA DOWNTOWN TOTAL",
+    "anchor_doc_type": "document",
+    "anchor_text": "Abu Dhabi, AE (AUH) 487,951 10.3 Cincinnati OH, US (CVG) 487,185 29.2 Chengdu, CN (CTU) 477,696 10.5 Sao Paulo, BR (GRU) 471,910 9.5 Shanghai, CN (SHA) 454,069 (5.5) Milan, IT (MXP) 450,447 4.1 Houston TX, US (IAH) 444,137 3.2 Brussels, BE (BRU) 430,496 (2.5) Madrid, ES (MAD) 422,168 5.2 Source: Airports Council International - Worldwide Airport Traffic Report - Calendar Year 2011 3.2.1 Revenue Freight Annual Totals 1998 to 2011 In Short Tons Domestic YEAR EWR JFK LGA SWF REGION 844,719 384,601 22,878 1,252,389 842,637 442,265 21,639 1,306,550 824,598 452,393 19,299 1,296,861 705,963 388,164 15,765 1,110,321 728,039 426,711 11,321 1,166,997 738,065 460,798 11,989 1,155 1,212,008 739,005 446,339 13,817 1,147 1,200,308 718,495 402,286 15,689 1,136,643 717,003 360,713 13,752 17,404 1,108,872 "
+  },
+  {
+    "task_id": "MULTI_016",
+    "expected_sources": [
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "170__c__2011__15__1",
+    "anchor_parent_id": "170__p__2011__15",
+    "anchor_source_file": "panynj-corporate-budgets-budget-2011.pdf",
+    "anchor_section_title": "Capital Spending Project List",
+    "anchor_doc_type": "document",
+    "anchor_text": "AT GREENVILLE YARD RPP CP17-014 TRANSFER BRIDGE #11 (STRUCTURAL/MECHANICAL) REPAIRS AT GREENVILLE YARD RPP CP17-015 REHABILITATE BARGE #29 AT GREENVILLE YARD RPP 1,498 CP17-016 INSTALLATION OF SUPPORT TRACKS FOR FLOAT BRIDGE # 9 - NJ RPP CP17-017 REPLACEMENT OF FLOAT BRIDGE # 9 - NJ RPP CP17-018 RECONFIGURE OFFSITE TRACKS - NJ RPP CP17-019 NEW BARGE AT GREENVILLE YARD RPP CP17-020 BRIDGE REPAIRS AT 65TH STREET YARD BROOKLYN RPP CP17 020 BRIDGE REPAIRS AT 65TH STREET YARD BROOKLYN RPP CP17-021 EXISTING TRACK REPAIRS – 65TH STREET TERMINAL NJ RPP 6,210 INTERMODAL CP17-003 CROSS HARBOR PERMITTING, PLANNING, DESIGN (MASTER PLAN) RPP CP17-005 CROSS HARBOR RAIL FREIGHT RPP 44,332 CP17-007 LIFTBRIDGE EMERGENCY REHABILITATION- NJ RPP 45,066 CP17-998 PROVISION FOR EFFICIENCY AND PHASING PROV (4,358"
+  },
+  {
+    "task_id": "MULTI_017",
+    "expected_sources": [
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "3__c__p1__15__0",
+    "anchor_parent_id": "3__p__p1__15",
+    "anchor_source_file": "ey2023_ghg_cap_inventory_report-final.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "sustainability_report",
+    "anchor_text": "by Size and Airport (Number of Aircraft) The 2023 taxi times displayed in Table 5-8 were provided by the Aviation department for JFK, EWR, and LGA (Port Authority 2024w). No taxi times were available for SWF and TEB, so the AEDT defaults were used. Table 5-8. Average Taxi In and Taxi Out Times by Airport Airport Taxi In (minutes) Taxi Out (minutes) JFK 12:30 27:00 EWR 11:18 18:24 LGA 10:00 19:12 SWF AEDT Default AEDT Default TEB AEDT Default AEDT Default The percentage availability of PCA and gate electrification (a.k.a. fixed electric ground power) at each airport in 2023 was provided by the Port Authority (Port Authority 2023d). This information was used to postprocess AEDT APU results to reflect the decline of APU utilization with greater availability of PCA and gate electrification at "
+  },
+  {
+    "task_id": "MULTI_018",
+    "expected_sources": [
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "112__c__p1__6__6",
+    "anchor_parent_id": "112__p__p1__6",
+    "anchor_source_file": "panynj-airports-index-wage-public-comments-061918.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "people don't always feel the need to tip and no one can't support themselves on a$2.13 and that is the only definite pay I receive. 11:11 AM I work at Newark Airport for OTG as a Prep Cook. I support the new Port Authority wage policy of $19.00 per hour. The wage increase will be incredibly important to me and my family. 11:14 AM I work at Newark Airport for OTG as a cook. I am a member of UNITE HERE local 100. All Port Authority workers deserve a fair wage of $19 an hour and we encourage the Port Authority to approve this wage increase. 11:18 AM I work at Newark liberty International Airport for OTG as a food runner/expeditor. I have been working for this company for 1 year and 7 months. I am a member of UNITE HERE Local 100. All Port Authority workers deserve a fair wage of $19 an hour a"
+  },
+  {
+    "task_id": "MULTI_019",
+    "expected_sources": [
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "92__c__p1__0__4",
+    "anchor_parent_id": "92__p__p1__0",
+    "anchor_source_file": "panynj-airports-2013-airline-competition-plan.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "Scheduled Gate Utilization Expressed in Daily Average Turns Per Gate All 1999 Terminal A Reallocation Airlines are required at least a 3 turn/day/gate operation on Master Lease Gates. American was not part of the reallocation. Delta/Northwest, Southwest, Common Use Airlines and operations in Terminal C do not have this requirement. *US Airways operations include those of Frontier Airlines/Republic. **Terminal B operations include those on the 9 Delta Gates. The 15 B-2/B-3 International Gates and operations are not inclued. 1. JetBlue operates on 3 Terminal A Common Use Gates, operations include seasonal once daily flights by WestJet. 2. United Express operates on 2 Terminal A Common Use Gates with split loading bridges. 3. Delta operations include departures of Air France, Alitalia, and Sw"
+  },
+  {
+    "task_id": "MULTI_020",
+    "expected_sources": [
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "165__c__p1__2__4",
+    "anchor_parent_id": "165__p__p1__2",
+    "anchor_source_file": "panynj-corporate-board-meeting-public-agenda-12-12-19.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "(b) an amount of up to $36.8 million for contract services retained by C&W on the Port Authority’s behalf, including for repairs, maintenance and procurement of materials to operate the site. The proposed expenditure of up to $50.2 million is less than what the Board authorized for fiscal year 2019. A total management fee of up to $850,000 would be paid to C&W for the one-year extension option. In addition, $425,000 would be paid to C&W for services through June 2020, which is included in the total amount of $5.5 million previously authorized by the Board on May 29, 2013 for the payment of such fees for these services through the base term of the contract, which expires on June 30, 2020. The Port Authority is responsible for the operation, maintenance and management of certain properties a"
+  },
+  {
+    "task_id": "MULTI_021",
+    "expected_sources": [
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "75__c__p1__4__4",
+    "anchor_parent_id": "75__p__p1__4",
+    "anchor_source_file": "panynj-studies-reports-scopingcomments-responses.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "Comment 31: The locations identified on geographic Long Island as potential rail-truck transfer facilities include sites that the City University of New York (CUNY) Institute for Urban Systems study of the Long Island Truck-Rail Intermodal Facility on behalf of NYSDOT found did not meet what they considered minimum-acceptable screening criteria. Conversely they do not include sites that the CUNY Institute for Urban Systems (CIUS) study found most likely to be feasible. Nor does the list of potential yard locations include any in Connecticut, where it could be argued that there would be sufficient demand to make a yard desirable, nor the Bronx, which may likewise merit a yard. (B. Miller) Response: The Scoping Document will be revised to include the facilities on geographic Long Island incl"
+  },
+  {
+    "task_id": "MULTI_022",
+    "expected_sources": [
+      "sql",
+      "graph"
+    ],
+    "anchor_chunk_id": "172__c__p1__7__6",
+    "anchor_parent_id": "172__p__p1__7",
+    "anchor_source_file": "panynj-corporate-financial-information-2015-final-budget-book-010715.pdf",
+    "anchor_section_title": "preamble",
+    "anchor_doc_type": "document",
+    "anchor_text": "offset by a $71 thousand increase in utility purchases at the Teleport due to anticipated rates increases. The total operating expenses will be allocated as shown in the chart and table that follows. Development Operating Expense Budget by Category $ in thousands Actual Budget Estimate Budget Operations $10,402 $10,615 $9,822 $10,409 Security Maintenance 2,724 3,651 3,011 2,405 Management Services (106) Rent & PILOT 1,578 2,107 2,166 2,366 Sub-total Operating & Maintenance 15,216 17,954 16,520 16,668 Allocated & Other 598 465 Total Operating Expenses $15,614 $18,552 $16,985 $17,112 * Totals may not add due to rounding. Management Services 4% Maintenance 14% Operations 63% Rent & PILOT 14% Security 5% Development 2015 Operating & Maintenance Expenses WORLD TRADE CENTER Mission To redevelop "
+  },
+  {
+    "task_id": "MULTI_023",
+    "expected_sources": [
+      "sql",
+      "graph"
+    ],
+    "anchor_chunk_id": "247__c__3-8__9__5",
+    "anchor_parent_id": "247__p__3-8__9",
+    "anchor_source_file": "2018_vrca_port_operating_handbook_31_5_18.pdf",
+    "anchor_section_title": "Navy Vessels Only Cunningham Pier West",
+    "anchor_doc_type": "handbook",
+    "anchor_text": "recreational diving activities in the port waters and is to be read in conjunction with Section 4.11. 3.9 Acid discharge (1) Masters, owners and agents of vessels involved with the loading/unloading of acid within the port of Geelong at non-tanker berths shall comply with relevant international, national and Victorian regulations. Special attention is drawn to the availability and proper use of adequate Personal Protective Equipment on board ship during cargo operations by ship and shore personnel. Safety and environmental requirements 4.1 Environmental protection 4.1.1 Statutory provisions and conventions The Environment Protection Authority (EPA) is the statutory body having primary responsibility for environmental protection in port waters. The EPA derives its authority from the Environ"
+  },
+  {
+    "task_id": "MULTI_024",
+    "expected_sources": [
+      "sql",
+      "graph"
+    ],
+    "anchor_chunk_id": "270__c__p1__0__5",
+    "anchor_parent_id": "270__p__p1__0",
+    "anchor_source_file": "strategic-plan-2018-2022.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "of port facilities. Initiative 3 Ensure that port properties are revenue efficient\u0003 and reflect current land values and market-\u0003based compensation. AMERICA’S PORT ® PORT DIVERSITY COMMUNITY BENEFITS ECONOMIC BENEFITS CARGO REVENUE GROWTH CARGO REVENUE GROWTH The Port of Los Angeles is the nation’s number one trade gateway for global commerce. As America’s Port®, it is the leading seaport in the U.S. by container volume and cargo value, and facilitates billions of dollars in trade annually. Located 20 miles south of downtown Los Angeles in the San Pedro Bay, the Port encompasses 7,500 acres of land and water along 43 miles of waterfront. It features 23 passenger and cargo terminals, including automobile, breakbulk, container, dry and liquid bulk, and warehouse facilities. In 2017, the Port "
+  },
+  {
+    "task_id": "MULTI_025",
+    "expected_sources": [
+      "sql",
+      "graph"
+    ],
+    "anchor_chunk_id": "113__c__2018__16__0",
+    "anchor_parent_id": "113__p__2018__16",
+    "anchor_source_file": "panynj-airports-index-wage-public-comments-081518.pdf",
+    "anchor_section_title": "Wage Policy Comments As of 8/15/2018 - Page 16/16 ID Timestamp Email body Notes",
+    "anchor_doc_type": "document",
+    "anchor_text": "that on-site and off-site workers are covered by the policy and reinforce that the Port Authority has the legal right as a market participant to set wage levels for all airport contractors. • Oppose any benefits offset that creates a loophole in the minimum wage floor and that punishes workers who are fortunate enough to have benefits. • Apply the same minimum wage level for all covered services including for employees of small businesses. • Continue the existing street pricing policy or, if deemed necessary, implement a “street- pricing plus” policy. • Eliminate tip credits for all “tipped” classifications. Covering Off-Site and On-Site Workers, and the Legality of Minimum Wage Policy Certain organizations raised objections to the legality of the Port Authority’s minimum wage policy. Thes"
+  },
+  {
+    "task_id": "MULTI_026",
+    "expected_sources": [
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "253__c__8-8__17__4",
+    "anchor_parent_id": "253__p__8-8__17",
+    "anchor_source_file": "final-port-master-plan-1990.pdf",
+    "anchor_section_title": "V-29",
+    "anchor_doc_type": "master_plan",
+    "anchor_text": "policy encourages oil production as an ongoing and necessary use of land in the Harbor District. Oil production planning is entirely managed by DOP. The Harbor Department acts as lead agency for projects located in the Harbor District requiring environmental review and discretionary review of the Board of Harbor Commissioners. In this capacity, the Port can shape individual projects to suit maritime commercial and environmental needs while preserving efficient oil recovery. Allow cargo storage among existing oil wells: Land of sufficient size and orientation to deep water is scarce, causing many areas to accommodate multiple users. Prime candidates for multiple use are oil field operations, especially those that have large, under- utilized areas between wells. The Port has completed three "
+  },
+  {
+    "task_id": "MULTI_027",
+    "expected_sources": [
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "207__c__p1__0__1",
+    "anchor_parent_id": "207__p__p1__0",
+    "anchor_source_file": "panynj-path-2017-path-hourly-ridership-report.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "Count) Hour 12:00:00 AM 1:00:00 AM 2:00:00 AM 3:00:00 AM 4:00:00 AM 5:00:00 AM 6:00:00 AM 7:00:00 AM 8:00:00 AM 9:00:00 AM 10:00:00 AM 11:00:00 AM 12:00:00 PM 1:00:00 PM 2:00:00 PM 3:00:00 PM 4:00:00 PM 5:00:00 PM 6:00:00 PM 7:00:00 PM 8:00:00 PM 9:00:00 PM 10:00:00 PM 11:00:00 PM Total 9th Street Avg Weekday Entry Avg Saturday Entry Avg Sunday Entry Avg Weekday Exit Avg Saturday Exit Avg Sunday Exit Avg Holiday Entries Avg Holiday Exits 4,986 3,675 2,969 5,198 4,219 2,949 2,613 2,842 YE 2017: Page 2 of 14 (Based on YTD 2017 Turnstile Count) Hour 12:00:00 AM 1:00:00 AM 2:00:00 AM 3:00:00 AM 4:00:00 AM 5:00:00 AM 6:00:00 AM 7:00:00 AM 8:00:00 AM 9:00:00 AM 10:00:00 AM 11:00:00 AM 12:00:00 PM 1:00:00 PM 2:00:00 PM 3:00:00 PM 4:00:00 PM 5:00:00 PM 6:00:00 PM 7:00:00 PM 8:00:00 PM 9:00:00 PM 1"
+  },
+  {
+    "task_id": "MULTI_028",
+    "expected_sources": [
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "271__c__2024__6__3",
+    "anchor_parent_id": "271__p__2024__6",
+    "anchor_source_file": "annual-report-2024.pdf",
+    "anchor_section_title": "Financial Statements Certification (pursuant to Port Authority by-laws)",
+    "anchor_doc_type": "annual_report",
+    "anchor_text": "Center campus including 1 WTC, 3 WTC, 4 WTC and 7 WTC. Historic Investment in Solar Energy Part of $19 Billion JFK Transformation In September of 2024, the Port Authority and the New Terminal One consortium that was selected to design, build, and operate the new terminal at John F. Kennedy International Airport (JFK) announced construction had begun on a massive solar array of more than 13,000 solar panels on the terminal’s roof that will cover an area the size of six-and-a-half football fields. The New Terminal One solar array will be the largest in New York City and the largest at any airport terminal in the country. As an all-international terminal, the New Terminal One is a key component of the Port Authority’s $19 billion transformation of JFK into a world-class global gateway that wi"
+  },
+  {
+    "task_id": "MULTI_029",
+    "expected_sources": [
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "93__c__3-5-2__1__6",
+    "anchor_parent_id": "93__p__3-5-2__1",
+    "anchor_source_file": "panynj-airports-air-traffic-2005.pdf",
+    "anchor_section_title": "Monthly Totals 2005, by Airport and Region",
+    "anchor_doc_type": "document",
+    "anchor_text": "BY The Port Authority of New York and New Jersey, under a lease with the City of New York, since June 1, 1947. In 2004 the Port Authority and the City of New York concluded an agreement that ensures the agency’s continued operation of LaGuardia and JFK International through 2050. LOCATION The Borough of Queens, New York City, bordering on Flushing Bay and Bowery Bay. The airport is eight miles from midtown Manhattan. SIZE LGA consists of 680 acres and has about 72 aircraft gates. HISTORY The airport site was first occupied by Gala Amusement Park, and in 1929 it was transformed into a 105-acre private flying field. It was first named Glenn H. Curtiss Airport and later North Beach Airport. Taken over by New York City, the airport was enlarged by the purchase of adjoining land and by filling "
+  },
+  {
+    "task_id": "MULTI_030",
+    "expected_sources": [
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "85__c__p1__13__2",
+    "anchor_parent_id": "85__p__p1__13",
+    "anchor_source_file": "smartportdevelopment_feb2021.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "and reliability of AI model. ◦ Makes AI a part of DataOps, ModelOps, DevOps. should be automated ◦ Responsible AI emerging to deal with trust, transparency, ethics, fairness, interpretability and compliance issues. Hyper-automation ◦ Hyper-automation is the idea that anything that can be automated in an organization, should be automated. ◦ Digital business requiring efficiency, speed and democratization. Figure 17. Top Gartner strategic technology trends for 202137 37 Source: https://www.gartner.com/smarterwithgartner/gartner-top-strategic-technology-trends-for- 2021/ COVID-19 has gradually accelerated digital business, allowing for remote digital priority options, while ultra-automation is mandatory now and in the future. For digital operational excellence and operational resilience, orga"
+  },
+  {
+    "task_id": "MULTI_031",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "36__c__p1__2__1",
+    "anchor_parent_id": "36__p__p1__2",
+    "anchor_source_file": "panynj-corporate-public-hearings-tfphp-holland-tunnel.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "for the Laborers' International Union of local (inaudible), a Trenton resident, frequent commuter into New York City. 1 am proud to offer my support for the Port Authority's 33 billion, ten-year capital plan; upgrading and repairing bridges and tunnels, expanding bus (inaudible), improving the safety and security throughout the region. building a new Bayonne Bridge, which is also important to large capacity ships and improving facilities along the PATH lines, all of these are good investments for our community. One who benefits, upgrade us all. Another positive aspect of the Port Authority capital plan is the main element of job creation. Based on federal highway research, which estimates that 27,000 jobs are created for every 1 million spent in infrastructure, the Port Authority capital p"
+  },
+  {
+    "task_id": "MULTI_032",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "11__c__3-5-2__1__2",
+    "anchor_parent_id": "11__p__3-5-2__1",
+    "anchor_source_file": "panynj-airports-atr2010.pdf",
+    "anchor_section_title": "Monthly Totals 2010, by Airport and Region",
+    "anchor_doc_type": "document",
+    "anchor_text": "Borough of Queens, New York City. There are 880 acres in the Central Terminal Area (CTA) and 30 miles of roadway. History Construction for a new international airport began in 1942 under a New York City contract on the site of the Idlewild Golf Course in Queens, New York City. The Port Authority of New York and New Jersey began operating the soon-to-open airport on June 1, 1947, under a lease with the City of New York. On July 1, 1948, commercial flights began flying into and out of the newly opened Idlewild Airport. The airport was rededicated John F. Kennedy International Airport on December 24, 1963, in memory of the nation’s thirty-fifth president. In 2004, the Port Authority and the City of New York concluded an agreement that ensures the agency’s continued operation of JFK through 20"
+  },
+  {
+    "task_id": "MULTI_033",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "247__c__12-5__6__2",
+    "anchor_parent_id": "247__p__12-5__6",
+    "anchor_source_file": "2018_vrca_port_operating_handbook_31_5_18.pdf",
+    "anchor_section_title": "Tusker",
+    "anchor_doc_type": "handbook",
+    "anchor_text": "any directions (including conditions, restrictions or requirements) imposed by the Harbour Master. (b) if the vessel has already entered port waters, immediately notify Geelong Port Marine Control of the changes to the conditions or circumstances affecting the seaworthiness of the vessel and thereafter provide written notice thereof within 24 hours. (2) A vessel is an ‘unsafe vessel’ for the purposes of these Directions if the vessel or the operation of the vessel is likely to endanger any life, the safety of the vessel or any other vessels or the environment by reason of: (a) the condition of the vessel and/or its equipment; (b) the manner in which cargo or equipment is or has been stowed and secured on the vessel; (c) the nature of any cargo loaded or to be loaded on the vessel; (d) any "
+  },
+  {
+    "task_id": "MULTI_034",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "16__c__p1__8__3",
+    "anchor_parent_id": "16__p__p1__8",
+    "anchor_source_file": "panynj-airports-atr2018.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "Jul – – – – – 12,033 12,033 -4.6% Aug – – – – – 12,350 12,350 -2.0% Sep – – – – – 14,422 14,422 -8.0% Oct – – – – – 15,859 15,859 0.0% Nov – – – – – 14,972 14,972 -3.5% Dec – – – – – 13,376 13,376 -1.2% Total 2018 – – – – – 164,046 164,046 -1.9% % Change 2017 to 2018 – – – – – -1.9% -1.9% International 2017-18 Jan – – – – – 9.5% Feb – – – – – 5.4% Mar – – – – – 3.9% Apr – – – – – -5.1% May – – – – – 8.2% Jun – – – – – 10.0% Jul – – – – – -0.9% Aug – – – – – 15.6% Sep – – – – – 1.8% Oct – – – – – 7.3% Nov – – – – – 5.0% Dec – – – – – 7.3% Total 2018 – – – – – 8,054 8,054 5.5% % Change 2017 to 2018 – – – – – 5.5% 5.5% Domestic and International 2017-18 Jan – – – – – 12,710 12,710 -0.1% Feb – – – – – 12,852 12,852 1.2% Mar – – – – – 13,895 13,895 -0.4% Apr – – – – – 14,062 14,062 -4.4% May – "
+  },
+  {
+    "task_id": "MULTI_035",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "rules"
+    ],
+    "anchor_chunk_id": "236__c__p1__4__2",
+    "anchor_parent_id": "236__p__p1__4",
+    "anchor_source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "495 itself does not exceed the theoretical capacity of three lanes but operational constraints at the toll plaza and the tunnel can cause delays that spread back along the NJ 495 approach, as far as the NJ Turnpike. Typical bus volumes on the XBL are also shown in these graphics. As shown, 130 buses originate from NJ 3 from 7-8 a.m. and travel westbound to the “teardrop” area to access the XBL. In addition to using a circuitous routing, these buses must use the local lanes of the NJ 3 approach to travel westbound, which can be more affected by spill back of delays on NJ 495 than NJ 100835 / Graphics / Powerpoint / Landscape1.ppt / 12-2-09 FIGURE 3 TOTAL HOURLY TRAFFIC DEMAND - 2007 A.M. PEAK PERIOD New Jersey Turnpike Ramp From US Routes 1 and 9 South Marginal Rd. New Jersey Turnpike Ramp "
+  },
+  {
+    "task_id": "MULTI_036",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "graph"
+    ],
+    "anchor_chunk_id": "18__c__p1__4__0",
+    "anchor_parent_id": "18__p__p1__4",
+    "anchor_source_file": "panynj-airports-ewr-competition-plan-update-march-2011.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "hereinafter called a “Requesting Airline”, the Master Airlines, in furtherance of the public interest of having the terminal facilities fully and most effectively utilized, are required to cooperate fully with the Port Authority and Requesting Airlines in providing accommodations for Requesting Airlines. The Requesting Airline shall first comply with the Port Authority’s Procedures Required for Requesting Airlines Applying for Operational Status or Expanding Service at as stated herein. The term ‘accommodations’ shall mean aircraft ramp and gate position capacity and related passenger terminal facilities including, but not limited to passenger ticketing, passenger check-in, baggage handling and flight information systems, passenger lounge and waiting areas and appropriate support space, si"
+  },
+  {
+    "task_id": "MULTI_037",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "graph"
+    ],
+    "anchor_chunk_id": "75__c__p1__12__5",
+    "anchor_parent_id": "75__p__p1__12",
+    "anchor_source_file": "panynj-studies-reports-scopingcomments-responses.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "analysis years. This is a standard practice for developing the future No Action condition. For example, the emissions from all fossil-fueled mobile sources including autos, trucks, buses, non-road construction equipment, marine engines and locomotives are regulated by the USEPA pursuant to the 1970 Clean Air Act and its subsequent amendments. As such, equipment manufactured in the past will emit higher levels of a pollutant than those currently produced. Moreover, some of the allowable emission levels continue to decrease in the future and a critical issue is how quickly those vehicles or equipment will penetrate the market. For example, it will take longer for the newer cleaner locomotives to completely penetrate the market than it does in the automobile market. For any impact assessment,"
+  },
+  {
+    "task_id": "MULTI_038",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "graph"
+    ],
+    "anchor_chunk_id": "31__c__p1__0__1",
+    "anchor_parent_id": "31__p__p1__0",
+    "anchor_source_file": "panynj-corporate-financial-information-2019-budget-book-dscz1hw1.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "and New Jersey for its annual budget for the fiscal year beginning January 1, 2018. In order to receive this award, a governmental unit must publish a budget document that meets program criteria as a policy document, as an operations guide, as a financial plan, and as a communications device. This award is valid for a period of one year only. We believe our current 2019 Budget continues to conform to GFOA program requirements, and we will be submitting it to GFOA to determine its eligibility for an award. Letter from the Board of Commissioners and the Executive Director Dear Governors, We are pleased to provide you with the final 2019 Budget, which the Board of Commissioners of the Port Authority of New York and New Jersey adopted at its December 2018 meeting. The $8.5 billion Budget inclu"
+  },
+  {
+    "task_id": "MULTI_039",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "graph"
+    ],
+    "anchor_chunk_id": "15__c__p1__2__0",
+    "anchor_parent_id": "15__p__p1__2",
+    "anchor_source_file": "panynj-airports-atr2017.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "Corridor and renamed AirTrain Newark. • In 2002, the airport was renamed Newark Liberty International Airport to memorialize all those who lost their lives on September 11, 2001. Also in 2002, the Port Authority and the City of Newark agreed to extend the lease through 2065. SIZE AND LOCATION Newark Liberty International Airport (EWR) occupies 2,027 acres, including a 425-acre Central Terminal Area, at roughly sea-level elevation. It is bordered by the New Jersey Turnpike, Interstate 78 and U.S. Routes 1-9 in the cities of Newark and Elizabeth, N.J. and resides in both the counties of Essex and Union and the cities of Newark and Elizabeth. AVIATION ROLE EWR is among the busiest North American and international airports. In 2017, the airport handled more than 443,000 flight operations. EWR’"
+  },
+  {
+    "task_id": "MULTI_040",
+    "expected_sources": [
+      "vector",
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "31__c__p1__16__1",
+    "anchor_parent_id": "31__p__p1__16",
+    "anchor_source_file": "panynj-corporate-financial-information-2019-budget-book-dscz1hw1.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "have started to rise slightly ahead of inflation. However, wage growth overall remains below what might be needed to raise standards of living across the income spectrum. Energy prices, in particular crude oil prices, increased substantially in 2018 and are now one of the key drivers of consumer price inflation. The baseline scenario acknowledges economic risks in the form of uncertain consequences from new federal executive policies such as tariffs on imported goods, immigration restrictions, and significant additional federal borrowing. The baseline scenario, with a probability of around 50%, is in line with expectations of many peer forecasts. The Port Authority’s core catchment area, its 17-county New York/New Jersey Port District and the surrounding bi-state region, draws great econom"
+  },
+  {
+    "task_id": "MULTI_041",
+    "expected_sources": [
+      "vector",
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "112__c__p1__3__1",
+    "anchor_parent_id": "112__p__p1__3",
+    "anchor_source_file": "panynj-airports-index-wage-public-comments-061918.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "the plane. She was frantic and I helped calm her down. I guided her and she was able to recover her chain. She was incredibly grateful. For my coworkers, I know that this raise will help them very much. When I get $19 it will be even better for me. Most of my coworkers and I have been there for less than a year. I think this raise will motivate two of my coworkers that were talking about leaving, to now stay at this job. I think these coworkers will provide a better job when they are provided for at home. I think they will be more committed. They will feel more secure in their lives, and then do a better job. Sincerely, As of 6/12/2018 Page 11/107 ID Timestamp Email body Notes 3:01 PM Dear Port Authority, My name is <> and I work in Line Queue management at Newark Airport. I’ve been at the"
+  },
+  {
+    "task_id": "MULTI_042",
+    "expected_sources": [
+      "vector",
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "239__c__p1__0__3",
+    "anchor_parent_id": "239__p__p1__0",
+    "anchor_source_file": "panynj-studies-reports-mou-nyc-dob-panynj-cranes-derricks-030509.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "notices and amendments thereto. 3. Certificates of Operation. The Authority shall ensure that there exists a valid and current Certificate of Operafion from the Department, and if no such certificate exists, shall cause the owner of such crane or derrick to file an applicaUon for and obtain a Certificate of Operation from the Department, prior to the erection, use and operation of any crane or derrick at Authority Sites in accordance with the New York City Construction Codes, reference standards, related rules and regulations, regulatory notices and amendments thereto. The Authority shall ensure that no crane or derrick is used or operated at Authority Sites if the Department has any open items, objections, nofices of deficiency or stop work orders and has not issued a Certificate of Opera"
+  },
+  {
+    "task_id": "MULTI_043",
+    "expected_sources": [
+      "sql",
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "99__c__2-3-1__16__6",
+    "anchor_parent_id": "99__p__2-3-1__16",
+    "anchor_source_file": "panynj-airports-atr2011.pdf",
+    "anchor_section_title": "Annual Totals 1998 to 2011 YEAR JFK EWR LGA DOWNTOWN TOTAL",
+    "anchor_doc_type": "document",
+    "anchor_text": "31.9% Akron/Canton, Ohio, US 141,300 100.0% 39.4% FL 96.2% US 2.8% San Francisco, CA, US 135,780 94.2% 43.8% UA 25.9% AA 16.0% Memphis, Tennessee, US 133,450 98.4% 44.0% DL 78.9% US 9.8% Buffalo, New York, US 125,180 99.3% 47.5% US 85.7% XX 11.9% Greensboro/High Point, NC, US 124,680 99.1% 43.8% US 53.2% XX 43.9% Richmond Intl, Richmnd, VA, US 121,900 99.3% 44.0% US 87.0% XX 7.3% Las Vegas, Nevada, US 119,990 96.9% 65.9% FL 21.1% US 19.7% Fort Myers, Florida, US 115,770 98.2% 67.6% DL 85.2% US 6.0% Louisville, Kentucky, US 98,450 99.5% 44.4% XX 48.5% DL 21.3% San Antonio, Texas, US 95,880 99.3% 45.5% AA 32.6% FL 17.7% Phoenix, Arizona, US 95,770 97.6% 47.6% AA 28.7% WN 19.1% Albuquerque, NM, US 93,620 99.0% 50.3% AA 49.7% DL 15.8% Newport News/Wmsbg, VA, US 93,430 100.0% 43.2% FL 97.4% US "
+  },
+  {
+    "task_id": "MULTI_044",
+    "expected_sources": [
+      "sql",
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "18__c__p1__13__4",
+    "anchor_parent_id": "18__p__p1__13",
+    "anchor_source_file": "panynj-airports-ewr-competition-plan-update-march-2011.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "CHRC and takes appropriate action as the results indicate. Approved (approved TSR1544 Airlines) are granted authority by the federal government to complete the CHRC for their employees. The Issuing Officer is responsible for compliance with applicable rules, regulations, and requirements regarding the execution, review, approval, and recordkeeping within this process. The Issuing Officer signature certifies that the individual has satisfactorily met the standards required for access.  SIDA Training/Certificate SIDA Training is required under TSA regulation prior to any individual being granted access to the, SIDA. The course must be conducted in accordance with the curriculum and standards set by the Port Authority and approved by the Transportation Security Administration. The applicant "
+  },
+  {
+    "task_id": "MULTI_045",
+    "expected_sources": [
+      "sql",
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "209__c__p1__15__6",
+    "anchor_parent_id": "209__p__p1__15",
+    "anchor_source_file": "panynj-path-2018-path-hourly-ridership-report.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "5,234 3,924 3,605 4,243 2,894 3,693 1,602 3,639 4,411 2,474 2,224 2,800 284,817 111,519 88,761 282,747 118,745 95,965 146,778 149,138 2018‐Nov: Page 14 of 14 December 2018 Average Hourly Turnstile Count (Based on December 2018 Turnstile Count) Christopher St. Hour Avg Weekday Entry Avg Saturday Entry Avg Sunday Entry Avg Weekday Exit Avg Saturday Exit Avg Sunday Exit Avg Holiday Entries Avg Holiday Exits 12:00:00 AM 1:00:00 AM 2:00:00 AM 3:00:00 AM 4:00:00 AM 5:00:00 AM 6:00:00 AM 7:00:00 AM 8:00:00 AM 9:00:00 AM 1,018 10:00:00 AM 11:00:00 AM 12:00:00 PM 1:00:00 PM 2:00:00 PM 3:00:00 PM 4:00:00 PM 5:00:00 PM 6:00:00 PM 7:00:00 PM 8:00:00 PM 9:00:00 PM 10:00:00 PM 11:00:00 PM Total 4,376 2,680 1,945 4,874 3,451 2,204 2018‐Dec: Page 1 of 14 (Based on December 2018 Turnstile Count) Hour 12:00"
+  },
+  {
+    "task_id": "MULTI_046",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "83__c__p1__1__0",
+    "anchor_parent_id": "83__p__p1__1",
+    "anchor_source_file": "p176587104998e0191b209161d8497e34d7.pdf",
+    "anchor_section_title": "",
+    "anchor_doc_type": "document",
+    "anchor_text": "planning • Proactive Exception Management Tool Real time tracking and consolidated information on-demand for query and analysis purposes • Container status, including arrival and discharge timings • Vessel status, including current location, and changes in berthing details • Detailed schedules: shipping, berthing, yard crane • Ship planning data • Reefer containers’ temperature • Dangerous Goods (DG) services enquiry Financial Functions Online billing functions which integrate with customers’ in-house systems • Financial Electronic Data Interchange (FEDI) of bills • Facilitate re-billing processes by shipping lines • Online viewing of PORTNET charges Singapore As is typical, the testing phase was included within the devel­ opment stage, where the platform was tested to ensure that it met t"
+  },
+  {
+    "task_id": "MULTI_047",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "169__c__2010__6__6",
+    "anchor_parent_id": "169__p__2010__6",
+    "anchor_source_file": "panynj-corporate-budgets-budget-2010.pdf",
+    "anchor_section_title": "Capital Budget Highlights Project Description",
+    "anchor_doc_type": "document",
+    "anchor_text": "environmental management. Revenues and Expenses Projected 2010 revenues for development activities are $93 million, a decrease of almost $10 million from the 2009 budget. Revenue largely consists of gate/tipping fees and the sale of electricity from the Essex County Resource Recovery Facility and rents generated by terms of existing agreements. Development’s operating budget for 2009 is $86 million. Development Revenue by Categories Gate/Tipping Fees 47% NLC Net Lease 4% Fixed Rent 16% Variable/ Electricity 33% Development Operating & Maintenance Expenses Rent 9% Management Services 5% Security 2% Operations 81% Maintenance 3% 2010 Capital Budget Overview als $22 million, not including the ARC project. The 2010 ARC 010 Capital Budget Highlights Project Description B Outcomes Acce s Partner"
+  },
+  {
+    "task_id": "MULTI_048",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "272__c__8-8__21__1",
+    "anchor_parent_id": "272__p__8-8__21",
+    "anchor_source_file": "final-port-master-plan-1990.pdf",
+    "anchor_section_title": "V-29",
+    "anchor_doc_type": "master_plan",
+    "anchor_text": "Port acquired the Ford/Melamed property at 700 Henry Ford Avenue, which included 72 acres of land and water. The Port is currently pursuing hazardous waste material clean-up at the site. The existing Ford Plant is scheduled for demolition. Future use of this site will be for primary port facility development. The Port purchased “Our Marina” at Berths 95-97 in conjunction with the purchase of the Ford/Melamed property. In December 1987, “Our Marina” was demolished and an 8-acre landfill is proposed in its place to complement backland terminal development. This landfill development will require certification. While the amount of surface area devoted to oil production in this planning district may decrease due to construction of primary port facilities, oil production should not decline due t"
+  },
+  {
+    "task_id": "MULTI_049",
+    "expected_sources": [
+      "vector",
+      "sql",
+      "rules",
+      "graph"
+    ],
+    "anchor_chunk_id": "107__c__8-0__13__1",
+    "anchor_parent_id": "107__p__8-0__13",
+    "anchor_source_file": "panynj-airports-ewr-competition-plan-december-2000.pdf",
+    "anchor_section_title": "Concluding Remarks",
+    "anchor_doc_type": "document",
+    "anchor_text": "whether or not a low-fare competitor is present. Most of this information was previously shown and discussed in previous sections. However, the following table identifies information from the FAA O&D database. The average trip length is 1,187, the average revenue per passenger is $206 and there are 136 markets served. Using data provided by the FAA airline revenues were compared by block distances to determine if there was a relationship between the carrier that had the most flights from EWR, Continental, and the per passenger revenue when block distances were considered. Of the eight block distances two of the eight categories had just one or two airlines for those markets and were not considered. For the other block groupings Continental Airlines was towards the low end to mid-range of t"
+  }
+]

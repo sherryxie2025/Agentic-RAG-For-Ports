@@ -216,18 +216,15 @@ class RuleDrivenGraphBuilder:
 
     def _create_bridge_concepts(self, session) -> None:
         """
-        Create legacy concept nodes and link them to the metric layer.
+        Create legacy concept + operation nodes and link them to the metric layer.
 
-        This preserves backward compatibility with graph_reasoner's
-        entity_alias_map, which references concept names like "weather_conditions"
-        and "crane_slowdown". Without these bridges, generic queries
-        ("weather", "safety") can't traverse to the metric nodes.
-
-        Each bridge concept is linked to relevant metrics via AFFECTS /
-        INCLUDES / INDICATES edges, so path-finding can traverse
-        concept -> metric -> action.
+        Preserves backward compatibility with graph_reasoner's entity_alias_map,
+        which references concept names like "weather_conditions" and operation
+        names like "vessel_entry". Without these bridges, generic queries
+        ("weather", "vessel", "navigation") can't traverse to the metric nodes.
         """
-        bridge_definitions = [
+        # --- Concept bridges (:Concept) ---
+        concept_bridges = [
             # (concept_name, related_metric_names, relationship_type)
             ("weather_conditions", ["wind_speed_ms", "wind_gust_ms", "wave_height_m",
                                      "air_temp_c", "pressure_hpa"], "INCLUDES"),
@@ -238,12 +235,6 @@ class RuleDrivenGraphBuilder:
             ("operational_disruption", ["arrival_delay_hours", "berth_delay_hours",
                                          "breakdown_minutes"], "INDICATES"),
             ("crane_slowdown", ["crane_productivity_mph", "breakdown_minutes"], "INDICATES"),
-            ("berth_operations", ["berth_productivity_mph", "arrival_delay_hours"], "INCLUDES"),
-            ("crane_operations", ["crane_productivity_mph", "crane_hours",
-                                   "breakdown_minutes"], "INCLUDES"),
-            ("yard_operations", ["average_dwell_days", "teu_received",
-                                  "peak_occupancy_pct"], "INCLUDES"),
-            ("gate_operations", ["total_transactions", "average_turn_time_minutes"], "INCLUDES"),
             ("congestion", ["peak_occupancy_pct", "average_turn_time_minutes",
                              "total_transactions"], "INDICATES"),
             ("gate_congestion", ["average_turn_time_minutes", "total_transactions"], "INDICATES"),
@@ -253,13 +244,35 @@ class RuleDrivenGraphBuilder:
             ("weather", ["wind_speed_ms", "wave_height_m", "pressure_hpa"], "IS_SAME_AS"),
         ]
 
+        # --- Operation bridges (:Operation) — match v1 schema ---
+        # These 11 are the canonical port operations that graph_reasoner
+        # aliases expect. Previously v2 had only 4 (notification, operational_pause,
+        # safety_inspection, tug_assistance) from rule actions; we add the rest
+        # to match the v1 operation layer.
+        operation_bridges = [
+            ("vessel_entry", ["vessel_imo", "vessel_capacity_teu", "vessel_loa_meters"], "MEASURES"),
+            ("navigation", ["tide_ft", "wave_height_m", "wind_speed_ms"], "DEPENDS_ON"),
+            ("berth_operations", ["berth_productivity_mph", "arrival_delay_hours",
+                                   "berth_delay_hours"], "MEASURED_BY"),
+            ("crane_operations", ["crane_productivity_mph", "crane_hours",
+                                   "breakdown_minutes"], "MEASURED_BY"),
+            ("yard_operations", ["average_dwell_days", "teu_received",
+                                  "peak_occupancy_pct"], "MEASURED_BY"),
+            ("gate_operations", ["total_transactions", "average_turn_time_minutes"], "MEASURED_BY"),
+            ("delay", ["arrival_delay_hours", "berth_delay_hours"], "MEASURED_BY"),
+            ("slowdown", ["crane_productivity_mph", "berth_productivity_mph"], "MEASURED_BY"),
+            ("vessel_scheduling", ["arrival_delay_hours", "vessel_capacity_teu"], "AFFECTS"),
+            ("container_logistics", ["teu_received", "teu_delivered", "total_moves"], "MEASURED_BY"),
+            # operational_pause already exists from rule edges, but merge to ensure
+            ("operational_pause", ["wind_speed_ms", "wave_height_m"], "TRIGGERED_BY"),
+        ]
+
         bridge_created = 0
         link_created = 0
-        for concept, metrics, rel_type in bridge_definitions:
-            session.run(
-                "MERGE (c:Concept {name: $name})",
-                name=concept,
-            )
+
+        # Create concept nodes
+        for name, metrics, rel_type in concept_bridges:
+            session.run("MERGE (c:Concept {name: $name})", name=name)
             bridge_created += 1
             for metric in metrics:
                 session.run(
@@ -268,39 +281,72 @@ class RuleDrivenGraphBuilder:
                     MATCH (m:Metric {{name: $metric}})
                     MERGE (c)-[r:{rel_type}]->(m)
                     """,
-                    concept=concept,
-                    metric=metric,
+                    concept=name, metric=metric,
                 )
                 link_created += 1
 
-        # Connect some concepts to each other (semantic umbrella)
-        concept_links = [
-            ("storm_event", "weather_conditions", "IS_PART_OF"),
-            ("weather_conditions", "environmental_conditions", "IS_PART_OF"),
-            ("wind_restriction", "safety", "ENFORCES"),
-            ("navigation_restriction", "safety", "ENFORCES"),
-            ("crane_slowdown", "operational_disruption", "CONTRIBUTES_TO"),
-            ("gate_congestion", "congestion", "IS_PART_OF"),
-            ("yard_overflow", "congestion", "IS_PART_OF"),
-            ("congestion", "operational_disruption", "CONTRIBUTES_TO"),
-            ("safety", "compliance", "REQUIRES"),
+        # Create operation nodes (with MERGE to not duplicate existing rule actions)
+        for name, metrics, rel_type in operation_bridges:
+            session.run("MERGE (o:Operation {name: $name})", name=name)
+            bridge_created += 1
+            for metric in metrics:
+                session.run(
+                    f"""
+                    MATCH (o:Operation {{name: $op}})
+                    MATCH (m:Metric {{name: $metric}})
+                    MERGE (o)-[r:{rel_type}]->(m)
+                    """,
+                    op=name, metric=metric,
+                )
+                link_created += 1
+
+        # --- Cross-layer semantic links (concept↔concept, concept↔operation) ---
+        semantic_links = [
+            # concept → concept
+            ("storm_event", "Concept", "weather_conditions", "Concept", "IS_PART_OF"),
+            ("weather_conditions", "Concept", "environmental_conditions", "Concept", "IS_PART_OF"),
+            ("wind_restriction", "Concept", "safety", "Concept", "ENFORCES"),
+            ("navigation_restriction", "Concept", "safety", "Concept", "ENFORCES"),
+            ("crane_slowdown", "Concept", "operational_disruption", "Concept", "CONTRIBUTES_TO"),
+            ("gate_congestion", "Concept", "congestion", "Concept", "IS_PART_OF"),
+            ("yard_overflow", "Concept", "congestion", "Concept", "IS_PART_OF"),
+            ("congestion", "Concept", "operational_disruption", "Concept", "CONTRIBUTES_TO"),
+            ("safety", "Concept", "compliance", "Concept", "REQUIRES"),
+            # concept → operation (causal)
+            ("weather_conditions", "Concept", "vessel_entry", "Operation", "AFFECTS"),
+            ("weather_conditions", "Concept", "navigation", "Operation", "AFFECTS"),
+            ("weather_conditions", "Concept", "operational_pause", "Operation", "CAN_TRIGGER"),
+            ("wind_restriction", "Concept", "vessel_entry", "Operation", "RESTRICTS"),
+            ("wind_restriction", "Concept", "crane_operations", "Operation", "RESTRICTS"),
+            ("navigation_restriction", "Concept", "navigation", "Operation", "RESTRICTS"),
+            ("crane_slowdown", "Concept", "berth_operations", "Operation", "AFFECTS"),
+            ("operational_disruption", "Concept", "delay", "Operation", "CAUSES"),
+            ("congestion", "Concept", "delay", "Operation", "CONTRIBUTES_TO"),
+            # operation → operation (cascade)
+            ("crane_operations", "Operation", "berth_operations", "Operation", "INFLUENCES"),
+            ("berth_operations", "Operation", "delay", "Operation", "INFLUENCES"),
+            ("yard_operations", "Operation", "gate_operations", "Operation", "INFLUENCES"),
+            ("container_logistics", "Operation", "yard_operations", "Operation", "INFLUENCES"),
+            ("vessel_scheduling", "Operation", "vessel_entry", "Operation", "INFLUENCES"),
+            ("slowdown", "Operation", "delay", "Operation", "CONTRIBUTES_TO"),
         ]
-        for start, end, rel in concept_links:
+
+        for a_name, a_label, b_name, b_label, rel in semantic_links:
             session.run(
                 f"""
-                MATCH (a:Concept {{name: $start}})
-                MATCH (b:Concept {{name: $end}})
+                MATCH (a:{a_label} {{name: $a}})
+                MATCH (b:{b_label} {{name: $b}})
                 MERGE (a)-[r:{rel}]->(b)
                 """,
-                start=start, end=end,
+                a=a_name, b=b_name,
             )
             link_created += 1
 
         self.nodes_created += bridge_created
         self.edges_created += link_created
         logger.info(
-            "Created %d bridge concept nodes with %d concept-metric/concept-concept edges",
-            bridge_created, link_created,
+            "Created %d bridge nodes (%d concepts + %d operations) with %d semantic edges",
+            bridge_created, len(concept_bridges), len(operation_bridges), link_created,
         )
 
     # -----------------------------------------------------------------------

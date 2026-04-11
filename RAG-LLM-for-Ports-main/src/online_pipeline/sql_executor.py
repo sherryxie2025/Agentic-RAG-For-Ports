@@ -82,6 +82,26 @@ class DuckDBExecutor:
                 error=str(e),
             )
 
+    def explain(self, sql: str) -> tuple[bool, Optional[str]]:
+        """
+        Run DuckDB EXPLAIN on a SQL query without executing it.
+        Returns (ok, error). Used for pre-check before expensive execution
+        so that LLM-generated SQL with GROUP BY / type errors can fall
+        back to rule-based before paying the execution cost.
+        """
+        sql_clean = sql.strip().rstrip(";")
+        if not self._is_safe_select(sql_clean):
+            return False, "Only read-only SELECT/WITH queries are allowed."
+        try:
+            conn = duckdb.connect(str(self.db_path), read_only=True)
+            try:
+                conn.execute(f"EXPLAIN {sql_clean}").fetchall()
+            finally:
+                conn.close()
+            return True, None
+        except Exception as e:
+            return False, str(e)
+
     @staticmethod
     def _is_safe_select(sql: str) -> bool:
         lowered = sql.lower().strip()

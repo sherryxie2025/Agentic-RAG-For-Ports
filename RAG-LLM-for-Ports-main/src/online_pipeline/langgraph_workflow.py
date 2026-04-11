@@ -86,10 +86,19 @@ class LangGraphWorkflowBuilder:
 
 def build_langgraph_workflow(
     project_root: str | Path,
-    chroma_collection_name: str | None = None,
-    use_llm_sql_planner: bool = False,
+    chroma_collection_name: str | None = "port_documents_v2",
+    use_llm_sql_planner: bool = True,
     sql_model_name: str | None = None,
 ):
+    """
+    Build the Agentic RAG DAG workflow.
+
+    Defaults changed in final version:
+    - chroma_collection_name defaults to "port_documents_v2" (BGE + Small-to-Big)
+    - use_llm_sql_planner defaults to True (LLM NL2SQL with rule fallback)
+
+    Pass None explicitly to use the v1 collection (for backward compat).
+    """
     builder = LangGraphWorkflowBuilder(
         project_root=project_root,
         chroma_collection_name=chroma_collection_name,

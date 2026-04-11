@@ -1,0 +1,137 @@
+[
+  {
+    "task_id": "GRA_001",
+    "source": "depth",
+    "target": "anchor_in_the_fork_between_williamstown_",
+    "rule_text": "Shallow draught vessels may anchor in the fork between Williamstown and Port Melbourne Channels. Depth 6.5 to 7.5 metres.",
+    "operator": "",
+    "threshold": -9999.0,
+    "source_file": "2018_VRCA_Port_Operating_Handbook_31_5_18.pdf"
+  },
+  {
+    "task_id": "GRA_002",
+    "source": "vessel_loa_meters",
+    "target": "operational_requirement",
+    "rule_text": "Trigger safety protocol for ultra-large container vessels",
+    "operator": ">=",
+    "threshold": 366.0,
+    "source_file": "synthetic_rule"
+  },
+  {
+    "task_id": "GRA_003",
+    "source": "vessel_imo",
+    "target": "produce_form_5_part_4_forms_3a_and_3b_fo",
+    "rule_text": "Documents required to be produced to Australian Border Force at first port are: Form 5 - Part 4 relating to the vessel’s stores. Forms 3a and 3b - Crew report. Form 13 – Pre arrival report.",
+    "operator": "",
+    "threshold": -9999.0,
+    "source_file": "2018_VRCA_Port_Operating_Handbook_31_5_18.pdf"
+  },
+  {
+    "task_id": "GRA_004",
+    "source": "pressure_hpa",
+    "target": "alert_port_authority_and_prepare_emergen",
+    "rule_text": "Initiate storm watch procedures during rapid atmospheric pressure decline.",
+    "operator": "<",
+    "threshold": 980.0,
+    "source_file": "synthetic_rule"
+  },
+  {
+    "task_id": "GRA_005",
+    "source": "water_temp_c",
+    "target": "engage_heating_systems_for_critical_dock",
+    "rule_text": "Activate freeze protection systems when water temperature approaches freezing point.",
+    "operator": "<",
+    "threshold": 1.0,
+    "source_file": "synthetic_rule"
+  },
+  {
+    "task_id": "GRA_006",
+    "source": "dominant_period_s",
+    "target": "deny_new_vessel_arrivals_until_period_de",
+    "rule_text": "Restrict vessel maneuvering during long swell periods to ensure mooring security.",
+    "operator": ">",
+    "threshold": 12.0,
+    "source_file": "synthetic_rule"
+  },
+  {
+    "task_id": "GRA_007",
+    "source": "arrival_delay_hours",
+    "target": "reassign_berth_schedule",
+    "rule_text": "Vessel arrival delay exceeding 6 hours requires berth schedule reassignment and notification to terminal operator.",
+    "operator": ">",
+    "threshold": 6.0,
+    "source_file": "synthetic_rule"
+  },
+  {
+    "task_id": "GRA_008",
+    "source": "vessel_loa_meters",
+    "target": "generate_exception_report_for_terminal_m",
+    "rule_text": "Flag vessels exceeding maximum terminal length limits for manual review",
+    "operator": ">",
+    "threshold": 400.0,
+    "source_file": "synthetic_rule"
+  },
+  {
+    "task_id": "GRA_009",
+    "source": "foreign_crew",
+    "target": "hold_a_valid_passport_with_a_marine_crew",
+    "rule_text": "Immigration clearance procedures for crew members of non-military ships require all foreign crew to hold a valid passport with a marine crew visa.",
+    "operator": "",
+    "threshold": -9999.0,
+    "source_file": "2018_VRCA_Port_Operating_Handbook_31_5_18.pdf"
+  },
+  {
+    "task_id": "GRA_010",
+    "source": "vessel_capacity_teu",
+    "target": "redirect_to_satellite_port_facility",
+    "rule_text": "Restrict access for vessels below minimum economic size for deep-sea terminals",
+    "operator": "<=",
+    "threshold": 5000.0,
+    "source_file": "synthetic_rule"
+  },
+  {
+    "task_id": "GRA_011",
+    "source": "owner",
+    "target": "appoint_an_agent_for_the_vessel",
+    "rule_text": "Before a vessel enters port waters the owner of the vessel must, unless VRCA otherwise agrees in writing, appoint an agent for the vessel, who may be the Master.",
+    "operator": "",
+    "threshold": -9999.0,
+    "source_file": "2018_VRCA_Port_Operating_Handbook_31_5_18.pdf"
+  },
+  {
+    "task_id": "GRA_012",
+    "source": "vessel_communication",
+    "target": "establish_contact_with_lonsdale_vts_and_",
+    "rule_text": "Inbound vessels should establish contact with Lonsdale VTS and, on clearing the South Channel, make contact with Geelong Port Marine Control.",
+    "operator": "",
+    "threshold": -9999.0,
+    "source_file": "2018_VRCA_Port_Operating_Handbook_31_5_18.pdf"
+  },
+  {
+    "task_id": "GRA_013",
+    "source": "vessel_imo",
+    "target": "fly_its_national_colours",
+    "rule_text": "The Master of a vessel of 200 gross tons or more must cause the vessel to fly its national colours between the hours of sunrise and sunset while within port waters.",
+    "operator": "",
+    "threshold": -9999.0,
+    "source_file": "2018_VRCA_Port_Operating_Handbook_31_5_18.pdf"
+  },
+  {
+    "task_id": "GRA_014",
+    "source": "slow_steaming_status",
+    "target": "advise_geelong_port_marine_control",
+    "rule_text": "At the time of placing a pilot order for departure, Geelong Port Marine Control is to be advised if the vessel is slow-steaming as a consequence of repairs undertaken during the port stay.",
+    "operator": "",
+    "threshold": -9999.0,
+    "source_file": "2018_VRCA_Port_Operating_Handbook_31_5_18.pdf"
+  },
+  {
+    "task_id": "GRA_015",
+    "source": "tug_requirement",
+    "target": "follow_minimum_towage_table",
+    "rule_text": "Tugs must be ordered as per the Minimum Towage Table.",
+    "operator": "",
+    "threshold": -9999.0,
+    "source_file": "2018_VRCA_Port_Operating_Handbook_31_5_18.pdf"
+  }
+]

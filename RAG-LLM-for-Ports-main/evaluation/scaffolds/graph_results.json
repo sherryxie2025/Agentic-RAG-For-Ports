@@ -1,0 +1,317 @@
+[
+  {
+    "id": "V3_GRA_001",
+    "query": "Why does channel depth determine whether shallow-draught vessels can anchor in the fork between Williamstown and Port Melbourne Channels?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["depth", "anchor", "shallow draught", "causes"],
+    "reference_answer": "Depth between 6.5 and 7.5 metres is what qualifies the fork as a permissible anchorage, so depth directly governs anchoring eligibility for shallow-draught vessels.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["depth", "anchor_in_the_fork_between_williamstown_"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_002",
+    "query": "How does a vessel's LOA cause an ultra-large container ship safety protocol to be triggered?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["vessel_loa_meters", "operational_requirement", "triggers"],
+    "reference_answer": "When LOA reaches or exceeds 366 m the vessel is classified as ultra-large, which causes the safety protocol for ULCVs to activate as an operational requirement.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["vessel_loa_meters", "operational_requirement"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_003",
+    "query": "Why does a vessel's IMO arrival drive the requirement to produce Form 5 Part 4 and Forms 3a and 3b at the first port?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["vessel_imo", "form 5", "forms 3a", "requires"],
+    "reference_answer": "An IMO-registered vessel arriving at its first port triggers Border Force clearance, which requires the master to produce Form 5 Part 4, Forms 3a/3b, and Form 13.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["vessel_imo", "produce_form_5_part_4_forms_3a_and_3b_fo"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_004",
+    "query": "What causal chain links a rapid drop in atmospheric pressure to alerting the port authority and preparing emergency procedures?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["pressure_hpa", "storm watch", "alert port authority", "triggers"],
+    "reference_answer": "Pressure below 980 hPa signals an approaching storm, which initiates storm-watch procedures and cascades into alerting the port authority and preparing emergency responses.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["pressure_hpa", "alert_port_authority_and_prepare_emergen"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_005",
+    "query": "How does water temperature influence the decision to engage heating systems for critical dock equipment?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["water_temp_c", "freeze protection", "heating systems", "causes"],
+    "reference_answer": "Water temperature below 1 degree C indicates near-freezing conditions, which triggers freeze-protection logic that activates dockside heating systems to prevent equipment damage.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["water_temp_c", "engage_heating_systems_for_critical_dock"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_006",
+    "query": "Why do long dominant wave periods lead the port to deny new vessel arrivals?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["dominant_period_s", "long swell", "deny new vessel arrivals", "causes"],
+    "reference_answer": "Dominant periods above 12 seconds produce long swells that destabilise mooring and maneuvering, so the port blocks new arrivals until the period decreases.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["dominant_period_s", "deny_new_vessel_arrivals_until_period_de"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_007",
+    "query": "What causal chain connects a large arrival delay to reassigning the berth schedule?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["arrival_delay_hours", "reassign berth schedule", "triggers"],
+    "reference_answer": "An arrival delay exceeding 6 hours invalidates the original berth window, which forces the terminal operator to reassign the berth schedule and notify stakeholders.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["arrival_delay_hours", "reassign_berth_schedule"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_008",
+    "query": "How does vessel LOA drive the generation of an exception report for the terminal manager?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["vessel_loa_meters", "exception report", "terminal limits", "causes"],
+    "reference_answer": "When LOA exceeds 400 m the vessel breaches terminal length limits, which flags it for manual review and triggers an exception report for the terminal manager.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["vessel_loa_meters", "generate_exception_report_for_terminal_m"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_009",
+    "query": "Why does the presence of foreign crew on a non-military ship require holding a valid passport with a marine crew visa?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["foreign_crew", "passport", "marine crew visa", "requires"],
+    "reference_answer": "Foreign crew members on non-military vessels are subject to immigration clearance, which mandates that each hold a valid passport endorsed with a marine crew visa.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["foreign_crew", "hold_a_valid_passport_with_a_marine_crew"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_010",
+    "query": "How does a low vessel TEU capacity cause redirection to a satellite port facility?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["vessel_capacity_teu", "satellite port", "economic size", "causes"],
+    "reference_answer": "Vessels at or below 5000 TEU fall under the minimum economic size for deep-sea terminals, which causes the system to redirect them to a satellite port facility.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["vessel_capacity_teu", "redirect_to_satellite_port_facility"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_011",
+    "query": "Why does vessel ownership drive the requirement to appoint an agent before entering port waters?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["owner", "appoint an agent", "port waters", "requires"],
+    "reference_answer": "The owner is legally accountable for the vessel, so VRCA requires the owner to appoint an agent (possibly the Master) before the vessel enters port waters.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["owner", "appoint_an_agent_for_the_vessel"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_012",
+    "query": "What causal chain links inbound vessel communication requirements to contacting Lonsdale VTS and Geelong Port Marine Control?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["vessel_communication", "lonsdale vts", "geelong port marine control", "requires"],
+    "reference_answer": "Inbound traffic coordination requires vessels to establish contact with Lonsdale VTS on entry and then hand off to Geelong Port Marine Control after clearing the South Channel.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["vessel_communication", "establish_contact_with_lonsdale_vts_and_"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_013",
+    "query": "Why does a vessel's IMO-registered gross tonnage cause it to fly its national colours while in port waters?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["vessel_imo", "national colours", "200 gross tons", "requires"],
+    "reference_answer": "A registered vessel of 200 gross tons or more is obligated under port rules to fly its national colours between sunrise and sunset whenever it is within port waters.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["vessel_imo", "fly_its_national_colours"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_014",
+    "query": "How does a slow-steaming status after in-port repairs drive the need to advise Geelong Port Marine Control?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["slow_steaming_status", "geelong port marine control", "pilot order", "requires"],
+    "reference_answer": "A vessel slow-steaming due to repairs has altered maneuvering performance, so at pilot-order time Geelong Port Marine Control must be advised to adjust pilotage planning.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["slow_steaming_status", "advise_geelong_port_marine_control"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  },
+  {
+    "id": "V3_GRA_015",
+    "query": "Why does a vessel's tug requirement cause it to follow the Minimum Towage Table?",
+    "expected_sources": ["graph"],
+    "needs_vector": false,
+    "needs_sql": false,
+    "needs_rules": false,
+    "needs_graph": true,
+    "answer_mode": "diagnostic",
+    "expected_evidence_keywords": ["tug_requirement", "minimum towage table", "requires"],
+    "reference_answer": "Tug needs are standardised by vessel class, so any tug requirement must be ordered in accordance with the Minimum Towage Table to ensure safe maneuvering.",
+    "difficulty": "hard",
+    "golden_vector": null,
+    "golden_sql": null,
+    "golden_rules": null,
+    "golden_graph": {
+      "expected_entities": ["tug_requirement", "follow_minimum_towage_table"],
+      "expected_relationships": ["TRIGGERS"]
+    },
+    "generation_method": "opus_graph_edge_first"
+  }
+]
