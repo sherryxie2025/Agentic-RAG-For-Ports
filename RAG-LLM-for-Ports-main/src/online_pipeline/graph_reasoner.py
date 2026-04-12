@@ -233,7 +233,42 @@ class Neo4jGraphReasoner:
     def _find_reasoning_paths(self, mapped_nodes: List[str]) -> List[Dict[str, Any]]:
         paths: List[Dict[str, Any]] = []
 
-        if len(mapped_nodes) < 2:
+        if not mapped_nodes:
+            return paths
+
+        # Single-anchor mode: many diagnostic queries only extract one
+        # entity (e.g. "berth_operations"). Instead of returning no
+        # paths, enumerate all 2-hop chains anchored at that node —
+        # these represent "what factors influence X" or "what does X
+        # affect", which is usually what the user wanted anyway.
+        if len(mapped_nodes) == 1:
+            anchor = mapped_nodes[0]
+            cypher_single = """
+            MATCH p = (a {name: $anchor})-[*1..2]-(b)
+            WHERE a <> b
+            RETURN
+              a.name AS start_node,
+              b.name AS end_node,
+              [n IN nodes(p) | n.name] AS path_nodes,
+              [rel IN relationships(p) | type(rel)] AS path_edges,
+              [rel IN relationships(p) | startNode(rel).name] AS edge_starts,
+              [rel IN relationships(p) | endNode(rel).name] AS edge_ends
+            LIMIT 8
+            """
+            rows = self.client.run_query(cypher_single, {"anchor": anchor})
+            for row in rows:
+                paths.append({
+                    "start_node": row.get("start_node"),
+                    "end_node": row.get("end_node"),
+                    "path_nodes": row.get("path_nodes", []),
+                    "path_edges": row.get("path_edges", []),
+                    "explanation": self._explain_path(
+                        row.get("path_nodes", []),
+                        row.get("path_edges", []),
+                        row.get("edge_starts", []),
+                        row.get("edge_ends", []),
+                    ),
+                })
             return paths
 
         pairs = self._build_pairs(mapped_nodes)

@@ -151,7 +151,10 @@ class NodeFactory:
 
     def _retrieve_rules_impl(self, state: Dict[str, Any]) -> Dict[str, Any]:
         query = self._find_subquery(state, source="rules") or state.get("user_query", "")
-        matched_rules = self.rule_retriever.retrieve(query=query, top_k=5, min_score=0.5)
+        # top_k=3 + min_score=0.4 align with RuleRetriever.update_state
+        # defaults. The variable-hit boost floor in _score_rule is 0.45, so
+        # min_score must be <= 0.45 for variable-targeted queries to pass.
+        matched_rules = self.rule_retriever.retrieve(query=query, top_k=3, min_score=0.4)
         rule_result = {
             "matched_rules": matched_rules,
             "applicable_rule_count": len(matched_rules),

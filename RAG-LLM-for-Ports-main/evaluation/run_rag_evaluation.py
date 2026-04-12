@@ -442,10 +442,16 @@ def main():
     print(f"\n>> Wrote {out_path}")
 
     # Auto-generate a Chinese Markdown summary next to the JSON.
+    # Import by file path (not package name) because the runner chdirs
+    # to PROJECT_ROOT and `evaluation/` has no __init__.py.
     try:
-        from evaluation.render_eval_markdown import render_report_md
+        import importlib.util
+        md_mod_path = Path(__file__).parent / "render_eval_markdown.py"
+        spec = importlib.util.spec_from_file_location("render_eval_markdown", md_mod_path)
+        md_mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(md_mod)
         md_path = out_path.with_suffix(".md")
-        render_report_md(report, md_path, source_json=out_path)
+        md_mod.render_report_md(report, md_path, source_json=out_path)
         print(f">> Wrote {md_path}")
     except Exception as e:
         print(f"[warn] Markdown rendering failed: {e}")
