@@ -36,10 +36,14 @@ class HybridDocumentRetriever:
         registry: SourceRegistry,
         collection_name: Optional[str] = None,
         rrf_k: int = 60,
+        dense_weight: float = 1.0,
+        bm25_weight: float = 1.2,
         enable_small_to_big: bool = True,
     ) -> None:
         self.registry = registry
         self.rrf_k = rrf_k
+        self.dense_weight = dense_weight
+        self.bm25_weight = bm25_weight
 
         # Dense retriever (existing)
         self.dense_retriever = ChromaDocumentRetriever(
@@ -230,17 +234,18 @@ class HybridDocumentRetriever:
         doc_scores: Dict[str, float] = {}
         doc_map: Dict[str, RetrievedDocument] = {}
 
-        # Score from dense list
+        # Score from dense list (weighted)
         for rank, doc in enumerate(dense_results):
             key = doc.get("chunk_id", "") or doc.get("text", "")[:50]
-            rrf_score = 1.0 / (self.rrf_k + rank + 1)
+            rrf_score = self.dense_weight / (self.rrf_k + rank + 1)
             doc_scores[key] = doc_scores.get(key, 0) + rrf_score
             doc_map[key] = doc
 
-        # Score from BM25 list
+        # Score from BM25 list (weighted — slightly higher default for
+        # port domain which has many acronyms: LOA, TEU, ISPS, etc.)
         for rank, doc in enumerate(bm25_results):
             key = doc.get("chunk_id", "") or doc.get("text", "")[:50]
-            rrf_score = 1.0 / (self.rrf_k + rank + 1)
+            rrf_score = self.bm25_weight / (self.rrf_k + rank + 1)
             doc_scores[key] = doc_scores.get(key, 0) + rrf_score
             if key not in doc_map:
                 doc_map[key] = doc

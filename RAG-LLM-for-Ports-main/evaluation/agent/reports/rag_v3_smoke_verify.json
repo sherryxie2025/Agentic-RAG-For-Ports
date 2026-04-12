@@ -1,0 +1,2548 @@
+{
+  "timestamp": "2026-04-12T03:42:18.844858",
+  "architecture": "Agentic RAG LangGraph DAG",
+  "data_pipeline": "v2 (Small-to-Big + BGE + auto-taxonomy + rule-driven graph)",
+  "golden_dataset": "golden_dataset_v3_rag.json (Opus 4.1 generated, 205 samples)",
+  "dataset_size": 205,
+  "evaluated_samples": 3,
+  "workers": 1,
+  "single_turn": {
+    "routing": {
+      "per_capability": {
+        "vector": {
+          "precision": 1.0,
+          "recall": 0.6667,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "sql": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        },
+        "rules": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "graph": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "micro": {
+        "precision": 0.4,
+        "recall": 0.6667,
+        "f1": 0.5,
+        "tp": 2,
+        "fp": 3,
+        "fn": 1
+      },
+      "macro": {
+        "precision": 0.25,
+        "recall": 0.1667,
+        "f1": 0.2
+      },
+      "exact_match_rate": 0.0,
+      "over_routing_rate": 0.6667,
+      "under_routing_rate": 0.3333,
+      "question_type_accuracy": 0.0,
+      "answer_mode_accuracy": 0.6667,
+      "total_samples": 3
+    },
+    "retrieval": {
+      "vector": {
+        "count": 3,
+        "chunk_recall@5": 0.6667,
+        "chunk_recall@20": 0.6667,
+        "chunk_precision@5": 0.1333,
+        "chunk_mrr": 0.4167,
+        "chunk_ndcg@10": 0.4297,
+        "chunk_samples": 3,
+        "recall@5": 0.6667,
+        "recall@20": 0.6667,
+        "precision@5": 0.1333,
+        "mrr": 0.4167,
+        "ndcg@10": 0.4297,
+        "source_recall@5": 0.6667,
+        "source_recall@20": 0.6667,
+        "source_precision@5": 0.4667,
+        "source_mrr": 0.6667,
+        "source_ndcg@10": 2.2112,
+        "source_samples": 3
+      },
+      "sql": {
+        "count": 0
+      },
+      "rules": {
+        "count": 0
+      },
+      "graph": {
+        "count": 0
+      },
+      "reranking_lift": {
+        "ndcg@5_lift": 0.2153,
+        "recall@5_lift": 0.5,
+        "top1_hit_before": 0.5,
+        "top1_hit_after": 0.5,
+        "top1_lift": 0.0,
+        "count": 2
+      },
+      "samples_counted": {
+        "total": 3
+      }
+    },
+    "answer_quality": {
+      "avg_keyword_coverage": 0.0,
+      "avg_citation_validity": 1.0,
+      "avg_numerical_accuracy": 0.0,
+      "avg_embedding_similarity": 0.5776,
+      "avg_rougeL_f1": 0.0605,
+      "samples_similarity_scored": 3,
+      "grounding_distribution": {
+        "llm_fallback": 1,
+        "fully_grounded": 2
+      },
+      "avg_faithfulness": 0.0,
+      "avg_relevance": 0.0,
+      "avg_completeness": 0.0,
+      "samples_total": 3,
+      "samples_llm_judged": 0
+    },
+    "guardrails": {
+      "pass_rates": {},
+      "counts": {},
+      "sample_details": []
+    },
+    "latency": {
+      "per_stage_seconds": {
+        "rerank_documents": {
+          "count": 2,
+          "mean": 0.309,
+          "p50": 0.309,
+          "p95": 0.342,
+          "p99": 0.345,
+          "max": 0.346
+        },
+        "end_to_end": {
+          "count": 3,
+          "mean": 2.85,
+          "p50": 2.625,
+          "p95": 3.426,
+          "p99": 3.497,
+          "max": 3.514
+        },
+        "planner__sub_queries__llm_call": {
+          "count": 2,
+          "mean": 0.454,
+          "p50": 0.454,
+          "p95": 0.618,
+          "p99": 0.632,
+          "max": 0.636
+        },
+        "retrieve_rules": {
+          "count": 1,
+          "mean": 0.001,
+          "p50": 0.001,
+          "p95": 0.001,
+          "p99": 0.001,
+          "max": 0.001
+        },
+        "planner__sub_query__rules__method": {
+          "count": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "merge_evidence": {
+          "count": 3,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "retrieve_documents": {
+          "count": 2,
+          "mean": 0.808,
+          "p50": 0.808,
+          "p95": 1.264,
+          "p99": 1.305,
+          "max": 1.315
+        },
+        "run_graph_reasoner": {
+          "count": 0
+        },
+        "planner__query_rewrite": {
+          "count": 3,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "planner__plan_total": {
+          "count": 3,
+          "mean": 0.303,
+          "p50": 0.273,
+          "p95": 0.6,
+          "p99": 0.629,
+          "max": 0.636
+        },
+        "planner__sub_query__sql__method": {
+          "count": 2,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "planner__sub_queries__rule_fallback": {
+          "count": 2,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "planner": {
+          "count": 3,
+          "mean": 0.303,
+          "p50": 0.274,
+          "p95": 0.6,
+          "p99": 0.629,
+          "max": 0.636
+        },
+        "planner__sub_query__documents__method": {
+          "count": 2,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "synthesize_answer": {
+          "count": 3,
+          "mean": 0.426,
+          "p50": 0.273,
+          "p95": 0.687,
+          "p99": 0.724,
+          "max": 0.734
+        },
+        "route_query": {
+          "count": 3,
+          "mean": 0.889,
+          "p50": 0.273,
+          "p95": 1.936,
+          "p99": 2.084,
+          "max": 2.121
+        },
+        "run_sql": {
+          "count": 2,
+          "mean": 0.318,
+          "p50": 0.318,
+          "p95": 0.331,
+          "p99": 0.332,
+          "max": 0.332
+        }
+      },
+      "iteration_distribution": {
+        "1": 3
+      },
+      "observation_call_count": {
+        "total": 0,
+        "avg_per_query": 0.0
+      },
+      "replan_trigger_rate": 0.0,
+      "react_abort_rate": 0.0,
+      "react_modify_rate": 0.0,
+      "total_samples": 3
+    }
+  },
+  "per_sample_results": [
+    {
+      "id": "V3_VEC_001",
+      "query": "In the Lincoln Tunnel HOT lane feasibility work, how was the amount of traffic diverting to alternate routes actually estimated, and what role did the BPM model play?",
+      "gold_needs_vector": true,
+      "gold_needs_sql": false,
+      "gold_needs_rules": false,
+      "gold_needs_graph": false,
+      "gold_answer_mode": "descriptive",
+      "gold_reference_answer": "Alternate-route diversion was estimated from the travel behavior choice model rather than the BPM model, and the BPM was instead used only to compare likely alternate routes against the stated-preference survey results.",
+      "needs_vector": false,
+      "needs_sql": false,
+      "needs_rules": false,
+      "needs_graph": false,
+      "question_type": "unknown",
+      "answer_mode": "lookup",
+      "router_decision": {
+        "question_type": "unknown",
+        "answer_mode": "lookup",
+        "needs_vector": false,
+        "needs_sql": false,
+        "needs_rules": false,
+        "needs_graph_reasoning": false,
+        "confidence": 0.3,
+        "matched_keywords": [],
+        "rationale": "No strong routing signal was detected from the query."
+      },
+      "original_query": "In the Lincoln Tunnel HOT lane feasibility work, how was the amount of traffic diverting to alternate routes actually estimated, and what role did the BPM model play?",
+      "source_plan": [],
+      "sub_queries": [],
+      "execution_strategy": "single_source",
+      "retrieved_chunk_ids": [],
+      "retrieved_child_ids": [],
+      "retrieved_sources": [],
+      "pre_rerank_chunk_ids": [],
+      "pre_rerank_sources": [],
+      "retrieved_docs": [],
+      "pre_rerank_docs": [],
+      "tables_used": [],
+      "execution_ok": false,
+      "row_count": 0,
+      "sql_results": [],
+      "rule_variables": [],
+      "rule_results": {
+        "matched_rule_count": 0,
+        "matched_rules": [],
+        "candidate_variables": null
+      },
+      "entities": [],
+      "relationships": [],
+      "path_count": 0,
+      "graph_results": {
+        "query_entities": null,
+        "path_count": 0,
+        "reasoning_paths": []
+      },
+      "answer_text": "### Insufficient Evidence\nNo data was retrieved from documents, SQL, rules, or the knowledge graph for this query. No records were found, and I cannot answer it confidently from the available evidence.\n\n### Answer\nNo strong grounded evidence was available for this query.\n\n### Supporting Evidence\n- No supporting evidence summary available.",
+      "sources_used": [],
+      "confidence": 0.25,
+      "grounding_status": "fallback_augmented",
+      "knowledge_fallback_used": true,
+      "knowledge_fallback_notes": [],
+      "llm_answer_used": false,
+      "llm_error": "BadRequestError: Error code: 400 - {'error': {'message': 'Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment', 'type': 'Arrearage', 'param': None, 'code': 'Arrearage'}, 'id': 'chatcmpl-bfafe4a7-0803-9062-abe3-5f1666cfbee0', 'request_id': 'bfafe4a7-0803-9062-abe3-5f1666cfbee0'}",
+      "fallback_reason": "lookup_without_grounded_evidence",
+      "caveats": [],
+      "reasoning_summary": [],
+      "final_answer": {
+        "answer": "### Insufficient Evidence\nNo data was retrieved from documents, SQL, rules, or the knowledge graph for this query. No records were found, and I cannot answer it confidently from the available evidence.\n\n### Answer\nNo strong grounded evidence was available for this query.\n\n### Supporting Evidence\n- No supporting evidence summary available.",
+        "confidence": 0.25,
+        "sources_used": [],
+        "reasoning_summary": [],
+        "caveats": [],
+        "grounding_status": "fallback_augmented",
+        "llm_answer_used": false,
+        "knowledge_fallback_used": true,
+        "knowledge_fallback_notes": [],
+        "fallback_reason": "lookup_without_grounded_evidence",
+        "llm_error": "BadRequestError: Error code: 400 - {'error': {'message': 'Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment', 'type': 'Arrearage', 'param': None, 'code': 'Arrearage'}, 'id': 'chatcmpl-bfafe4a7-0803-9062-abe3-5f1666cfbee0', 'request_id': 'bfafe4a7-0803-9062-abe3-5f1666cfbee0'}",
+        "evidence_snapshot": {
+          "doc_summary": null,
+          "sql_summary": null,
+          "rule_summary": null,
+          "graph_summary": null
+        }
+      },
+      "evidence_bundle": {
+        "documents_count": 0,
+        "documents": [],
+        "sql_results": [],
+        "rules": {
+          "matched_rule_count": 0,
+          "matched_rules": [],
+          "candidate_variables": null
+        },
+        "graph": {
+          "query_entities": null,
+          "path_count": 0,
+          "reasoning_paths": []
+        },
+        "conflict_annotations": []
+      },
+      "reasoning_trace": [
+        "route_query_node => vector=False, sql=False, rules=False, graph=False",
+        "planner_node => sources=[] strategy=single_source method=rule",
+        "merge_evidence_node => merged evidence bundle",
+        "synthesize_answer_node => produced final answer"
+      ],
+      "warnings": [],
+      "error": null,
+      "total_time": 2.411977767944336,
+      "stage_timings": {
+        "route_query": 2.1211,
+        "planner__query_rewrite": 0.0,
+        "planner__plan_total": 0.0,
+        "planner": 0.0,
+        "merge_evidence": 0.0,
+        "synthesize_answer": 0.2708
+      }
+    },
+    {
+      "id": "V3_VEC_002",
+      "query": "For the Lincoln Tunnel HOT lane study, which alternative delivered the lowest minutes-per-vehicle during the 7-9 AM peak, and how much travel time did it save compared to the No-Build case?",
+      "gold_needs_vector": true,
+      "gold_needs_sql": false,
+      "gold_needs_rules": false,
+      "gold_needs_graph": false,
+      "gold_answer_mode": "comparison",
+      "gold_reference_answer": "Alternative 2A produced the lowest 22.5 minutes per vehicle during the 7-9 AM peak, saving 20.4 minutes versus the No-Build condition, with Alternative 3A-Modified second at 25.9 minutes.",
+      "needs_vector": true,
+      "needs_sql": true,
+      "needs_rules": false,
+      "needs_graph": false,
+      "question_type": "hybrid_reasoning",
+      "answer_mode": "comparison",
+      "router_decision": {
+        "question_type": "hybrid_reasoning",
+        "answer_mode": "comparison",
+        "needs_vector": true,
+        "needs_sql": true,
+        "needs_rules": false,
+        "needs_graph_reasoning": false,
+        "confidence": 0.49,
+        "matched_keywords": [
+          "compare",
+          "min",
+          "study"
+        ],
+        "rationale": "Router selected: documents, structured operational data. Matched keywords: compare, min, study."
+      },
+      "original_query": "For the Lincoln Tunnel HOT lane study, which alternative delivered the lowest minutes-per-vehicle during the 7-9 AM peak, and how much travel time did it save compared to the No-Build case?",
+      "source_plan": [
+        "documents",
+        "sql"
+      ],
+      "sub_queries": [
+        {
+          "source": "documents",
+          "query": "For the Lincoln Tunnel HOT lane study, which alternative delivered the lowest minutes-per-vehicle during the 7-9 AM peak, and how much travel time did it save compared to the No-Build case?",
+          "purpose": "retrieve textual evidence from port documents"
+        },
+        {
+          "source": "sql",
+          "query": "For the Lincoln Tunnel HOT lane study, which alternative delivered the lowest minutes-per-vehicle during the 7-9 AM peak, and how much travel time did it save compared to the No-Build case? [Target: berth_operations, crane_operations, environment]",
+          "purpose": "retrieve structured operational data"
+        }
+      ],
+      "execution_strategy": "parallel_then_merge",
+      "retrieved_chunk_ids": [
+        "236__p__p1__28",
+        "236__p__p1__21",
+        "236__p__p1__25",
+        "236__c__p1__30__4"
+      ],
+      "retrieved_child_ids": [
+        "236__c__p1__28__4",
+        "236__c__p1__28__5",
+        "236__c__p1__21__3",
+        "236__c__p1__25__1",
+        "236__c__p1__30__4"
+      ],
+      "retrieved_sources": [
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf"
+      ],
+      "pre_rerank_chunk_ids": [
+        "236__c__p1__28__4",
+        "236__c__p1__10__1",
+        "236__c__p1__21__3",
+        "236__c__p1__15__1",
+        "236__c__p1__25__5",
+        "236__c__p1__14__0",
+        "236__c__p1__28__5",
+        "236__c__p1__10__4",
+        "236__c__p1__28__3",
+        "236__c__p1__25__1",
+        "236__c__p1__10__3",
+        "236__c__p1__14__5",
+        "236__c__p1__14__4",
+        "236__c__p1__18__3",
+        "236__c__p1__21__2",
+        "236__c__p1__8__4",
+        "236__c__p1__25__0",
+        "236__c__p1__10__0",
+        "236__c__p1__26__5",
+        "236__c__p1__26__6",
+        "236__c__p1__27__0",
+        "236__c__p1__25__2",
+        "236__c__p1__28__2",
+        "236__c__p1__13__0",
+        "236__c__p1__26__4",
+        "236__c__p1__29__6",
+        "236__c__p1__30__4",
+        "236__c__p1__15__2",
+        "236__c__p1__5__0",
+        "236__c__p1__8__1",
+        "236__c__p1__12__6",
+        "236__c__p1__8__3",
+        "236__c__p1__4__0",
+        "236__c__p1__23__4",
+        "236__c__p1__18__4",
+        "236__c__p1__3__3",
+        "236__c__p1__15__5",
+        "236__c__p1__32__0",
+        "236__c__p1__30__5",
+        "236__c__p1__10__2"
+      ],
+      "pre_rerank_sources": [
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf"
+      ],
+      "retrieved_docs": [
+        {
+          "chunk_id": "236__p__p1__28",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 4.364772,
+          "rerank_score": null,
+          "text": "- - 15.7 - All Lanes 33.2 17.4 -15.8 15.4 -17.7 19.3 -13.8 16.9 -16.3 18.5 -14.7 Maximum Queue Length (miles) 4.3 3.5 -0.8 3.6 -0.7 3.3 -1.0 3.4 -0.9 3.3 -1.0 FINAL REPORT Table 35 2015 Performance Measures for NJ 3 Approach 5:00-11:00 a.m. Lane Type No-Build (Constrained) Alt. 1A Difference from No- Build Alt. 2A Difference from No- Build Alt. 3A Difference from No- Build. 3A-Mod. Difference from No- Build Alt. 4A Difference from No- Build Number of Vehicles XBL -434 -434 -434 -434 -434 GP 7,432 -6,541 -6,547 1,173 -6,259 -6,605 1,268 -6,164 HOT 3,727 3,727 3,769 3,769 5,446 5,446 5,262 5,262...[+8061 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__p__p1__21",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 3.712958,
+          "rerank_score": null,
+          "text": "to approach the corridor from NJ 3, with an increase of 2.5 miles of travel.. All traffic from NJ 3 would have the choice to either access the HOT lane or use the general purpose lanes on NJ 495. Alternative 3A-Modified – Alternative 3A-Modified assumes that registered carpools can use the HOT lane for free. 7.1.5 ALTERNATIVE 4 Alternative 4 addresses the NJ Turnpike access to the proposed HOT lane through a more extensive construction project that would allow direct access without the need to weave across NJ 495. This alternative envisions the construction of a new roadway and three bridges t...[+8213 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__p__p1__25",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 3.208861,
+          "rerank_score": null,
+          "text": "the option “A” variant of each study alternative since options “A” and “B” are very similar in nature from the standpoint of traffic operations and demand. As noted earlier, under all the study alternatives, the existing XBL bus traffic originating from NJ 3 was diverted into the proposed HOT lane; buses from the NJ Turnpike were assumed to stay on the existing contra-flow XBL. The travel behavior demand model allowed traffic to choose an alternative crossing, as well as for exiting person trips to shift to a transit mode or form a carpool. As a consequence, the study alternatives generally re...[+8119 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__30__4",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 2.672168,
+          "rerank_score": null,
+          "text": "corridors. (4) Equity Access - is a combination of the availability of the HOT lane to all approaches AND how direct the approach entry is. Items are rated from 1 to 3 with 3=highest/best value, 2=good or secondary, and 1=lowest ranking The alternatives with the highest overall rating are preferred. New Parallel Roadway 5:00-11:00 A.M. FINAL REPORT 8.2.2 MOBILITY CRITERIA During the 7-9 a.m. peak period, total vehicle trips is highest under Alternatives 3A, 3A-M, and 4A, while Alternatives 1A and 2A indicate a lower number of vehicle trips by about 6 percent. During the 5-11 a.m. period, Alter...[+959 chars]",
+          "metadata": null
+        }
+      ],
+      "pre_rerank_docs": [
+        {
+          "chunk_id": "236__c__p1__28__4",
+          "parent_id": "236__p__p1__28",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.03283,
+          "rerank_score": null,
+          "text": "traffic results in fewer NJ 3 vehicles and sub-optimal usage of the lanes on the connector ramp. Travel times for XBL buses improve from 12.6 minutes under No-Build conditions to just over 9 minutes u...[+1293 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__10__1",
+          "parent_id": "236__p__p1__10",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.032527,
+          "rerank_score": null,
+          "text": "first alternative longer than their current trip time. 4.3.3 DEBRIEF QUESTIONS At the conclusion of the stated-preference scenarios, respondents who did not choose any of the HOT lane alternatives in ...[+1353 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__21__3",
+          "parent_id": "236__p__p1__21",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.031919,
+          "rerank_score": null,
+          "text": "traffic is diverted to the proposed HOT lane and the total demand shown in all the pie charts is the same. In the pie chart for the No-Build condition in Figure 25, low-occupancy vehicular traffic con...[+1362 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__15__1",
+          "parent_id": "236__p__p1__15",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.030706,
+          "rerank_score": null,
+          "text": "time in the general purpose lanes for future conditions defined by the study alternatives were generated from regression equations developed from micro-simulation results. 5. Calculate the difference ...[+1452 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__25__5",
+          "parent_id": "236__p__p1__25",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.030415,
+          "rerank_score": null,
+          "text": "a higher share of the HOV traffic is in shifted to the HOT lane in the Build alternatives. Tables 29 through 31 provide the same information as Table 28, but shown by individual approach. NJ Turnpike ...[+1339 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__14__0",
+          "parent_id": "236__p__p1__14",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.030365,
+          "rerank_score": null,
+          "text": "by Income for AM Time Period Segments $0.00 $5.00 $10.00 $15.00 $20.00 $25.00 $30.00 $35.00 $40.00 $45.00 $50.00 $0 $50 $100 $150 $200 $250 $300 Income (k$) Value of Time ($/hr) Before 6:00 AM 6:00 AM...[+1338 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__28__5",
+          "parent_id": "236__p__p1__28",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.029737,
+          "rerank_score": null,
+          "text": "vehicle throughputs during the peak hours from 7-9 a.m. Lincoln Tunnel Plaza – As shown in the table, Toll Lane 4 at the Lincoln Tunnel toll plaza processes the highest amount of traffic under Alterna...[+1386 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__10__4",
+          "parent_id": "236__p__p1__10",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.029538,
+          "rerank_score": null,
+          "text": "their opinion of the proposed Lincoln Tunnel HOT Lane concept if it were possible to earn credits toward free trips on the HOT lane by driving in the regular purpose lanes. This question was designed ...[+1410 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__28__3",
+          "parent_id": "236__p__p1__28",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.029355,
+          "rerank_score": null,
+          "text": "per vehicle (19.63) compared to other options. Maximum Queue Length (miles) – Alternatives 3A and 4A show the highest reduction in maximum queue length (1.0 miles) over the No-Build condition. NJ 3 – ...[+1383 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__25__1",
+          "parent_id": "236__p__p1__25",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.029269,
+          "rerank_score": null,
+          "text": "lane. 7.3.1 TRAVEL TIME AND QUEUES - PEAK HOURS (7-9 A.M.) All Approaches - Table 28 provides a summary of the corridor performance measures used to compare the constrained 2015 No-Build alternative, ...[+1341 chars]",
+          "metadata": null
+        }
+      ],
+      "tables_used": [
+        "crane_operations"
+      ],
+      "execution_ok": true,
+      "row_count": 20,
+      "sql_results": [
+        {
+          "sub_query": null,
+          "execution_ok": true,
+          "error": null,
+          "row_count": 20,
+          "columns": null,
+          "rows_preview": [
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000001-QC-J01",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J01",
+                "crane_start_time": "2015-01-01 10:08:11",
+                "crane_end_time": "2015-01-01 23:11:46",
+                "crane_hours": 13.06,
+                "total_moves": 352,
+                "discharge_moves": 207,
+                "load_moves": 145,
+                "restows": 2,
+                "crane_productivity_mph": 26.95,
+                "breakdown_minutes": 13,
+                "waiting_time_minutes": 7,
+                "utilization_pct": 97.4
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000001-QC-J06",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J06",
+                "crane_start_time": "2015-01-01 10:01:27",
+                "crane_end_time": "2015-01-01 23:22:12",
+                "crane_hours": 13.35,
+                "total_moves": 342,
+                "discharge_moves": 190,
+                "load_moves": 152,
+                "restows": 15,
+                "crane_productivity_mph": 25.63,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 39,
+                "utilization_pct": 95.1
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000001-QC-J03",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J03",
+                "crane_start_time": "2015-01-01 10:20:07",
+                "crane_end_time": "2015-01-01 23:35:09",
+                "crane_hours": 13.25,
+                "total_moves": 352,
+                "discharge_moves": 176,
+                "load_moves": 176,
+                "restows": 12,
+                "crane_productivity_mph": 26.57,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 32,
+                "utilization_pct": 96.0
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000001-QC-J02",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J02",
+                "crane_start_time": "2015-01-01 10:15:59",
+                "crane_end_time": "2015-01-02 00:11:00",
+                "crane_hours": 13.92,
+                "total_moves": 356,
+                "discharge_moves": 181,
+                "load_moves": 175,
+                "restows": 13,
+                "crane_productivity_mph": 25.58,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 27,
+                "utilization_pct": 96.8
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000002-QC-T07",
+                "call_id": "POLB2015000002",
+                "vessel_name": "OOCL LONG BEACH",
+                "terminal_code": "TTI",
+                "berth_id": "T138",
+                "crane_id": "QC-T07",
+                "crane_start_time": "2015-01-01 16:58:15",
+                "crane_end_time": "2015-01-02 04:24:12",
+                "crane_hours": 11.43,
+                "total_moves": 275,
+                "discharge_moves": 160,
+                "load_moves": 115,
+                "restows": 11,
+                "crane_productivity_mph": 24.05,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 28,
+                "utilization_pct": 95.9
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000002-QC-T01",
+                "call_id": "POLB2015000002",
+                "vessel_name": "OOCL LONG BEACH",
+                "terminal_code": "TTI",
+                "berth_id": "T138",
+                "crane_id": "QC-T01",
+                "crane_start_time": "2015-01-01 17:08:04",
+                "crane_end_time": "2015-01-02 03:15:45",
+                "crane_hours": 10.13,
+                "total_moves": 236,
+                "discharge_moves": 136,
+                "load_moves": 100,
+                "restows": 3,
+                "crane_productivity_mph": 23.3,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 19,
+                "utilization_pct": 96.9
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000002-QC-T04",
+                "call_id": "POLB2015000002",
+                "vessel_name": "OOCL LONG BEACH",
+                "terminal_code": "TTI",
+                "berth_id": "T138",
+                "crane_id": "QC-T04",
+                "crane_start_time": "2015-01-01 17:23:38",
+                "crane_end_time": "2015-01-02 03:30:09",
+                "crane_hours": 10.11,
+                "total_moves": 245,
+                "discharge_moves": 126,
+                "load_moves": 119,
+                "restows": 12,
+                "crane_productivity_mph": 24.24,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 22,
+                "utilization_pct": 96.4
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000002-QC-T06",
+                "call_id": "POLB2015000002",
+                "vessel_name": "OOCL LONG BEACH",
+                "terminal_code": "TTI",
+                "berth_id": "T138",
+                "crane_id": "QC-T06",
+                "crane_start_time": "2015-01-01 16:23:58",
+                "crane_end_time": "2015-01-02 02:55:16",
+                "crane_hours": 10.52,
+                "total_moves": 259,
+                "discharge_moves": 148,
+                "load_moves": 111,
+                "restows": 6,
+                "crane_productivity_mph": 24.62,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 29,
+                "utilization_pct": 95.4
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000003-QC-T06",
+                "call_id": "POLB2015000003",
+                "vessel_name": "EVER GIVEN",
+                "terminal_code": "TTI",
+                "berth_id": "T132",
+                "crane_id": "QC-T06",
+                "crane_start_time": "2015-01-03 06:57:03",
+                "crane_end_time": "2015-01-03 21:14:49",
+                "crane_hours": 14.3,
+                "total_moves": 399,
+                "discharge_moves": 200,
+                "load_moves": 199,
+                "restows": 4,
+                "crane_productivity_mph": 27.91,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 22,
+                "utilization_pct": 97.4
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000003-QC-T03",
+                "call_id": "POLB2015000003",
+                "vessel_name": "EVER GIVEN",
+                "terminal_code": "TTI",
+                "berth_id": "T132",
+                "crane_id": "QC-T03",
+                "crane_start_time": "2015-01-03 07:55:19",
+                "crane_end_time": "2015-01-03 20:17:50",
+                "crane_hours": 12.38,
+                "total_moves": 351,
+                "discharge_moves": 186,
+                "load_moves": 165,
+                "restows": 16,
+                "crane_productivity_mph": 28.36,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 30,
+                "utilization_pct": 96.0
+              }
+            }
+          ],
+          "plan": {
+            "target_tables": [
+              "crane_operations"
+            ],
+            "generated_sql": "SELECT * FROM crane_operations LIMIT 20",
+            "aggregation": null,
+            "filter_terms": null,
+            "generation_mode": "rule_based"
+          }
+        }
+      ],
+      "rule_variables": [],
+      "rule_results": {
+        "matched_rule_count": 0,
+        "matched_rules": [],
+        "candidate_variables": null
+      },
+      "entities": [],
+      "relationships": [],
+      "path_count": 0,
+      "graph_results": {
+        "query_entities": null,
+        "path_count": 0,
+        "reasoning_paths": []
+      },
+      "answer_text": "### Answer\nGrounded structured data is available for this query.\n\n### Supporting Evidence\n- Top document source: panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf (page 1).",
+      "sources_used": [
+        "documents",
+        "sql"
+      ],
+      "confidence": 0.55,
+      "grounding_status": "fully_grounded",
+      "knowledge_fallback_used": false,
+      "knowledge_fallback_notes": [],
+      "llm_answer_used": false,
+      "llm_error": "BadRequestError: Error code: 400 - {'error': {'message': 'Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment', 'type': 'Arrearage', 'param': None, 'code': 'Arrearage'}, 'id': 'chatcmpl-ed6d90de-9e58-9f47-b24f-801d2e4976e4', 'request_id': 'ed6d90de-9e58-9f47-b24f-801d2e4976e4'}",
+      "fallback_reason": null,
+      "caveats": [],
+      "reasoning_summary": [
+        "Document evidence available.",
+        "Structured operational evidence available."
+      ],
+      "final_answer": {
+        "answer": "### Answer\nGrounded structured data is available for this query.\n\n### Supporting Evidence\n- Top document source: panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf (page 1).",
+        "confidence": 0.55,
+        "sources_used": [
+          "documents",
+          "sql"
+        ],
+        "reasoning_summary": [
+          "Document evidence available.",
+          "Structured operational evidence available."
+        ],
+        "caveats": [],
+        "grounding_status": "fully_grounded",
+        "llm_answer_used": false,
+        "knowledge_fallback_used": false,
+        "knowledge_fallback_notes": [],
+        "fallback_reason": null,
+        "llm_error": "BadRequestError: Error code: 400 - {'error': {'message': 'Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment', 'type': 'Arrearage', 'param': None, 'code': 'Arrearage'}, 'id': 'chatcmpl-ed6d90de-9e58-9f47-b24f-801d2e4976e4', 'request_id': 'ed6d90de-9e58-9f47-b24f-801d2e4976e4'}",
+        "evidence_snapshot": {
+          "doc_summary": {
+            "top_documents": [
+              {
+                "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+                "page": 1,
+                "score": 4.364772,
+                "snippet": "- - 15.7 - All Lanes 33.2 17.4 -15.8 15.4 -17.7 19.3 -13.8 16.9 -16.3 18.5 -14.7 Maximum Queue Length (miles) 4.3 3.5 -0.8 3.6 -0.7 3.3 -1.0 3.4 -0.9 3.3 -1.0 FINAL REPORT Table 35 2015 Performance Measures for NJ 3 Approach 5:00-11:00 a.m. Lane Type No-Build (Constrained) Alt. 1A Difference from No- Build Alt. 2A Difference from No- Build Alt. 3A Difference from No- Build. 3A-Mod. Difference from No- Build Alt. 4A Difference from No- Build Number of Vehicles XBL -434 -434 -434 -434 -434 GP 7,43"
+              },
+              {
+                "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+                "page": 1,
+                "score": 3.712958,
+                "snippet": "to approach the corridor from NJ 3, with an increase of 2.5 miles of travel.. All traffic from NJ 3 would have the choice to either access the HOT lane or use the general purpose lanes on NJ 495. Alternative 3A-Modified – Alternative 3A-Modified assumes that registered carpools can use the HOT lane for free. 7.1.5 ALTERNATIVE 4 Alternative 4 addresses the NJ Turnpike access to the proposed HOT lane through a more extensive construction project that would allow direct access without the need to w"
+              },
+              {
+                "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+                "page": 1,
+                "score": 3.208861,
+                "snippet": "the option “A” variant of each study alternative since options “A” and “B” are very similar in nature from the standpoint of traffic operations and demand. As noted earlier, under all the study alternatives, the existing XBL bus traffic originating from NJ 3 was diverted into the proposed HOT lane; buses from the NJ Turnpike were assumed to stay on the existing contra-flow XBL. The travel behavior demand model allowed traffic to choose an alternative crossing, as well as for exiting person trips"
+              }
+            ],
+            "best_source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "best_page": 1,
+            "best_snippet": "- - 15.7 - All Lanes 33.2 17.4 -15.8 15.4 -17.7 19.3 -13.8 16.9 -16.3 18.5 -14.7 Maximum Queue Length (miles) 4.3 3.5 -0.8 3.6 -0.7 3.3 -1.0 3.4 -0.9 3.3 -1.0 FINAL REPORT Table 35 2015 Performance Measures for NJ 3 Approach 5:00-11:00 a.m. Lane Type No-Build (Constrained) Alt. 1A Difference from No- Build Alt. 2A Difference from No- Build Alt. 3A Difference from No- Build. 3A-Mod. Difference from No- Build Alt. 4A Difference from No- Build Number of Vehicles XBL -434 -434 -434 -434 -434 GP 7,43"
+          },
+          "sql_summary": {
+            "execution_ok": true,
+            "used_tables": [
+              "crane_operations"
+            ],
+            "generated_sql": "SELECT * FROM crane_operations LIMIT 20",
+            "aggregation": null,
+            "row_count": 20,
+            "preview_rows": [
+              {
+                "crane_operation_id": "CO-POLB2015000001-QC-J01",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J01",
+                "crane_start_time": "2015-01-01 10:08:11",
+                "crane_end_time": "2015-01-01 23:11:46",
+                "crane_hours": 13.06,
+                "total_moves": 352,
+                "discharge_moves": 207,
+                "load_moves": 145,
+                "restows": 2,
+                "crane_productivity_mph": 26.95,
+                "breakdown_minutes": 13,
+                "waiting_time_minutes": 7,
+                "utilization_pct": 97.4
+              },
+              {
+                "crane_operation_id": "CO-POLB2015000001-QC-J06",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J06",
+                "crane_start_time": "2015-01-01 10:01:27",
+                "crane_end_time": "2015-01-01 23:22:12",
+                "crane_hours": 13.35,
+                "total_moves": 342,
+                "discharge_moves": 190,
+                "load_moves": 152,
+                "restows": 15,
+                "crane_productivity_mph": 25.63,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 39,
+                "utilization_pct": 95.1
+              },
+              {
+                "crane_operation_id": "CO-POLB2015000001-QC-J03",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J03",
+                "crane_start_time": "2015-01-01 10:20:07",
+                "crane_end_time": "2015-01-01 23:35:09",
+                "crane_hours": 13.25,
+                "total_moves": 352,
+                "discharge_moves": 176,
+                "load_moves": 176,
+                "restows": 12,
+                "crane_productivity_mph": 26.57,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 32,
+                "utilization_pct": 96.0
+              },
+              {
+                "crane_operation_id": "CO-POLB2015000001-QC-J02",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J02",
+                "crane_start_time": "2015-01-01 10:15:59",
+                "crane_end_time": "2015-01-02 00:11:00",
+                "crane_hours": 13.92,
+                "total_moves": 356,
+                "discharge_moves": 181,
+                "load_moves": 175,
+                "restows": 13,
+                "crane_productivity_mph": 25.58,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 27,
+                "utilization_pct": 96.8
+              },
+              {
+                "crane_operation_id": "CO-POLB2015000002-QC-T07",
+                "call_id": "POLB2015000002",
+                "vessel_name": "OOCL LONG BEACH",
+                "terminal_code": "TTI",
+                "berth_id": "T138",
+                "crane_id": "QC-T07",
+                "crane_start_time": "2015-01-01 16:58:15",
+                "crane_end_time": "2015-01-02 04:24:12",
+                "crane_hours": 11.43,
+                "total_moves": 275,
+                "discharge_moves": 160,
+                "load_moves": 115,
+                "restows": 11,
+                "crane_productivity_mph": 24.05,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 28,
+                "utilization_pct": 95.9
+              }
+            ],
+            "derived_insights": []
+          },
+          "rule_summary": null,
+          "graph_summary": null
+        }
+      },
+      "evidence_bundle": {
+        "documents_count": 4,
+        "documents": [
+          {
+            "chunk_id": "236__p__p1__28",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 4.364772,
+            "rerank_score": null,
+            "text": "- - 15.7 - All Lanes 33.2 17.4 -15.8 15.4 -17.7 19.3 -13.8 16.9 -16.3 18.5 -14.7 Maximum Queue Length (miles) 4.3 3.5 -0.8 3.6 -0.7 3.3 -1.0 3.4 -0.9 3.3 -1.0 FINAL REPORT Table 35 2015 Performance Measures for NJ 3 Approach 5:00-11:00 a.m. Lane Type No-Build (Constrained) Alt. 1A Difference from No- Build Alt. 2A Difference from No- Build Alt. 3A Difference from No- Build. 3A-Mod. Difference from...[+8261 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "236__p__p1__21",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 3.712958,
+            "rerank_score": null,
+            "text": "to approach the corridor from NJ 3, with an increase of 2.5 miles of travel.. All traffic from NJ 3 would have the choice to either access the HOT lane or use the general purpose lanes on NJ 495. Alternative 3A-Modified – Alternative 3A-Modified assumes that registered carpools can use the HOT lane for free. 7.1.5 ALTERNATIVE 4 Alternative 4 addresses the NJ Turnpike access to the proposed HOT lan...[+8413 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "236__p__p1__25",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 3.208861,
+            "rerank_score": null,
+            "text": "the option “A” variant of each study alternative since options “A” and “B” are very similar in nature from the standpoint of traffic operations and demand. As noted earlier, under all the study alternatives, the existing XBL bus traffic originating from NJ 3 was diverted into the proposed HOT lane; buses from the NJ Turnpike were assumed to stay on the existing contra-flow XBL. The travel behavior...[+8319 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "236__c__p1__30__4",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 2.672168,
+            "rerank_score": null,
+            "text": "corridors. (4) Equity Access - is a combination of the availability of the HOT lane to all approaches AND how direct the approach entry is. Items are rated from 1 to 3 with 3=highest/best value, 2=good or secondary, and 1=lowest ranking The alternatives with the highest overall rating are preferred. New Parallel Roadway 5:00-11:00 A.M. FINAL REPORT 8.2.2 MOBILITY CRITERIA During the 7-9 a.m. peak ...[+1159 chars]",
+            "metadata": null
+          }
+        ],
+        "sql_results": [
+          {
+            "sub_query": null,
+            "execution_ok": true,
+            "error": null,
+            "row_count": 20,
+            "columns": null,
+            "rows_preview": [
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000001-QC-J01",
+                  "call_id": "POLB2015000001",
+                  "vessel_name": "OOCL ATLANTA",
+                  "terminal_code": "PCT",
+                  "berth_id": "J243",
+                  "crane_id": "QC-J01",
+                  "crane_start_time": "2015-01-01 10:08:11",
+                  "crane_end_time": "2015-01-01 23:11:46",
+                  "crane_hours": 13.06,
+                  "total_moves": 352,
+                  "discharge_moves": 207,
+                  "load_moves": 145,
+                  "restows": 2,
+                  "crane_productivity_mph": 26.95,
+                  "breakdown_minutes": 13,
+                  "waiting_time_minutes": 7,
+                  "utilization_pct": 97.4
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000001-QC-J06",
+                  "call_id": "POLB2015000001",
+                  "vessel_name": "OOCL ATLANTA",
+                  "terminal_code": "PCT",
+                  "berth_id": "J243",
+                  "crane_id": "QC-J06",
+                  "crane_start_time": "2015-01-01 10:01:27",
+                  "crane_end_time": "2015-01-01 23:22:12",
+                  "crane_hours": 13.35,
+                  "total_moves": 342,
+                  "discharge_moves": 190,
+                  "load_moves": 152,
+                  "restows": 15,
+                  "crane_productivity_mph": 25.63,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 39,
+                  "utilization_pct": 95.1
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000001-QC-J03",
+                  "call_id": "POLB2015000001",
+                  "vessel_name": "OOCL ATLANTA",
+                  "terminal_code": "PCT",
+                  "berth_id": "J243",
+                  "crane_id": "QC-J03",
+                  "crane_start_time": "2015-01-01 10:20:07",
+                  "crane_end_time": "2015-01-01 23:35:09",
+                  "crane_hours": 13.25,
+                  "total_moves": 352,
+                  "discharge_moves": 176,
+                  "load_moves": 176,
+                  "restows": 12,
+                  "crane_productivity_mph": 26.57,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 32,
+                  "utilization_pct": 96.0
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000001-QC-J02",
+                  "call_id": "POLB2015000001",
+                  "vessel_name": "OOCL ATLANTA",
+                  "terminal_code": "PCT",
+                  "berth_id": "J243",
+                  "crane_id": "QC-J02",
+                  "crane_start_time": "2015-01-01 10:15:59",
+                  "crane_end_time": "2015-01-02 00:11:00",
+                  "crane_hours": 13.92,
+                  "total_moves": 356,
+                  "discharge_moves": 181,
+                  "load_moves": 175,
+                  "restows": 13,
+                  "crane_productivity_mph": 25.58,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 27,
+                  "utilization_pct": 96.8
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000002-QC-T07",
+                  "call_id": "POLB2015000002",
+                  "vessel_name": "OOCL LONG BEACH",
+                  "terminal_code": "TTI",
+                  "berth_id": "T138",
+                  "crane_id": "QC-T07",
+                  "crane_start_time": "2015-01-01 16:58:15",
+                  "crane_end_time": "2015-01-02 04:24:12",
+                  "crane_hours": 11.43,
+                  "total_moves": 275,
+                  "discharge_moves": 160,
+                  "load_moves": 115,
+                  "restows": 11,
+                  "crane_productivity_mph": 24.05,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 28,
+                  "utilization_pct": 95.9
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000002-QC-T01",
+                  "call_id": "POLB2015000002",
+                  "vessel_name": "OOCL LONG BEACH",
+                  "terminal_code": "TTI",
+                  "berth_id": "T138",
+                  "crane_id": "QC-T01",
+                  "crane_start_time": "2015-01-01 17:08:04",
+                  "crane_end_time": "2015-01-02 03:15:45",
+                  "crane_hours": 10.13,
+                  "total_moves": 236,
+                  "discharge_moves": 136,
+                  "load_moves": 100,
+                  "restows": 3,
+                  "crane_productivity_mph": 23.3,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 19,
+                  "utilization_pct": 96.9
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000002-QC-T04",
+                  "call_id": "POLB2015000002",
+                  "vessel_name": "OOCL LONG BEACH",
+                  "terminal_code": "TTI",
+                  "berth_id": "T138",
+                  "crane_id": "QC-T04",
+                  "crane_start_time": "2015-01-01 17:23:38",
+                  "crane_end_time": "2015-01-02 03:30:09",
+                  "crane_hours": 10.11,
+                  "total_moves": 245,
+                  "discharge_moves": 126,
+                  "load_moves": 119,
+                  "restows": 12,
+                  "crane_productivity_mph": 24.24,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 22,
+                  "utilization_pct": 96.4
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000002-QC-T06",
+                  "call_id": "POLB2015000002",
+                  "vessel_name": "OOCL LONG BEACH",
+                  "terminal_code": "TTI",
+                  "berth_id": "T138",
+                  "crane_id": "QC-T06",
+                  "crane_start_time": "2015-01-01 16:23:58",
+                  "crane_end_time": "2015-01-02 02:55:16",
+                  "crane_hours": 10.52,
+                  "total_moves": 259,
+                  "discharge_moves": 148,
+                  "load_moves": 111,
+                  "restows": 6,
+                  "crane_productivity_mph": 24.62,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 29,
+                  "utilization_pct": 95.4
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000003-QC-T06",
+                  "call_id": "POLB2015000003",
+                  "vessel_name": "EVER GIVEN",
+                  "terminal_code": "TTI",
+                  "berth_id": "T132",
+                  "crane_id": "QC-T06",
+                  "crane_start_time": "2015-01-03 06:57:03",
+                  "crane_end_time": "2015-01-03 21:14:49",
+                  "crane_hours": 14.3,
+                  "total_moves": 399,
+                  "discharge_moves": 200,
+                  "load_moves": 199,
+                  "restows": 4,
+                  "crane_productivity_mph": 27.91,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 22,
+                  "utilization_pct": 97.4
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000003-QC-T03",
+                  "call_id": "POLB2015000003",
+                  "vessel_name": "EVER GIVEN",
+                  "terminal_code": "TTI",
+                  "berth_id": "T132",
+                  "crane_id": "QC-T03",
+                  "crane_start_time": "2015-01-03 07:55:19",
+                  "crane_end_time": "2015-01-03 20:17:50",
+                  "crane_hours": 12.38,
+                  "total_moves": 351,
+                  "discharge_moves": 186,
+                  "load_moves": 165,
+                  "restows": 16,
+                  "crane_productivity_mph": 28.36,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 30,
+                  "utilization_pct": 96.0
+                }
+              }
+            ],
+            "plan": {
+              "target_tables": [
+                "crane_operations"
+              ],
+              "generated_sql": "SELECT * FROM crane_operations LIMIT 20",
+              "aggregation": null,
+              "filter_terms": null,
+              "generation_mode": "rule_based"
+            }
+          }
+        ],
+        "rules": {
+          "matched_rule_count": 0,
+          "matched_rules": [],
+          "candidate_variables": null
+        },
+        "graph": {
+          "query_entities": null,
+          "path_count": 0,
+          "reasoning_paths": []
+        },
+        "conflict_annotations": []
+      },
+      "reasoning_trace": [
+        "route_query_node => vector=True, sql=True, rules=False, graph=False",
+        "planner_node => sources=['documents', 'sql'] strategy=parallel_then_merge method=rule",
+        "retrieve_documents_node => retrieved 40 docs",
+        "run_sql_node => mode=rule_based tables=['crane_operations'] rows=20 ok=True",
+        "merge_evidence_node => merged evidence bundle",
+        "rerank_documents_node => reranked 40 -> 5 docs",
+        "merge_evidence_node => merged evidence bundle",
+        "synthesize_answer_node => produced final answer",
+        "synthesize_answer_node => produced final answer"
+      ],
+      "warnings": [],
+      "error": null,
+      "total_time": 3.514463424682617,
+      "stage_timings": {
+        "route_query": 0.2726,
+        "planner__query_rewrite": 0.0,
+        "planner__plan_total": 0.6361,
+        "planner__sub_queries__llm_call": 0.6361,
+        "planner__sub_queries__rule_fallback": 0.0,
+        "planner__sub_query__documents__method": 0.0,
+        "planner__sub_query__sql__method": 0.0,
+        "planner": 0.6361,
+        "retrieve_documents": 1.3148,
+        "run_sql": 0.3324,
+        "merge_evidence": 0.0,
+        "rerank_documents": 0.2719,
+        "synthesize_answer": 0.2727
+      }
+    },
+    {
+      "id": "V3_VEC_003",
+      "query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions?",
+      "gold_needs_vector": true,
+      "gold_needs_sql": false,
+      "gold_needs_rules": false,
+      "gold_needs_graph": false,
+      "gold_answer_mode": "lookup",
+      "gold_reference_answer": "Business-type activities are accounted for using the flow of economic resources measurement focus and accrual basis of accounting in an enterprise fund, and additions or asset improvements exceeding $100,000 that extend service life are capitalized.",
+      "needs_vector": true,
+      "needs_sql": true,
+      "needs_rules": true,
+      "needs_graph": false,
+      "question_type": "hybrid_reasoning",
+      "answer_mode": "lookup",
+      "router_decision": {
+        "question_type": "hybrid_reasoning",
+        "answer_mode": "lookup",
+        "needs_vector": true,
+        "needs_sql": true,
+        "needs_rules": true,
+        "needs_graph_reasoning": false,
+        "confidence": 0.57,
+        "matched_keywords": [
+          "according to",
+          "count",
+          "report",
+          "threshold"
+        ],
+        "rationale": "Router selected: documents, structured operational data, policy/rule database. Matched keywords: according to, count, report, threshold."
+      },
+      "original_query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions?",
+      "source_plan": [
+        "documents",
+        "sql",
+        "rules"
+      ],
+      "sub_queries": [
+        {
+          "source": "documents",
+          "query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions?",
+          "purpose": "retrieve textual evidence from port documents"
+        },
+        {
+          "source": "sql",
+          "query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions? [Target: berth_operations, crane_operations, environment]",
+          "purpose": "retrieve structured operational data"
+        },
+        {
+          "source": "rules",
+          "query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions? [Search all rule variables for matching thresholds and restrictions]",
+          "purpose": "retrieve policy/rule thresholds"
+        }
+      ],
+      "execution_strategy": "parallel_then_merge",
+      "retrieved_chunk_ids": [
+        "248__p__2024__20",
+        "271__p__2024__20",
+        "180__p__p1__4",
+        "177__p__p1__4",
+        "176__p__p1__3"
+      ],
+      "retrieved_child_ids": [
+        "248__c__2024__20__1",
+        "271__c__2024__20__1",
+        "180__c__p1__4__3",
+        "177__c__p1__4__3",
+        "176__c__p1__3__4"
+      ],
+      "retrieved_sources": [
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2005.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2004.pdf"
+      ],
+      "pre_rerank_chunk_ids": [
+        "248__c__2024__20__1",
+        "251__c__p1__0__2",
+        "271__c__2024__20__1",
+        "183__c__p1__6__1",
+        "179__c__p1__4__4",
+        "177__c__p1__4__3",
+        "254__c__p1__2__3",
+        "273__c__p1__2__3",
+        "248__c__2024__20__0",
+        "271__c__2024__20__0",
+        "251__c__p1__0__0",
+        "184__c__p1__1__2",
+        "248__c__2024__10__4",
+        "271__c__2024__10__4",
+        "254__c__p1__2__2",
+        "273__c__p1__2__2",
+        "248__c__2024__8__5",
+        "180__c__p1__4__3",
+        "271__c__2024__8__5",
+        "176__c__p1__3__4",
+        "255__c__p1__12__0",
+        "174__c__2017__18__0",
+        "268__c__p1__12__0",
+        "255__c__p1__0__1",
+        "268__c__p1__0__1",
+        "111__c__p1__0__0",
+        "255__c__p1__4__6",
+        "248__c__2024__21__6",
+        "268__c__p1__4__6",
+        "271__c__2024__21__6",
+        "3__c__p1__1__3",
+        "7__c__p1__1__4",
+        "166__c__p1__14__4",
+        "182__c__p1__5__3",
+        "107__c__8-0__3__1",
+        "181__c__p1__4__6",
+        "179__c__p1__1__1",
+        "267__c__p1__14__2",
+        "248__c__2024__0__4",
+        "95__c__3-5-2__3__0"
+      ],
+      "pre_rerank_sources": [
+        "annual-report-2024.pdf",
+        "condensed-financial-statements-1st-qtr-2024.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2011.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2007.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2005.pdf",
+        "half-year-report-2025-final.pdf",
+        "half-year-report-2025-final.pdf",
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "condensed-financial-statements-1st-qtr-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2012.pdf",
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "half-year-report-2025-final.pdf",
+        "half-year-report-2025-final.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2004.pdf",
+        "highlights-annual-report-2024-port-of-rotterdam-authority.pdf",
+        "panynj-corporate-financial-information-2017-budget-book-final.pdf",
+        "highlights-annual-report-2024-port-of-rotterdam-authority.pdf",
+        "highlights-annual-report-2024-port-of-rotterdam-authority.pdf",
+        "highlights-annual-report-2024-port-of-rotterdam-authority.pdf",
+        "panynj-airports-index-faq-minimum-wage-policy.pdf",
+        "highlights-annual-report-2024-port-of-rotterdam-authority.pdf",
+        "annual-report-2024.pdf",
+        "highlights-annual-report-2024-port-of-rotterdam-authority.pdf",
+        "annual-report-2024.pdf",
+        "ey2023_ghg_cap_inventory_report-final.pdf",
+        "iaph-risk-and-resilience-guidelines-for-ports-bd.pdf",
+        "panynj-corporate-budgets-2012-preliminary-budget.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2010.pdf",
+        "panynj-airports-ewr-competition-plan-december-2000.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2009.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2007.pdf",
+        "the-container-port-performance-index-2020-to-2024---trends-and-lessons-learned.pdf",
+        "annual-report-2024.pdf",
+        "panynj-airports-atr2006.pdf"
+      ],
+      "retrieved_docs": [
+        {
+          "chunk_id": "248__p__2024__20",
+          "parent_id": null,
+          "source_file": "annual-report-2024.pdf",
+          "page": 4,
+          "score": 4.818594,
+          "rerank_score": null,
+          "text": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired employees of the Port Authority and PATH and eligible dependents of such retired employees to facilitate all or part of the required funding of certain postemployment benefits, including group healthca...[+9199 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "271__p__2024__20",
+          "parent_id": null,
+          "source_file": "annual-report-2024.pdf",
+          "page": 4,
+          "score": 4.818594,
+          "rerank_score": null,
+          "text": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired employees of the Port Authority and PATH and eligible dependents of such retired employees to facilitate all or part of the required funding of certain postemployment benefits, including group healthca...[+9199 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "180__p__p1__4",
+          "parent_id": null,
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+          "page": 1,
+          "score": 3.554745,
+          "rerank_score": null,
+          "text": "payables 42,525 (21,836) Increase (decrease) in other liabilities 80,184 (6,373) (Decrease) increase in accrued payroll, pension and other employee benefits (7,902) 20,157 Total adjustments 878,199 596,060 Net cash provided by operating activities 1,684,517 $ 843,860 $ 3. Capital obligations: Consolidated bonds and notes, commercial paper, variable rate master notes and versatile structure obligations. 4. Noncash Investing, Capital and Financing Activities: Noncash activity of ($60,699,000) in 2008 and $37,979,000 in 2007 includes amortization of discount and premium on consolidated bonds and ...[+9348 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "177__p__p1__4",
+          "parent_id": null,
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2005.pdf",
+          "page": 1,
+          "score": 3.464617,
+          "rerank_score": null,
+          "text": "activities: Purchase of investment securities (44,502,671) (60,791,113) Proceeds from maturity and sale of investment securities 44,844,137 60,746,162 Interest received on investment securities 43,280 31,284 Other interest income received 12,035 8,889 Net cash provided by (used for) investing activities 396,781 (4,778) Net increase in cash 3,448 9,071 Cash at beginning of year 48,764 39,693 Cash at end of year 52,212 $ 48,764 $ See . Consolidated Statements of Cash Flows Year ended December 31, (In thousands) 2. Reconciliation of income from operations to net cash provided by operating activit...[+9492 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "176__p__p1__3",
+          "parent_id": null,
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2004.pdf",
+          "page": 1,
+          "score": 3.390396,
+          "rerank_score": null,
+          "text": "paid to suppliers (706,667) (885,650) Cash payments related to the events of September 11, 2001 (3,467) (21,427) Net cash provided by operating activities 243,126 1,581,247 Cash flows from capital activities: Proceeds from sales of capital obligations 1,156,120 1,365,507 Principal paid on capital obligations (332,682) (887,729) Proceeds from capital obligations issued for refunding purposes 1,854,753 2,078,996 Principal paid through capital obligations refundings (1,854,753) (2,078,996) Interest paid on capital obligations (402,139) (385,755) Investment in facilities and construction of capita...[+9693 chars]",
+          "metadata": null
+        }
+      ],
+      "pre_rerank_docs": [
+        {
+          "chunk_id": "248__c__2024__20__1",
+          "parent_id": "248__p__2024__20",
+          "source_file": "annual-report-2024.pdf",
+          "page": 4,
+          "score": 0.031818,
+          "rerank_score": null,
+          "text": "The Port Authority of New York and New Jersey, 2 Montgomery Street, Jersey City, New Jersey 07302. 2. Basis of Accounting a. Port Authority business-type activities are accounted for using the flow of...[+1452 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "251__c__p1__0__2",
+          "parent_id": "251__p__p1__0",
+          "source_file": "condensed-financial-statements-1st-qtr-2024.pdf",
+          "page": 1,
+          "score": 0.031548,
+          "rerank_score": null,
+          "text": "and New Jersey with the consent of the United States Congress. The Compact envisions the Port Authority as being financially self-sustaining. As such, the agency must raise the funds necessary for the...[+1551 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "271__c__2024__20__1",
+          "parent_id": "271__p__2024__20",
+          "source_file": "annual-report-2024.pdf",
+          "page": 4,
+          "score": 0.031364,
+          "rerank_score": null,
+          "text": "The Port Authority of New York and New Jersey, 2 Montgomery Street, Jersey City, New Jersey 07302. 2. Basis of Accounting a. Port Authority business-type activities are accounted for using the flow of...[+1452 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "183__c__p1__6__1",
+          "parent_id": "183__p__p1__6",
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2011.pdf",
+          "page": 1,
+          "score": 0.030495,
+          "rerank_score": null,
+          "text": "LLC, Tower 1 Holdings LLC, WTC Tower 1 LLC, and New York New Jersey Rail LLC (all collectively referred to as the Port Authority). 2. Basis of Accounting a. The Port Authority’s activities are account...[+1551 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "179__c__p1__4__4",
+          "parent_id": "179__p__p1__4",
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2007.pdf",
+          "page": 1,
+          "score": 0.03003,
+          "rerank_score": null,
+          "text": "(PATH), the Newark Legal and Communications Center Urban Renewal Corporation, the New York and New Jersey Railroad Corporation, WTC Retail LLC, Port District Capital Projects LLC, Port Authority Insur...[+1698 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "177__c__p1__4__3",
+          "parent_id": "177__p__p1__4",
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2005.pdf",
+          "page": 1,
+          "score": 0.029578,
+          "rerank_score": null,
+          "text": "Jersey and its wholly-owned corporate entities, Port Authority Trans-Hudson Corporation (PATH), the Newark Legal and Communications Center Urban Renewal Corporation, the New York and New Jersey Railro...[+1722 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "254__c__p1__2__3",
+          "parent_id": null,
+          "source_file": "half-year-report-2025-final.pdf",
+          "page": 1,
+          "score": 0.019672,
+          "rerank_score": null,
+          "text": "figures. Exemption from required consolidation Port of Rotterdam Authority has made use of the exemption from the requirement to consolidate the details of participating interests if the participating...[+1548 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "273__c__p1__2__3",
+          "parent_id": null,
+          "source_file": "half-year-report-2025-final.pdf",
+          "page": 1,
+          "score": 0.019355,
+          "rerank_score": null,
+          "text": "figures. Exemption from required consolidation Port of Rotterdam Authority has made use of the exemption from the requirement to consolidate the details of participating interests if the participating...[+1548 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "248__c__2024__20__0",
+          "parent_id": null,
+          "source_file": "annual-report-2024.pdf",
+          "page": 4,
+          "score": 0.01875,
+          "rerank_score": null,
+          "text": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trus...[+1420 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "271__c__2024__20__0",
+          "parent_id": null,
+          "source_file": "annual-report-2024.pdf",
+          "page": 4,
+          "score": 0.018462,
+          "rerank_score": null,
+          "text": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trus...[+1420 chars]",
+          "metadata": null
+        }
+      ],
+      "tables_used": [
+        "crane_operations"
+      ],
+      "execution_ok": true,
+      "row_count": 20,
+      "sql_results": [
+        {
+          "sub_query": null,
+          "execution_ok": true,
+          "error": null,
+          "row_count": 20,
+          "columns": null,
+          "rows_preview": [
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000001-QC-J01",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J01",
+                "crane_start_time": "2015-01-01 10:08:11",
+                "crane_end_time": "2015-01-01 23:11:46",
+                "crane_hours": 13.06,
+                "total_moves": 352,
+                "discharge_moves": 207,
+                "load_moves": 145,
+                "restows": 2,
+                "crane_productivity_mph": 26.95,
+                "breakdown_minutes": 13,
+                "waiting_time_minutes": 7,
+                "utilization_pct": 97.4
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000001-QC-J06",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J06",
+                "crane_start_time": "2015-01-01 10:01:27",
+                "crane_end_time": "2015-01-01 23:22:12",
+                "crane_hours": 13.35,
+                "total_moves": 342,
+                "discharge_moves": 190,
+                "load_moves": 152,
+                "restows": 15,
+                "crane_productivity_mph": 25.63,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 39,
+                "utilization_pct": 95.1
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000001-QC-J03",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J03",
+                "crane_start_time": "2015-01-01 10:20:07",
+                "crane_end_time": "2015-01-01 23:35:09",
+                "crane_hours": 13.25,
+                "total_moves": 352,
+                "discharge_moves": 176,
+                "load_moves": 176,
+                "restows": 12,
+                "crane_productivity_mph": 26.57,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 32,
+                "utilization_pct": 96.0
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000001-QC-J02",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J02",
+                "crane_start_time": "2015-01-01 10:15:59",
+                "crane_end_time": "2015-01-02 00:11:00",
+                "crane_hours": 13.92,
+                "total_moves": 356,
+                "discharge_moves": 181,
+                "load_moves": 175,
+                "restows": 13,
+                "crane_productivity_mph": 25.58,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 27,
+                "utilization_pct": 96.8
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000002-QC-T07",
+                "call_id": "POLB2015000002",
+                "vessel_name": "OOCL LONG BEACH",
+                "terminal_code": "TTI",
+                "berth_id": "T138",
+                "crane_id": "QC-T07",
+                "crane_start_time": "2015-01-01 16:58:15",
+                "crane_end_time": "2015-01-02 04:24:12",
+                "crane_hours": 11.43,
+                "total_moves": 275,
+                "discharge_moves": 160,
+                "load_moves": 115,
+                "restows": 11,
+                "crane_productivity_mph": 24.05,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 28,
+                "utilization_pct": 95.9
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000002-QC-T01",
+                "call_id": "POLB2015000002",
+                "vessel_name": "OOCL LONG BEACH",
+                "terminal_code": "TTI",
+                "berth_id": "T138",
+                "crane_id": "QC-T01",
+                "crane_start_time": "2015-01-01 17:08:04",
+                "crane_end_time": "2015-01-02 03:15:45",
+                "crane_hours": 10.13,
+                "total_moves": 236,
+                "discharge_moves": 136,
+                "load_moves": 100,
+                "restows": 3,
+                "crane_productivity_mph": 23.3,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 19,
+                "utilization_pct": 96.9
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000002-QC-T04",
+                "call_id": "POLB2015000002",
+                "vessel_name": "OOCL LONG BEACH",
+                "terminal_code": "TTI",
+                "berth_id": "T138",
+                "crane_id": "QC-T04",
+                "crane_start_time": "2015-01-01 17:23:38",
+                "crane_end_time": "2015-01-02 03:30:09",
+                "crane_hours": 10.11,
+                "total_moves": 245,
+                "discharge_moves": 126,
+                "load_moves": 119,
+                "restows": 12,
+                "crane_productivity_mph": 24.24,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 22,
+                "utilization_pct": 96.4
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000002-QC-T06",
+                "call_id": "POLB2015000002",
+                "vessel_name": "OOCL LONG BEACH",
+                "terminal_code": "TTI",
+                "berth_id": "T138",
+                "crane_id": "QC-T06",
+                "crane_start_time": "2015-01-01 16:23:58",
+                "crane_end_time": "2015-01-02 02:55:16",
+                "crane_hours": 10.52,
+                "total_moves": 259,
+                "discharge_moves": 148,
+                "load_moves": 111,
+                "restows": 6,
+                "crane_productivity_mph": 24.62,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 29,
+                "utilization_pct": 95.4
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000003-QC-T06",
+                "call_id": "POLB2015000003",
+                "vessel_name": "EVER GIVEN",
+                "terminal_code": "TTI",
+                "berth_id": "T132",
+                "crane_id": "QC-T06",
+                "crane_start_time": "2015-01-03 06:57:03",
+                "crane_end_time": "2015-01-03 21:14:49",
+                "crane_hours": 14.3,
+                "total_moves": 399,
+                "discharge_moves": 200,
+                "load_moves": 199,
+                "restows": 4,
+                "crane_productivity_mph": 27.91,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 22,
+                "utilization_pct": 97.4
+              }
+            },
+            {
+              "data": {
+                "crane_operation_id": "CO-POLB2015000003-QC-T03",
+                "call_id": "POLB2015000003",
+                "vessel_name": "EVER GIVEN",
+                "terminal_code": "TTI",
+                "berth_id": "T132",
+                "crane_id": "QC-T03",
+                "crane_start_time": "2015-01-03 07:55:19",
+                "crane_end_time": "2015-01-03 20:17:50",
+                "crane_hours": 12.38,
+                "total_moves": 351,
+                "discharge_moves": 186,
+                "load_moves": 165,
+                "restows": 16,
+                "crane_productivity_mph": 28.36,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 30,
+                "utilization_pct": 96.0
+              }
+            }
+          ],
+          "plan": {
+            "target_tables": [
+              "crane_operations"
+            ],
+            "generated_sql": "SELECT * FROM crane_operations LIMIT 20",
+            "aggregation": null,
+            "filter_terms": null,
+            "generation_mode": "rule_based"
+          }
+        }
+      ],
+      "rule_variables": [
+        "speed_restrictions"
+      ],
+      "rule_results": {
+        "matched_rule_count": 1,
+        "matched_rules": [
+          {
+            "variable": "speed_restrictions",
+            "rule_text": "The maximum speed for all vessels transiting through the main navigation channel shall not exceed 8 knots to prevent excessive wake and ensure safety of smaller craft and infrastructure.",
+            "threshold": null,
+            "operator": null,
+            "source_file": "synthetic_rule",
+            "page": 0,
+            "score": null
+          }
+        ],
+        "candidate_variables": null
+      },
+      "entities": [],
+      "relationships": [],
+      "path_count": 0,
+      "graph_results": {
+        "query_entities": null,
+        "path_count": 0,
+        "reasoning_paths": []
+      },
+      "answer_text": "### Answer\nGrounded structured data is available for this query.\n\n### Supporting Evidence\n- Top document source: annual-report-2024.pdf (page 4).",
+      "sources_used": [
+        "documents",
+        "sql",
+        "rules"
+      ],
+      "confidence": 0.73,
+      "grounding_status": "fully_grounded",
+      "knowledge_fallback_used": false,
+      "knowledge_fallback_notes": [],
+      "llm_answer_used": false,
+      "llm_error": "BadRequestError: Error code: 400 - {'error': {'message': 'Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment', 'type': 'Arrearage', 'param': None, 'code': 'Arrearage'}, 'id': 'chatcmpl-c1544595-d7cc-9a70-ad0d-e0fe1c2c66e1', 'request_id': 'c1544595-d7cc-9a70-ad0d-e0fe1c2c66e1'}",
+      "fallback_reason": null,
+      "caveats": [],
+      "reasoning_summary": [
+        "Document evidence available.",
+        "Structured operational evidence available.",
+        "Rule evidence available."
+      ],
+      "final_answer": {
+        "answer": "### Answer\nGrounded structured data is available for this query.\n\n### Supporting Evidence\n- Top document source: annual-report-2024.pdf (page 4).",
+        "confidence": 0.73,
+        "sources_used": [
+          "documents",
+          "sql",
+          "rules"
+        ],
+        "reasoning_summary": [
+          "Document evidence available.",
+          "Structured operational evidence available.",
+          "Rule evidence available."
+        ],
+        "caveats": [],
+        "grounding_status": "fully_grounded",
+        "llm_answer_used": false,
+        "knowledge_fallback_used": false,
+        "knowledge_fallback_notes": [],
+        "fallback_reason": null,
+        "llm_error": "BadRequestError: Error code: 400 - {'error': {'message': 'Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment', 'type': 'Arrearage', 'param': None, 'code': 'Arrearage'}, 'id': 'chatcmpl-c1544595-d7cc-9a70-ad0d-e0fe1c2c66e1', 'request_id': 'c1544595-d7cc-9a70-ad0d-e0fe1c2c66e1'}",
+        "evidence_snapshot": {
+          "doc_summary": {
+            "top_documents": [
+              {
+                "source_file": "annual-report-2024.pdf",
+                "page": 4,
+                "score": 4.818594,
+                "snippet": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired employees of the Port Authority and PATH and eligible dependents of such retired employees to facilit"
+              },
+              {
+                "source_file": "annual-report-2024.pdf",
+                "page": 4,
+                "score": 4.818594,
+                "snippet": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired employees of the Port Authority and PATH and eligible dependents of such retired employees to facilit"
+              },
+              {
+                "source_file": "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+                "page": 1,
+                "score": 3.554745,
+                "snippet": "payables 42,525 (21,836) Increase (decrease) in other liabilities 80,184 (6,373) (Decrease) increase in accrued payroll, pension and other employee benefits (7,902) 20,157 Total adjustments 878,199 596,060 Net cash provided by operating activities 1,684,517 $ 843,860 $ 3. Capital obligations: Consolidated bonds and notes, commercial paper, variable rate master notes and versatile structure obligations. 4. Noncash Investing, Capital and Financing Activities: Noncash activity of ($60,699,000) in 2"
+              }
+            ],
+            "best_source_file": "annual-report-2024.pdf",
+            "best_page": 4,
+            "best_snippet": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired employees of the Port Authority and PATH and eligible dependents of such retired employees to facilit"
+          },
+          "sql_summary": {
+            "execution_ok": true,
+            "used_tables": [
+              "crane_operations"
+            ],
+            "generated_sql": "SELECT * FROM crane_operations LIMIT 20",
+            "aggregation": null,
+            "row_count": 20,
+            "preview_rows": [
+              {
+                "crane_operation_id": "CO-POLB2015000001-QC-J01",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J01",
+                "crane_start_time": "2015-01-01 10:08:11",
+                "crane_end_time": "2015-01-01 23:11:46",
+                "crane_hours": 13.06,
+                "total_moves": 352,
+                "discharge_moves": 207,
+                "load_moves": 145,
+                "restows": 2,
+                "crane_productivity_mph": 26.95,
+                "breakdown_minutes": 13,
+                "waiting_time_minutes": 7,
+                "utilization_pct": 97.4
+              },
+              {
+                "crane_operation_id": "CO-POLB2015000001-QC-J06",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J06",
+                "crane_start_time": "2015-01-01 10:01:27",
+                "crane_end_time": "2015-01-01 23:22:12",
+                "crane_hours": 13.35,
+                "total_moves": 342,
+                "discharge_moves": 190,
+                "load_moves": 152,
+                "restows": 15,
+                "crane_productivity_mph": 25.63,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 39,
+                "utilization_pct": 95.1
+              },
+              {
+                "crane_operation_id": "CO-POLB2015000001-QC-J03",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J03",
+                "crane_start_time": "2015-01-01 10:20:07",
+                "crane_end_time": "2015-01-01 23:35:09",
+                "crane_hours": 13.25,
+                "total_moves": 352,
+                "discharge_moves": 176,
+                "load_moves": 176,
+                "restows": 12,
+                "crane_productivity_mph": 26.57,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 32,
+                "utilization_pct": 96.0
+              },
+              {
+                "crane_operation_id": "CO-POLB2015000001-QC-J02",
+                "call_id": "POLB2015000001",
+                "vessel_name": "OOCL ATLANTA",
+                "terminal_code": "PCT",
+                "berth_id": "J243",
+                "crane_id": "QC-J02",
+                "crane_start_time": "2015-01-01 10:15:59",
+                "crane_end_time": "2015-01-02 00:11:00",
+                "crane_hours": 13.92,
+                "total_moves": 356,
+                "discharge_moves": 181,
+                "load_moves": 175,
+                "restows": 13,
+                "crane_productivity_mph": 25.58,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 27,
+                "utilization_pct": 96.8
+              },
+              {
+                "crane_operation_id": "CO-POLB2015000002-QC-T07",
+                "call_id": "POLB2015000002",
+                "vessel_name": "OOCL LONG BEACH",
+                "terminal_code": "TTI",
+                "berth_id": "T138",
+                "crane_id": "QC-T07",
+                "crane_start_time": "2015-01-01 16:58:15",
+                "crane_end_time": "2015-01-02 04:24:12",
+                "crane_hours": 11.43,
+                "total_moves": 275,
+                "discharge_moves": 160,
+                "load_moves": 115,
+                "restows": 11,
+                "crane_productivity_mph": 24.05,
+                "breakdown_minutes": 0,
+                "waiting_time_minutes": 28,
+                "utilization_pct": 95.9
+              }
+            ],
+            "derived_insights": []
+          },
+          "rule_summary": {
+            "applicable_rule_count": 1,
+            "triggered_rule_count": 0,
+            "top_rule": {
+              "rule_text": "The maximum speed for all vessels transiting through the main navigation channel shall not exceed 8 knots to prevent excessive wake and ensure safety of smaller craft and infrastructure.",
+              "variable": "speed_restrictions",
+              "threshold_raw": null,
+              "operator": null,
+              "value": null,
+              "canonical_unit": null,
+              "source_file": "synthetic_rule",
+              "page": 0,
+              "triggered": null,
+              "trigger_explanation": null
+            },
+            "top_rules": [
+              {
+                "rule_text": "The maximum speed for all vessels transiting through the main navigation channel shall not exceed 8 knots to prevent excessive wake and ensure safety of smaller craft and infrastructure.",
+                "variable": "speed_restrictions",
+                "threshold_raw": null,
+                "operator": null,
+                "value": null,
+                "canonical_unit": null,
+                "source_file": "synthetic_rule",
+                "page": 0,
+                "triggered": null,
+                "trigger_explanation": null
+              }
+            ]
+          },
+          "graph_summary": null
+        }
+      },
+      "evidence_bundle": {
+        "documents_count": 5,
+        "documents": [
+          {
+            "chunk_id": "248__p__2024__20",
+            "parent_id": null,
+            "source_file": "annual-report-2024.pdf",
+            "page": 4,
+            "score": 4.818594,
+            "rerank_score": null,
+            "text": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired e...[+9399 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "271__p__2024__20",
+            "parent_id": null,
+            "source_file": "annual-report-2024.pdf",
+            "page": 4,
+            "score": 4.818594,
+            "rerank_score": null,
+            "text": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired e...[+9399 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "180__p__p1__4",
+            "parent_id": null,
+            "source_file": "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+            "page": 1,
+            "score": 3.554745,
+            "rerank_score": null,
+            "text": "payables 42,525 (21,836) Increase (decrease) in other liabilities 80,184 (6,373) (Decrease) increase in accrued payroll, pension and other employee benefits (7,902) 20,157 Total adjustments 878,199 596,060 Net cash provided by operating activities 1,684,517 $ 843,860 $ 3. Capital obligations: Consolidated bonds and notes, commercial paper, variable rate master notes and versatile structure obligat...[+9548 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "177__p__p1__4",
+            "parent_id": null,
+            "source_file": "panynj-corporate-financial-statements-financial-statement-2005.pdf",
+            "page": 1,
+            "score": 3.464617,
+            "rerank_score": null,
+            "text": "activities: Purchase of investment securities (44,502,671) (60,791,113) Proceeds from maturity and sale of investment securities 44,844,137 60,746,162 Interest received on investment securities 43,280 31,284 Other interest income received 12,035 8,889 Net cash provided by (used for) investing activities 396,781 (4,778) Net increase in cash 3,448 9,071 Cash at beginning of year 48,764 39,693 Cash a...[+9692 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "176__p__p1__3",
+            "parent_id": null,
+            "source_file": "panynj-corporate-financial-statements-financial-statement-2004.pdf",
+            "page": 1,
+            "score": 3.390396,
+            "rerank_score": null,
+            "text": "paid to suppliers (706,667) (885,650) Cash payments related to the events of September 11, 2001 (3,467) (21,427) Net cash provided by operating activities 243,126 1,581,247 Cash flows from capital activities: Proceeds from sales of capital obligations 1,156,120 1,365,507 Principal paid on capital obligations (332,682) (887,729) Proceeds from capital obligations issued for refunding purposes 1,854,...[+9893 chars]",
+            "metadata": null
+          }
+        ],
+        "sql_results": [
+          {
+            "sub_query": null,
+            "execution_ok": true,
+            "error": null,
+            "row_count": 20,
+            "columns": null,
+            "rows_preview": [
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000001-QC-J01",
+                  "call_id": "POLB2015000001",
+                  "vessel_name": "OOCL ATLANTA",
+                  "terminal_code": "PCT",
+                  "berth_id": "J243",
+                  "crane_id": "QC-J01",
+                  "crane_start_time": "2015-01-01 10:08:11",
+                  "crane_end_time": "2015-01-01 23:11:46",
+                  "crane_hours": 13.06,
+                  "total_moves": 352,
+                  "discharge_moves": 207,
+                  "load_moves": 145,
+                  "restows": 2,
+                  "crane_productivity_mph": 26.95,
+                  "breakdown_minutes": 13,
+                  "waiting_time_minutes": 7,
+                  "utilization_pct": 97.4
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000001-QC-J06",
+                  "call_id": "POLB2015000001",
+                  "vessel_name": "OOCL ATLANTA",
+                  "terminal_code": "PCT",
+                  "berth_id": "J243",
+                  "crane_id": "QC-J06",
+                  "crane_start_time": "2015-01-01 10:01:27",
+                  "crane_end_time": "2015-01-01 23:22:12",
+                  "crane_hours": 13.35,
+                  "total_moves": 342,
+                  "discharge_moves": 190,
+                  "load_moves": 152,
+                  "restows": 15,
+                  "crane_productivity_mph": 25.63,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 39,
+                  "utilization_pct": 95.1
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000001-QC-J03",
+                  "call_id": "POLB2015000001",
+                  "vessel_name": "OOCL ATLANTA",
+                  "terminal_code": "PCT",
+                  "berth_id": "J243",
+                  "crane_id": "QC-J03",
+                  "crane_start_time": "2015-01-01 10:20:07",
+                  "crane_end_time": "2015-01-01 23:35:09",
+                  "crane_hours": 13.25,
+                  "total_moves": 352,
+                  "discharge_moves": 176,
+                  "load_moves": 176,
+                  "restows": 12,
+                  "crane_productivity_mph": 26.57,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 32,
+                  "utilization_pct": 96.0
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000001-QC-J02",
+                  "call_id": "POLB2015000001",
+                  "vessel_name": "OOCL ATLANTA",
+                  "terminal_code": "PCT",
+                  "berth_id": "J243",
+                  "crane_id": "QC-J02",
+                  "crane_start_time": "2015-01-01 10:15:59",
+                  "crane_end_time": "2015-01-02 00:11:00",
+                  "crane_hours": 13.92,
+                  "total_moves": 356,
+                  "discharge_moves": 181,
+                  "load_moves": 175,
+                  "restows": 13,
+                  "crane_productivity_mph": 25.58,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 27,
+                  "utilization_pct": 96.8
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000002-QC-T07",
+                  "call_id": "POLB2015000002",
+                  "vessel_name": "OOCL LONG BEACH",
+                  "terminal_code": "TTI",
+                  "berth_id": "T138",
+                  "crane_id": "QC-T07",
+                  "crane_start_time": "2015-01-01 16:58:15",
+                  "crane_end_time": "2015-01-02 04:24:12",
+                  "crane_hours": 11.43,
+                  "total_moves": 275,
+                  "discharge_moves": 160,
+                  "load_moves": 115,
+                  "restows": 11,
+                  "crane_productivity_mph": 24.05,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 28,
+                  "utilization_pct": 95.9
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000002-QC-T01",
+                  "call_id": "POLB2015000002",
+                  "vessel_name": "OOCL LONG BEACH",
+                  "terminal_code": "TTI",
+                  "berth_id": "T138",
+                  "crane_id": "QC-T01",
+                  "crane_start_time": "2015-01-01 17:08:04",
+                  "crane_end_time": "2015-01-02 03:15:45",
+                  "crane_hours": 10.13,
+                  "total_moves": 236,
+                  "discharge_moves": 136,
+                  "load_moves": 100,
+                  "restows": 3,
+                  "crane_productivity_mph": 23.3,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 19,
+                  "utilization_pct": 96.9
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000002-QC-T04",
+                  "call_id": "POLB2015000002",
+                  "vessel_name": "OOCL LONG BEACH",
+                  "terminal_code": "TTI",
+                  "berth_id": "T138",
+                  "crane_id": "QC-T04",
+                  "crane_start_time": "2015-01-01 17:23:38",
+                  "crane_end_time": "2015-01-02 03:30:09",
+                  "crane_hours": 10.11,
+                  "total_moves": 245,
+                  "discharge_moves": 126,
+                  "load_moves": 119,
+                  "restows": 12,
+                  "crane_productivity_mph": 24.24,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 22,
+                  "utilization_pct": 96.4
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000002-QC-T06",
+                  "call_id": "POLB2015000002",
+                  "vessel_name": "OOCL LONG BEACH",
+                  "terminal_code": "TTI",
+                  "berth_id": "T138",
+                  "crane_id": "QC-T06",
+                  "crane_start_time": "2015-01-01 16:23:58",
+                  "crane_end_time": "2015-01-02 02:55:16",
+                  "crane_hours": 10.52,
+                  "total_moves": 259,
+                  "discharge_moves": 148,
+                  "load_moves": 111,
+                  "restows": 6,
+                  "crane_productivity_mph": 24.62,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 29,
+                  "utilization_pct": 95.4
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000003-QC-T06",
+                  "call_id": "POLB2015000003",
+                  "vessel_name": "EVER GIVEN",
+                  "terminal_code": "TTI",
+                  "berth_id": "T132",
+                  "crane_id": "QC-T06",
+                  "crane_start_time": "2015-01-03 06:57:03",
+                  "crane_end_time": "2015-01-03 21:14:49",
+                  "crane_hours": 14.3,
+                  "total_moves": 399,
+                  "discharge_moves": 200,
+                  "load_moves": 199,
+                  "restows": 4,
+                  "crane_productivity_mph": 27.91,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 22,
+                  "utilization_pct": 97.4
+                }
+              },
+              {
+                "data": {
+                  "crane_operation_id": "CO-POLB2015000003-QC-T03",
+                  "call_id": "POLB2015000003",
+                  "vessel_name": "EVER GIVEN",
+                  "terminal_code": "TTI",
+                  "berth_id": "T132",
+                  "crane_id": "QC-T03",
+                  "crane_start_time": "2015-01-03 07:55:19",
+                  "crane_end_time": "2015-01-03 20:17:50",
+                  "crane_hours": 12.38,
+                  "total_moves": 351,
+                  "discharge_moves": 186,
+                  "load_moves": 165,
+                  "restows": 16,
+                  "crane_productivity_mph": 28.36,
+                  "breakdown_minutes": 0,
+                  "waiting_time_minutes": 30,
+                  "utilization_pct": 96.0
+                }
+              }
+            ],
+            "plan": {
+              "target_tables": [
+                "crane_operations"
+              ],
+              "generated_sql": "SELECT * FROM crane_operations LIMIT 20",
+              "aggregation": null,
+              "filter_terms": null,
+              "generation_mode": "rule_based"
+            }
+          }
+        ],
+        "rules": {
+          "matched_rule_count": 1,
+          "matched_rules": [
+            {
+              "variable": "speed_restrictions",
+              "rule_text": "The maximum speed for all vessels transiting through the main navigation channel shall not exceed 8 knots to prevent excessive wake and ensure safety of smaller craft and infrastructure.",
+              "threshold": null,
+              "operator": null,
+              "source_file": "synthetic_rule",
+              "page": 0,
+              "score": null
+            }
+          ],
+          "candidate_variables": null
+        },
+        "graph": {
+          "query_entities": null,
+          "path_count": 0,
+          "reasoning_paths": []
+        },
+        "conflict_annotations": []
+      },
+      "reasoning_trace": [
+        "route_query_node => vector=True, sql=True, rules=True, graph=False",
+        "planner_node => sources=['documents', 'sql', 'rules'] strategy=parallel_then_merge method=rule",
+        "retrieve_documents_node => retrieved 40 docs",
+        "retrieve_rules_node => retrieved 1 rules",
+        "run_sql_node => mode=rule_based tables=['crane_operations'] rows=20 ok=True",
+        "merge_evidence_node => merged evidence bundle",
+        "rerank_documents_node => reranked 40 -> 5 docs",
+        "merge_evidence_node => merged evidence bundle",
+        "synthesize_answer_node => produced final answer",
+        "synthesize_answer_node => produced final answer"
+      ],
+      "warnings": [],
+      "error": null,
+      "total_time": 2.6249897480010986,
+      "stage_timings": {
+        "route_query": 0.2724,
+        "planner__query_rewrite": 0.0,
+        "planner__plan_total": 0.2725,
+        "planner__sub_queries__llm_call": 0.2725,
+        "planner__sub_queries__rule_fallback": 0.0,
+        "planner__sub_query__documents__method": 0.0,
+        "planner__sub_query__sql__method": 0.0,
+        "planner__sub_query__rules__method": 0.0,
+        "planner": 0.2736,
+        "retrieve_documents": 0.3005,
+        "retrieve_rules": 0.001,
+        "run_sql": 0.3045,
+        "merge_evidence": 0.0,
+        "rerank_documents": 0.3458,
+        "synthesize_answer": 0.7335
+      }
+    }
+  ]
+}

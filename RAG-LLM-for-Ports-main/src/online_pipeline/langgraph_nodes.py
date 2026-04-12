@@ -59,12 +59,20 @@ class NodeFactory:
         self.node_timings.setdefault(node_name, []).append(round(elapsed, 4))
 
     def _timed(self, node_name: str, func, state: Dict[str, Any]) -> Dict[str, Any]:
-        """Wrapper that records per-node latency."""
+        """Wrapper that records per-node latency.
+
+        Writes timing into both:
+          - self.node_timings (instance-level, for logging)
+          - result["_node_timings"] (per-invocation, written into LangGraph
+            state so the eval runner can extract it per sample)
+        """
         t0 = time.time()
         result = func(state)
-        elapsed = time.time() - t0
+        elapsed = round(time.time() - t0, 4)
         self._record_timing(node_name, elapsed)
         logger.info("NODE %-22s %.2fs", node_name, elapsed)
+        # Inject into result so LangGraph state reducer merges it
+        result.setdefault("_node_timings", {})[node_name] = elapsed
         return result
 
     def route_query_node(self, state: Dict[str, Any]) -> Dict[str, Any]:
@@ -93,23 +101,41 @@ class NodeFactory:
         return self._timed("planner", self._planner_impl, state)
 
     def _planner_impl(self, state: Dict[str, Any]) -> Dict[str, Any]:
-        # Step 1: query rewrite (abbreviation expansion)
         original_query = state.get("user_query", "")
+        router_decision = state.get("router_decision", {})
+
+        # Sub-stage 1: abbreviation expansion (dict-only, ~0ms)
+        t0 = time.time()
         rewrite_result = self.query_rewriter.rewrite(original_query)
         rewritten = rewrite_result.get("rewritten_query", original_query)
         expanded_terms = rewrite_result.get("expanded_terms", [])
+        rewrite_time = round(time.time() - t0, 4)
 
-        # Step 2: planning on rewritten query
-        router_decision = state.get("router_decision", {})
+        # Sub-stage 2: plan() — includes source_plan + sub_queries + strategy
+        # planner.plan() now returns _timings with per-source breakdown
+        t1 = time.time()
         plan = self.planner.plan(user_query=rewritten, router_decision=router_decision)
+        plan_total_time = round(time.time() - t1, 4)
 
         trace = []
         if expanded_terms:
             trace.append(f"planner_node => rewrite expanded_terms={expanded_terms}")
         trace.append(
             f"planner_node => sources={plan['source_plan']} "
-            f"strategy={plan['execution_strategy']}"
+            f"strategy={plan['execution_strategy']} "
+            f"method={plan.get('planning_method', '?')}"
         )
+
+        # Merge planner's internal _timings into _node_timings
+        # This gives us: planner__query_rewrite, planner__sub_queries (total),
+        # sub_queries__llm_call, sub_queries__rule_fallback, sub_query__<source>__method
+        node_timings = {
+            "planner__query_rewrite": rewrite_time,
+            "planner__plan_total": plan_total_time,
+        }
+        planner_timings = plan.get("_timings", {})
+        for k, v in planner_timings.items():
+            node_timings[f"planner__{k}"] = v
 
         return {
             "original_query": original_query,
@@ -118,6 +144,7 @@ class NodeFactory:
             "sub_queries": plan["sub_queries"],
             "execution_strategy": plan["execution_strategy"],
             "reasoning_trace": trace,
+            "_node_timings": node_timings,
         }
 
     def retrieve_documents_node(self, state: Dict[str, Any]) -> Dict[str, Any]:
@@ -125,7 +152,9 @@ class NodeFactory:
 
     def _retrieve_documents_impl(self, state: Dict[str, Any]) -> Dict[str, Any]:
         query = self._find_subquery(state, source="documents") or state.get("user_query", "")
-        docs = self.doc_retriever.retrieve(query=query, top_k=20)
+        # v3: widen retrieval funnel (20→40) for better recall@20.
+        # Reranker still selects top-5, so synthesis context stays bounded.
+        docs = self.doc_retriever.retrieve(query=query, top_k=40)
         return {
             "retrieved_docs": docs,
             "reasoning_trace": [f"retrieve_documents_node => retrieved {len(docs)} docs"],
@@ -140,9 +169,21 @@ class NodeFactory:
         if not docs:
             return {"reasoning_trace": ["rerank_documents_node => no docs to rerank"]}
         reranked = self.reranker.rerank(query, docs, top_k=5)
+
+        # Small-to-Big: expand reranked children to parent chunks for
+        # synthesis context. The synthesizer gets 1500-word parents instead
+        # of 250-word child fragments. Evaluation uses `retrieved_children`
+        # (child IDs) for chunk recall; `retrieved_docs` (parent text) feeds
+        # the synthesizer.
+        if self.doc_retriever.parent_store is not None:
+            parents = self.doc_retriever._children_to_parents(reranked)
+        else:
+            parents = reranked
+
         return {
-            "pre_rerank_docs": docs,  # snapshot before rerank for eval comparison
-            "retrieved_docs": reranked,
+            "pre_rerank_docs": docs,            # 20+ children (eval pre-rerank baseline)
+            "retrieved_children": reranked,      # 5 children post-rerank (eval chunk recall)
+            "retrieved_docs": parents,           # parents for synthesis context
             "reasoning_trace": [f"rerank_documents_node => reranked {len(docs)} -> {len(reranked)} docs"],
         }
 

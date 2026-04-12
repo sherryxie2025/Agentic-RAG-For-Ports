@@ -1,0 +1,1632 @@
+{
+  "timestamp": "2026-04-11T23:57:28.434662",
+  "architecture": "Agentic RAG LangGraph DAG",
+  "data_pipeline": "v2 (Small-to-Big + BGE + auto-taxonomy + rule-driven graph)",
+  "golden_dataset": "golden_dataset_v3_rag.json (Opus 4.1 generated, 205 samples)",
+  "dataset_size": 205,
+  "evaluated_samples": 3,
+  "workers": 1,
+  "single_turn": {
+    "routing": {
+      "per_capability": {
+        "vector": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "sql": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "rules": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "graph": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "micro": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571,
+        "tp": 3,
+        "fp": 1,
+        "fn": 0
+      },
+      "macro": {
+        "precision": 0.25,
+        "recall": 0.25,
+        "f1": 0.25
+      },
+      "exact_match_rate": 0.6667,
+      "over_routing_rate": 0.3333,
+      "under_routing_rate": 0.0,
+      "question_type_accuracy": 0.0,
+      "answer_mode_accuracy": 0.6667,
+      "total_samples": 3
+    },
+    "retrieval": {
+      "vector": {
+        "count": 3,
+        "chunk_recall@5": 1.0,
+        "chunk_recall@20": 1.0,
+        "chunk_precision@5": 0.2,
+        "chunk_mrr": 0.5278,
+        "chunk_ndcg@10": 0.7854,
+        "chunk_samples": 3,
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.5278,
+        "ndcg@10": 0.7854,
+        "source_recall@5": 1.0,
+        "source_recall@20": 1.0,
+        "source_precision@5": 0.8,
+        "source_mrr": 0.7778,
+        "source_ndcg@10": 3.2589,
+        "source_samples": 3
+      },
+      "sql": {
+        "count": 0
+      },
+      "rules": {
+        "count": 0
+      },
+      "graph": {
+        "count": 0
+      },
+      "reranking_lift": {
+        "ndcg@5_lift": -0.0231,
+        "recall@5_lift": 0.3333,
+        "top1_hit_before": 0.6667,
+        "top1_hit_after": 0.3333,
+        "top1_lift": -0.3333,
+        "count": 3
+      },
+      "samples_counted": {
+        "total": 3
+      }
+    },
+    "answer_quality": {
+      "avg_keyword_coverage": 0.3333,
+      "avg_citation_validity": 1.0,
+      "avg_numerical_accuracy": 0.2143,
+      "avg_embedding_similarity": 0.7438,
+      "avg_rougeL_f1": 0.0873,
+      "samples_similarity_scored": 3,
+      "grounding_distribution": {
+        "fully_grounded": 3
+      },
+      "avg_faithfulness": 0.0,
+      "avg_relevance": 0.0,
+      "avg_completeness": 0.0,
+      "samples_total": 3,
+      "samples_llm_judged": 0
+    },
+    "guardrails": {
+      "pass_rates": {},
+      "counts": {},
+      "sample_details": []
+    },
+    "latency": {
+      "per_stage_seconds": {
+        "retrieve_documents": {
+          "count": 3,
+          "mean": 1.384,
+          "p50": 0.812,
+          "p95": 2.55,
+          "p99": 2.704,
+          "max": 2.743
+        },
+        "retrieve_rules": {
+          "count": 0
+        },
+        "run_graph_reasoner": {
+          "count": 0
+        },
+        "route_query": {
+          "count": 3,
+          "mean": 24.491,
+          "p50": 26.466,
+          "p95": 29.661,
+          "p99": 29.945,
+          "max": 30.016
+        },
+        "synthesize_answer": {
+          "count": 3,
+          "mean": 35.149,
+          "p50": 39.467,
+          "p95": 40.82,
+          "p99": 40.941,
+          "max": 40.971
+        },
+        "end_to_end": {
+          "count": 3,
+          "mean": 121.739,
+          "p50": 106.36,
+          "p95": 150.988,
+          "p99": 154.954,
+          "max": 155.946
+        },
+        "rerank_documents": {
+          "count": 3,
+          "mean": 0.535,
+          "p50": 0.393,
+          "p95": 0.788,
+          "p99": 0.823,
+          "max": 0.832
+        },
+        "run_sql": {
+          "count": 1,
+          "mean": 6.13,
+          "p50": 6.13,
+          "p95": 6.13,
+          "p99": 6.13,
+          "max": 6.13
+        },
+        "merge_evidence": {
+          "count": 3,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "planner": {
+          "count": 3,
+          "mean": 45.634,
+          "p50": 40.363,
+          "p95": 58.724,
+          "p99": 60.356,
+          "max": 60.764
+        }
+      },
+      "iteration_distribution": {
+        "1": 3
+      },
+      "observation_call_count": {
+        "total": 0,
+        "avg_per_query": 0.0
+      },
+      "replan_trigger_rate": 0.0,
+      "react_abort_rate": 0.0,
+      "react_modify_rate": 0.0,
+      "total_samples": 3
+    }
+  },
+  "per_sample_results": [
+    {
+      "id": "V3_VEC_001",
+      "query": "In the Lincoln Tunnel HOT lane feasibility work, how was the amount of traffic diverting to alternate routes actually estimated, and what role did the BPM model play?",
+      "gold_needs_vector": true,
+      "gold_needs_sql": false,
+      "gold_needs_rules": false,
+      "gold_needs_graph": false,
+      "gold_answer_mode": "descriptive",
+      "gold_reference_answer": "Alternate-route diversion was estimated from the travel behavior choice model rather than the BPM model, and the BPM was instead used only to compare likely alternate routes against the stated-preference survey results.",
+      "needs_vector": true,
+      "needs_sql": false,
+      "needs_rules": false,
+      "needs_graph": false,
+      "question_type": "document_lookup",
+      "answer_mode": "lookup",
+      "router_decision": {
+        "question_type": "document_lookup",
+        "answer_mode": "lookup",
+        "needs_vector": true,
+        "needs_sql": false,
+        "needs_rules": false,
+        "needs_graph_reasoning": false,
+        "confidence": 0.9,
+        "matched_keywords": [],
+        "rationale": "LLM-routed"
+      },
+      "original_query": "In the Lincoln Tunnel HOT lane feasibility work, how was the amount of traffic diverting to alternate routes actually estimated, and what role did the BPM model play?",
+      "source_plan": [
+        "documents"
+      ],
+      "sub_queries": [
+        {
+          "source": "documents",
+          "query": "In the Lincoln Tunnel HOT lane feasibility work, how was the amount of traffic diverting to alternate routes actually estimated, and what role did the BPM model play?",
+          "purpose": "retrieve textual evidence from port documents"
+        }
+      ],
+      "execution_strategy": "single_source",
+      "retrieved_chunk_ids": [
+        "236__p__p1__15",
+        "236__p__p1__21",
+        "236__p__p1__14",
+        "236__p__p1__16"
+      ],
+      "retrieved_child_ids": [
+        "236__c__p1__15__5",
+        "236__c__p1__21__3",
+        "236__c__p1__14__2",
+        "236__c__p1__21__2",
+        "236__c__p1__16__2"
+      ],
+      "retrieved_sources": [
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf"
+      ],
+      "pre_rerank_chunk_ids": [
+        "236__c__p1__15__5",
+        "236__c__p1__16__2",
+        "236__c__p1__14__5",
+        "236__c__p1__13__0",
+        "236__c__p1__16__1",
+        "236__c__p1__4__0",
+        "236__c__p1__11__2",
+        "236__c__p1__14__2",
+        "236__c__p1__33__5",
+        "236__c__p1__4__6",
+        "236__c__p1__7__2",
+        "236__c__p1__12__6",
+        "236__c__p1__14__0",
+        "236__c__p1__15__4",
+        "236__c__p1__29__3",
+        "236__c__p1__3__6",
+        "236__c__p1__8__1",
+        "236__c__p1__21__2",
+        "236__c__p1__5__0",
+        "236__c__p1__10__4",
+        "236__c__p1__21__3",
+        "236__c__p1__33__0",
+        "236__c__p1__15__1",
+        "236__c__p1__8__4",
+        "236__c__p1__14__4",
+        "236__c__p1__34__0",
+        "236__c__p1__10__1",
+        "236__c__p1__33__6",
+        "236__c__p1__8__3",
+        "236__c__p1__29__4",
+        "236__c__p1__14__1",
+        "236__c__p1__1__1",
+        "236__c__p1__3__3",
+        "236__c__p1__14__3",
+        "236__c__p1__2__1",
+        "236__c__p1__32__3",
+        "236__c__p1__10__3",
+        "236__c__p1__10__6",
+        "236__c__p1__14__6",
+        "236__c__p1__20__0"
+      ],
+      "pre_rerank_sources": [
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf"
+      ],
+      "retrieved_docs": [
+        {
+          "chunk_id": "236__p__p1__15",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 4.652851,
+          "rerank_score": null,
+          "text": "required to maintain the same volumes in the HOT lane. Figure 14: HOT Lane Demand vs. General Purpose Lane Speeds Equilibrium Traffic in Managed Lanes Speed in General Purpose Lanes $2.00 $3.00 $1.00 Traffic in Managed Lanes Speed in General Purpose Lanes $2.00 $3.00 $1.00 The travel behavior choice model was developed using the following steps and assumptions: 1. Use the individual survey records from the stated-preference surveys as observations of travel characteristics of drivers in the corridor, including vehicle occupancy, trip purpose, origins, destinations, approach road, method of pay...[+8699 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__p__p1__21",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 3.021265,
+          "rerank_score": null,
+          "text": "to approach the corridor from NJ 3, with an increase of 2.5 miles of travel.. All traffic from NJ 3 would have the choice to either access the HOT lane or use the general purpose lanes on NJ 495. Alternative 3A-Modified – Alternative 3A-Modified assumes that registered carpools can use the HOT lane for free. 7.1.5 ALTERNATIVE 4 Alternative 4 addresses the NJ Turnpike access to the proposed HOT lane through a more extensive construction project that would allow direct access without the need to weave across NJ 495. This alternative envisions the construction of a new roadway and three bridges t...[+8213 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__p__p1__14",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 2.689201,
+          "rerank_score": null,
+          "text": "by Income for AM Time Period Segments $0.00 $5.00 $10.00 $15.00 $20.00 $25.00 $30.00 $35.00 $40.00 $45.00 $50.00 $0 $50 $100 $150 $200 $250 $300 Income (k$) Value of Time ($/hr) Before 6:00 AM 6:00 AM–7:00 AM 7:00 AM–10:00 AM 10:00 AM–11:30 AM Morning peak period business travelers using the Lincoln Tunnel and paying by E-ZPass® were found to have slightly higher values of time than business travelers using the tunnel later in the day (Figure 13). Figure 13: Lincoln Tunnel Automobile E-ZPass® Business Values of Time by Income for Time Period Segments $0.00 $5.00 $10.00 $15.00 $20.00 $25.00 $30...[+8439 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__p__p1__16",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 2.557704,
+          "rerank_score": null,
+          "text": "BEHAVIOR CHOICE MODEL STATED ORIGIN COUNTY TIME ARRIVED AT LINCOLN TUNNEL PLAZA ASSIGN TIME ARRIVED AT APPROACH ON NJ 495 ENTER TOLL RATE SCHEDULE TO TEST IDENTIFY NUMBER OF MINUTES NEEDED FOR PEAK DRIVERS TO SHIFT TO LOWER RATE STATED PREFERENCE SURVEYS • 1,954 a.m. Surveys (5 - 11 a.m.) • 601 p.m. Surveys (3 - 8 p.m.) DUPLICATE RECORDS TO SMOOTH OUT DISTRIBUTION BY HOUR AND BY MANHATTAN DESTINATION ESTIMATED DELAY ON APPROACH TO LINCOLN TUNNEL ESTIMATED TRAVEL TIME, DELAY, QUEUE • From New Jersey Turnpike Int. 16E • From New Jersey Turnpike Int. 17 • From NJ 3 • From Field Observations • Fro...[+8369 chars]",
+          "metadata": null
+        }
+      ],
+      "pre_rerank_docs": [
+        {
+          "chunk_id": "236__c__p1__15__5",
+          "parent_id": "236__p__p1__15",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.036066,
+          "rerank_score": null,
+          "text": "a separate express link was added to replicate the proposed HOT lane. Traffic assignments were run using a range of alternative time penalties to test pricing in the proposed HOT lane. These tests ind...[+1280 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__16__2",
+          "parent_id": "236__p__p1__16",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.033016,
+          "rerank_score": null,
+          "text": "lane (based on the time savings noted above), shifts to other modes, travel time shifts, and shifts to other crossings. The resulting traffic volumes in the HOT lane and general purpose lanes were the...[+1397 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__14__5",
+          "parent_id": "236__p__p1__14",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.032868,
+          "rerank_score": null,
+          "text": "Passenger GP Time - HOT Time Savings Lincoln Tunnel Toll and HOT Lane Fee At New Time At Route 495 Approach Discounted Lincoln Tunnel Toll and Discounted HOT Lane Fee At Time At Route 495 Approach Lin...[+1235 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__13__0",
+          "parent_id": "236__p__p1__13",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.031873,
+          "rerank_score": null,
+          "text": "earlier or later on the proposed Lincoln Tunnel HOT Lane 4. Driving in a registered carpool (three or more occupants) on the proposed Lincoln Tunnel HOT Lane FINAL REPORT 5. Riding a bus on the propos...[+1432 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__16__1",
+          "parent_id": "236__p__p1__16",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.031346,
+          "rerank_score": null,
+          "text": "tunnel-bound automobile traffic originating from locations outside of the NJ 495 corridor stated that the George Washington Bridge would be their next best alternative, while 41 percent would use the ...[+1417 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__4__0",
+          "parent_id": "236__p__p1__4",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.030415,
+          "rerank_score": null,
+          "text": "of the Project Advisory Committee was held midway through the course of the study to provide a status report on the project, to obtain agreement on the source of growth assumptions, and to present the...[+1458 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__11__2",
+          "parent_id": "236__p__p1__11",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.029123,
+          "rerank_score": null,
+          "text": "the Port Authority of NY & NJ for future travel surveys, and given the opportunity to leave comments about the survey or about the proposed Lincoln Tunnel HOT Lane. 4.5 OTHER SURVEYS The surveys for o...[+1427 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__14__2",
+          "parent_id": "236__p__p1__14",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.028879,
+          "rerank_score": null,
+          "text": "for the Lincoln Tunnel. The total global demand on NJ 495 is used to project the overall levels of congestion and delay that can be avoided by using the proposed HOT lane. The next step in the overall...[+1336 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__33__5",
+          "parent_id": "236__p__p1__33",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.02878,
+          "rerank_score": null,
+          "text": "increase in speed and reduction in density), HOT lane rates will be reduced to attract usage. Since the project is using an existing lane, it is critical that maximum traffic flow in the lane be maint...[+1328 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__4__6",
+          "parent_id": "236__p__p1__4",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.028295,
+          "rerank_score": null,
+          "text": "XBL) while 23 percent originates from the local community immediately adjacent to the tunnel (primarily Hoboken and Weehawken). 2.1.2 CONSTRAINT TO MAXIMUM HOT LANE VOLUMES The traffic volumes in Figu...[+1309 chars]",
+          "metadata": null
+        }
+      ],
+      "tables_used": [],
+      "execution_ok": false,
+      "row_count": 0,
+      "sql_results": [],
+      "rule_variables": [],
+      "rule_results": {
+        "matched_rule_count": 0,
+        "matched_rules": [],
+        "candidate_variables": null
+      },
+      "entities": [],
+      "relationships": [],
+      "path_count": 0,
+      "graph_results": {
+        "query_entities": null,
+        "path_count": 0,
+        "reasoning_paths": []
+      },
+      "answer_text": "### Answer\n\nBased on the provided Lincoln Tunnel HOT Lane Feasibility Study documentation, the traffic estimation process relied on a **travel behavior choice model** rather than a model explicitly identified as \"BPM\" in the available text segments. This model was constructed using individual survey records from stated-preference surveys to observe driver travel characteristics. The analysis focused on determining equilibrium traffic volumes in managed lanes relative to speeds in general purpose lanes, rather than solely estimating diversion to external alternate routes.\n\n### Supporting Evidence\n\n*   **Model Development Methodology:** The study specifies that the travel behavior choice model was developed using individual survey records from stated-preference surveys as observations of travel characteristics of drivers [doc].\n*   **Demand Estimation Approach:** Traffic demand was analyzed through equilibrium conditions, specifically examining \"HOT Lane Demand vs. General Purpose Lane Speeds\" to understand traffic distribution in managed lanes [doc].\n*   **Lane Choice Context:** The documentation indicates that traffic decisions involved choices between accessing the HOT lane or using general purpose lanes on NJ 495, such as in Alternative 3A-Modified where registered carpools could use the HOT lane for free [doc].\n*   **Terminology Clarification:** The provided text segments refer to the analytical tool as a \"travel behavior choice model\" without explicitly defining or referencing the acronym \"BPM\" [doc].\n*   **Value of Time Factors:** The estimation accounted for economic factors, noting that business travelers using the tunnel and paying by E-ZPass® had slightly higher values of time depending on the morning peak period [doc].\n\n### Notes\n\n*   **Scope of Diversion Data:** The visible excerpts focus primarily on lane-level choice (HOT vs. General Purpose) within the corridor rather than diversion to entirely separate alternate highway routes outside the tunnel complex.\n*   **Acronym Discrepancy:** While the query asks about a \"BPM model,\" the retrieved evidence consistently labels the tool as a \"travel behavior choice model.\" Further review of the full document may be required to confirm if \"BPM\" is an internal designation for this model.\n*   **Data Granularity:** The study incorporates income-based segmentation and value-of-time calculations to refine the behavioral predictions used in the demand estimation [doc].",
+      "sources_used": [
+        "documents"
+      ],
+      "confidence": 0.4,
+      "grounding_status": "fully_grounded",
+      "knowledge_fallback_used": false,
+      "knowledge_fallback_notes": [],
+      "llm_answer_used": true,
+      "llm_error": null,
+      "fallback_reason": null,
+      "caveats": [],
+      "reasoning_summary": [
+        "Document evidence available."
+      ],
+      "final_answer": {
+        "answer": "### Answer\n\nBased on the provided Lincoln Tunnel HOT Lane Feasibility Study documentation, the traffic estimation process relied on a **travel behavior choice model** rather than a model explicitly identified as \"BPM\" in the available text segments. This model was constructed using individual survey records from stated-preference surveys to observe driver travel characteristics. The analysis focused on determining equilibrium traffic volumes in managed lanes relative to speeds in general purpose lanes, rather than solely estimating diversion to external alternate routes.\n\n### Supporting Evidence\n\n*   **Model Development Methodology:** The study specifies that the travel behavior choice model was developed using individual survey records from stated-preference surveys as observations of travel characteristics of drivers [doc].\n*   **Demand Estimation Approach:** Traffic demand was analyzed through equilibrium conditions, specifically examining \"HOT Lane Demand vs. General Purpose Lane Speeds\" to understand traffic distribution in managed lanes [doc].\n*   **Lane Choice Context:** The documentation indicates that traffic decisions involved choices between accessing the HOT lane or using general purpose lanes on NJ 495, such as in Alternative 3A-Modified where registered carpools could use the HOT lane for free [doc].\n*   **Terminology Clarification:** The provided text segments refer to the analytical tool as a \"travel behavior choice model\" without explicitly defining or referencing the acronym \"BPM\" [doc].\n*   **Value of Time Factors:** The estimation accounted for economic factors, noting that business travelers using the tunnel and paying by E-ZPass® had slightly higher values of time depending on the morning peak period [doc].\n\n### Notes\n\n*   **Scope of Diversion Data:** The visible excerpts focus primarily on lane-level choice (HOT vs. General Purpose) within the corridor rather than diversion to entirely separate alternate highway routes outside the tunnel complex.\n*   **Acronym Discrepancy:** While the query asks about a \"BPM model,\" the retrieved evidence consistently labels the tool as a \"travel behavior choice model.\" Further review of the full document may be required to confirm if \"BPM\" is an internal designation for this model.\n*   **Data Granularity:** The study incorporates income-based segmentation and value-of-time calculations to refine the behavioral predictions used in the demand estimation [doc].",
+        "confidence": 0.4,
+        "sources_used": [
+          "documents"
+        ],
+        "reasoning_summary": [
+          "Document evidence available."
+        ],
+        "caveats": [],
+        "grounding_status": "fully_grounded",
+        "llm_answer_used": true,
+        "knowledge_fallback_used": false,
+        "knowledge_fallback_notes": [],
+        "fallback_reason": null,
+        "llm_error": null,
+        "evidence_snapshot": {
+          "doc_summary": {
+            "top_documents": [
+              {
+                "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+                "page": 1,
+                "score": 4.652851,
+                "snippet": "required to maintain the same volumes in the HOT lane. Figure 14: HOT Lane Demand vs. General Purpose Lane Speeds Equilibrium Traffic in Managed Lanes Speed in General Purpose Lanes $2.00 $3.00 $1.00 Traffic in Managed Lanes Speed in General Purpose Lanes $2.00 $3.00 $1.00 The travel behavior choice model was developed using the following steps and assumptions: 1. Use the individual survey records from the stated-preference surveys as observations of travel characteristics of drivers in the corr"
+              },
+              {
+                "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+                "page": 1,
+                "score": 3.021265,
+                "snippet": "to approach the corridor from NJ 3, with an increase of 2.5 miles of travel.. All traffic from NJ 3 would have the choice to either access the HOT lane or use the general purpose lanes on NJ 495. Alternative 3A-Modified – Alternative 3A-Modified assumes that registered carpools can use the HOT lane for free. 7.1.5 ALTERNATIVE 4 Alternative 4 addresses the NJ Turnpike access to the proposed HOT lane through a more extensive construction project that would allow direct access without the need to w"
+              },
+              {
+                "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+                "page": 1,
+                "score": 2.689201,
+                "snippet": "by Income for AM Time Period Segments $0.00 $5.00 $10.00 $15.00 $20.00 $25.00 $30.00 $35.00 $40.00 $45.00 $50.00 $0 $50 $100 $150 $200 $250 $300 Income (k$) Value of Time ($/hr) Before 6:00 AM 6:00 AM–7:00 AM 7:00 AM–10:00 AM 10:00 AM–11:30 AM Morning peak period business travelers using the Lincoln Tunnel and paying by E-ZPass® were found to have slightly higher values of time than business travelers using the tunnel later in the day (Figure 13). Figure 13: Lincoln Tunnel Automobile E-ZPass® Bu"
+              }
+            ],
+            "best_source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "best_page": 1,
+            "best_snippet": "required to maintain the same volumes in the HOT lane. Figure 14: HOT Lane Demand vs. General Purpose Lane Speeds Equilibrium Traffic in Managed Lanes Speed in General Purpose Lanes $2.00 $3.00 $1.00 Traffic in Managed Lanes Speed in General Purpose Lanes $2.00 $3.00 $1.00 The travel behavior choice model was developed using the following steps and assumptions: 1. Use the individual survey records from the stated-preference surveys as observations of travel characteristics of drivers in the corr"
+          },
+          "sql_summary": null,
+          "rule_summary": null,
+          "graph_summary": null
+        }
+      },
+      "evidence_bundle": {
+        "documents_count": 4,
+        "documents": [
+          {
+            "chunk_id": "236__p__p1__15",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 4.652851,
+            "rerank_score": null,
+            "text": "required to maintain the same volumes in the HOT lane. Figure 14: HOT Lane Demand vs. General Purpose Lane Speeds Equilibrium Traffic in Managed Lanes Speed in General Purpose Lanes $2.00 $3.00 $1.00 Traffic in Managed Lanes Speed in General Purpose Lanes $2.00 $3.00 $1.00 The travel behavior choice model was developed using the following steps and assumptions: 1. Use the individual survey records...[+8899 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "236__p__p1__21",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 3.021265,
+            "rerank_score": null,
+            "text": "to approach the corridor from NJ 3, with an increase of 2.5 miles of travel.. All traffic from NJ 3 would have the choice to either access the HOT lane or use the general purpose lanes on NJ 495. Alternative 3A-Modified – Alternative 3A-Modified assumes that registered carpools can use the HOT lane for free. 7.1.5 ALTERNATIVE 4 Alternative 4 addresses the NJ Turnpike access to the proposed HOT lan...[+8413 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "236__p__p1__14",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 2.689201,
+            "rerank_score": null,
+            "text": "by Income for AM Time Period Segments $0.00 $5.00 $10.00 $15.00 $20.00 $25.00 $30.00 $35.00 $40.00 $45.00 $50.00 $0 $50 $100 $150 $200 $250 $300 Income (k$) Value of Time ($/hr) Before 6:00 AM 6:00 AM–7:00 AM 7:00 AM–10:00 AM 10:00 AM–11:30 AM Morning peak period business travelers using the Lincoln Tunnel and paying by E-ZPass® were found to have slightly higher values of time than business trave...[+8639 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "236__p__p1__16",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 2.557704,
+            "rerank_score": null,
+            "text": "BEHAVIOR CHOICE MODEL STATED ORIGIN COUNTY TIME ARRIVED AT LINCOLN TUNNEL PLAZA ASSIGN TIME ARRIVED AT APPROACH ON NJ 495 ENTER TOLL RATE SCHEDULE TO TEST IDENTIFY NUMBER OF MINUTES NEEDED FOR PEAK DRIVERS TO SHIFT TO LOWER RATE STATED PREFERENCE SURVEYS • 1,954 a.m. Surveys (5 - 11 a.m.) • 601 p.m. Surveys (3 - 8 p.m.) DUPLICATE RECORDS TO SMOOTH OUT DISTRIBUTION BY HOUR AND BY MANHATTAN DESTINAT...[+8569 chars]",
+            "metadata": null
+          }
+        ],
+        "sql_results": [],
+        "rules": {
+          "matched_rule_count": 0,
+          "matched_rules": [],
+          "candidate_variables": null
+        },
+        "graph": {
+          "query_entities": null,
+          "path_count": 0,
+          "reasoning_paths": []
+        },
+        "conflict_annotations": []
+      },
+      "reasoning_trace": [
+        "route_query_node => vector=True, sql=False, rules=False, graph=False",
+        "planner_node => sources=['documents'] strategy=single_source",
+        "retrieve_documents_node => retrieved 40 docs",
+        "rerank_documents_node => reranked 40 -> 5 docs",
+        "merge_evidence_node => merged evidence bundle",
+        "synthesize_answer_node => produced final answer"
+      ],
+      "warnings": [],
+      "error": null,
+      "total_time": 106.35969138145447,
+      "stage_timings": {
+        "route_query": 16.99,
+        "planner": 60.7639,
+        "retrieve_documents": 2.7428,
+        "rerank_documents": 0.8319,
+        "merge_evidence": 0.0,
+        "synthesize_answer": 25.0083
+      }
+    },
+    {
+      "id": "V3_VEC_002",
+      "query": "For the Lincoln Tunnel HOT lane study, which alternative delivered the lowest minutes-per-vehicle during the 7-9 AM peak, and how much travel time did it save compared to the No-Build case?",
+      "gold_needs_vector": true,
+      "gold_needs_sql": false,
+      "gold_needs_rules": false,
+      "gold_needs_graph": false,
+      "gold_answer_mode": "comparison",
+      "gold_reference_answer": "Alternative 2A produced the lowest 22.5 minutes per vehicle during the 7-9 AM peak, saving 20.4 minutes versus the No-Build condition, with Alternative 3A-Modified second at 25.9 minutes.",
+      "needs_vector": true,
+      "needs_sql": true,
+      "needs_rules": false,
+      "needs_graph": false,
+      "question_type": "hybrid_reasoning",
+      "answer_mode": "comparison",
+      "router_decision": {
+        "question_type": "hybrid_reasoning",
+        "answer_mode": "comparison",
+        "needs_vector": true,
+        "needs_sql": true,
+        "needs_rules": false,
+        "needs_graph_reasoning": false,
+        "confidence": 0.49,
+        "matched_keywords": [
+          "compare",
+          "min",
+          "study"
+        ],
+        "rationale": "Router selected: documents, structured operational data. Matched keywords: compare, min, study."
+      },
+      "original_query": "For the Lincoln Tunnel HOT lane study, which alternative delivered the lowest minutes-per-vehicle during the 7-9 AM peak, and how much travel time did it save compared to the No-Build case?",
+      "source_plan": [
+        "documents",
+        "sql"
+      ],
+      "sub_queries": [
+        {
+          "source": "documents",
+          "query": "For the Lincoln Tunnel High Occupancy Toll lane study, which alternative scenario delivered the lowest minutes per vehicle during the 7-9 AM Morning peak period, and how much travel time duration did it save compared to the No-Build baseline case?",
+          "purpose": "retrieve textual evidence from port documents"
+        },
+        {
+          "source": "sql",
+          "query": "For the Lincoln Tunnel High Occupancy Toll lane study, which alternative scenario delivered the lowest minutes per vehicle during the 7-9 AM Morning peak period, and how much travel time duration did it save compared to the No-Build baseline case? [Target: yard_operations(peak_occupancy_pct)]",
+          "purpose": "retrieve structured operational data"
+        }
+      ],
+      "execution_strategy": "parallel_then_merge",
+      "retrieved_chunk_ids": [
+        "236__p__p1__21",
+        "236__p__p1__28",
+        "236__p__p1__25",
+        "236__p__p1__3"
+      ],
+      "retrieved_child_ids": [
+        "236__c__p1__21__3",
+        "236__c__p1__28__5",
+        "236__c__p1__28__4",
+        "236__c__p1__25__1",
+        "236__c__p1__3__1"
+      ],
+      "retrieved_sources": [
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf"
+      ],
+      "pre_rerank_chunk_ids": [
+        "236__c__p1__25__1",
+        "236__c__p1__10__3",
+        "236__c__p1__28__4",
+        "236__c__p1__25__5",
+        "236__c__p1__18__3",
+        "236__c__p1__14__0",
+        "236__c__p1__28__5",
+        "236__c__p1__3__1",
+        "236__c__p1__10__2",
+        "236__c__p1__8__4",
+        "236__c__p1__28__6",
+        "236__c__p1__8__3",
+        "236__c__p1__6__0",
+        "236__c__p1__28__3",
+        "236__c__p1__30__4",
+        "236__c__p1__28__2",
+        "236__c__p1__27__0",
+        "236__c__p1__25__2",
+        "236__c__p1__26__5",
+        "236__c__p1__27__1",
+        "236__c__p1__26__6",
+        "236__c__p1__18__4",
+        "236__c__p1__29__0",
+        "236__c__p1__12__1",
+        "236__c__p1__3__3",
+        "236__c__p1__17__5",
+        "236__c__p1__26__4",
+        "236__c__p1__12__0",
+        "236__c__p1__14__5",
+        "236__c__p1__19__1",
+        "236__c__p1__21__2",
+        "236__c__p1__15__1",
+        "54__c__19-8__19__3",
+        "236__c__p1__10__1",
+        "236__c__p1__32__0",
+        "236__c__p1__13__0",
+        "53__c__p1__13__6",
+        "236__c__p1__21__3",
+        "236__c__p1__0__5",
+        "236__c__p1__32__5"
+      ],
+      "pre_rerank_sources": [
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-environmental-initiatives-panynj-ghg-emissions-inventory-2007.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-environmental-initiatives-panynj-ghg-emissions-inventory-2006.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+        "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf"
+      ],
+      "retrieved_docs": [
+        {
+          "chunk_id": "236__p__p1__21",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 3.292719,
+          "rerank_score": null,
+          "text": "to approach the corridor from NJ 3, with an increase of 2.5 miles of travel.. All traffic from NJ 3 would have the choice to either access the HOT lane or use the general purpose lanes on NJ 495. Alternative 3A-Modified – Alternative 3A-Modified assumes that registered carpools can use the HOT lane for free. 7.1.5 ALTERNATIVE 4 Alternative 4 addresses the NJ Turnpike access to the proposed HOT lane through a more extensive construction project that would allow direct access without the need to weave across NJ 495. This alternative envisions the construction of a new roadway and three bridges t...[+8213 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__p__p1__28",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 3.186661,
+          "rerank_score": null,
+          "text": "- - 15.7 - All Lanes 33.2 17.4 -15.8 15.4 -17.7 19.3 -13.8 16.9 -16.3 18.5 -14.7 Maximum Queue Length (miles) 4.3 3.5 -0.8 3.6 -0.7 3.3 -1.0 3.4 -0.9 3.3 -1.0 FINAL REPORT Table 35 2015 Performance Measures for NJ 3 Approach 5:00-11:00 a.m. Lane Type No-Build (Constrained) Alt. 1A Difference from No- Build Alt. 2A Difference from No- Build Alt. 3A Difference from No- Build. 3A-Mod. Difference from No- Build Alt. 4A Difference from No- Build Number of Vehicles XBL -434 -434 -434 -434 -434 GP 7,432 -6,541 -6,547 1,173 -6,259 -6,605 1,268 -6,164 HOT 3,727 3,727 3,769 3,769 5,446 5,446 5,262 5,262...[+8061 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__p__p1__25",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 2.14153,
+          "rerank_score": null,
+          "text": "the option “A” variant of each study alternative since options “A” and “B” are very similar in nature from the standpoint of traffic operations and demand. As noted earlier, under all the study alternatives, the existing XBL bus traffic originating from NJ 3 was diverted into the proposed HOT lane; buses from the NJ Turnpike were assumed to stay on the existing contra-flow XBL. The travel behavior demand model allowed traffic to choose an alternative crossing, as well as for exiting person trips to shift to a transit mode or form a carpool. As a consequence, the study alternatives generally re...[+8119 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__p__p1__3",
+          "parent_id": null,
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 1.908333,
+          "rerank_score": null,
+          "text": "/ Landscape1.ppt / 12-2-09 Center Ramp XBL Ce te a p XBL North Tube Center Tube Helix East Ramp South Tube East Ramp FIGURE 2 TYPICAL TOLL PLAZA CHANNELIZATION - 7:00-9:00 A.M. FINAL REPORT Since mid-2008, an additional level of channelization has been used during most morning peaks to improve flow – the left lane of the NJ 495 (on the Helix approach) is channelized toward lanes 4 and 5 at the toll plaza. After the tollbooths, traffic in Lane 4 is channelized toward the center tube and traffic in Lane 5 is channelized toward the south tube. Since these two toll lanes are E- ZPass-only, traffic...[+8723 chars]",
+          "metadata": null
+        }
+      ],
+      "pre_rerank_docs": [
+        {
+          "chunk_id": "236__c__p1__25__1",
+          "parent_id": "236__p__p1__25",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.035177,
+          "rerank_score": null,
+          "text": "lane. 7.3.1 TRAVEL TIME AND QUEUES - PEAK HOURS (7-9 A.M.) All Approaches - Table 28 provides a summary of the corridor performance measures used to compare the constrained 2015 No-Build alternative, ...[+1341 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__10__3",
+          "parent_id": "236__p__p1__10",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.031778,
+          "rerank_score": null,
+          "text": "time - 6 minutes Same as Peak Period Option 2 time - 9 minutes Lincoln Tunnel 30 minutes 15 minutes Option 3 HOT Lane at Time shift 45 minutes 30 minutes a different amount 60 minutes 45 minutes time ...[+1207 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__28__4",
+          "parent_id": "236__p__p1__28",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.03172,
+          "rerank_score": null,
+          "text": "traffic results in fewer NJ 3 vehicles and sub-optimal usage of the lanes on the connector ramp. Travel times for XBL buses improve from 12.6 minutes under No-Build conditions to just over 9 minutes u...[+1293 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__25__5",
+          "parent_id": "236__p__p1__25",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.030415,
+          "rerank_score": null,
+          "text": "a higher share of the HOV traffic is in shifted to the HOT lane in the Build alternatives. Tables 29 through 31 provide the same information as Table 28, but shown by individual approach. NJ Turnpike ...[+1339 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__18__3",
+          "parent_id": "236__p__p1__18",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.029487,
+          "rerank_score": null,
+          "text": "alternatives assume that traffic can choose other river crossings to avoid additional congestion in the NJ 495 Lincoln Tunnel corridor. A constrained 2015 No-Build scenario was developed to recognize ...[+1496 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__14__0",
+          "parent_id": "236__p__p1__14",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.029261,
+          "rerank_score": null,
+          "text": "by Income for AM Time Period Segments $0.00 $5.00 $10.00 $15.00 $20.00 $25.00 $30.00 $35.00 $40.00 $45.00 $50.00 $0 $50 $100 $150 $200 $250 $300 Income (k$) Value of Time ($/hr) Before 6:00 AM 6:00 AM...[+1338 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__28__5",
+          "parent_id": "236__p__p1__28",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.029079,
+          "rerank_score": null,
+          "text": "vehicle throughputs during the peak hours from 7-9 a.m. Lincoln Tunnel Plaza – As shown in the table, Toll Lane 4 at the Lincoln Tunnel toll plaza processes the highest amount of traffic under Alterna...[+1386 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__3__1",
+          "parent_id": "236__p__p1__3",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.027976,
+          "rerank_score": null,
+          "text": "PANYNJ operations staff begins a procedure to convert the Center Tube from a two-way mode to a westbound traffic only operation. From 4-8 p.m., the tunnel is operated with four westbound lanes and two...[+1386 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__10__2",
+          "parent_id": "236__p__p1__10",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.027802,
+          "rerank_score": null,
+          "text": "and paid their tolls with an E-ZPass® transponder could earn credits toward free trips on the HOT lane. Respondents were then asked how often they anticipated using the Lincoln Tunnel HOT Lane if they...[+1188 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "236__c__p1__8__4",
+          "parent_id": "236__p__p1__8",
+          "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+          "page": 1,
+          "score": 0.026776,
+          "rerank_score": null,
+          "text": "the toll direction (eastbound toward Manhattan) during peak time periods. 2. Automobile travelers who use the Lincoln Tunnel in the toll direction (eastbound toward Manhattan) during shoulder time per...[+1691 chars]",
+          "metadata": null
+        }
+      ],
+      "tables_used": [
+        "yard_operations"
+      ],
+      "execution_ok": true,
+      "row_count": 0,
+      "sql_results": [
+        {
+          "sub_query": null,
+          "execution_ok": true,
+          "error": null,
+          "row_count": 0,
+          "columns": null,
+          "rows_preview": [],
+          "plan": {
+            "target_tables": [
+              "yard_operations"
+            ],
+            "generated_sql": "SELECT \n    'No matching data found' AS scenario,\n    NULL AS minutes_per_vehicle,\n    NULL AS time_saved_minutes\nFROM yard_operations\nWHERE 1 = 0",
+            "aggregation": null,
+            "filter_terms": null,
+            "generation_mode": "llm"
+          }
+        }
+      ],
+      "rule_variables": [],
+      "rule_results": {
+        "matched_rule_count": 0,
+        "matched_rules": [],
+        "candidate_variables": null
+      },
+      "entities": [],
+      "relationships": [],
+      "path_count": 0,
+      "graph_results": {
+        "query_entities": null,
+        "path_count": 0,
+        "reasoning_paths": []
+      },
+      "answer_text": "### Evidence Discrepancy\nThe narrative document returned content, but the SQL database returned 0 rows for the same filter. This is a discrepancy: the document does not match the operational data, so the figures differ.\n\n### Answer\n\nThe Lincoln Tunnel High Occupancy Toll lane feasibility study evaluates multiple traffic management scenarios, including Alternative 3A-Modified and Alternative 4, against a No-Build baseline [doc]. While the study establishes performance measures for the morning peak period spanning 5:00–11:00 a.m., the specific minutes-per-vehicle metric for the 7–9 AM sub-window is not explicitly quantified in the provided text excerpts [doc]. Consequently, a definitive ranking of alternatives based on travel time duration savings for this specific timeframe cannot be confirmed from the current evidence set [doc].\n\n### Supporting Evidence\n\n**Document Findings**\n*   The study document outlines the corridor approach from NJ 3, allowing traffic to choose between the HOT lane or general purpose lanes on NJ 495 [doc].\n*   Alternative 3A-Modified is described as assuming that registered carpools can use the HOT lane for free [doc].\n*   Alternative 4 addresses NJ Turnpike access through a more extensive construction project allowing direct access [doc].\n*   Table 35 of the report presents 2015 Performance Measures for the NJ 3 Approach covering the 5:00–11:00 a.m. window [doc].\n*   The table lists differences from the No-Build case for Alternatives 1A, 2A, 3A, 3A-Mod, and 4A, though specific travel time values are truncated in the available snippets [doc].\n\n**Data Query Results**\n*   Queries against the operational database tables yielded no matching records for this specific study context [sql].\n*   The absence of structured data in the operational schema indicates reliance on the external feasibility study reports for performance metrics [sql].\n\n### Notes\n\n*   The analysis is constrained by the completeness of the provided document excerpts, which summarize the study framework but omit granular numerical results for the 7–9 AM peak [doc].\n*   Operational database fields currently map to yard operations rather than highway traffic studies, resulting in no direct data retrieval [sql].\n*   Without explicit numeric values in the retrieved text, comparative assertions regarding the lowest minutes per vehicle remain unsupported by the current evidence [doc].",
+      "sources_used": [
+        "documents",
+        "sql"
+      ],
+      "confidence": 0.55,
+      "grounding_status": "fully_grounded",
+      "knowledge_fallback_used": false,
+      "knowledge_fallback_notes": [],
+      "llm_answer_used": true,
+      "llm_error": null,
+      "fallback_reason": null,
+      "caveats": [],
+      "reasoning_summary": [
+        "Document evidence available.",
+        "Structured operational evidence available."
+      ],
+      "final_answer": {
+        "answer": "### Evidence Discrepancy\nThe narrative document returned content, but the SQL database returned 0 rows for the same filter. This is a discrepancy: the document does not match the operational data, so the figures differ.\n\n### Answer\n\nThe Lincoln Tunnel High Occupancy Toll lane feasibility study evaluates multiple traffic management scenarios, including Alternative 3A-Modified and Alternative 4, against a No-Build baseline [doc]. While the study establishes performance measures for the morning peak period spanning 5:00–11:00 a.m., the specific minutes-per-vehicle metric for the 7–9 AM sub-window is not explicitly quantified in the provided text excerpts [doc]. Consequently, a definitive ranking of alternatives based on travel time duration savings for this specific timeframe cannot be confirmed from the current evidence set [doc].\n\n### Supporting Evidence\n\n**Document Findings**\n*   The study document outlines the corridor approach from NJ 3, allowing traffic to choose between the HOT lane or general purpose lanes on NJ 495 [doc].\n*   Alternative 3A-Modified is described as assuming that registered carpools can use the HOT lane for free [doc].\n*   Alternative 4 addresses NJ Turnpike access through a more extensive construction project allowing direct access [doc].\n*   Table 35 of the report presents 2015 Performance Measures for the NJ 3 Approach covering the 5:00–11:00 a.m. window [doc].\n*   The table lists differences from the No-Build case for Alternatives 1A, 2A, 3A, 3A-Mod, and 4A, though specific travel time values are truncated in the available snippets [doc].\n\n**Data Query Results**\n*   Queries against the operational database tables yielded no matching records for this specific study context [sql].\n*   The absence of structured data in the operational schema indicates reliance on the external feasibility study reports for performance metrics [sql].\n\n### Notes\n\n*   The analysis is constrained by the completeness of the provided document excerpts, which summarize the study framework but omit granular numerical results for the 7–9 AM peak [doc].\n*   Operational database fields currently map to yard operations rather than highway traffic studies, resulting in no direct data retrieval [sql].\n*   Without explicit numeric values in the retrieved text, comparative assertions regarding the lowest minutes per vehicle remain unsupported by the current evidence [doc].",
+        "confidence": 0.55,
+        "sources_used": [
+          "documents",
+          "sql"
+        ],
+        "reasoning_summary": [
+          "Document evidence available.",
+          "Structured operational evidence available."
+        ],
+        "caveats": [],
+        "grounding_status": "fully_grounded",
+        "llm_answer_used": true,
+        "knowledge_fallback_used": false,
+        "knowledge_fallback_notes": [],
+        "fallback_reason": null,
+        "llm_error": null,
+        "evidence_snapshot": {
+          "doc_summary": {
+            "top_documents": [
+              {
+                "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+                "page": 1,
+                "score": 3.292719,
+                "snippet": "to approach the corridor from NJ 3, with an increase of 2.5 miles of travel.. All traffic from NJ 3 would have the choice to either access the HOT lane or use the general purpose lanes on NJ 495. Alternative 3A-Modified – Alternative 3A-Modified assumes that registered carpools can use the HOT lane for free. 7.1.5 ALTERNATIVE 4 Alternative 4 addresses the NJ Turnpike access to the proposed HOT lane through a more extensive construction project that would allow direct access without the need to w"
+              },
+              {
+                "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+                "page": 1,
+                "score": 3.186661,
+                "snippet": "- - 15.7 - All Lanes 33.2 17.4 -15.8 15.4 -17.7 19.3 -13.8 16.9 -16.3 18.5 -14.7 Maximum Queue Length (miles) 4.3 3.5 -0.8 3.6 -0.7 3.3 -1.0 3.4 -0.9 3.3 -1.0 FINAL REPORT Table 35 2015 Performance Measures for NJ 3 Approach 5:00-11:00 a.m. Lane Type No-Build (Constrained) Alt. 1A Difference from No- Build Alt. 2A Difference from No- Build Alt. 3A Difference from No- Build. 3A-Mod. Difference from No- Build Alt. 4A Difference from No- Build Number of Vehicles XBL -434 -434 -434 -434 -434 GP 7,43"
+              },
+              {
+                "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+                "page": 1,
+                "score": 2.14153,
+                "snippet": "the option “A” variant of each study alternative since options “A” and “B” are very similar in nature from the standpoint of traffic operations and demand. As noted earlier, under all the study alternatives, the existing XBL bus traffic originating from NJ 3 was diverted into the proposed HOT lane; buses from the NJ Turnpike were assumed to stay on the existing contra-flow XBL. The travel behavior demand model allowed traffic to choose an alternative crossing, as well as for exiting person trips"
+              }
+            ],
+            "best_source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "best_page": 1,
+            "best_snippet": "to approach the corridor from NJ 3, with an increase of 2.5 miles of travel.. All traffic from NJ 3 would have the choice to either access the HOT lane or use the general purpose lanes on NJ 495. Alternative 3A-Modified – Alternative 3A-Modified assumes that registered carpools can use the HOT lane for free. 7.1.5 ALTERNATIVE 4 Alternative 4 addresses the NJ Turnpike access to the proposed HOT lane through a more extensive construction project that would allow direct access without the need to w"
+          },
+          "sql_summary": {
+            "execution_ok": true,
+            "used_tables": [
+              "yard_operations"
+            ],
+            "generated_sql": "SELECT \n    'No matching data found' AS scenario,\n    NULL AS minutes_per_vehicle,\n    NULL AS time_saved_minutes\nFROM yard_operations\nWHERE 1 = 0",
+            "aggregation": null,
+            "row_count": 0,
+            "preview_rows": [],
+            "derived_insights": []
+          },
+          "rule_summary": null,
+          "graph_summary": null
+        }
+      },
+      "evidence_bundle": {
+        "documents_count": 4,
+        "documents": [
+          {
+            "chunk_id": "236__p__p1__21",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 3.292719,
+            "rerank_score": null,
+            "text": "to approach the corridor from NJ 3, with an increase of 2.5 miles of travel.. All traffic from NJ 3 would have the choice to either access the HOT lane or use the general purpose lanes on NJ 495. Alternative 3A-Modified – Alternative 3A-Modified assumes that registered carpools can use the HOT lane for free. 7.1.5 ALTERNATIVE 4 Alternative 4 addresses the NJ Turnpike access to the proposed HOT lan...[+8413 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "236__p__p1__28",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 3.186661,
+            "rerank_score": null,
+            "text": "- - 15.7 - All Lanes 33.2 17.4 -15.8 15.4 -17.7 19.3 -13.8 16.9 -16.3 18.5 -14.7 Maximum Queue Length (miles) 4.3 3.5 -0.8 3.6 -0.7 3.3 -1.0 3.4 -0.9 3.3 -1.0 FINAL REPORT Table 35 2015 Performance Measures for NJ 3 Approach 5:00-11:00 a.m. Lane Type No-Build (Constrained) Alt. 1A Difference from No- Build Alt. 2A Difference from No- Build Alt. 3A Difference from No- Build. 3A-Mod. Difference from...[+8261 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "236__p__p1__25",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 2.14153,
+            "rerank_score": null,
+            "text": "the option “A” variant of each study alternative since options “A” and “B” are very similar in nature from the standpoint of traffic operations and demand. As noted earlier, under all the study alternatives, the existing XBL bus traffic originating from NJ 3 was diverted into the proposed HOT lane; buses from the NJ Turnpike were assumed to stay on the existing contra-flow XBL. The travel behavior...[+8319 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "236__p__p1__3",
+            "parent_id": null,
+            "source_file": "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf",
+            "page": 1,
+            "score": 1.908333,
+            "rerank_score": null,
+            "text": "/ Landscape1.ppt / 12-2-09 Center Ramp XBL Ce te a p XBL North Tube Center Tube Helix East Ramp South Tube East Ramp FIGURE 2 TYPICAL TOLL PLAZA CHANNELIZATION - 7:00-9:00 A.M. FINAL REPORT Since mid-2008, an additional level of channelization has been used during most morning peaks to improve flow – the left lane of the NJ 495 (on the Helix approach) is channelized toward lanes 4 and 5 at the tol...[+8923 chars]",
+            "metadata": null
+          }
+        ],
+        "sql_results": [
+          {
+            "sub_query": null,
+            "execution_ok": true,
+            "error": null,
+            "row_count": 0,
+            "columns": null,
+            "rows_preview": [],
+            "plan": {
+              "target_tables": [
+                "yard_operations"
+              ],
+              "generated_sql": "SELECT \n    'No matching data found' AS scenario,\n    NULL AS minutes_per_vehicle,\n    NULL AS time_saved_minutes\nFROM yard_operations\nWHERE 1 = 0",
+              "aggregation": null,
+              "filter_terms": null,
+              "generation_mode": "llm"
+            }
+          }
+        ],
+        "rules": {
+          "matched_rule_count": 0,
+          "matched_rules": [],
+          "candidate_variables": null
+        },
+        "graph": {
+          "query_entities": null,
+          "path_count": 0,
+          "reasoning_paths": []
+        },
+        "conflict_annotations": []
+      },
+      "reasoning_trace": [
+        "route_query_node => vector=True, sql=True, rules=False, graph=False",
+        "planner_node => rewrite expanded_terms=['HOT', 'High Occupancy Toll', 'AM', 'Morning', 'peak', 'peak period', 'travel time', 'travel time duration', 'No-Build', 'No-Build baseline', 'alternative', 'alternative scenario']",
+        "planner_node => sources=['documents', 'sql'] strategy=parallel_then_merge",
+        "retrieve_documents_node => retrieved 40 docs",
+        "run_sql_node => mode=llm tables=['yard_operations'] rows=0 ok=True",
+        "merge_evidence_node => merged evidence bundle",
+        "rerank_documents_node => reranked 40 -> 5 docs",
+        "merge_evidence_node => merged evidence bundle",
+        "synthesize_answer_node => produced final answer",
+        "synthesize_answer_node => produced final answer"
+      ],
+      "warnings": [],
+      "error": null,
+      "total_time": 155.94619917869568,
+      "stage_timings": {
+        "route_query": 30.0161,
+        "planner": 40.3634,
+        "retrieve_documents": 0.5962,
+        "run_sql": 6.1302,
+        "merge_evidence": 0.0,
+        "rerank_documents": 0.3932,
+        "synthesize_answer": 40.9708
+      }
+    },
+    {
+      "id": "V3_VEC_003",
+      "query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions?",
+      "gold_needs_vector": true,
+      "gold_needs_sql": false,
+      "gold_needs_rules": false,
+      "gold_needs_graph": false,
+      "gold_answer_mode": "lookup",
+      "gold_reference_answer": "Business-type activities are accounted for using the flow of economic resources measurement focus and accrual basis of accounting in an enterprise fund, and additions or asset improvements exceeding $100,000 that extend service life are capitalized.",
+      "needs_vector": true,
+      "needs_sql": false,
+      "needs_rules": false,
+      "needs_graph": false,
+      "question_type": "document_lookup",
+      "answer_mode": "lookup",
+      "router_decision": {
+        "question_type": "document_lookup",
+        "answer_mode": "lookup",
+        "needs_vector": true,
+        "needs_sql": false,
+        "needs_rules": false,
+        "needs_graph_reasoning": false,
+        "confidence": 0.95,
+        "matched_keywords": [],
+        "rationale": "LLM-routed"
+      },
+      "original_query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions?",
+      "source_plan": [
+        "documents"
+      ],
+      "sub_queries": [
+        {
+          "source": "documents",
+          "query": "According to the 2024 annual report fiscal year report, what basis of accounting accounting standards does the Port Authority port management authority use for its business-type activities commercial operations, and what is the capitalization threshold capital expenditure limit for facility additions port infrastructure? (design, construction, maintenance)",
+          "purpose": "retrieve textual evidence from port documents"
+        }
+      ],
+      "execution_strategy": "single_source",
+      "retrieved_chunk_ids": [
+        "183__p__p1__6",
+        "176__p__p1__3",
+        "248__p__2024__20",
+        "271__p__2024__20",
+        "180__p__p1__4"
+      ],
+      "retrieved_child_ids": [
+        "183__c__p1__6__1",
+        "176__c__p1__3__4",
+        "248__c__2024__20__1",
+        "271__c__2024__20__1",
+        "180__c__p1__4__3"
+      ],
+      "retrieved_sources": [
+        "panynj-corporate-financial-statements-financial-statement-2011.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2004.pdf",
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2008.pdf"
+      ],
+      "pre_rerank_chunk_ids": [
+        "179__c__p1__4__4",
+        "177__c__p1__4__3",
+        "183__c__p1__6__1",
+        "176__c__p1__3__4",
+        "180__c__p1__4__3",
+        "248__c__2024__20__1",
+        "271__c__2024__20__1",
+        "182__c__p1__5__3",
+        "31__c__p1__20__5",
+        "254__c__p1__2__3",
+        "273__c__p1__2__3",
+        "254__c__p1__2__2",
+        "273__c__p1__2__2",
+        "251__c__p1__0__2",
+        "248__c__2024__8__6",
+        "271__c__2024__8__6",
+        "181__c__p1__4__5",
+        "248__c__2024__10__4",
+        "271__c__2024__10__4",
+        "178__c__p1__4__2",
+        "166__c__p1__13__6",
+        "248__c__2024__8__5",
+        "271__c__2024__8__5",
+        "174__c__2017__18__0",
+        "184__c__p1__1__2",
+        "180__c__p1__5__3",
+        "248__c__2024__20__0",
+        "166__c__p1__14__4",
+        "271__c__2024__20__0",
+        "251__c__p1__0__0",
+        "170__c__2011__16__5",
+        "169__c__2010__18__4",
+        "248__c__2024__22__0",
+        "271__c__2024__22__0",
+        "248__c__2024__10__1",
+        "181__c__p1__4__6",
+        "271__c__2024__10__1",
+        "248__c__2024__21__6",
+        "184__c__p1__0__5",
+        "271__c__2024__21__6"
+      ],
+      "pre_rerank_sources": [
+        "panynj-corporate-financial-statements-financial-statement-2007.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2005.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2011.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2004.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2010.pdf",
+        "panynj-corporate-financial-information-2019-budget-book-dscz1hw1.pdf",
+        "half-year-report-2025-final.pdf",
+        "half-year-report-2025-final.pdf",
+        "half-year-report-2025-final.pdf",
+        "half-year-report-2025-final.pdf",
+        "condensed-financial-statements-1st-qtr-2024.pdf",
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2009.pdf",
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2006.pdf",
+        "panynj-corporate-budgets-2012-preliminary-budget.pdf",
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-information-2017-budget-book-final.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2012.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-budgets-2012-preliminary-budget.pdf",
+        "annual-report-2024.pdf",
+        "condensed-financial-statements-1st-qtr-2024.pdf",
+        "panynj-corporate-budgets-budget-2011.pdf",
+        "panynj-corporate-budgets-budget-2010.pdf",
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2009.pdf",
+        "annual-report-2024.pdf",
+        "annual-report-2024.pdf",
+        "panynj-corporate-financial-statements-financial-statement-2012.pdf",
+        "annual-report-2024.pdf"
+      ],
+      "retrieved_docs": [
+        {
+          "chunk_id": "183__p__p1__6",
+          "parent_id": null,
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2011.pdf",
+          "page": 1,
+          "score": 2.813474,
+          "rerank_score": null,
+          "text": "of the Board of Commissioners other than the Chairman and Vice Chairman of the Port Authority, provides oversight of the quality and integrity of the Port Authority’s framework of internal controls, compliance systems and the accounting, auditing and financial reporting processes. The Audit Committee retains independent auditors and reviews their performance and independence. The independent auditors are required to provide written disclosure of, and discuss with the Committee, any significant relationships or issues that would have a bearing on their independence. The Audit Committee meets di...[+9387 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "176__p__p1__3",
+          "parent_id": null,
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2004.pdf",
+          "page": 1,
+          "score": 2.702989,
+          "rerank_score": null,
+          "text": "paid to suppliers (706,667) (885,650) Cash payments related to the events of September 11, 2001 (3,467) (21,427) Net cash provided by operating activities 243,126 1,581,247 Cash flows from capital activities: Proceeds from sales of capital obligations 1,156,120 1,365,507 Principal paid on capital obligations (332,682) (887,729) Proceeds from capital obligations issued for refunding purposes 1,854,753 2,078,996 Principal paid through capital obligations refundings (1,854,753) (2,078,996) Interest paid on capital obligations (402,139) (385,755) Investment in facilities and construction of capita...[+9693 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "248__p__2024__20",
+          "parent_id": null,
+          "source_file": "annual-report-2024.pdf",
+          "page": 4,
+          "score": 2.616382,
+          "rerank_score": null,
+          "text": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired employees of the Port Authority and PATH and eligible dependents of such retired employees to facilitate all or part of the required funding of certain postemployment benefits, including group healthca...[+9199 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "271__p__2024__20",
+          "parent_id": null,
+          "source_file": "annual-report-2024.pdf",
+          "page": 4,
+          "score": 2.616382,
+          "rerank_score": null,
+          "text": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired employees of the Port Authority and PATH and eligible dependents of such retired employees to facilitate all or part of the required funding of certain postemployment benefits, including group healthca...[+9199 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "180__p__p1__4",
+          "parent_id": null,
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+          "page": 1,
+          "score": 2.47199,
+          "rerank_score": null,
+          "text": "payables 42,525 (21,836) Increase (decrease) in other liabilities 80,184 (6,373) (Decrease) increase in accrued payroll, pension and other employee benefits (7,902) 20,157 Total adjustments 878,199 596,060 Net cash provided by operating activities 1,684,517 $ 843,860 $ 3. Capital obligations: Consolidated bonds and notes, commercial paper, variable rate master notes and versatile structure obligations. 4. Noncash Investing, Capital and Financing Activities: Noncash activity of ($60,699,000) in 2008 and $37,979,000 in 2007 includes amortization of discount and premium on consolidated bonds and ...[+9348 chars]",
+          "metadata": null
+        }
+      ],
+      "pre_rerank_docs": [
+        {
+          "chunk_id": "179__c__p1__4__4",
+          "parent_id": "179__p__p1__4",
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2007.pdf",
+          "page": 1,
+          "score": 0.035177,
+          "rerank_score": null,
+          "text": "(PATH), the Newark Legal and Communications Center Urban Renewal Corporation, the New York and New Jersey Railroad Corporation, WTC Retail LLC, Port District Capital Projects LLC, Port Authority Insur...[+1698 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "177__c__p1__4__3",
+          "parent_id": "177__p__p1__4",
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2005.pdf",
+          "page": 1,
+          "score": 0.03498,
+          "rerank_score": null,
+          "text": "Jersey and its wholly-owned corporate entities, Port Authority Trans-Hudson Corporation (PATH), the Newark Legal and Communications Center Urban Renewal Corporation, the New York and New Jersey Railro...[+1722 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "183__c__p1__6__1",
+          "parent_id": "183__p__p1__6",
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2011.pdf",
+          "page": 1,
+          "score": 0.034378,
+          "rerank_score": null,
+          "text": "LLC, Tower 1 Holdings LLC, WTC Tower 1 LLC, and New York New Jersey Rail LLC (all collectively referred to as the Port Authority). 2. Basis of Accounting a. The Port Authority’s activities are account...[+1551 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "176__c__p1__3__4",
+          "parent_id": "176__p__p1__3",
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2004.pdf",
+          "page": 1,
+          "score": 0.031583,
+          "rerank_score": null,
+          "text": "The Port Authority’s activities are accounted for using the flow of economic resources measurement focus and the accrual basis of accounting. All assets, liabilities, net assets, revenues and expenses...[+1540 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "180__c__p1__4__3",
+          "parent_id": "180__p__p1__4",
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+          "page": 1,
+          "score": 0.030331,
+          "rerank_score": null,
+          "text": "The Port Authority’s activities are accounted for using the flow of economic resources measurement focus and the accrual basis of accounting. All assets, liabilities, net assets, revenues and expenses...[+1497 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "248__c__2024__20__1",
+          "parent_id": "248__p__2024__20",
+          "source_file": "annual-report-2024.pdf",
+          "page": 4,
+          "score": 0.028446,
+          "rerank_score": null,
+          "text": "The Port Authority of New York and New Jersey, 2 Montgomery Street, Jersey City, New Jersey 07302. 2. Basis of Accounting a. Port Authority business-type activities are accounted for using the flow of...[+1452 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "271__c__2024__20__1",
+          "parent_id": "271__p__2024__20",
+          "source_file": "annual-report-2024.pdf",
+          "page": 4,
+          "score": 0.028079,
+          "rerank_score": null,
+          "text": "The Port Authority of New York and New Jersey, 2 Montgomery Street, Jersey City, New Jersey 07302. 2. Basis of Accounting a. Port Authority business-type activities are accounted for using the flow of...[+1452 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "182__c__p1__5__3",
+          "parent_id": "182__p__p1__5",
+          "source_file": "panynj-corporate-financial-statements-financial-statement-2010.pdf",
+          "page": 1,
+          "score": 0.027418,
+          "rerank_score": null,
+          "text": "economic resources measurement focus and the accrual basis of accounting. All assets, liabilities, net assets, revenues and expenses are accounted for in an enterprise fund with revenues recorded when...[+1613 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "31__c__p1__20__5",
+          "parent_id": "31__p__p1__20",
+          "source_file": "panynj-corporate-financial-information-2019-budget-book-dscz1hw1.pdf",
+          "page": 1,
+          "score": 0.025586,
+          "rerank_score": null,
+          "text": "be specifically known at this point in time. Allocated Expenses – Expenses allocated to various business programs, operating facilities, and capital projects of the Port Authority, using labor as the ...[+1626 chars]",
+          "metadata": null
+        },
+        {
+          "chunk_id": "254__c__p1__2__3",
+          "parent_id": null,
+          "source_file": "half-year-report-2025-final.pdf",
+          "page": 1,
+          "score": 0.01875,
+          "rerank_score": null,
+          "text": "figures. Exemption from required consolidation Port of Rotterdam Authority has made use of the exemption from the requirement to consolidate the details of participating interests if the participating...[+1548 chars]",
+          "metadata": null
+        }
+      ],
+      "tables_used": [],
+      "execution_ok": false,
+      "row_count": 0,
+      "sql_results": [],
+      "rule_variables": [],
+      "rule_results": {
+        "matched_rule_count": 0,
+        "matched_rules": [],
+        "candidate_variables": null
+      },
+      "entities": [],
+      "relationships": [],
+      "path_count": 0,
+      "graph_results": {
+        "query_entities": null,
+        "path_count": 0,
+        "reasoning_paths": []
+      },
+      "answer_text": "### Answer\n\nBased on the retrieved excerpts from the 2024 Annual Report, the specific basis of accounting standards for business-type activities and the capitalization threshold for facility additions are not explicitly detailed in the available text [doc]. The provided documentation confirms the existence of the 2024 Annual Report but highlights different financial components, such as the Retiree Health Benefits Trust [doc].\n\n### Supporting Evidence\n\nThe top-ranked document identified in the search is 'annual-report-2024.pdf' [doc].\nPage 4 of this document contains a section explicitly titled \"NOTES TO FINANCIAL STATEMENTS\" [doc].\nThe text on this page describes the establishment of the Port Authority of New York and New Jersey Retiree Health Benefits Trust [doc].\nOther retrieved files from 2011 and 2004 reference audit committee oversight and cash flows but do not provide the 2024 specific thresholds requested [doc].\nThe specific accounting basis and capitalization limits are not visible in the provided snippets [doc].\n\n### Notes\n\nThe snippet explicitly labels the section as \"NOTES TO FINANCIAL STATEMENTS\" [doc].\nTo locate the specific accounting basis and capitalization limits, the full version of the 2024 Annual Report should be reviewed [doc].\nThese details are typically contained within the \"Summary of Significant Accounting Policies\" subsection of the Notes [doc].\nManual verification against the complete document is required to confirm the exact standards and limits [doc].",
+      "sources_used": [
+        "documents"
+      ],
+      "confidence": 0.4,
+      "grounding_status": "fully_grounded",
+      "knowledge_fallback_used": false,
+      "knowledge_fallback_notes": [],
+      "llm_answer_used": true,
+      "llm_error": null,
+      "fallback_reason": null,
+      "caveats": [],
+      "reasoning_summary": [
+        "Document evidence available."
+      ],
+      "final_answer": {
+        "answer": "### Answer\n\nBased on the retrieved excerpts from the 2024 Annual Report, the specific basis of accounting standards for business-type activities and the capitalization threshold for facility additions are not explicitly detailed in the available text [doc]. The provided documentation confirms the existence of the 2024 Annual Report but highlights different financial components, such as the Retiree Health Benefits Trust [doc].\n\n### Supporting Evidence\n\nThe top-ranked document identified in the search is 'annual-report-2024.pdf' [doc].\nPage 4 of this document contains a section explicitly titled \"NOTES TO FINANCIAL STATEMENTS\" [doc].\nThe text on this page describes the establishment of the Port Authority of New York and New Jersey Retiree Health Benefits Trust [doc].\nOther retrieved files from 2011 and 2004 reference audit committee oversight and cash flows but do not provide the 2024 specific thresholds requested [doc].\nThe specific accounting basis and capitalization limits are not visible in the provided snippets [doc].\n\n### Notes\n\nThe snippet explicitly labels the section as \"NOTES TO FINANCIAL STATEMENTS\" [doc].\nTo locate the specific accounting basis and capitalization limits, the full version of the 2024 Annual Report should be reviewed [doc].\nThese details are typically contained within the \"Summary of Significant Accounting Policies\" subsection of the Notes [doc].\nManual verification against the complete document is required to confirm the exact standards and limits [doc].",
+        "confidence": 0.4,
+        "sources_used": [
+          "documents"
+        ],
+        "reasoning_summary": [
+          "Document evidence available."
+        ],
+        "caveats": [],
+        "grounding_status": "fully_grounded",
+        "llm_answer_used": true,
+        "knowledge_fallback_used": false,
+        "knowledge_fallback_notes": [],
+        "fallback_reason": null,
+        "llm_error": null,
+        "evidence_snapshot": {
+          "doc_summary": {
+            "top_documents": [
+              {
+                "source_file": "panynj-corporate-financial-statements-financial-statement-2011.pdf",
+                "page": 1,
+                "score": 2.813474,
+                "snippet": "of the Board of Commissioners other than the Chairman and Vice Chairman of the Port Authority, provides oversight of the quality and integrity of the Port Authority’s framework of internal controls, compliance systems and the accounting, auditing and financial reporting processes. The Audit Committee retains independent auditors and reviews their performance and independence. The independent auditors are required to provide written disclosure of, and discuss with the Committee, any significant r"
+              },
+              {
+                "source_file": "panynj-corporate-financial-statements-financial-statement-2004.pdf",
+                "page": 1,
+                "score": 2.702989,
+                "snippet": "paid to suppliers (706,667) (885,650) Cash payments related to the events of September 11, 2001 (3,467) (21,427) Net cash provided by operating activities 243,126 1,581,247 Cash flows from capital activities: Proceeds from sales of capital obligations 1,156,120 1,365,507 Principal paid on capital obligations (332,682) (887,729) Proceeds from capital obligations issued for refunding purposes 1,854,753 2,078,996 Principal paid through capital obligations refundings (1,854,753) (2,078,996) Interest"
+              },
+              {
+                "source_file": "annual-report-2024.pdf",
+                "page": 4,
+                "score": 2.616382,
+                "snippet": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired employees of the Port Authority and PATH and eligible dependents of such retired employees to facilit"
+              }
+            ],
+            "best_source_file": "panynj-corporate-financial-statements-financial-statement-2011.pdf",
+            "best_page": 1,
+            "best_snippet": "of the Board of Commissioners other than the Chairman and Vice Chairman of the Port Authority, provides oversight of the quality and integrity of the Port Authority’s framework of internal controls, compliance systems and the accounting, auditing and financial reporting processes. The Audit Committee retains independent auditors and reviews their performance and independence. The independent auditors are required to provide written disclosure of, and discuss with the Committee, any significant r"
+          },
+          "sql_summary": null,
+          "rule_summary": null,
+          "graph_summary": null
+        }
+      },
+      "evidence_bundle": {
+        "documents_count": 5,
+        "documents": [
+          {
+            "chunk_id": "183__p__p1__6",
+            "parent_id": null,
+            "source_file": "panynj-corporate-financial-statements-financial-statement-2011.pdf",
+            "page": 1,
+            "score": 2.813474,
+            "rerank_score": null,
+            "text": "of the Board of Commissioners other than the Chairman and Vice Chairman of the Port Authority, provides oversight of the quality and integrity of the Port Authority’s framework of internal controls, compliance systems and the accounting, auditing and financial reporting processes. The Audit Committee retains independent auditors and reviews their performance and independence. The independent audit...[+9587 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "176__p__p1__3",
+            "parent_id": null,
+            "source_file": "panynj-corporate-financial-statements-financial-statement-2004.pdf",
+            "page": 1,
+            "score": 2.702989,
+            "rerank_score": null,
+            "text": "paid to suppliers (706,667) (885,650) Cash payments related to the events of September 11, 2001 (3,467) (21,427) Net cash provided by operating activities 243,126 1,581,247 Cash flows from capital activities: Proceeds from sales of capital obligations 1,156,120 1,365,507 Principal paid on capital obligations (332,682) (887,729) Proceeds from capital obligations issued for refunding purposes 1,854,...[+9893 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "248__p__2024__20",
+            "parent_id": null,
+            "source_file": "annual-report-2024.pdf",
+            "page": 4,
+            "score": 2.616382,
+            "rerank_score": null,
+            "text": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired e...[+9399 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "271__p__2024__20",
+            "parent_id": null,
+            "source_file": "annual-report-2024.pdf",
+            "page": 4,
+            "score": 2.616382,
+            "rerank_score": null,
+            "text": "relationship between the Port Authority and the respective component unit listed. NOTES TO FINANCIAL STATEMENTS e. The Port Authority of New York and New Jersey Retiree Health Benefits Trust (the Trust) was established on December 14, 2006 by the Port Authority on behalf of itself and its component unit, Port Authority Trans-Hudson Corporation (PATH) for the exclusive benefit of eligible retired e...[+9399 chars]",
+            "metadata": null
+          },
+          {
+            "chunk_id": "180__p__p1__4",
+            "parent_id": null,
+            "source_file": "panynj-corporate-financial-statements-financial-statement-2008.pdf",
+            "page": 1,
+            "score": 2.47199,
+            "rerank_score": null,
+            "text": "payables 42,525 (21,836) Increase (decrease) in other liabilities 80,184 (6,373) (Decrease) increase in accrued payroll, pension and other employee benefits (7,902) 20,157 Total adjustments 878,199 596,060 Net cash provided by operating activities 1,684,517 $ 843,860 $ 3. Capital obligations: Consolidated bonds and notes, commercial paper, variable rate master notes and versatile structure obligat...[+9548 chars]",
+            "metadata": null
+          }
+        ],
+        "sql_results": [],
+        "rules": {
+          "matched_rule_count": 0,
+          "matched_rules": [],
+          "candidate_variables": null
+        },
+        "graph": {
+          "query_entities": null,
+          "path_count": 0,
+          "reasoning_paths": []
+        },
+        "conflict_annotations": []
+      },
+      "reasoning_trace": [
+        "route_query_node => vector=True, sql=False, rules=False, graph=False",
+        "planner_node => rewrite expanded_terms=['fiscal year report', 'accounting standards', 'port management authority', 'commercial operations', 'capital expenditure limit', 'port infrastructure']",
+        "planner_node => sources=['documents'] strategy=single_source",
+        "retrieve_documents_node => retrieved 40 docs",
+        "rerank_documents_node => reranked 40 -> 5 docs",
+        "merge_evidence_node => merged evidence bundle",
+        "synthesize_answer_node => produced final answer"
+      ],
+      "warnings": [],
+      "error": null,
+      "total_time": 102.90974640846252,
+      "stage_timings": {
+        "route_query": 26.4665,
+        "planner": 35.7756,
+        "retrieve_documents": 0.8119,
+        "rerank_documents": 0.3793,
+        "merge_evidence": 0.0,
+        "synthesize_answer": 39.4668
+      }
+    }
+  ]
+}

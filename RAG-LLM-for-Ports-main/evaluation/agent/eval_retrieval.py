@@ -125,7 +125,9 @@ def evaluate_vector(
             (s or "").lower() for s in gv.get("relevant_source_files", [])
         )
 
-        post = r.get("retrieved_chunk_ids", [])
+        # v3: prefer retrieved_child_ids (child-level post-rerank) for
+        # chunk recall. Falls back to retrieved_chunk_ids for old reports.
+        post = r.get("retrieved_child_ids") or r.get("retrieved_chunk_ids", [])
         pre = r.get("pre_rerank_chunk_ids", []) or post
 
         # Chunk-level (only if golden has chunk ids)
@@ -192,6 +194,8 @@ def evaluate_reranking_lift(
     golden_by_id = {g["id"]: g for g in golden}
     lifts_ndcg = []
     lifts_r5 = []
+    pre_ndcg_vals = []
+    post_ndcg_vals = []
     top1_hit_before = 0
     top1_hit_after = 0
     count = 0
@@ -205,12 +209,14 @@ def evaluate_reranking_lift(
             continue
 
         pre = r.get("pre_rerank_chunk_ids", [])
-        post = r.get("retrieved_chunk_ids", [])
+        post = r.get("retrieved_child_ids") or r.get("retrieved_chunk_ids", [])
         if not pre or not post:
             continue
 
         pre_ndcg = ndcg_at_k(pre, relevant, 5)
         post_ndcg = ndcg_at_k(post, relevant, 5)
+        pre_ndcg_vals.append(pre_ndcg)
+        post_ndcg_vals.append(post_ndcg)
         lifts_ndcg.append(post_ndcg - pre_ndcg)
 
         pre_r5 = recall_at_k(pre, relevant, 5)
@@ -227,6 +233,8 @@ def evaluate_reranking_lift(
         return {"count": 0}
 
     return {
+        "ndcg@5_before": round(sum(pre_ndcg_vals) / count, 4),
+        "ndcg@5_after": round(sum(post_ndcg_vals) / count, 4),
         "ndcg@5_lift": round(sum(lifts_ndcg) / count, 4),
         "recall@5_lift": round(sum(lifts_r5) / count, 4),
         "top1_hit_before": round(top1_hit_before / count, 4),

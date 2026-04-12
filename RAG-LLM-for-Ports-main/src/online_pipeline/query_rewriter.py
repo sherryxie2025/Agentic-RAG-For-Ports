@@ -71,32 +71,24 @@ class QueryRewriter:
 
     def rewrite(self, query: str) -> Dict[str, Any]:
         """
-        Dictionary-first rewrite. LLM fallback only when no abbreviation matched.
+        Dictionary-only rewrite. Expands known abbreviations via regex+dict
+        in <1ms. No LLM call — the planner's _build_doc_subquery already
+        adds domain synonyms, so a 30s LLM rewrite was redundant.
+
+        v3: removed LLM fallback. Previously, when no abbreviation was
+        found, the system spent ~30s calling Qwen to add synonyms. This
+        was the single biggest planner latency contributor (see smoke
+        test: planner__query_rewrite=30s). The synonym expansion is now
+        handled entirely by planner._DOC_SYNONYM_MAP (0ms, rule-based).
         """
-        # Step 1: dictionary expansion
         expanded_query, expanded_terms = self._dict_expand(query)
 
         if expanded_terms:
             logger.info("DICT rewrite: %d expansions %s", len(expanded_terms), expanded_terms)
-            logger.debug("Rewritten query: %s", expanded_query)
             return {"rewritten_query": expanded_query, "expanded_terms": expanded_terms}
 
-        # Step 2: no dictionary match — try LLM
-        try:
-            logger.info("No dict match => calling LLM rewriter")
-            response = self._call_llm(query)
-            result = self._parse_response(response)
-            if result and result.get("rewritten_query"):
-                logger.info("LLM rewrite: expanded_terms=%s", result.get("expanded_terms", []))
-                logger.debug("LLM rewritten query: %s", result.get("rewritten_query"))
-                return result
-            else:
-                logger.warning("LLM rewrite returned empty or unparseable response")
-        except Exception as e:
-            logger.error("LLM rewrite failed: %s", e)
-
-        # Graceful fallback: return original query
-        logger.info("Rewrite fallback: returning original query unchanged")
+        # No abbreviations found — return original. Domain synonyms are
+        # added downstream by planner._build_doc_subquery / _DOC_SYNONYM_MAP.
         return {"rewritten_query": query, "expanded_terms": []}
 
     def _dict_expand(self, query: str) -> tuple[str, List[str]]:

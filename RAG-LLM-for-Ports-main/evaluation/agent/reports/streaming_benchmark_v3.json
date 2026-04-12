@@ -1,0 +1,192 @@
+{
+  "samples": [
+    {
+      "id": "V3_VEC_001",
+      "pipeline_time": 59.73,
+      "block_synth": 43.1,
+      "stream_total": 20.94,
+      "ttft": 17.66,
+      "speedup": 2.4,
+      "chunks": 164
+    },
+    {
+      "id": "V3_VEC_002",
+      "pipeline_time": 86.26,
+      "block_synth": 32.7,
+      "stream_total": 18.63,
+      "ttft": 16.036,
+      "speedup": 2.0,
+      "chunks": 137
+    },
+    {
+      "id": "V3_VEC_003",
+      "pipeline_time": 47.61,
+      "block_synth": 27.89,
+      "stream_total": 14.71,
+      "ttft": 13.289,
+      "speedup": 2.1,
+      "chunks": 75
+    },
+    {
+      "id": "V3_VEC_004",
+      "pipeline_time": 41.16,
+      "block_synth": 20.74,
+      "stream_total": 20.83,
+      "ttft": 19.501,
+      "speedup": 1.1,
+      "chunks": 71
+    },
+    {
+      "id": "V3_VEC_005",
+      "pipeline_time": 50.2,
+      "block_synth": 38.91,
+      "stream_total": 25.86,
+      "ttft": 25.128,
+      "speedup": 1.5,
+      "chunks": 41
+    },
+    {
+      "id": "V3_VEC_006",
+      "pipeline_time": 39.52,
+      "block_synth": 28.14,
+      "stream_total": 29.04,
+      "ttft": 27.492,
+      "speedup": 1.0,
+      "chunks": 69
+    },
+    {
+      "id": "V3_SQL_001",
+      "pipeline_time": 23.61,
+      "block_synth": 39.78,
+      "stream_total": 29.4,
+      "ttft": 28.826,
+      "speedup": 1.4,
+      "chunks": 34
+    },
+    {
+      "id": "V3_SQL_002",
+      "pipeline_time": 36.1,
+      "block_synth": 24.27,
+      "stream_total": 22.74,
+      "ttft": 22.174,
+      "speedup": 1.1,
+      "chunks": 35
+    },
+    {
+      "id": "V3_SQL_003",
+      "pipeline_time": 41.24,
+      "block_synth": 50.37,
+      "stream_total": 30.96,
+      "ttft": 30.445,
+      "speedup": 1.7,
+      "chunks": 29
+    },
+    {
+      "id": "V3_SQL_004",
+      "pipeline_time": 52.06,
+      "block_synth": 43.05,
+      "stream_total": 20.2,
+      "ttft": 19.876,
+      "speedup": 2.2,
+      "chunks": 22
+    },
+    {
+      "id": "V3_RUL_001",
+      "pipeline_time": 24.84,
+      "block_synth": 40.63,
+      "stream_total": 25.64,
+      "ttft": 23.804,
+      "speedup": 1.7,
+      "chunks": 81
+    },
+    {
+      "id": "V3_RUL_002",
+      "pipeline_time": 30.31,
+      "block_synth": 42.28,
+      "stream_total": 20.07,
+      "ttft": 17.863,
+      "speedup": 2.4,
+      "chunks": 105
+    },
+    {
+      "id": "V3_RUL_003",
+      "pipeline_time": 36.34,
+      "block_synth": 30.28,
+      "stream_total": 28.77,
+      "ttft": 26.675,
+      "speedup": 1.1,
+      "chunks": 89
+    },
+    {
+      "id": "V3_GRA_001",
+      "pipeline_time": 90.32,
+      "block_synth": 23.54,
+      "stream_total": 23.69,
+      "ttft": 21.364,
+      "speedup": 1.1,
+      "chunks": 103
+    },
+    {
+      "id": "V3_GRA_002",
+      "pipeline_time": 78.99,
+      "block_synth": 28.62,
+      "stream_total": 18.59,
+      "ttft": 16.852,
+      "speedup": 1.7,
+      "chunks": 91
+    },
+    {
+      "id": "V3_GRA_003",
+      "pipeline_time": 88.08,
+      "block_synth": 20.53,
+      "stream_total": 22.92,
+      "ttft": 19.449,
+      "speedup": 1.1,
+      "chunks": 172
+    },
+    {
+      "id": "V3_MULTI_001",
+      "pipeline_time": 97.75,
+      "block_synth": 9.74,
+      "stream_total": 24.98,
+      "ttft": 21.547,
+      "speedup": 0.5,
+      "chunks": 155
+    },
+    {
+      "id": "V3_MULTI_002",
+      "pipeline_time": 55.24,
+      "block_synth": 34.95,
+      "stream_total": 21.91,
+      "ttft": 19.554,
+      "speedup": 1.8,
+      "chunks": 129
+    },
+    {
+      "id": "V3_MULTI_003",
+      "pipeline_time": 59.66,
+      "block_synth": 30.93,
+      "stream_total": 28.84,
+      "ttft": 27.083,
+      "speedup": 1.1,
+      "chunks": 104
+    },
+    {
+      "id": "V3_MULTI_004",
+      "pipeline_time": 52.0,
+      "block_synth": 60.01,
+      "stream_total": 84.23,
+      "ttft": 84.229,
+      "speedup": 0.7,
+      "chunks": 1
+    }
+  ],
+  "summary": {
+    "count": 20,
+    "ttft_mean": 24.942,
+    "ttft_min": 13.289,
+    "ttft_max": 84.229,
+    "block_mean": 33.523,
+    "speedup_mean": 1.49
+  }
+}

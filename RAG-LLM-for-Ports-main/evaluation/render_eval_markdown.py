@@ -176,25 +176,71 @@ def _guardrails_md(g: Dict[str, Any]) -> str:
 
 
 def _latency_md(l: Dict[str, Any]) -> str:
-    """Render latency sub-report."""
+    """Render latency sub-report with top-level nodes + planner sub-stages."""
     out = ["## 5. 延迟 (Latency)", ""]
     stages = l.get("per_stage_seconds", {}) or {}
     e2e = stages.get("end_to_end", {})
-    if e2e and e2e.get("count", 0):
-        out.append("| 阶段 | count | mean | p50 | p95 | p99 | max |")
-        out.append("|---|---|---|---|---|---|---|")
-        for name, s in stages.items():
-            if not s or not s.get("count"):
-                continue
+    if not e2e or not e2e.get("count", 0):
+        out.append("(no latency data)")
+        return "\n".join(out)
+
+    # Separate top-level vs sub-stage keys
+    top_level = []
+    sub_stages = []
+    for name, s in stages.items():
+        if not s or not s.get("count"):
+            continue
+        if "__" in name:
+            sub_stages.append((name, s))
+        else:
+            top_level.append((name, s))
+
+    # Top-level table
+    out.append("### 节点级延迟")
+    out.append("")
+    out.append("| 阶段 | count | mean | p50 | p95 | p99 | max |")
+    out.append("|---|---|---|---|---|---|---|")
+    for name, s in top_level:
+        out.append(
+            f"| {name} | {s.get('count', 0)}"
+            f" | {_fmt(s.get('mean'))}"
+            f" | {_fmt(s.get('p50'))}"
+            f" | {_fmt(s.get('p95'))}"
+            f" | {_fmt(s.get('p99'))}"
+            f" | {_fmt(s.get('max'))} |"
+        )
+    out.append("")
+
+    # Planner sub-stage table (if any)
+    if sub_stages:
+        out.append("### Planner 子阶段延迟")
+        out.append("")
+        out.append("| 子阶段 | count | mean | p50 | p95 | max |")
+        out.append("|---|---|---|---|---|---|")
+        for name, s in sub_stages:
             out.append(
                 f"| {name} | {s.get('count', 0)}"
                 f" | {_fmt(s.get('mean'))}"
                 f" | {_fmt(s.get('p50'))}"
                 f" | {_fmt(s.get('p95'))}"
-                f" | {_fmt(s.get('p99'))}"
                 f" | {_fmt(s.get('max'))} |"
             )
-    out.append("")
+        out.append("")
+
+    # TTFT (if available)
+    ttft = l.get("ttft", {}) or {}
+    if ttft and ttft.get("count", 0):
+        out.append("### TTFT (流式首 token)")
+        out.append("")
+        out.append(f"| mean | p50 | p95 | max | count |")
+        out.append(f"|---|---|---|---|---|")
+        out.append(
+            f"| {_fmt(ttft.get('mean'))} | {_fmt(ttft.get('p50'))}"
+            f" | {_fmt(ttft.get('p95'))} | {_fmt(ttft.get('max'))}"
+            f" | {ttft.get('count', 0)} |"
+        )
+        out.append("")
+
     return "\n".join(out)
 
 

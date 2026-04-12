@@ -306,6 +306,86 @@ async def ask_agent(request: AgentRequest):
         raise HTTPException(status_code=500, detail=f"Agent processing failed: {str(e)}")
 
 
+# ---------------------------------------------------------------------------
+# Streaming DAG endpoint (SSE)
+# ---------------------------------------------------------------------------
+
+_dag_presynthesis = None
+_dag_synthesizer = None
+
+
+def _get_dag_stream_system():
+    """Lazy-initialize the pre-synthesis DAG + synthesizer for streaming."""
+    global _dag_presynthesis, _dag_synthesizer
+    if _dag_presynthesis is None:
+        from pathlib import Path
+        from ..online_pipeline.langgraph_workflow import build_langgraph_workflow_presynthesis
+        project_root = Path(__file__).resolve().parents[2]
+        workflow, builder = build_langgraph_workflow_presynthesis(
+            project_root=project_root,
+        )
+        _dag_presynthesis = workflow
+        _dag_synthesizer = builder.factory.answer_synthesizer
+    return _dag_presynthesis, _dag_synthesizer
+
+
+@app.post("/ask_dag_stream")
+async def ask_dag_stream(request: AgentRequest):
+    """
+    Streaming Agentic RAG endpoint via Server-Sent Events (SSE).
+
+    Runs the full DAG up to merge_evidence (blocking), then streams the
+    answer synthesis token-by-token. TTFT (time-to-first-token) is
+    typically ~2-3 seconds vs ~30s for the blocking endpoint.
+
+    Curl example:
+        curl -N -X POST http://localhost:8000/ask_dag_stream \
+             -H 'Content-Type: application/json' \
+             -d '{"query": "Under what wind conditions should crane operations stop?"}'
+    """
+    import json as _json
+    import time as _time
+    from fastapi.responses import StreamingResponse
+
+    try:
+        workflow, synthesizer = _get_dag_stream_system()
+
+        # Phase 1: Run DAG up to merge_evidence (blocking)
+        t0 = _time.time()
+        state = await asyncio.get_event_loop().run_in_executor(
+            None,
+            lambda: workflow.invoke({
+                "user_query": request.query,
+                "reasoning_trace": [],
+                "warnings": [],
+            }),
+        )
+        pipeline_time = _time.time() - t0
+
+        # Phase 2: Stream synthesis
+        async def event_generator():
+            t_stream = _time.time()
+            ttft_sent = False
+            for chunk in synthesizer.synthesize_stream(state):
+                if not ttft_sent:
+                    ttft = _time.time() - t_stream
+                    yield f"data: {_json.dumps({'ttft': round(ttft, 3)})}\n\n"
+                    ttft_sent = True
+                yield f"data: {_json.dumps({'text': chunk})}\n\n"
+            # Final event with metadata
+            yield f"data: {_json.dumps({'done': True, 'pipeline_time': round(pipeline_time, 2)})}\n\n"
+
+        return StreamingResponse(
+            event_generator(),
+            media_type="text/event-stream",
+            headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        )
+
+    except Exception as e:
+        logger.error(f"Error in DAG stream: {e}")
+        raise HTTPException(status_code=500, detail=f"Streaming failed: {str(e)}")
+
+
 @app.post("/session/{session_id}/end")
 async def end_session(session_id: str):
     """End a conversation session and persist summary to long-term memory."""

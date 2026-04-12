@@ -210,29 +210,39 @@ class QueryPlanner:
         if needs_graph:
             source_plan.append("graph")
 
-        # ── Planning strategy: rule-first for speed, LLM only for complex ──
-        # Rule-based planner is 0ms and schema-aware; LLM adds ~15s latency.
-        # Only use LLM for 3+ source queries where cross-source coordination matters.
-        planning_method = "rule"
-        source_count = len(source_plan)
+        # ── v3: LLM-first for ALL queries, rule-based only as fallback ──
+        # Sub-query generation is the most critical planning step: it
+        # determines which exact table/column/variable/entity each
+        # retriever targets. The LLM's schema-aware prompt (_PLANNER_SYSTEM)
+        # produces far better sub-queries than keyword heuristics.
+        import time as _time
 
-        if source_count >= 3:
+        planning_method = "rule"
+        _timings: Dict[str, float] = {}
+
+        if source_plan:
+            t_llm = _time.time()
             llm_plan = self._llm_plan(user_query, source_plan)
+            _timings["sub_queries__llm_call"] = round(_time.time() - t_llm, 4)
+
             if llm_plan and llm_plan.get("sub_queries"):
                 sub_queries = llm_plan["sub_queries"]
                 planning_method = "llm"
             else:
+                t_rule = _time.time()
                 sub_queries = self._build_sub_queries(
                     query=query, original_query=user_query,
                     needs_vector=needs_vector, needs_sql=needs_sql,
                     needs_rules=needs_rules, needs_graph=needs_graph,
                 )
+                _timings["sub_queries__rule_fallback"] = round(_time.time() - t_rule, 4)
         else:
-            sub_queries = self._build_sub_queries(
-                query=query, original_query=user_query,
-                needs_vector=needs_vector, needs_sql=needs_sql,
-                needs_rules=needs_rules, needs_graph=needs_graph,
-            )
+            sub_queries = []
+
+        # Per-source timing: record which sources got sub-queries
+        for sq in sub_queries:
+            src = sq.get("source", "unknown")
+            _timings[f"sub_query__{src}__method"] = 0.0  # placeholder for presence
 
         execution_strategy = self._infer_execution_strategy(
             needs_vector=needs_vector,
@@ -258,12 +268,21 @@ class QueryPlanner:
             "source_plan": source_plan,
             "sub_queries": sub_queries,
             "execution_strategy": execution_strategy,
+            "planning_method": planning_method,
+            "_timings": _timings,
         }
 
     # ── LLM planner (schema-enriched prompt) ────────────────────────────────
 
     def _llm_plan(self, user_query: str, source_plan: List[str]) -> dict | None:
-        """Use LLM to generate optimized sub-queries with schema context."""
+        """Use LLM to generate optimized sub-queries with schema context.
+
+        v3: called for ALL queries (not just 3+ sources). This is the most
+        critical planning step — better sub-queries directly improve SQL
+        table/column targeting, rule variable matching, and graph entity
+        selection. Timeout raised to 45s to give the LLM enough time for
+        complex multi-source plans.
+        """
         if not source_plan:
             return None
         try:
@@ -277,7 +296,7 @@ class QueryPlanner:
                     )},
                 ],
                 temperature=0.1,
-                timeout=30,
+                timeout=45,
             )
             if isinstance(result, dict) and result.get("sub_queries"):
                 logger.debug("LLM planner returned %d sub-queries", len(result["sub_queries"]))

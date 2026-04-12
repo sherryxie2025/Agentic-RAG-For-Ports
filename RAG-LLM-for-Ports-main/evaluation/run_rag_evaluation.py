@@ -219,6 +219,13 @@ def _process_sample(
         retrieved_sources_list = [
             d.get("source_file", "") for d in retrieved_docs if isinstance(d, dict)
         ]
+        # v3: child chunks post-rerank (for chunk-level eval recall).
+        # After P0 fix, retrieved_docs contains parents; retrieved_children
+        # contains the reranked child chunks whose IDs match the golden.
+        retrieved_children = state.get("retrieved_children", []) or []
+        retrieved_child_ids = [
+            d.get("chunk_id", "") for d in retrieved_children if isinstance(d, dict)
+        ]
         pre_rerank_docs = state.get("pre_rerank_docs", []) or []
         pre_rerank_ids = [
             d.get("chunk_id", "") for d in pre_rerank_docs if isinstance(d, dict)
@@ -254,7 +261,8 @@ def _process_sample(
             "execution_strategy": state.get("execution_strategy"),
 
             # --- Retrieval (compact) ---
-            "retrieved_chunk_ids": retrieved_chunk_ids,
+            "retrieved_chunk_ids": retrieved_chunk_ids,       # parent IDs (after Small-to-Big)
+            "retrieved_child_ids": retrieved_child_ids,       # child IDs (for chunk recall eval)
             "retrieved_sources": retrieved_sources_list,
             "pre_rerank_chunk_ids": pre_rerank_ids,
             "pre_rerank_sources": pre_rerank_sources_list,
@@ -307,7 +315,7 @@ def _process_sample(
 
             # --- Latency ---
             "total_time": total_time,
-            "stage_timings": {},
+            "stage_timings": state.get("_node_timings", {}),
         }
         with print_lock:
             print(f"  [{idx+1}/{total}] {sample_id}: {total_time:.1f}s", flush=True)
@@ -382,6 +390,8 @@ def main():
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--workers", type=int, default=1,
                         help="Thread pool size for parallel sample processing.")
+    parser.add_argument("--streaming", action="store_true", default=False,
+                        help="Also measure TTFT by calling synthesize_stream after each DAG run.")
     parser.add_argument("--output", default="rag_v2_n205_final.json")
     args = parser.parse_args()
 
@@ -397,6 +407,37 @@ def main():
 
     print(f"\n--- Running DAG workflow on samples (workers={args.workers}) ---\n", flush=True)
     results = run_dag_on_samples(samples, limit=args.limit, workers=args.workers)
+
+    # Optional: measure TTFT by streaming synthesis on each completed state
+    if args.streaming:
+        print("\n--- Measuring TTFT (streaming) ---\n", flush=True)
+        try:
+            from online_pipeline.langgraph_workflow import build_langgraph_workflow_presynthesis
+            _, builder = build_langgraph_workflow_presynthesis(project_root=PROJECT_ROOT)
+            synth = builder.factory.answer_synthesizer
+            for r in results:
+                if r.get("error"):
+                    continue
+                # Build a minimal state from per_sample fields for synthesize_stream
+                state_for_stream = {
+                    "user_query": r.get("query", ""),
+                    "answer_mode": r.get("answer_mode", "lookup"),
+                    "retrieved_docs": r.get("retrieved_docs", []),
+                    "sql_results": r.get("sql_results", []),
+                    "rule_results": r.get("rule_results", {}),
+                    "graph_results": r.get("graph_results", {}),
+                }
+                t0_stream = time.time()
+                ttft = None
+                for chunk in synth.synthesize_stream(state_for_stream):
+                    if ttft is None:
+                        ttft = round(time.time() - t0_stream, 4)
+                    # consume all chunks to complete the stream
+                r["ttft"] = ttft
+                if ttft is not None:
+                    print(f"  {r.get('id')}: TTFT={ttft:.2f}s", flush=True)
+        except Exception as e:
+            print(f"[warn] Streaming TTFT measurement failed: {e}")
 
     print("\n--- Computing metrics ---\n")
     routing = evaluate_routing(results, samples)
