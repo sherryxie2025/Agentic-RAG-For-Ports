@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from operator import add
-from typing import Annotated, Dict, List, Optional, TypedDict
+from typing import Annotated, Any, Dict, List, Optional, TypedDict
 
 from .state_schema import (
     RouterDecision,
@@ -24,6 +24,15 @@ def _merge_dicts(a: Dict[str, float], b: Dict[str, float]) -> Dict[str, float]:
 class LangGraphPortState(TypedDict, total=False):
     user_query: str
     original_query: str
+
+    # Multi-turn / memory fields (all optional — single-turn callers omit them
+    # and the workflow behaves exactly as it did before memory was added).
+    session_id: Optional[str]
+    raw_query: Optional[str]              # original user input before co-ref resolution
+    resolved_query: Optional[str]         # standalone form after follow-up resolution
+    memory_context: Optional[str]         # short+long-term context block injected into prompts
+    active_entities: Optional[Dict[str, Any]]
+    coref_was_rewritten: Optional[bool]   # True if resolve_followup actually changed the query
 
     router_decision: RouterDecision
     question_type: str

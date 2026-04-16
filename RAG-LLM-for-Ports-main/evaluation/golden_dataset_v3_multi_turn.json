@@ -1,0 +1,1348 @@
+{
+  "description": "Multi-turn conversations composed from golden_dataset_v3_rag.json. Each turn inherits its golden retrieval/answer fields from the linked base sample (`derived_from_sample_id`).",
+  "version": "v3.0",
+  "generated_at": "2026-04-15T01:27:45",
+  "base_dataset": "golden_dataset_v3_rag.json",
+  "total_conversations": 10,
+  "total_turns": 31,
+  "pattern_counts": {
+    "entity_anchored": 2,
+    "mode_progression": 2,
+    "cross_source_verification": 2,
+    "topic_switch": 2,
+    "long_summarisation": 1,
+    "guardrail_in_conversation": 1
+  },
+  "answer_mode_counts": {
+    "lookup": 13,
+    "decision_support": 7,
+    "diagnostic": 3,
+    "comparison": 6,
+    "descriptive": 2
+  },
+  "source_combo_counts": {
+    "('sql',)": 12,
+    "('rules',)": 5,
+    "('graph',)": 3,
+    "('sql', 'vector')": 3,
+    "('vector',)": 7,
+    "()": 1
+  },
+  "skipped_conversations": [],
+  "conversations": [
+    {
+      "conversation_id": "MT3_001",
+      "pattern": "entity_anchored",
+      "description": "Berth productivity SQL lookup, followed by a rules check then a graph causal probe — all anchored on the same berth.",
+      "turns": [
+        {
+          "turn_id": 1,
+          "raw_query": "What was the average tide level at the port in 2016?",
+          "derived_from_sample_id": "V3_SQL_001",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "average",
+            "tide",
+            "2016",
+            "environment",
+            "tide_ft"
+          ],
+          "reference_answer": "The average tide level in 2016 was approximately 0.027 ft.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "environment": [
+                "tide_ft"
+              ]
+            },
+            "expected_aggregation": "AVG",
+            "expected_year_filter": "2016"
+          },
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 2,
+          "raw_query": "And what are the policy rules around that?",
+          "derived_from_sample_id": "V3_RUL_001",
+          "evaluation_focus": "ellipsis_with_topic_carry",
+          "expected_sources": [
+            "rules"
+          ],
+          "needs_vector": false,
+          "needs_sql": false,
+          "needs_rules": true,
+          "needs_graph": false,
+          "answer_mode": "decision_support",
+          "expected_evidence_keywords": [
+            "wave height",
+            "exceed",
+            "halt crane"
+          ],
+          "reference_answer": "Halt external crane lifting operations and secure cranes when significant wave height exceeds 2.5 m.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": null,
+          "golden_rules": {
+            "expected_rule_variables": [
+              "wave_height_m"
+            ],
+            "expected_sql_variables": [
+              "wave_height_m"
+            ],
+            "expected_rule_source": "synthetic_rule",
+            "expected_rule_page": 0
+          },
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "tide",
+            "rule"
+          ],
+          "expected_memory_recall": {
+            "from_turn": 1,
+            "key_fact": "tide"
+          }
+        },
+        {
+          "turn_id": 3,
+          "raw_query": "If that threshold is breached, which port operations are affected?",
+          "derived_from_sample_id": "V3_GRA_001",
+          "evaluation_focus": "demonstrative_resolution",
+          "expected_sources": [
+            "graph"
+          ],
+          "needs_vector": false,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": true,
+          "answer_mode": "diagnostic",
+          "expected_evidence_keywords": [
+            "depth",
+            "anchor",
+            "shallow draught",
+            "causes"
+          ],
+          "reference_answer": "Depth between 6.5 and 7.5 metres is what qualifies the fork as a permissible anchorage, so depth directly governs anchoring eligibility for shallow-draught vessels.",
+          "difficulty": "hard",
+          "golden_vector": null,
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": {
+            "expected_entities": [
+              "depth",
+              "anchor_in_the_fork_between_williamstown_"
+            ],
+            "expected_relationships": [
+              "TRIGGERS"
+            ]
+          },
+          "expected_resolved_query_contains": [
+            "threshold",
+            "operations"
+          ],
+          "expected_memory_recall": {
+            "from_turn": 2,
+            "key_fact": "threshold"
+          }
+        }
+      ]
+    },
+    {
+      "conversation_id": "MT3_002",
+      "pattern": "mode_progression",
+      "description": "User starts with a fact lookup, then asks for a comparison, then a decision-support framing.",
+      "turns": [
+        {
+          "turn_id": 1,
+          "raw_query": "How much was the average wind speed recorded in 2015?",
+          "derived_from_sample_id": "V3_SQL_002",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "average",
+            "wind speed",
+            "2015",
+            "environment",
+            "wind_speed_ms"
+          ],
+          "reference_answer": "The average wind speed in 2015 was approximately 5.14 m/s.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "environment": [
+                "wind_speed_ms"
+              ]
+            },
+            "expected_aggregation": "AVG",
+            "expected_year_filter": "2015"
+          },
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 2,
+          "raw_query": "How does that compare with the previous year?",
+          "derived_from_sample_id": "V3_SQL_003",
+          "evaluation_focus": "ellipsis_with_metric_carry",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "total TEU",
+            "received",
+            "2015",
+            "yard_operations",
+            "teu_received"
+          ],
+          "reference_answer": "The total TEU received in 2015 was 941,944.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "yard_operations": [
+                "teu_received"
+              ]
+            },
+            "expected_aggregation": "SUM",
+            "expected_year_filter": "2015"
+          },
+          "golden_rules": null,
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "compare",
+            "year"
+          ]
+        },
+        {
+          "turn_id": 3,
+          "raw_query": "Given those numbers, should we adjust operations?",
+          "derived_from_sample_id": "V3_MULTI_001",
+          "evaluation_focus": "decision_support_with_history",
+          "expected_sources": [
+            "vector",
+            "sql"
+          ],
+          "needs_vector": true,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "comparison",
+          "expected_evidence_keywords": [
+            "environmental objectives",
+            "management review",
+            "EMS targets",
+            "compliance status",
+            "operational data"
+          ],
+          "reference_answer": "The manual requires EMS review against environmental targets; the operational statistics must then be checked to confirm whether current metrics (e.g., emissions, waste) meet those documented objectives.",
+          "difficulty": "hard",
+          "golden_vector": {
+            "relevant_chunk_ids": [
+              "8__c__p1__18__5"
+            ],
+            "relevant_source_files": [
+              "manualbestmanagementports.pdf"
+            ]
+          },
+          "golden_sql": {
+            "expected_tables": {}
+          },
+          "golden_rules": null,
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "operations"
+          ],
+          "expected_memory_recall": {
+            "from_turn": 1,
+            "key_fact": "value"
+          }
+        }
+      ]
+    },
+    {
+      "conversation_id": "MT3_003",
+      "pattern": "cross_source_verification",
+      "description": "User gets a SQL number, then asks whether port policy is consistent with it (forces rules), then whether documentation explains the gap (forces vector).",
+      "turns": [
+        {
+          "turn_id": 1,
+          "raw_query": "What was the peak yard occupancy percentage reached in 2015?",
+          "derived_from_sample_id": "V3_SQL_004",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "peak",
+            "yard occupancy",
+            "2015",
+            "yard_operations",
+            "peak_occupancy_pct"
+          ],
+          "reference_answer": "The peak yard occupancy in 2015 reached 95.0%.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "yard_operations": [
+                "peak_occupancy_pct"
+              ]
+            },
+            "expected_aggregation": "MAX",
+            "expected_year_filter": "2015"
+          },
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 2,
+          "raw_query": "Is that consistent with current port policy?",
+          "derived_from_sample_id": "V3_RUL_002",
+          "evaluation_focus": "policy_grounding",
+          "expected_sources": [
+            "rules"
+          ],
+          "needs_vector": false,
+          "needs_sql": false,
+          "needs_rules": true,
+          "needs_graph": false,
+          "answer_mode": "decision_support",
+          "expected_evidence_keywords": [
+            "pressure",
+            "below",
+            "storm watch"
+          ],
+          "reference_answer": "Initiate storm watch and alert emergency teams when atmospheric pressure falls below 980 hPa.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": null,
+          "golden_rules": {
+            "expected_rule_variables": [
+              "pressure_hpa"
+            ],
+            "expected_sql_variables": [
+              "pressure_hpa"
+            ],
+            "expected_rule_source": "synthetic_rule",
+            "expected_rule_page": 0
+          },
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "policy"
+          ],
+          "expected_memory_recall": {
+            "from_turn": 1,
+            "key_fact": "value"
+          }
+        },
+        {
+          "turn_id": 3,
+          "raw_query": "What does the documentation say about the discrepancy?",
+          "derived_from_sample_id": "V3_VEC_002",
+          "evaluation_focus": "doc_grounding_with_history",
+          "expected_sources": [
+            "vector"
+          ],
+          "needs_vector": true,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "comparison",
+          "expected_evidence_keywords": [
+            "Alternative 2A",
+            "22.5 minutes",
+            "20.4 minutes",
+            "peak hours",
+            "No-Build"
+          ],
+          "reference_answer": "Alternative 2A produced the lowest 22.5 minutes per vehicle during the 7-9 AM peak, saving 20.4 minutes versus the No-Build condition, with Alternative 3A-Modified second at 25.9 minutes.",
+          "difficulty": "easy",
+          "golden_vector": {
+            "relevant_chunk_ids": [
+              "236__c__p1__25__1"
+            ],
+            "relevant_parent_ids": [
+              "236__p__p1__25"
+            ],
+            "relevant_source_files": [
+              "panynj-studies-reports-lincoln-tunnel-hot-lane-feasibility-study.pdf"
+            ],
+            "relevant_sections": [
+              ""
+            ],
+            "expected_doc_types": [
+              "document"
+            ],
+            "expected_categories": [
+              "management"
+            ],
+            "expected_publish_year": null
+          },
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "documentation"
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "MT3_004",
+      "pattern": "topic_switch",
+      "description": "Two turns about port productivity, then a hard pivot to a different operational area. Tests that old entities are NOT injected into the resolved third query.",
+      "turns": [
+        {
+          "turn_id": 1,
+          "raw_query": "Was the average wind speed in 2015 within the normal operating range?",
+          "derived_from_sample_id": "V3_SQL_005",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "decision_support",
+          "expected_evidence_keywords": [
+            "average",
+            "wind speed",
+            "2015",
+            "normal range",
+            "wind_speed_ms"
+          ],
+          "reference_answer": "The average wind speed in 2015 was around 5.14 m/s, which is typical and within normal operating conditions.",
+          "difficulty": "medium",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "environment": [
+                "wind_speed_ms"
+              ]
+            },
+            "expected_aggregation": "AVG",
+            "expected_year_filter": "2015"
+          },
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 2,
+          "raw_query": "Same question for the previous quarter.",
+          "derived_from_sample_id": "V3_SQL_006",
+          "evaluation_focus": "temporal_carry",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "total",
+            "crane breakdown",
+            "2015",
+            "crane_operations",
+            "breakdown_minutes"
+          ],
+          "reference_answer": "Total crane breakdown time in 2015 was 7,722 minutes.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "crane_operations": [
+                "breakdown_minutes"
+              ]
+            },
+            "expected_aggregation": "SUM",
+            "expected_year_filter": "2015"
+          },
+          "golden_rules": null,
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "quarter"
+          ]
+        },
+        {
+          "turn_id": 3,
+          "raw_query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions?",
+          "derived_from_sample_id": "V3_VEC_003",
+          "evaluation_focus": "topic_switch_no_carry",
+          "expected_sources": [
+            "vector"
+          ],
+          "needs_vector": true,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "accrual basis",
+            "enterprise fund",
+            "$100,000",
+            "capitalized",
+            "GASB"
+          ],
+          "reference_answer": "Business-type activities are accounted for using the flow of economic resources measurement focus and accrual basis of accounting in an enterprise fund, and additions or asset improvements exceeding $100,000 that extend service life are capitalized.",
+          "difficulty": "easy",
+          "golden_vector": {
+            "relevant_chunk_ids": [
+              "248__c__2024__20__1"
+            ],
+            "relevant_parent_ids": [
+              "248__p__2024__20"
+            ],
+            "relevant_source_files": [
+              "annual-report-2024.pdf"
+            ],
+            "relevant_sections": [
+              "2024"
+            ],
+            "expected_doc_types": [
+              "annual_report"
+            ],
+            "expected_categories": [
+              "operations"
+            ],
+            "expected_publish_year": 2024
+          },
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": null,
+          "expected_resolved_query_should_not_contain": [
+            "productivity",
+            "quarter"
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "MT3_005",
+      "pattern": "long_summarisation",
+      "description": "Six diverse turns: triggers ShortTermMemory.summaries population (max_raw_turns=10/2). Final turn must recall a fact from turn 1 after summarisation.",
+      "turns": [
+        {
+          "turn_id": 1,
+          "raw_query": "Who won Port of Seattle's airline noise awards in 2024, and what is the purpose of the StART forum?",
+          "derived_from_sample_id": "V3_VEC_004",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "vector"
+          ],
+          "needs_vector": true,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "Air Canada",
+            "Frontier Airlines",
+            "Air France",
+            "StART",
+            "Stakeholder Advisory"
+          ],
+          "reference_answer": "The 2024 noise award winners were Air Canada, Frontier Airlines, and Air France, and StART is SEA's Stakeholder Advisory Round Table that brings together neighboring cities and residents to discuss aviation concerns.",
+          "difficulty": "easy",
+          "golden_vector": {
+            "relevant_chunk_ids": [
+              "0__c__p1__8__1"
+            ],
+            "relevant_parent_ids": [
+              "0__p__p1__8"
+            ],
+            "relevant_source_files": [
+              "2024-environment-and-sustainability-annual-report.pdf"
+            ],
+            "relevant_sections": [
+              ""
+            ],
+            "expected_doc_types": [
+              "sustainability_report"
+            ],
+            "expected_categories": [
+              "environment"
+            ],
+            "expected_publish_year": 2024
+          },
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 2,
+          "raw_query": "What was the worst vessel arrival delay in 2015?",
+          "derived_from_sample_id": "V3_SQL_007",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "worst",
+            "arrival delay",
+            "2015",
+            "berth_operations",
+            "arrival_delay_hours"
+          ],
+          "reference_answer": "The worst arrival delay recorded in 2015 was 4.0 hours.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "berth_operations": [
+                "arrival_delay_hours"
+              ]
+            },
+            "expected_aggregation": "MAX",
+            "expected_year_filter": "2015"
+          },
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 3,
+          "raw_query": "When should we deny new vessel arrivals due to long swell periods?",
+          "derived_from_sample_id": "V3_RUL_003",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "rules"
+          ],
+          "needs_vector": false,
+          "needs_sql": false,
+          "needs_rules": true,
+          "needs_graph": false,
+          "answer_mode": "decision_support",
+          "expected_evidence_keywords": [
+            "dominant period",
+            "swell",
+            "deny arrivals"
+          ],
+          "reference_answer": "Deny new vessel arrivals when the dominant wave period exceeds 12 seconds to ensure mooring security.",
+          "difficulty": "medium",
+          "golden_vector": null,
+          "golden_sql": null,
+          "golden_rules": {
+            "expected_rule_variables": [
+              "dominant_period_s"
+            ],
+            "expected_sql_variables": [
+              "dominant_period_s"
+            ],
+            "expected_rule_source": "synthetic_rule",
+            "expected_rule_page": 0
+          },
+          "golden_graph": null
+        },
+        {
+          "turn_id": 4,
+          "raw_query": "How does a vessel's LOA cause an ultra-large container ship safety protocol to be triggered?",
+          "derived_from_sample_id": "V3_GRA_002",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "graph"
+          ],
+          "needs_vector": false,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": true,
+          "answer_mode": "diagnostic",
+          "expected_evidence_keywords": [
+            "vessel_loa_meters",
+            "operational_requirement",
+            "triggers"
+          ],
+          "reference_answer": "When LOA reaches or exceeds 366 m the vessel is classified as ultra-large, which causes the safety protocol for ULCVs to activate as an operational requirement.",
+          "difficulty": "hard",
+          "golden_vector": null,
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": {
+            "expected_entities": [
+              "vessel_loa_meters",
+              "operational_requirement"
+            ],
+            "expected_relationships": [
+              "TRIGGERS"
+            ]
+          }
+        },
+        {
+          "turn_id": 5,
+          "raw_query": "How many total gate transactions did the port process in 2015?",
+          "derived_from_sample_id": "V3_SQL_008",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "total",
+            "gate transactions",
+            "2015",
+            "gate_operations",
+            "total_transactions"
+          ],
+          "reference_answer": "The port processed 1,550,621 total gate transactions in 2015.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "gate_operations": [
+                "total_transactions"
+              ]
+            },
+            "expected_aggregation": "SUM",
+            "expected_year_filter": "2015"
+          },
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 6,
+          "raw_query": "Going back to what we discussed first — does that source explain it?",
+          "derived_from_sample_id": "V3_VEC_005",
+          "evaluation_focus": "long_range_recall",
+          "expected_sources": [
+            "vector"
+          ],
+          "needs_vector": true,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "comparison",
+          "expected_evidence_keywords": [
+            "JFK",
+            "EWR",
+            "CO2e",
+            "air cargo",
+            "117,443"
+          ],
+          "reference_answer": "JFK and EWR together accounted for nearly all 2023 cargo-attracted travel emissions, with totals around 56,410 and 59,561 metric tons CO2e respectively, out of an overall 117,443 metric tons.",
+          "difficulty": "medium",
+          "golden_vector": {
+            "relevant_chunk_ids": [
+              "3__c__p1__18__2"
+            ],
+            "relevant_parent_ids": [
+              "3__p__p1__18"
+            ],
+            "relevant_source_files": [
+              "ey2023_ghg_cap_inventory_report-final.pdf"
+            ],
+            "relevant_sections": [
+              ""
+            ],
+            "expected_doc_types": [
+              "sustainability_report"
+            ],
+            "expected_categories": [
+              "environment"
+            ],
+            "expected_publish_year": 2023
+          },
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "source"
+          ],
+          "expected_memory_recall": {
+            "from_turn": 1,
+            "key_fact": "first_topic"
+          }
+        }
+      ]
+    },
+    {
+      "conversation_id": "MT3_006",
+      "pattern": "guardrail_in_conversation",
+      "description": "Two normal port turns, then an out-of-domain query in the middle of the chat, then a return to the original topic. Tests that the OOD refusal does not contaminate downstream turns.",
+      "turns": [
+        {
+          "turn_id": 1,
+          "raw_query": "Give me the mean tide level observed during 2016.",
+          "derived_from_sample_id": "V3_SQL_009",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "mean",
+            "tide level",
+            "2016",
+            "environment",
+            "tide_ft"
+          ],
+          "reference_answer": "The mean tide level in 2016 was about 0.027 ft.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "environment": [
+                "tide_ft"
+              ]
+            },
+            "expected_aggregation": "AVG",
+            "expected_year_filter": "2016"
+          },
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 2,
+          "raw_query": "What's the best pizza recipe?",
+          "derived_from_sample_id": "V3_GUARD_OOD_001",
+          "evaluation_focus": "ood_mid_conversation",
+          "expected_sources": [],
+          "needs_vector": false,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [],
+          "reference_answer": "The question is outside port operations domain.",
+          "difficulty": "hard",
+          "golden_vector": null,
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 3,
+          "raw_query": "Back to the earlier topic — what was the trend?",
+          "derived_from_sample_id": "V3_SQL_010",
+          "evaluation_focus": "post_guardrail_recovery",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "decision_support",
+          "expected_evidence_keywords": [
+            "average",
+            "tide level",
+            "2016",
+            "normal range",
+            "tide_ft"
+          ],
+          "reference_answer": "The 2016 average tide level of about 0.027 ft sits near the expected baseline, within typical operating conditions.",
+          "difficulty": "medium",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "environment": [
+                "tide_ft"
+              ]
+            },
+            "expected_aggregation": "AVG",
+            "expected_year_filter": "2016"
+          },
+          "golden_rules": null,
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "trend"
+          ],
+          "expected_memory_recall": {
+            "from_turn": 1,
+            "key_fact": "topic"
+          }
+        }
+      ]
+    },
+    {
+      "conversation_id": "MT3_007",
+      "pattern": "entity_anchored",
+      "description": "Crane operations question with two follow-ups, all anchored on the same crane.",
+      "turns": [
+        {
+          "turn_id": 1,
+          "raw_query": "Tell me the 2015 mean wind speed measured at the port.",
+          "derived_from_sample_id": "V3_SQL_011",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "mean",
+            "wind speed",
+            "2015",
+            "environment",
+            "wind_speed_ms"
+          ],
+          "reference_answer": "The mean wind speed in 2015 was roughly 5.14 m/s.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "environment": [
+                "wind_speed_ms"
+              ]
+            },
+            "expected_aggregation": "AVG",
+            "expected_year_filter": "2015"
+          },
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 2,
+          "raw_query": "Are there safety rules tied to it?",
+          "derived_from_sample_id": "V3_RUL_004",
+          "evaluation_focus": "pronoun_resolution",
+          "expected_sources": [
+            "rules"
+          ],
+          "needs_vector": false,
+          "needs_sql": false,
+          "needs_rules": true,
+          "needs_graph": false,
+          "answer_mode": "decision_support",
+          "expected_evidence_keywords": [
+            "water temperature",
+            "freeze protection",
+            "heating"
+          ],
+          "reference_answer": "Activate freeze protection and heating for dockside utilities when water temperature drops below 1 C.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": null,
+          "golden_rules": {
+            "expected_rule_variables": [
+              "water_temp_c"
+            ],
+            "expected_sql_variables": [
+              "water_temp_c"
+            ],
+            "expected_rule_source": "synthetic_rule",
+            "expected_rule_page": 0
+          },
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "safety",
+            "rule"
+          ],
+          "expected_memory_recall": {
+            "from_turn": 1,
+            "key_fact": "crane"
+          }
+        },
+        {
+          "turn_id": 3,
+          "raw_query": "Is this documented anywhere?",
+          "derived_from_sample_id": "V3_VEC_006",
+          "evaluation_focus": "doc_grounding_with_history",
+          "expected_sources": [
+            "vector"
+          ],
+          "needs_vector": true,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "descriptive",
+          "expected_evidence_keywords": [
+            "charter",
+            "1200-2000",
+            "hardstand",
+            "Amelia",
+            "Lindy"
+          ],
+          "reference_answer": "Charter operations cannot be scheduled during the 1200-2000 peak window at EWR's international facility, and use of Hardstands Amelia and Lindy requires prior Port Authority coordination with priority given to international carriers parking between arrival and departure.",
+          "difficulty": "medium",
+          "golden_vector": {
+            "relevant_chunk_ids": [
+              "17__c__p1__17__4"
+            ],
+            "relevant_parent_ids": [
+              "17__p__p1__17"
+            ],
+            "relevant_source_files": [
+              "panynj-airports-ewr-competition-plan-update-february-2004.pdf"
+            ],
+            "relevant_sections": [
+              ""
+            ],
+            "expected_doc_types": [
+              "document"
+            ],
+            "expected_categories": [
+              "environment"
+            ],
+            "expected_publish_year": 2004
+          },
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "document"
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "MT3_008",
+      "pattern": "cross_source_verification",
+      "description": "User checks a SQL number and asks if it conflicts with documented thresholds.",
+      "turns": [
+        {
+          "turn_id": 1,
+          "raw_query": "Compared to expected values, what was the average tide level for 2016?",
+          "derived_from_sample_id": "V3_SQL_012",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "sql"
+          ],
+          "needs_vector": false,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "comparison",
+          "expected_evidence_keywords": [
+            "average",
+            "tide level",
+            "2016",
+            "environment",
+            "tide_ft"
+          ],
+          "reference_answer": "The 2016 average tide level was approximately 0.027 ft.",
+          "difficulty": "medium",
+          "golden_vector": null,
+          "golden_sql": {
+            "expected_tables": {
+              "environment": [
+                "tide_ft"
+              ]
+            },
+            "expected_aggregation": "AVG",
+            "expected_year_filter": "2016"
+          },
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 2,
+          "raw_query": "Does that exceed the documented threshold?",
+          "derived_from_sample_id": "V3_RUL_005",
+          "evaluation_focus": "conflict_query_with_carry",
+          "expected_sources": [
+            "rules"
+          ],
+          "needs_vector": false,
+          "needs_sql": false,
+          "needs_rules": true,
+          "needs_graph": false,
+          "answer_mode": "decision_support",
+          "expected_evidence_keywords": [
+            "air temperature",
+            "extreme cold",
+            "heated shelter"
+          ],
+          "reference_answer": "Implement extreme cold protocols including heated shelters and frequent breaks when air temperature falls below -10 C.",
+          "difficulty": "easy",
+          "golden_vector": null,
+          "golden_sql": null,
+          "golden_rules": {
+            "expected_rule_variables": [
+              "air_temp_c"
+            ],
+            "expected_sql_variables": [
+              "air_temp_c"
+            ],
+            "expected_rule_source": "synthetic_rule",
+            "expected_rule_page": 0
+          },
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "threshold",
+            "exceed"
+          ],
+          "expected_memory_recall": {
+            "from_turn": 1,
+            "key_fact": "value"
+          }
+        }
+      ]
+    },
+    {
+      "conversation_id": "MT3_009",
+      "pattern": "topic_switch",
+      "description": "Berth thread followed by an unrelated graph query about gate operations.",
+      "turns": [
+        {
+          "turn_id": 1,
+          "raw_query": "What action did the Port Authority take in July 2001 against American Airlines and Air Canada at EWR based on the Gate Utilization Assessment?",
+          "derived_from_sample_id": "V3_VEC_007",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "vector"
+          ],
+          "needs_vector": true,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "lookup",
+          "expected_evidence_keywords": [
+            "American Airlines",
+            "Air Canada",
+            "underutilized",
+            "terminate",
+            "July 23, 2001"
+          ],
+          "reference_answer": "On July 23, 2001 the Port Authority issued notices to American Airlines and Air Canada announcing its intent to take back (terminate the leases on) underutilized space at EWR pursuant to the Gate Utilization Assessment and Air 21.",
+          "difficulty": "medium",
+          "golden_vector": {
+            "relevant_chunk_ids": [
+              "108__c__p1__2__3"
+            ],
+            "relevant_parent_ids": [
+              "108__p__p1__2"
+            ],
+            "relevant_source_files": [
+              "panynj-airports-ewr-competition-plan-update-march-2002.pdf"
+            ],
+            "relevant_sections": [
+              ""
+            ],
+            "expected_doc_types": [
+              "document"
+            ],
+            "expected_categories": [
+              "management"
+            ],
+            "expected_publish_year": 2002
+          },
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 2,
+          "raw_query": "Why does a vessel's IMO arrival drive the requirement to produce Form 5 Part 4 and Forms 3a and 3b at the first port?",
+          "derived_from_sample_id": "V3_GRA_003",
+          "evaluation_focus": "topic_switch_no_carry",
+          "expected_sources": [
+            "graph"
+          ],
+          "needs_vector": false,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": true,
+          "answer_mode": "diagnostic",
+          "expected_evidence_keywords": [
+            "vessel_imo",
+            "form 5",
+            "forms 3a",
+            "requires"
+          ],
+          "reference_answer": "An IMO-registered vessel arriving at its first port triggers Border Force clearance, which requires the master to produce Form 5 Part 4, Forms 3a/3b, and Form 13.",
+          "difficulty": "hard",
+          "golden_vector": null,
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": {
+            "expected_entities": [
+              "vessel_imo",
+              "produce_form_5_part_4_forms_3a_and_3b_fo"
+            ],
+            "expected_relationships": [
+              "TRIGGERS"
+            ]
+          },
+          "expected_resolved_query_should_not_contain": [
+            "berth"
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "MT3_010",
+      "pattern": "mode_progression",
+      "description": "Diagnostic question sequence: descriptive -> diagnostic -> decision_support over 3 turns.",
+      "turns": [
+        {
+          "turn_id": 1,
+          "raw_query": "Under the 2019 Port Authority tariff, what happens if cargo gets wet or fire-damaged on a wharf, and who is liable for damage to watercraft at the terminal?",
+          "derived_from_sample_id": "V3_VEC_008",
+          "evaluation_focus": "single_turn_baseline",
+          "expected_sources": [
+            "vector"
+          ],
+          "needs_vector": true,
+          "needs_sql": false,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "descriptive",
+          "expected_evidence_keywords": [
+            "wet or fire damaged",
+            "permission",
+            "not liable",
+            "watercraft",
+            "subrule"
+          ],
+          "reference_answer": "Wet or fire damaged cargo cannot remain on any wharf or terminal without permission, and the Port Authority is not liable for loss or damage to watercraft or merchandise at the terminal per Subrule 34-210.",
+          "difficulty": "medium",
+          "golden_vector": {
+            "relevant_chunk_ids": [
+              "231__c__p1__4__4"
+            ],
+            "relevant_parent_ids": [
+              "231__p__p1__4"
+            ],
+            "relevant_source_files": [
+              "panynj-port-doing-business-tariff-pa-july-2019.pdf"
+            ],
+            "relevant_sections": [
+              ""
+            ],
+            "expected_doc_types": [
+              "document"
+            ],
+            "expected_categories": [
+              "management"
+            ],
+            "expected_publish_year": 2019
+          },
+          "golden_sql": null,
+          "golden_rules": null,
+          "golden_graph": null
+        },
+        {
+          "turn_id": 2,
+          "raw_query": "Why might that be happening?",
+          "derived_from_sample_id": "V3_MULTI_002",
+          "evaluation_focus": "diagnostic_with_carry",
+          "expected_sources": [
+            "vector",
+            "sql"
+          ],
+          "needs_vector": true,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "comparison",
+          "expected_evidence_keywords": [
+            "Cessna",
+            "LGA general aviation",
+            "aircraft operations",
+            "traffic statistics",
+            "environmental report"
+          ],
+          "reference_answer": "Cross-check the report's listed GA fleet at LGA against actual operations data to verify the reported share of small-aircraft movements.",
+          "difficulty": "hard",
+          "golden_vector": {
+            "relevant_chunk_ids": [
+              "52__c__p1__19__7"
+            ],
+            "relevant_source_files": [
+              "panynj-environmental-initiatives-ey2016-report-final.pdf"
+            ]
+          },
+          "golden_sql": {
+            "expected_tables": {}
+          },
+          "golden_rules": null,
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "why"
+          ],
+          "expected_memory_recall": {
+            "from_turn": 1,
+            "key_fact": "phenomenon"
+          }
+        },
+        {
+          "turn_id": 3,
+          "raw_query": "What should we recommend doing about it?",
+          "derived_from_sample_id": "V3_MULTI_003",
+          "evaluation_focus": "decision_with_diagnostic_history",
+          "expected_sources": [
+            "vector",
+            "sql"
+          ],
+          "needs_vector": true,
+          "needs_sql": true,
+          "needs_rules": false,
+          "needs_graph": false,
+          "answer_mode": "comparison",
+          "expected_evidence_keywords": [
+            "port district",
+            "employment",
+            "per-capita income",
+            "17 counties",
+            "2008 financials"
+          ],
+          "reference_answer": "Compare the narrative demographic claims in the 2008 financial report against the actual data tables for population, income, and unemployment.",
+          "difficulty": "hard",
+          "golden_vector": {
+            "relevant_chunk_ids": [
+              "180__c__p1__18__2"
+            ],
+            "relevant_source_files": [
+              "panynj-corporate-financial-statements-financial-statement-2008.pdf"
+            ]
+          },
+          "golden_sql": {
+            "expected_tables": {}
+          },
+          "golden_rules": null,
+          "golden_graph": null,
+          "expected_resolved_query_contains": [
+            "recommend"
+          ],
+          "expected_memory_recall": {
+            "from_turn": 2,
+            "key_fact": "cause"
+          }
+        }
+      ]
+    }
+  ]
+}

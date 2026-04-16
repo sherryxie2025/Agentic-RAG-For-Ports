@@ -157,6 +157,15 @@ class AnswerSynthesizer:
             sources_used=sources_used,
         )
 
+        # Multi-turn: if the caller injected a memory_context block, expose it
+        # to the synthesis LLM. The packet is JSON-serialised verbatim into
+        # the user prompt, so adding the field is enough — no prompt edits
+        # needed. In single-turn evaluation this field is absent and the
+        # behaviour is identical to before.
+        memory_context = state.get("memory_context")
+        if memory_context:
+            evidence_packet["conversation_context"] = memory_context
+
         # Detect SQL-primary scenario for focused prompt
         is_sql_primary = (
             bool(sql_summary)

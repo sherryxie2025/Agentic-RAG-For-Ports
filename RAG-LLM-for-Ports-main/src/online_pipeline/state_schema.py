@@ -183,6 +183,21 @@ class ConversationSummary(TypedDict, total=False):
     key_facts: List[str]            # factual claims established
 
 
+class KeyFactRecord(TypedDict, total=False):
+    """
+    A durable, atomic factual claim extracted from older conversation turns.
+
+    Lives longer than raw turns and individual summaries — this is the
+    bottom layer of the 3-tier short-term memory. Key facts are the only
+    thing that survives when a conversation grows past the buffer + summary
+    budget.
+    """
+    fact: str                       # concise one-line claim
+    from_turn_ids: List[int]        # which turns this fact was distilled from
+    entities: List[str]             # entities mentioned in the fact
+    extracted_at: str               # ISO-8601 timestamp
+
+
 # ---------------------------------------------------------------------------
 # ReAct observation types
 # ---------------------------------------------------------------------------

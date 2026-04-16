@@ -1,0 +1,667 @@
+{
+  "generated_at": "2026-04-15T02:20:23",
+  "dataset": "golden_dataset_v3_multi_turn.json",
+  "evaluated_system": "agentic-rag DAG with conversation_memory",
+  "skip_llm_judge": true,
+  "metrics": {
+    "co_reference": {
+      "contains_score": 0.9167,
+      "exclusion_score": 1.0,
+      "rewrite_rate": 0.0
+    },
+    "recall": {
+      "overall_memory_recall_at_k": 0.6667,
+      "forgetting_curve_by_age": {
+        "age_1_turns": 0.5,
+        "age_2_turns": 1.0
+      }
+    },
+    "entities": {
+      "avg_persistence_rate": 1.0
+    },
+    "topic_switch": {
+      "correct_no_carry_rate": 0.0
+    },
+    "efficiency": {
+      "avg_context_token_overhead": 10.858,
+      "avg_resolve_followup_ms": 3334.6,
+      "avg_build_context_ms": 3.9
+    },
+    "counts": {
+      "conversations": 2,
+      "turns": 6,
+      "llm_judged_turns": 0
+    }
+  },
+  "per_turn": [
+    {
+      "turn_id": 1,
+      "evaluation_focus": "single_turn_baseline",
+      "coref": {
+        "contains_score": 1.0,
+        "exclusion_score": 1.0,
+        "was_rewritten": 0.0,
+        "length_ratio": 1.0
+      },
+      "memory_recall": null,
+      "recall_age_in_turns": null,
+      "entity_persistence": null,
+      "topic_switch": null,
+      "context_token_overhead": 0.0,
+      "resolve_latency_ms": 0.0,
+      "build_ctx_latency_ms": 1.430511474609375,
+      "judge_precision": null,
+      "judge_consistency": null,
+      "judge_attribution": null,
+      "conversation_id": "MT3_001",
+      "pattern": "entity_anchored"
+    },
+    {
+      "turn_id": 2,
+      "evaluation_focus": "ellipsis_with_topic_carry",
+      "coref": {
+        "contains_score": 0.5,
+        "exclusion_score": 1.0,
+        "was_rewritten": 0.0,
+        "length_ratio": 1.0
+      },
+      "memory_recall": 1.0,
+      "recall_age_in_turns": 1,
+      "entity_persistence": 1.0,
+      "topic_switch": null,
+      "context_token_overhead": 12.095,
+      "resolve_latency_ms": 0.0,
+      "build_ctx_latency_ms": 0.9682178497314453,
+      "judge_precision": null,
+      "judge_consistency": null,
+      "judge_attribution": null,
+      "conversation_id": "MT3_001",
+      "pattern": "entity_anchored"
+    },
+    {
+      "turn_id": 3,
+      "evaluation_focus": "demonstrative_resolution",
+      "coref": {
+        "contains_score": 1.0,
+        "exclusion_score": 1.0,
+        "was_rewritten": 0.0,
+        "length_ratio": 1.0
+      },
+      "memory_recall": 0.0,
+      "recall_age_in_turns": 1,
+      "entity_persistence": 1.0,
+      "topic_switch": null,
+      "context_token_overhead": 13.606,
+      "resolve_latency_ms": 0.0,
+      "build_ctx_latency_ms": 0.9932518005371094,
+      "judge_precision": null,
+      "judge_consistency": null,
+      "judge_attribution": null,
+      "conversation_id": "MT3_001",
+      "pattern": "entity_anchored"
+    },
+    {
+      "turn_id": 1,
+      "evaluation_focus": "single_turn_baseline",
+      "coref": {
+        "contains_score": 1.0,
+        "exclusion_score": 1.0,
+        "was_rewritten": 0.0,
+        "length_ratio": 1.0
+      },
+      "memory_recall": null,
+      "recall_age_in_turns": null,
+      "entity_persistence": null,
+      "topic_switch": null,
+      "context_token_overhead": 4.792,
+      "resolve_latency_ms": 0.0,
+      "build_ctx_latency_ms": 9.996891021728516,
+      "judge_precision": null,
+      "judge_consistency": null,
+      "judge_attribution": null,
+      "conversation_id": "MT3_002",
+      "pattern": "mode_progression"
+    },
+    {
+      "turn_id": 2,
+      "evaluation_focus": "ellipsis_with_metric_carry",
+      "coref": {
+        "contains_score": 1.0,
+        "exclusion_score": 1.0,
+        "was_rewritten": 0.0,
+        "length_ratio": 1.0
+      },
+      "memory_recall": null,
+      "recall_age_in_turns": null,
+      "entity_persistence": 1.0,
+      "topic_switch": null,
+      "context_token_overhead": 17.0,
+      "resolve_latency_ms": 0.0,
+      "build_ctx_latency_ms": 9.994983673095703,
+      "judge_precision": null,
+      "judge_consistency": null,
+      "judge_attribution": null,
+      "conversation_id": "MT3_002",
+      "pattern": "mode_progression"
+    },
+    {
+      "turn_id": 3,
+      "evaluation_focus": "decision_support_with_history",
+      "coref": {
+        "contains_score": 1.0,
+        "exclusion_score": 1.0,
+        "was_rewritten": 0.0,
+        "length_ratio": 1.0
+      },
+      "memory_recall": 1.0,
+      "recall_age_in_turns": 2,
+      "entity_persistence": 1.0,
+      "topic_switch": null,
+      "context_token_overhead": 17.653,
+      "resolve_latency_ms": 20007.48872756958,
+      "build_ctx_latency_ms": 0.0,
+      "judge_precision": null,
+      "judge_consistency": null,
+      "judge_attribution": null,
+      "conversation_id": "MT3_002",
+      "pattern": "mode_progression"
+    }
+  ],
+  "raw_runs": [
+    {
+      "conversation_id": "MT3_001",
+      "pattern": "entity_anchored",
+      "session_id": "6bfab2f42175",
+      "turns": [
+        {
+          "turn_id": 1,
+          "turn_spec": {
+            "turn_id": 1,
+            "raw_query": "What was the average tide level at the port in 2016?",
+            "derived_from_sample_id": "V3_SQL_001",
+            "evaluation_focus": "single_turn_baseline",
+            "expected_sources": [
+              "sql"
+            ],
+            "needs_vector": false,
+            "needs_sql": true,
+            "needs_rules": false,
+            "needs_graph": false,
+            "answer_mode": "lookup",
+            "expected_evidence_keywords": [
+              "average",
+              "tide",
+              "2016",
+              "environment",
+              "tide_ft"
+            ],
+            "reference_answer": "The average tide level in 2016 was approximately 0.027 ft.",
+            "difficulty": "easy",
+            "golden_vector": null,
+            "golden_sql": {
+              "expected_tables": {
+                "environment": [
+                  "tide_ft"
+                ]
+              },
+              "expected_aggregation": "AVG",
+              "expected_year_filter": "2016"
+            },
+            "golden_rules": null,
+            "golden_graph": null
+          },
+          "raw_query": "What was the average tide level at the port in 2016?",
+          "resolved_query": "What was the average tide level at the port in 2016?",
+          "was_rewritten": false,
+          "memory_context": "",
+          "memory_context_chars": 0,
+          "resolve_latency_ms": 0.0,
+          "build_ctx_latency_ms": 1.430511474609375,
+          "active_entities_after_turn": [
+            "metric_tide_level",
+            "year_2016",
+            "date_2016-01",
+            "date_2017-01"
+          ],
+          "prior_entities_per_turn": [],
+          "final_answer": "### Answer\nThe average tide level at the port in 2016 [sql] was 0.027313323818074237 [sql] feet.\n\n### Data Details\nThis value represents the mean aggregation from the environment table [sql] spanning 2016-01-01 [sql] to 2017-01-01 [sql].\n\n### Notes\nThe result set contained one row with successful execution.",
+          "sources_used": [
+            "sql"
+          ],
+          "router_decision": {
+            "question_type": "structured_data",
+            "answer_mode": "lookup",
+            "needs_vector": false,
+            "needs_sql": true,
+            "needs_rules": false,
+            "needs_graph_reasoning": false,
+            "confidence": 0.95,
+            "matched_keywords": [],
+            "rationale": "LLM-routed"
+          },
+          "expected_sources": [
+            "sql"
+          ],
+          "answer_mode": "lookup"
+        },
+        {
+          "turn_id": 2,
+          "turn_spec": {
+            "turn_id": 2,
+            "raw_query": "And what are the policy rules around that?",
+            "derived_from_sample_id": "V3_RUL_001",
+            "evaluation_focus": "ellipsis_with_topic_carry",
+            "expected_sources": [
+              "rules"
+            ],
+            "needs_vector": false,
+            "needs_sql": false,
+            "needs_rules": true,
+            "needs_graph": false,
+            "answer_mode": "decision_support",
+            "expected_evidence_keywords": [
+              "wave height",
+              "exceed",
+              "halt crane"
+            ],
+            "reference_answer": "Halt external crane lifting operations and secure cranes when significant wave height exceeds 2.5 m.",
+            "difficulty": "easy",
+            "golden_vector": null,
+            "golden_sql": null,
+            "golden_rules": {
+              "expected_rule_variables": [
+                "wave_height_m"
+              ],
+              "expected_sql_variables": [
+                "wave_height_m"
+              ],
+              "expected_rule_source": "synthetic_rule",
+              "expected_rule_page": 0
+            },
+            "golden_graph": null,
+            "expected_resolved_query_contains": [
+              "tide",
+              "rule"
+            ],
+            "expected_memory_recall": {
+              "from_turn": 1,
+              "key_fact": "tide"
+            }
+          },
+          "raw_query": "And what are the policy rules around that?",
+          "resolved_query": "And what are the policy rules around that?",
+          "was_rewritten": false,
+          "memory_context": "[Recent turns]:\n  user: What was the average tide level at the port in 2016?\n  assistant: ### Answer\nThe average tide level at the port in 2016 [sql] was 0.027313323818074237 [sql] feet.\n\n### Data Details\nThis value represents the mean aggregation from the environment table [sql] spanning 2016-01-01 [sql] to 2017-01-01 [sql].\n\n### Notes\nThe result set contained one ro\n\n[Active entities]: metric_tide_level, year_2016, date_2016-01, date_2017-01\n\n[Last evidence]: sql: tables=['environment'] rows=1 ok=True",
+          "memory_context_chars": 508,
+          "resolve_latency_ms": 0.0,
+          "build_ctx_latency_ms": 0.9682178497314453,
+          "active_entities_after_turn": [
+            "metric_tide_level",
+            "year_2016",
+            "date_2016-01",
+            "date_2017-01"
+          ],
+          "prior_entities_per_turn": [
+            [
+              "metric_tide_level",
+              "year_2016"
+            ]
+          ],
+          "final_answer": "### Current Assessment\nOnly limited grounded evidence is currently available for this assessment.\n\n### Evidence-Based Analysis\n- A relevant rule was retrieved: Vessels navigating the designated traffic separation scheme within the fairway must maintain a maximum speed of 10 knots and keep to the starboard side of the lane..\n\n### Recommendation\nA grounded recommendation should be based primarily on the retrieved rule together with the current operational evidence.",
+          "sources_used": [
+            "rules"
+          ],
+          "router_decision": {
+            "question_type": "policy_rule",
+            "answer_mode": "decision_support",
+            "needs_vector": false,
+            "needs_sql": false,
+            "needs_rules": true,
+            "needs_graph_reasoning": false,
+            "confidence": 0.95,
+            "matched_keywords": [],
+            "rationale": "LLM-routed"
+          },
+          "expected_sources": [
+            "rules"
+          ],
+          "answer_mode": "decision_support"
+        },
+        {
+          "turn_id": 3,
+          "turn_spec": {
+            "turn_id": 3,
+            "raw_query": "If that threshold is breached, which port operations are affected?",
+            "derived_from_sample_id": "V3_GRA_001",
+            "evaluation_focus": "demonstrative_resolution",
+            "expected_sources": [
+              "graph"
+            ],
+            "needs_vector": false,
+            "needs_sql": false,
+            "needs_rules": false,
+            "needs_graph": true,
+            "answer_mode": "diagnostic",
+            "expected_evidence_keywords": [
+              "depth",
+              "anchor",
+              "shallow draught",
+              "causes"
+            ],
+            "reference_answer": "Depth between 6.5 and 7.5 metres is what qualifies the fork as a permissible anchorage, so depth directly governs anchoring eligibility for shallow-draught vessels.",
+            "difficulty": "hard",
+            "golden_vector": null,
+            "golden_sql": null,
+            "golden_rules": null,
+            "golden_graph": {
+              "expected_entities": [
+                "depth",
+                "anchor_in_the_fork_between_williamstown_"
+              ],
+              "expected_relationships": [
+                "TRIGGERS"
+              ]
+            },
+            "expected_resolved_query_contains": [
+              "threshold",
+              "operations"
+            ],
+            "expected_memory_recall": {
+              "from_turn": 2,
+              "key_fact": "threshold"
+            }
+          },
+          "raw_query": "If that threshold is breached, which port operations are affected?",
+          "resolved_query": "If that threshold is breached, which port operations are affected?",
+          "was_rewritten": false,
+          "memory_context": "[Recent turns]:\n  user: What was the average tide level at the port in 2016?\n  assistant: ### Answer\nThe average tide level at the port in 2016 [sql] was 0.027313323818074237 [sql] feet.\n\n### Data Details\nThis value represents the mean aggregation from the environment table [sql] spanning 2016-01-01 [sql] to 2017-01-01 [sql].\n\n### Notes\nThe result set contained one ro\n  user: And what are the policy rules around that?\n  assistant: ### Current Assessment\nOnly limited grounded evidence is currently available for this assessment.\n\n### Evidence-Based Analysis\n- A relevant rule was retrieved: Vessels navigating the designated traffic separation scheme within the fairway must maintain a maximum speed of 10 knots\n\n[Active entities]: metric_tide_level, year_2016, date_2016-01, date_2017-01\n\n[Last evidence]: rules: Vessels navigating the designated traffic separation scheme within the fairway m",
+          "memory_context_chars": 898,
+          "resolve_latency_ms": 0.0,
+          "build_ctx_latency_ms": 0.9932518005371094,
+          "active_entities_after_turn": [
+            "metric_tide_level",
+            "year_2016",
+            "date_2016-01",
+            "date_2017-01"
+          ],
+          "prior_entities_per_turn": [
+            [
+              "metric_tide_level",
+              "year_2016"
+            ],
+            []
+          ],
+          "final_answer": "### Current Assessment\nThe system has identified a speed regulation rule but currently lacks specific evidence regarding the operational consequences of breaching this threshold. While the requirement for vessel speed is established, the policy details defining the impact on port operations upon violation are not present in the retrieved data.\n\n### Evidence-Based Analysis\nA relevant channel rule was retrieved stating that vessels navigating the designated traffic separation scheme within the fairway must maintain a maximum speed of 10 knots [rule]. This rule also mandates that vessels keep to the starboard side of the lane [rule]. However, the retrieved rule text does not include provisions detailing operational suspensions, fines, or other enforcement actions if the 10-knot threshold is exceeded [rule]. The system trace shows no triggered explanation or consequence mapping associated with this specific rule variable [rule]. Consequently, the specific port operations affected by a breach remain undefined in the current evidence set [rule].\n\n### Recommendation\nGiven the absence of explicit consequence data in the retrieved rules, we recommend manual verification against the complete port authority policy documentation before determining operational impacts [general knowledge]. Operational teams should consult the safety or compliance department to confirm whether a breach triggers inspections, traffic hold-ups, or other restrictions [general knowledge]. Until the full enforcement protocol is verified, no automated stop or go recommendation should be applied based solely on this speed limit rule [rule].\n\n### Notes\nThe current analysis is limited to the single speed regulation rule retrieved from the synthetic rule source [rule]. Any general assumptions regarding maritime enforcement procedures are not grounded in the specific port database evidence [general knowledge]. Users should treat the lack of consequence data as a gap requiring human review rather than an indication that no impact exists [rule].",
+          "sources_used": [
+            "rules"
+          ],
+          "router_decision": {
+            "question_type": "policy_rule",
+            "answer_mode": "decision_support",
+            "needs_vector": false,
+            "needs_sql": false,
+            "needs_rules": true,
+            "needs_graph_reasoning": false,
+            "confidence": 0.9,
+            "matched_keywords": [],
+            "rationale": "LLM-routed"
+          },
+          "expected_sources": [
+            "graph"
+          ],
+          "answer_mode": "diagnostic"
+        }
+      ]
+    },
+    {
+      "conversation_id": "MT3_002",
+      "pattern": "mode_progression",
+      "session_id": "f47ba8e9d0ef",
+      "turns": [
+        {
+          "turn_id": 1,
+          "turn_spec": {
+            "turn_id": 1,
+            "raw_query": "How much was the average wind speed recorded in 2015?",
+            "derived_from_sample_id": "V3_SQL_002",
+            "evaluation_focus": "single_turn_baseline",
+            "expected_sources": [
+              "sql"
+            ],
+            "needs_vector": false,
+            "needs_sql": true,
+            "needs_rules": false,
+            "needs_graph": false,
+            "answer_mode": "lookup",
+            "expected_evidence_keywords": [
+              "average",
+              "wind speed",
+              "2015",
+              "environment",
+              "wind_speed_ms"
+            ],
+            "reference_answer": "The average wind speed in 2015 was approximately 5.14 m/s.",
+            "difficulty": "easy",
+            "golden_vector": null,
+            "golden_sql": {
+              "expected_tables": {
+                "environment": [
+                  "wind_speed_ms"
+                ]
+              },
+              "expected_aggregation": "AVG",
+              "expected_year_filter": "2015"
+            },
+            "golden_rules": null,
+            "golden_graph": null
+          },
+          "raw_query": "How much was the average wind speed recorded in 2015?",
+          "resolved_query": "How much was the average wind speed recorded in 2015?",
+          "was_rewritten": false,
+          "memory_context": "[Memories from prior sessions]:\n  - (session_summary) The user investigated the 2016 average tide level and related vessel navigation policies, with the system providing a specific measurement of approximately 0.027 feet. Although a speed regulation rule",
+          "memory_context_chars": 254,
+          "resolve_latency_ms": 0.0,
+          "build_ctx_latency_ms": 9.996891021728516,
+          "active_entities_after_turn": [
+            "metric_wind_speed",
+            "year_2015",
+            "date_2015-01",
+            "date_2016-01"
+          ],
+          "prior_entities_per_turn": [],
+          "final_answer": "### Answer\nThe average wind speed recorded in 2015 was 5.140104526956818 [sql].\n\n### Data Details\nThis value represents the mean aggregation from the environment table for the period 2015-01-01 to 2016-01-01 [sql]. One result row was retrieved from the query execution [sql].\n\n### Notes\nThe database execution completed successfully without errors [sql].",
+          "sources_used": [
+            "sql"
+          ],
+          "router_decision": {
+            "question_type": "structured_data",
+            "answer_mode": "lookup",
+            "needs_vector": false,
+            "needs_sql": true,
+            "needs_rules": false,
+            "needs_graph_reasoning": false,
+            "confidence": 0.95,
+            "matched_keywords": [],
+            "rationale": "LLM-routed"
+          },
+          "expected_sources": [
+            "sql"
+          ],
+          "answer_mode": "lookup"
+        },
+        {
+          "turn_id": 2,
+          "turn_spec": {
+            "turn_id": 2,
+            "raw_query": "How does that compare with the previous year?",
+            "derived_from_sample_id": "V3_SQL_003",
+            "evaluation_focus": "ellipsis_with_metric_carry",
+            "expected_sources": [
+              "sql"
+            ],
+            "needs_vector": false,
+            "needs_sql": true,
+            "needs_rules": false,
+            "needs_graph": false,
+            "answer_mode": "lookup",
+            "expected_evidence_keywords": [
+              "total TEU",
+              "received",
+              "2015",
+              "yard_operations",
+              "teu_received"
+            ],
+            "reference_answer": "The total TEU received in 2015 was 941,944.",
+            "difficulty": "easy",
+            "golden_vector": null,
+            "golden_sql": {
+              "expected_tables": {
+                "yard_operations": [
+                  "teu_received"
+                ]
+              },
+              "expected_aggregation": "SUM",
+              "expected_year_filter": "2015"
+            },
+            "golden_rules": null,
+            "golden_graph": null,
+            "expected_resolved_query_contains": [
+              "compare",
+              "year"
+            ]
+          },
+          "raw_query": "How does that compare with the previous year?",
+          "resolved_query": "How does that compare with the previous year?",
+          "was_rewritten": false,
+          "memory_context": "[Recent turns]:\n  user: How much was the average wind speed recorded in 2015?\n  assistant: ### Answer\nThe average wind speed recorded in 2015 was 5.140104526956818 [sql].\n\n### Data Details\nThis value represents the mean aggregation from the environment table for the period 2015-01-01 to 2016-01-01 [sql]. One result row was retrieved from the query execution [sql].\n\n###\n\n[Active entities]: metric_wind_speed, year_2015, date_2015-01, date_2016-01\n\n[Last evidence]: sql: tables=['environment'] rows=1 ok=True\n\n[Memories from prior sessions]:\n  - (session_summary) The user investigated the 2016 average tide level and related vessel navigation policies, with the system providing a specific measurement of approximately 0.027 feet. Although a speed regulation rule",
+          "memory_context_chars": 765,
+          "resolve_latency_ms": 0.0,
+          "build_ctx_latency_ms": 9.994983673095703,
+          "active_entities_after_turn": [
+            "metric_wind_speed",
+            "date_2015-01",
+            "date_2016-01",
+            "metric_delay",
+            "year_2015"
+          ],
+          "prior_entities_per_turn": [
+            [
+              "metric_wind_speed",
+              "year_2015"
+            ]
+          ],
+          "final_answer": "### Answer\nThe retrieved data pertains to berth operations for the year 2015 [sql].\n\n### Data Details\nAverage arrival delay was 2.5093974630021125 hours [sql] and average productivity was 25.244852008456647 mph [sql].\n\n### Notes\nOnly one result row was retrieved [sql].",
+          "sources_used": [
+            "sql"
+          ],
+          "router_decision": {
+            "question_type": "structured_data",
+            "answer_mode": "comparison",
+            "needs_vector": false,
+            "needs_sql": true,
+            "needs_rules": false,
+            "needs_graph_reasoning": false,
+            "confidence": 0.9,
+            "matched_keywords": [],
+            "rationale": "LLM-routed"
+          },
+          "expected_sources": [
+            "sql"
+          ],
+          "answer_mode": "lookup"
+        },
+        {
+          "turn_id": 3,
+          "turn_spec": {
+            "turn_id": 3,
+            "raw_query": "Given those numbers, should we adjust operations?",
+            "derived_from_sample_id": "V3_MULTI_001",
+            "evaluation_focus": "decision_support_with_history",
+            "expected_sources": [
+              "vector",
+              "sql"
+            ],
+            "needs_vector": true,
+            "needs_sql": true,
+            "needs_rules": false,
+            "needs_graph": false,
+            "answer_mode": "comparison",
+            "expected_evidence_keywords": [
+              "environmental objectives",
+              "management review",
+              "EMS targets",
+              "compliance status",
+              "operational data"
+            ],
+            "reference_answer": "The manual requires EMS review against environmental targets; the operational statistics must then be checked to confirm whether current metrics (e.g., emissions, waste) meet those documented objectives.",
+            "difficulty": "hard",
+            "golden_vector": {
+              "relevant_chunk_ids": [
+                "8__c__p1__18__5"
+              ],
+              "relevant_source_files": [
+                "manualbestmanagementports.pdf"
+              ]
+            },
+            "golden_sql": {
+              "expected_tables": {}
+            },
+            "golden_rules": null,
+            "golden_graph": null,
+            "expected_resolved_query_contains": [
+              "operations"
+            ],
+            "expected_memory_recall": {
+              "from_turn": 1,
+              "key_fact": "value"
+            }
+          },
+          "raw_query": "Given those numbers, should we adjust operations?",
+          "resolved_query": "Given those numbers, should we adjust operations?",
+          "was_rewritten": false,
+          "memory_context": "[Recent turns]:\n  user: How much was the average wind speed recorded in 2015?\n  assistant: ### Answer\nThe average wind speed recorded in 2015 was 5.140104526956818 [sql].\n\n### Data Details\nThis value represents the mean aggregation from the environment table for the period 2015-01-01 to 2016-01-01 [sql]. One result row was retrieved from the query execution [sql].\n\n###\n  user: How does that compare with the previous year?\n  assistant: ### Answer\nThe retrieved data pertains to berth operations for the year 2015 [sql].\n\n### Data Details\nAverage arrival delay was 2.5093974630021125 hours [sql] and average productivity was 25.244852008456647 mph [sql].\n\n### Notes\nOnly one result row was retrieved [sql].\n\n[Active entities]: metric_wind_speed, date_2015-01, date_2016-01, metric_delay, year_2015\n\n[Last evidence]: sql: tables=['berth_operations'] rows=1 ok=True",
+          "memory_context_chars": 865,
+          "resolve_latency_ms": 20007.48872756958,
+          "build_ctx_latency_ms": 0.0,
+          "active_entities_after_turn": [
+            "date_2015-01",
+            "date_2016-01",
+            "metric_wind_speed",
+            "metric_delay",
+            "year_2015"
+          ],
+          "prior_entities_per_turn": [
+            [
+              "metric_wind_speed",
+              "year_2015"
+            ],
+            []
+          ],
+          "final_answer": "### Current Assessment\nBased on the retrieved policy framework, there are no mandatory regulatory triggers requiring an immediate adjustment to current operations. [rule] The analysis confirms that existing rules do not link the reported wind and delay metrics to compulsory operational changes. [rule]\n\n### Evidence-Based Analysis\nThe system retrieved one active regulation concerning pilotage mandates for commercial vessels exceeding 500 Gross Tonnage. [rule] This specific rule was not triggered by the current operational data inputs. [rule] Historical records show average wind speeds of 5.14 m/s recorded in 2015. [sql] Average arrival delays for the same period were measured at 2.51 hours. [sql] No additional rules were found that define thresholds for wind speed or vessel delays within the current database. [rule] Consequently, the regulatory basis for enforcing a change in protocol is absent. [rule]\n\n### Recommendation\nNo regulatory mandate exists to alter operations based on the retrieved rules. [rule] Teams may proceed subject to internal verification. [general knowledge] Manual confirmation of compliance with facility-specific Standard Operating Procedures is advised before finalizing any long-term strategy. [general knowledge]\n\n### Notes\nThe assessment is limited to the single pilotage rule retrieved in this session. [rule] Other operational metrics such as wind speed do not have associated policy constraints in the current evidence set. [rule] Users should consult updated rule sets if new thresholds are implemented. [rule]",
+          "sources_used": [
+            "rules"
+          ],
+          "router_decision": {
+            "question_type": "policy_rule",
+            "answer_mode": "decision_support",
+            "needs_vector": false,
+            "needs_sql": false,
+            "needs_rules": true,
+            "needs_graph_reasoning": false,
+            "confidence": 0.41,
+            "matched_keywords": [
+              "should",
+              "should we"
+            ],
+            "rationale": "Router selected: policy/rule database. Matched keywords: should, should we."
+          },
+          "expected_sources": [
+            "vector",
+            "sql"
+          ],
+          "answer_mode": "comparison"
+        }
+      ]
+    }
+  ]
+}
