@@ -54,7 +54,66 @@ from typing import Any, Dict, List
 # Session 2 (fresh session_id) asks queries that should retrieve session-1
 # content from the long-term store.
 
+# -------------------------------------------------------------------
+# Helpers to reduce template boilerplate
+# -------------------------------------------------------------------
+
+def _pos_2sess(cid, pattern, desc, s1_ids, s2_id, rephrase, key_fact,
+               from_order=1):
+    """Shorthand for a standard 2-session positive conversation."""
+    s1_turns = [{"from_sample_id": sid,
+                 "evaluation_focus": "session1_establish"} for sid in s1_ids]
+    return {
+        "conversation_id": cid,
+        "pattern": pattern,
+        "description": desc,
+        "sessions": [
+            {"session_order": 1, "description": "establish", "turns": s1_turns},
+            {"session_order": 2, "description": "recall via long-term",
+             "turns": [{
+                 "from_sample_id": s2_id,
+                 "rephrase_as": rephrase,
+                 "evaluation_focus": f"cross_session_{pattern}",
+                 "expected_cross_session_hit": True,
+                 "expected_from_session_order": from_order,
+                 "expected_memory_recall": {
+                     "from_session": from_order,
+                     "key_fact": key_fact,
+                 },
+             }]},
+        ],
+    }
+
+
+def _neg_2sess(cid, desc, s1_ids, s2_id):
+    """Shorthand for a 2-session NEGATIVE conversation (topic drift)."""
+    s1_turns = [{"from_sample_id": sid,
+                 "evaluation_focus": "session1_unrelated_topic"} for sid in s1_ids]
+    return {
+        "conversation_id": cid,
+        "pattern": "cross_session_topic_drift",
+        "description": desc,
+        "sessions": [
+            {"session_order": 1, "description": "topic A", "turns": s1_turns},
+            {"session_order": 2, "description": "topic B (unrelated — negative)",
+             "turns": [{
+                 "from_sample_id": s2_id,
+                 "evaluation_focus": "cross_session_negative_no_leak",
+                 "expected_cross_session_hit": False,
+                 "expected_from_session_order": None,
+             }]},
+        ],
+    }
+
+
 CONVERSATIONS: List[Dict[str, Any]] = [
+
+    # ===================================================================
+    #  POSITIVE — cross_session_entity_recall  (5)
+    # ===================================================================
+    # Session 1 establishes a specific entity / metric.
+    # Session 2 (fresh sid) asks about the same entity using different
+    # vocabulary — tests whether long-term retrieve can bridge the gap.
 
     # -----------------------------------------------------------
     # Pattern 1: cross_session_entity_recall
@@ -282,6 +341,187 @@ CONVERSATIONS: List[Dict[str, Any]] = [
             },
         ],
     },
+
+    # ===================================================================
+    #  POSITIVE — cross_session_entity_recall  (4 more = 5 total)
+    # ===================================================================
+
+    _pos_2sess("CS3_006", "entity_recall",
+               "Session 1: crane productivity. Session 2: 'terminal equipment throughput'.",
+               ["V3_SQL_011", "V3_SQL_012"], "V3_SQL_011",
+               "What do we know about terminal equipment throughput?",
+               "crane"),
+    _pos_2sess("CS3_007", "entity_recall",
+               "Session 1: berth delays Q3 2015. Session 2: 'port congestion last summer'.",
+               ["V3_SQL_006"], "V3_SQL_006",
+               "Was there port congestion during the summer months?",
+               "delay"),
+    _pos_2sess("CS3_008", "entity_recall",
+               "Session 1: vessel calls data. Session 2: 'ship arrivals record'.",
+               ["V3_SQL_007", "V3_SQL_008"], "V3_SQL_007",
+               "What's the ship arrivals record we discussed?",
+               "vessel"),
+    _pos_2sess("CS3_009", "entity_recall",
+               "Session 1: yard occupancy. Session 2: 'container storage utilisation'.",
+               ["V3_SQL_009"], "V3_SQL_009",
+               "How full was the container storage area?",
+               "yard"),
+
+    # ===================================================================
+    #  POSITIVE — cross_session_paraphrase  (5)
+    # ===================================================================
+    # Heavy paraphrase with near-zero lexical overlap.
+
+    _pos_2sess("CS3_010", "paraphrase",
+               "Session 1: 'average wind speed 2015'. Session 2: 'how strong were the gusts recorded?'",
+               ["V3_SQL_005"], "V3_SQL_005",
+               "How strong were the gusts recorded at the facility?",
+               "wind"),
+    _pos_2sess("CS3_011", "paraphrase",
+               "Session 1: 'gate transactions'. Session 2: 'truck movement volume at entry points'.",
+               ["V3_SQL_010"], "V3_SQL_010",
+               "What was the truck movement volume at the entry points?",
+               "gate"),
+    _pos_2sess("CS3_012", "paraphrase",
+               "Session 1: 'berth productivity'. Session 2: 'quayside loading rate'.",
+               ["V3_SQL_013", "V3_SQL_014"], "V3_SQL_013",
+               "What was the quayside loading rate?",
+               "berth"),
+    _pos_2sess("CS3_013", "paraphrase",
+               "Session 1: environmental data. Session 2: 'weather observations at the harbour'.",
+               ["V3_SQL_002", "V3_SQL_003"], "V3_SQL_002",
+               "Any weather observations recorded at the harbour?",
+               "tide"),
+    _pos_2sess("CS3_014", "paraphrase",
+               "Session 1: crane breakdown data. Session 2: 'equipment downtime incidents'.",
+               ["V3_SQL_015"], "V3_SQL_015",
+               "Were there equipment downtime incidents recently?",
+               "crane"),
+
+    # ===================================================================
+    #  POSITIVE — cross_session_rule_followup  (4)
+    # ===================================================================
+    # Session 1 establishes a rule / policy. Session 2 asks to apply it.
+
+    _pos_2sess("CS3_015", "rule_followup",
+               "Session 1: wind restriction policy. Session 2: 'operational limits during storms'.",
+               ["V3_RUL_002", "V3_RUL_003"], "V3_RUL_002",
+               "What are the operational limits during severe weather?",
+               "wind"),
+    _pos_2sess("CS3_016", "rule_followup",
+               "Session 1: vessel entry restrictions. Session 2: 'ship access conditions'.",
+               ["V3_RUL_004", "V3_RUL_005"], "V3_RUL_004",
+               "Under what conditions is ship access restricted?",
+               "vessel"),
+    _pos_2sess("CS3_017", "rule_followup",
+               "Session 1: crane safety thresholds. Session 2: 'when should crane ops halt?'",
+               ["V3_RUL_006"], "V3_RUL_006",
+               "When should crane operations be halted for safety?",
+               "crane"),
+    _pos_2sess("CS3_018", "rule_followup",
+               "Session 1: berth allocation policy. Session 2: 'how are berths assigned?'.",
+               ["V3_RUL_007", "V3_RUL_008"], "V3_RUL_007",
+               "How are berths assigned to incoming vessels?",
+               "berth"),
+
+    # ===================================================================
+    #  POSITIVE — cross_session_multi_hop  (3 more = 4 total)
+    # ===================================================================
+    # 3 sessions; session 3 needs facts from sessions 1 AND 2.
+
+    {
+        "conversation_id": "CS3_019",
+        "pattern": "cross_session_multi_hop",
+        "description": "S1: crane data. S2: berth data. S3: correlate crane + berth.",
+        "sessions": [
+            {"session_order": 1, "description": "crane metrics",
+             "turns": [{"from_sample_id": "V3_SQL_011",
+                        "evaluation_focus": "session1_crane"}]},
+            {"session_order": 2, "description": "berth metrics",
+             "turns": [{"from_sample_id": "V3_SQL_013",
+                        "evaluation_focus": "session2_berth"}]},
+            {"session_order": 3, "description": "needs both",
+             "turns": [{
+                 "from_sample_id": "V3_MULTI_002",
+                 "rephrase_as": "How do crane and berth performance relate to each other?",
+                 "evaluation_focus": "cross_session_multi_hop",
+                 "expected_cross_session_hit": True,
+                 "expected_from_session_order": [1, 2],
+                 "expected_memory_recall": {"from_session": 1, "key_fact": "crane"},
+             }]},
+        ],
+    },
+    {
+        "conversation_id": "CS3_020",
+        "pattern": "cross_session_multi_hop",
+        "description": "S1: rules. S2: SQL data. S3: 'does actual data comply with rules?'",
+        "sessions": [
+            {"session_order": 1, "description": "rule context",
+             "turns": [{"from_sample_id": "V3_RUL_001",
+                        "evaluation_focus": "session1_rule"}]},
+            {"session_order": 2, "description": "actual data",
+             "turns": [{"from_sample_id": "V3_SQL_001",
+                        "evaluation_focus": "session2_data"}]},
+            {"session_order": 3, "description": "compliance check",
+             "turns": [{
+                 "from_sample_id": "V3_MULTI_003",
+                 "rephrase_as": "Does the actual operational data comply with the rules we reviewed?",
+                 "evaluation_focus": "cross_session_multi_hop",
+                 "expected_cross_session_hit": True,
+                 "expected_from_session_order": [1, 2],
+                 "expected_memory_recall": {"from_session": 1, "key_fact": "rule"},
+             }]},
+        ],
+    },
+    {
+        "conversation_id": "CS3_021",
+        "pattern": "cross_session_multi_hop",
+        "description": "S1: graph causal. S2: SQL numeric. S3: 'explain the root cause with data'.",
+        "sessions": [
+            {"session_order": 1, "description": "causal graph",
+             "turns": [{"from_sample_id": "V3_GRA_001",
+                        "evaluation_focus": "session1_graph"}]},
+            {"session_order": 2, "description": "numeric data",
+             "turns": [{"from_sample_id": "V3_SQL_004",
+                        "evaluation_focus": "session2_sql"}]},
+            {"session_order": 3, "description": "combine both",
+             "turns": [{
+                 "from_sample_id": "V3_MULTI_004",
+                 "rephrase_as": "Can you explain the root cause using both the causal model and the numbers?",
+                 "evaluation_focus": "cross_session_multi_hop",
+                 "expected_cross_session_hit": True,
+                 "expected_from_session_order": [1, 2],
+                 "expected_memory_recall": {"from_session": 2, "key_fact": "value"},
+             }]},
+        ],
+    },
+
+    # ===================================================================
+    #  NEGATIVE — cross_session_topic_drift  (10)
+    # ===================================================================
+    # Session 1 and session 2 are on COMPLETELY DIFFERENT topics.
+    # expected_cross_session_hit = False.
+
+    _neg_2sess("CS3_NEG_001", "S1: tide data.      S2: gate operations.",
+               ["V3_SQL_001", "V3_SQL_002"], "V3_VEC_003"),
+    _neg_2sess("CS3_NEG_002", "S1: crane metrics.  S2: environmental policy doc.",
+               ["V3_SQL_011"], "V3_VEC_010"),
+    _neg_2sess("CS3_NEG_003", "S1: wind speed.     S2: vessel scheduling doc.",
+               ["V3_SQL_005"], "V3_VEC_015"),
+    _neg_2sess("CS3_NEG_004", "S1: berth delays.   S2: sustainability report.",
+               ["V3_SQL_006"], "V3_VEC_020"),
+    _neg_2sess("CS3_NEG_005", "S1: yard occupancy. S2: noise policy.",
+               ["V3_SQL_009"], "V3_VEC_004"),
+    _neg_2sess("CS3_NEG_006", "S1: vessel calls.   S2: HOT lane feasibility.",
+               ["V3_SQL_007"], "V3_VEC_001"),
+    _neg_2sess("CS3_NEG_007", "S1: gate transactions. S2: graph causal analysis.",
+               ["V3_SQL_010"], "V3_GRA_005"),
+    _neg_2sess("CS3_NEG_008", "S1: rule R-14 wind. S2: annual report overview.",
+               ["V3_RUL_002"], "V3_VEC_008"),
+    _neg_2sess("CS3_NEG_009", "S1: crane safety.   S2: tide historical data.",
+               ["V3_RUL_006"], "V3_SQL_002"),
+    _neg_2sess("CS3_NEG_010", "S1: graph weather impact. S2: berth allocation rule.",
+               ["V3_GRA_001"], "V3_RUL_007"),
 ]
 
 
