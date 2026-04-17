@@ -1,0 +1,693 @@
+{
+  "description": "Multi-session (cross-session) conversations composed from golden_dataset_v3_rag.json. Each conversation is a SEQUENCE of sessions — session N writes facts into long-term memory on end_session; session N+1 (fresh sid) queries them back. Designed to exercise the long-term retrieval path the single-session multi-turn dataset leaves untouched.",
+  "version": "v3.0-cross-session",
+  "generated_at": "2026-04-16T09:23:22",
+  "base_dataset": "golden_dataset_v3_rag.json",
+  "total_conversations": 5,
+  "total_sessions": 11,
+  "total_turns": 15,
+  "pattern_counts": {
+    "cross_session_entity_recall": 1,
+    "cross_session_paraphrase": 1,
+    "cross_session_rule_followup": 1,
+    "cross_session_topic_drift": 1,
+    "cross_session_multi_hop": 1
+  },
+  "skipped_conversations": [],
+  "conversations": [
+    {
+      "conversation_id": "CS3_001",
+      "pattern": "cross_session_entity_recall",
+      "description": "Session 1 establishes 2016 tide level + related policy rules. Session 2 (new session) asks a semantically similar but lexically different question. Tests whether long-term retrieve can bridge the vocabulary gap (wind vs gust, tide vs sea-level).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "description": "Establishes tide + rule context",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "What was the average tide level at the port in 2016?",
+              "derived_from_sample_id": "V3_SQL_001",
+              "evaluation_focus": "session1_establish_fact",
+              "expected_sources": [
+                "sql"
+              ],
+              "needs_vector": false,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "lookup",
+              "expected_evidence_keywords": [
+                "average",
+                "tide",
+                "2016",
+                "environment",
+                "tide_ft"
+              ],
+              "reference_answer": "The average tide level in 2016 was approximately 0.027 ft.",
+              "difficulty": "easy",
+              "golden_vector": null,
+              "golden_sql": {
+                "expected_tables": {
+                  "environment": [
+                    "tide_ft"
+                  ]
+                },
+                "expected_aggregation": "AVG",
+                "expected_year_filter": "2016"
+              },
+              "golden_rules": null,
+              "golden_graph": null
+            },
+            {
+              "turn_id": 2,
+              "raw_query": "And what are the policy rules around that?",
+              "derived_from_sample_id": "V3_RUL_001",
+              "evaluation_focus": "session1_establish_rule",
+              "expected_sources": [
+                "rules"
+              ],
+              "needs_vector": false,
+              "needs_sql": false,
+              "needs_rules": true,
+              "needs_graph": false,
+              "answer_mode": "decision_support",
+              "expected_evidence_keywords": [
+                "wave height",
+                "exceed",
+                "halt crane"
+              ],
+              "reference_answer": "Halt external crane lifting operations and secure cranes when significant wave height exceeds 2.5 m.",
+              "difficulty": "easy",
+              "golden_vector": null,
+              "golden_sql": null,
+              "golden_rules": {
+                "expected_rule_variables": [
+                  "wave_height_m"
+                ],
+                "expected_sql_variables": [
+                  "wave_height_m"
+                ],
+                "expected_rule_source": "synthetic_rule",
+                "expected_rule_page": 0
+              },
+              "golden_graph": null,
+              "expected_resolved_query_contains": [
+                "tide",
+                "rule"
+              ]
+            }
+          ]
+        },
+        {
+          "session_order": 2,
+          "description": "Fresh session — should retrieve session 1 via long-term",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "What do we know about sea level data at the port?",
+              "derived_from_sample_id": "V3_SQL_001",
+              "evaluation_focus": "cross_session_recall_entity",
+              "expected_sources": [
+                "sql"
+              ],
+              "needs_vector": false,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "lookup",
+              "expected_evidence_keywords": [
+                "average",
+                "tide",
+                "2016",
+                "environment",
+                "tide_ft"
+              ],
+              "reference_answer": "The average tide level in 2016 was approximately 0.027 ft.",
+              "difficulty": "easy",
+              "golden_vector": null,
+              "golden_sql": {
+                "expected_tables": {
+                  "environment": [
+                    "tide_ft"
+                  ]
+                },
+                "expected_aggregation": "AVG",
+                "expected_year_filter": "2016"
+              },
+              "golden_rules": null,
+              "golden_graph": null,
+              "expected_memory_recall": {
+                "from_session": 1,
+                "key_fact": "tide"
+              },
+              "expected_cross_session_hit": true,
+              "expected_from_session_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_002",
+      "pattern": "cross_session_paraphrase",
+      "description": "Session 1 discusses berth productivity in Q3 2015. Session 2 asks 'how efficient were terminal operations last year' — no lexical overlap with 'berth productivity Q3 2015'. Phase-A keyword scoring should fail; Phase-B vector should win.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "description": "Establishes productivity + wind data",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "Tell me the 2015 mean wind speed measured at the port.",
+              "derived_from_sample_id": "V3_SQL_011",
+              "evaluation_focus": "session1_establish_productivity",
+              "expected_sources": [
+                "sql"
+              ],
+              "needs_vector": false,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "lookup",
+              "expected_evidence_keywords": [
+                "mean",
+                "wind speed",
+                "2015",
+                "environment",
+                "wind_speed_ms"
+              ],
+              "reference_answer": "The mean wind speed in 2015 was roughly 5.14 m/s.",
+              "difficulty": "easy",
+              "golden_vector": null,
+              "golden_sql": {
+                "expected_tables": {
+                  "environment": [
+                    "wind_speed_ms"
+                  ]
+                },
+                "expected_aggregation": "AVG",
+                "expected_year_filter": "2015"
+              },
+              "golden_rules": null,
+              "golden_graph": null
+            },
+            {
+              "turn_id": 2,
+              "raw_query": "Compared to expected values, what was the average tide level for 2016?",
+              "derived_from_sample_id": "V3_SQL_012",
+              "evaluation_focus": "session1_establish_related_metric",
+              "expected_sources": [
+                "sql"
+              ],
+              "needs_vector": false,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "comparison",
+              "expected_evidence_keywords": [
+                "average",
+                "tide level",
+                "2016",
+                "environment",
+                "tide_ft"
+              ],
+              "reference_answer": "The 2016 average tide level was approximately 0.027 ft.",
+              "difficulty": "medium",
+              "golden_vector": null,
+              "golden_sql": {
+                "expected_tables": {
+                  "environment": [
+                    "tide_ft"
+                  ]
+                },
+                "expected_aggregation": "AVG",
+                "expected_year_filter": "2016"
+              },
+              "golden_rules": null,
+              "golden_graph": null
+            }
+          ]
+        },
+        {
+          "session_order": 2,
+          "description": "Heavy paraphrase — tests vector vs keyword",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "How efficient were terminal operations last year?",
+              "derived_from_sample_id": "V3_SQL_011",
+              "evaluation_focus": "cross_session_paraphrase",
+              "expected_sources": [
+                "sql"
+              ],
+              "needs_vector": false,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "lookup",
+              "expected_evidence_keywords": [
+                "mean",
+                "wind speed",
+                "2015",
+                "environment",
+                "wind_speed_ms"
+              ],
+              "reference_answer": "The mean wind speed in 2015 was roughly 5.14 m/s.",
+              "difficulty": "easy",
+              "golden_vector": null,
+              "golden_sql": {
+                "expected_tables": {
+                  "environment": [
+                    "wind_speed_ms"
+                  ]
+                },
+                "expected_aggregation": "AVG",
+                "expected_year_filter": "2015"
+              },
+              "golden_rules": null,
+              "golden_graph": null,
+              "expected_memory_recall": {
+                "from_session": 1,
+                "key_fact": "productivity"
+              },
+              "expected_cross_session_hit": true,
+              "expected_from_session_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_003",
+      "pattern": "cross_session_rule_followup",
+      "description": "Session 1 retrieves a wind-speed rule. Session 2 asks 'what should we do when gusts are high' — tests whether the wind rule is retrieved across session boundary.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "description": "Retrieve wind policy rule",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "Under what atmospheric pressure condition should the port authority be alerted and emergency response teams prepared?",
+              "derived_from_sample_id": "V3_RUL_002",
+              "evaluation_focus": "session1_establish_wind_rule",
+              "expected_sources": [
+                "rules"
+              ],
+              "needs_vector": false,
+              "needs_sql": false,
+              "needs_rules": true,
+              "needs_graph": false,
+              "answer_mode": "decision_support",
+              "expected_evidence_keywords": [
+                "pressure",
+                "below",
+                "storm watch"
+              ],
+              "reference_answer": "Initiate storm watch and alert emergency teams when atmospheric pressure falls below 980 hPa.",
+              "difficulty": "easy",
+              "golden_vector": null,
+              "golden_sql": null,
+              "golden_rules": {
+                "expected_rule_variables": [
+                  "pressure_hpa"
+                ],
+                "expected_sql_variables": [
+                  "pressure_hpa"
+                ],
+                "expected_rule_source": "synthetic_rule",
+                "expected_rule_page": 0
+              },
+              "golden_graph": null
+            },
+            {
+              "turn_id": 2,
+              "raw_query": "And what are typical wind speeds in 2015?",
+              "derived_from_sample_id": "V3_SQL_005",
+              "evaluation_focus": "session1_support_data",
+              "expected_sources": [
+                "sql"
+              ],
+              "needs_vector": false,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "decision_support",
+              "expected_evidence_keywords": [
+                "average",
+                "wind speed",
+                "2015",
+                "normal range",
+                "wind_speed_ms"
+              ],
+              "reference_answer": "The average wind speed in 2015 was around 5.14 m/s, which is typical and within normal operating conditions.",
+              "difficulty": "medium",
+              "golden_vector": null,
+              "golden_sql": {
+                "expected_tables": {
+                  "environment": [
+                    "wind_speed_ms"
+                  ]
+                },
+                "expected_aggregation": "AVG",
+                "expected_year_filter": "2015"
+              },
+              "golden_rules": null,
+              "golden_graph": null,
+              "expected_resolved_query_contains": [
+                "wind",
+                "2015"
+              ]
+            }
+          ]
+        },
+        {
+          "session_order": 2,
+          "description": "Apply rule in fresh session",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "What should we do when strong gusts are present?",
+              "derived_from_sample_id": "V3_RUL_002",
+              "evaluation_focus": "cross_session_rule_application",
+              "expected_sources": [
+                "rules"
+              ],
+              "needs_vector": false,
+              "needs_sql": false,
+              "needs_rules": true,
+              "needs_graph": false,
+              "answer_mode": "decision_support",
+              "expected_evidence_keywords": [
+                "pressure",
+                "below",
+                "storm watch"
+              ],
+              "reference_answer": "Initiate storm watch and alert emergency teams when atmospheric pressure falls below 980 hPa.",
+              "difficulty": "easy",
+              "golden_vector": null,
+              "golden_sql": null,
+              "golden_rules": {
+                "expected_rule_variables": [
+                  "pressure_hpa"
+                ],
+                "expected_sql_variables": [
+                  "pressure_hpa"
+                ],
+                "expected_rule_source": "synthetic_rule",
+                "expected_rule_page": 0
+              },
+              "golden_graph": null,
+              "expected_memory_recall": {
+                "from_session": 1,
+                "key_fact": "wind"
+              },
+              "expected_cross_session_hit": true,
+              "expected_from_session_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_004",
+      "pattern": "cross_session_topic_drift",
+      "description": "Session 1 discusses tide levels. Session 2 discusses gate operations (completely unrelated). cross_session_hit SHOULD NOT fire — long-term retrieve must return nothing relevant.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "description": "Tide topic",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "How much was the average wind speed recorded in 2015?",
+              "derived_from_sample_id": "V3_SQL_002",
+              "evaluation_focus": "session1_tide",
+              "expected_sources": [
+                "sql"
+              ],
+              "needs_vector": false,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "lookup",
+              "expected_evidence_keywords": [
+                "average",
+                "wind speed",
+                "2015",
+                "environment",
+                "wind_speed_ms"
+              ],
+              "reference_answer": "The average wind speed in 2015 was approximately 5.14 m/s.",
+              "difficulty": "easy",
+              "golden_vector": null,
+              "golden_sql": {
+                "expected_tables": {
+                  "environment": [
+                    "wind_speed_ms"
+                  ]
+                },
+                "expected_aggregation": "AVG",
+                "expected_year_filter": "2015"
+              },
+              "golden_rules": null,
+              "golden_graph": null
+            },
+            {
+              "turn_id": 2,
+              "raw_query": "Show me the total TEU received at the yard in 2015.",
+              "derived_from_sample_id": "V3_SQL_003",
+              "evaluation_focus": "session1_tide_followup",
+              "expected_sources": [
+                "sql"
+              ],
+              "needs_vector": false,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "lookup",
+              "expected_evidence_keywords": [
+                "total TEU",
+                "received",
+                "2015",
+                "yard_operations",
+                "teu_received"
+              ],
+              "reference_answer": "The total TEU received in 2015 was 941,944.",
+              "difficulty": "easy",
+              "golden_vector": null,
+              "golden_sql": {
+                "expected_tables": {
+                  "yard_operations": [
+                    "teu_received"
+                  ]
+                },
+                "expected_aggregation": "SUM",
+                "expected_year_filter": "2015"
+              },
+              "golden_rules": null,
+              "golden_graph": null
+            }
+          ]
+        },
+        {
+          "session_order": 2,
+          "description": "Unrelated gate topic — negative test",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions?",
+              "derived_from_sample_id": "V3_VEC_003",
+              "evaluation_focus": "cross_session_negative_no_leak",
+              "expected_sources": [
+                "vector"
+              ],
+              "needs_vector": true,
+              "needs_sql": false,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "lookup",
+              "expected_evidence_keywords": [
+                "accrual basis",
+                "enterprise fund",
+                "$100,000",
+                "capitalized",
+                "GASB"
+              ],
+              "reference_answer": "Business-type activities are accounted for using the flow of economic resources measurement focus and accrual basis of accounting in an enterprise fund, and additions or asset improvements exceeding $100,000 that extend service life are capitalized.",
+              "difficulty": "easy",
+              "golden_vector": {
+                "relevant_chunk_ids": [
+                  "248__c__2024__20__1"
+                ],
+                "relevant_parent_ids": [
+                  "248__p__2024__20"
+                ],
+                "relevant_source_files": [
+                  "annual-report-2024.pdf"
+                ],
+                "relevant_sections": [
+                  "2024"
+                ],
+                "expected_doc_types": [
+                  "annual_report"
+                ],
+                "expected_categories": [
+                  "operations"
+                ],
+                "expected_publish_year": 2024
+              },
+              "golden_sql": null,
+              "golden_rules": null,
+              "golden_graph": null,
+              "expected_cross_session_hit": false,
+              "expected_from_session_order": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_005",
+      "pattern": "cross_session_multi_hop",
+      "description": "Session 1: tide facts. Session 2: wind facts. Session 3: 'compare weather impact on operations' — should retrieve from BOTH prior sessions.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "description": "Tide data",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "How much was the average wind speed recorded in 2015?",
+              "derived_from_sample_id": "V3_SQL_002",
+              "evaluation_focus": "session1_tide_data",
+              "expected_sources": [
+                "sql"
+              ],
+              "needs_vector": false,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "lookup",
+              "expected_evidence_keywords": [
+                "average",
+                "wind speed",
+                "2015",
+                "environment",
+                "wind_speed_ms"
+              ],
+              "reference_answer": "The average wind speed in 2015 was approximately 5.14 m/s.",
+              "difficulty": "easy",
+              "golden_vector": null,
+              "golden_sql": {
+                "expected_tables": {
+                  "environment": [
+                    "wind_speed_ms"
+                  ]
+                },
+                "expected_aggregation": "AVG",
+                "expected_year_filter": "2015"
+              },
+              "golden_rules": null,
+              "golden_graph": null
+            }
+          ]
+        },
+        {
+          "session_order": 2,
+          "description": "Wind data",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "Was the average wind speed in 2015 within the normal operating range?",
+              "derived_from_sample_id": "V3_SQL_005",
+              "evaluation_focus": "session2_wind_data",
+              "expected_sources": [
+                "sql"
+              ],
+              "needs_vector": false,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "decision_support",
+              "expected_evidence_keywords": [
+                "average",
+                "wind speed",
+                "2015",
+                "normal range",
+                "wind_speed_ms"
+              ],
+              "reference_answer": "The average wind speed in 2015 was around 5.14 m/s, which is typical and within normal operating conditions.",
+              "difficulty": "medium",
+              "golden_vector": null,
+              "golden_sql": {
+                "expected_tables": {
+                  "environment": [
+                    "wind_speed_ms"
+                  ]
+                },
+                "expected_aggregation": "AVG",
+                "expected_year_filter": "2015"
+              },
+              "golden_rules": null,
+              "golden_graph": null
+            }
+          ]
+        },
+        {
+          "session_order": 3,
+          "description": "Multi-hop retrieval — needs both prior sessions",
+          "turns": [
+            {
+              "turn_id": 1,
+              "raw_query": "Can you summarise what weather factors we discussed affect operations?",
+              "derived_from_sample_id": "V3_MULTI_001",
+              "evaluation_focus": "cross_session_multi_hop",
+              "expected_sources": [
+                "vector",
+                "sql"
+              ],
+              "needs_vector": true,
+              "needs_sql": true,
+              "needs_rules": false,
+              "needs_graph": false,
+              "answer_mode": "comparison",
+              "expected_evidence_keywords": [
+                "environmental objectives",
+                "management review",
+                "EMS targets",
+                "compliance status",
+                "operational data"
+              ],
+              "reference_answer": "The manual requires EMS review against environmental targets; the operational statistics must then be checked to confirm whether current metrics (e.g., emissions, waste) meet those documented objectives.",
+              "difficulty": "hard",
+              "golden_vector": {
+                "relevant_chunk_ids": [
+                  "8__c__p1__18__5"
+                ],
+                "relevant_source_files": [
+                  "manualbestmanagementports.pdf"
+                ]
+              },
+              "golden_sql": {
+                "expected_tables": {}
+              },
+              "golden_rules": null,
+              "golden_graph": null,
+              "expected_memory_recall": {
+                "from_session": 1,
+                "key_fact": "tide"
+              },
+              "expected_cross_session_hit": true,
+              "expected_from_session_order": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

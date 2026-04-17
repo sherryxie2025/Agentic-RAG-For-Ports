@@ -1,0 +1,1436 @@
+{
+  "generated_at": "2026-04-16T09:58:35",
+  "dataset": "golden_dataset_v3_cross_session.json",
+  "config_label": "phaseA_keyword_only",
+  "use_embeddings": false,
+  "weights": {
+    "word": 0.35,
+    "entity": 0.45,
+    "decay": 0.12,
+    "access": 0.03,
+    "importance": 0.05
+  },
+  "per_conversation_scores": [
+    {
+      "conversation_id": "CS3_001",
+      "pattern": "cross_session_entity_recall",
+      "hit_pos": 1,
+      "hit_pos_total": 1,
+      "hit_pos_correct_session": 1,
+      "hit_neg_leaked": 0,
+      "hit_neg_total": 0,
+      "avg_lt_top_score_positive": 0.2308,
+      "avg_lt_top_score_negative": 0.0,
+      "per_turn": [
+        {
+          "conversation_id": "CS3_001",
+          "session_order": 2,
+          "turn_id": 1,
+          "evaluation_focus": "cross_session_recall_entity",
+          "expected_hit": true,
+          "actually_hit_prior_session": true,
+          "lt_top_score": 0.2308,
+          "lt_hit_count": 4
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_002",
+      "pattern": "cross_session_paraphrase",
+      "hit_pos": 0,
+      "hit_pos_total": 1,
+      "hit_pos_correct_session": 0,
+      "hit_neg_leaked": 0,
+      "hit_neg_total": 0,
+      "avg_lt_top_score_positive": 0.2,
+      "avg_lt_top_score_negative": 0.0,
+      "per_turn": [
+        {
+          "conversation_id": "CS3_002",
+          "session_order": 2,
+          "turn_id": 1,
+          "evaluation_focus": "cross_session_paraphrase",
+          "expected_hit": true,
+          "actually_hit_prior_session": false,
+          "lt_top_score": 0.2,
+          "lt_hit_count": 5
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_003",
+      "pattern": "cross_session_rule_followup",
+      "hit_pos": 0,
+      "hit_pos_total": 1,
+      "hit_pos_correct_session": 0,
+      "hit_neg_leaked": 0,
+      "hit_neg_total": 0,
+      "avg_lt_top_score_positive": 0.15,
+      "avg_lt_top_score_negative": 0.0,
+      "per_turn": [
+        {
+          "conversation_id": "CS3_003",
+          "session_order": 2,
+          "turn_id": 1,
+          "evaluation_focus": "cross_session_rule_application",
+          "expected_hit": true,
+          "actually_hit_prior_session": false,
+          "lt_top_score": 0.15,
+          "lt_hit_count": 5
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_004",
+      "pattern": "cross_session_topic_drift",
+      "hit_pos": 0,
+      "hit_pos_total": 0,
+      "hit_pos_correct_session": 0,
+      "hit_neg_leaked": 0,
+      "hit_neg_total": 1,
+      "avg_lt_top_score_positive": 0.0,
+      "avg_lt_top_score_negative": 0.6437,
+      "per_turn": [
+        {
+          "conversation_id": "CS3_004",
+          "session_order": 2,
+          "turn_id": 1,
+          "evaluation_focus": "cross_session_negative_no_leak",
+          "expected_hit": false,
+          "actually_hit_prior_session": false,
+          "lt_top_score": 0.6437,
+          "lt_hit_count": 5
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_005",
+      "pattern": "cross_session_multi_hop",
+      "hit_pos": 1,
+      "hit_pos_total": 1,
+      "hit_pos_correct_session": 1,
+      "hit_neg_leaked": 0,
+      "hit_neg_total": 0,
+      "avg_lt_top_score_positive": 0.167,
+      "avg_lt_top_score_negative": 0.0,
+      "per_turn": [
+        {
+          "conversation_id": "CS3_005",
+          "session_order": 3,
+          "turn_id": 1,
+          "evaluation_focus": "cross_session_multi_hop",
+          "expected_hit": true,
+          "actually_hit_prior_session": true,
+          "lt_top_score": 0.167,
+          "lt_hit_count": 5
+        }
+      ]
+    }
+  ],
+  "raw_runs": [
+    {
+      "conversation_id": "CS3_001",
+      "pattern": "cross_session_entity_recall",
+      "sid_by_session_order": {
+        "1": "950bc6d3266f",
+        "2": "aab7c5bf68b7"
+      },
+      "sessions": [
+        {
+          "session_order": 1,
+          "session_id": "950bc6d3266f",
+          "description": "Establishes tide + rule context",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 1,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "What was the average tide level at the port in 2016?",
+                "derived_from_sample_id": "V3_SQL_001",
+                "evaluation_focus": "session1_establish_fact",
+                "expected_sources": [
+                  "sql"
+                ],
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "lookup",
+                "expected_evidence_keywords": [
+                  "average",
+                  "tide",
+                  "2016",
+                  "environment",
+                  "tide_ft"
+                ],
+                "reference_answer": "The average tide level in 2016 was approximately 0.027 ft.",
+                "difficulty": "easy",
+                "golden_vector": null,
+                "golden_sql": {
+                  "expected_tables": {
+                    "environment": [
+                      "tide_ft"
+                    ]
+                  },
+                  "expected_aggregation": "AVG",
+                  "expected_year_filter": "2016"
+                },
+                "golden_rules": null,
+                "golden_graph": null
+              },
+              "raw_query": "What was the average tide level at the port in 2016?",
+              "resolved_query": "What was the average tide level at the port in 2016?",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) The user inquired about the maximum wind speed recorded in 2015 and whether safety rules for that level were violated. The system identified a peak speed of approximately 16.54 and confirmed the exist\n  - (session_summary) The user inquired about the average berth and crane operations productivity for Berth B3 in 2015. The assistant reported that specific data for both metrics is unavailable in the current system record\n  - (session_summary) The user inquired about the causes of berth delays in Q3 2015, with the assistant identifying wind speed and crane operations as the primary contributing factors. Data analysis retrieved specific wind",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 12.592792510986328,
+              "lt_hit_session_ids": [
+                "87bacd8f-925",
+                "fdb260cb-a31",
+                "6ac5e3b5-0d3"
+              ],
+              "lt_hit_count": 3,
+              "lt_hit_top_score": 0.2754,
+              "final_answer": "### Answer\nThe average tide level recorded at the port in 2016 was 0.026543909874268048 feet [sql].\n\n### Data Details\nThe calculation covers the full year from January 1, 2016, to December 31, 2016 [sql]. This figure represents the mean aggregation from the environment table [sql].\n\n### Notes\nNo caveats were returned for this query [sql].",
+              "sources_used": [
+                "sql"
+              ],
+              "router_decision": {
+                "question_type": "structured_data",
+                "answer_mode": "lookup",
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.95,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "sql"
+              ],
+              "answer_mode": "lookup"
+            },
+            {
+              "turn_id": 2,
+              "session_order": 1,
+              "turn_spec": {
+                "turn_id": 2,
+                "raw_query": "And what are the policy rules around that?",
+                "derived_from_sample_id": "V3_RUL_001",
+                "evaluation_focus": "session1_establish_rule",
+                "expected_sources": [
+                  "rules"
+                ],
+                "needs_vector": false,
+                "needs_sql": false,
+                "needs_rules": true,
+                "needs_graph": false,
+                "answer_mode": "decision_support",
+                "expected_evidence_keywords": [
+                  "wave height",
+                  "exceed",
+                  "halt crane"
+                ],
+                "reference_answer": "Halt external crane lifting operations and secure cranes when significant wave height exceeds 2.5 m.",
+                "difficulty": "easy",
+                "golden_vector": null,
+                "golden_sql": null,
+                "golden_rules": {
+                  "expected_rule_variables": [
+                    "wave_height_m"
+                  ],
+                  "expected_sql_variables": [
+                    "wave_height_m"
+                  ],
+                  "expected_rule_source": "synthetic_rule",
+                  "expected_rule_page": 0
+                },
+                "golden_graph": null,
+                "expected_resolved_query_contains": [
+                  "tide",
+                  "rule"
+                ]
+              },
+              "raw_query": "And what are the policy rules around that?",
+              "resolved_query": "And what are the policy rules around that?",
+              "was_rewritten": false,
+              "memory_context": "[Recent turns]:\n  user: What was the average tide level at the port in 2016?\n  assistant: ### Answer\nThe average tide level recorded at the port in 2016 was 0.026543909874268048 feet [sql].\n\n### Data Details\nThe calculation covers the full year from January 1, 2016, to December 31, 2016 [sql]. This figure represents the mean aggregation from the environment table [sql\n\n[Active entities]: metric_tide_level, year_2016\n\n[Last evidence]: sql: tables=['environment'] rows=1 ok=True\n\n[Memories from prior sessions]:\n  - (session_summary) The user inquired about the maximum wind speed recorded in 2015 and whether safety rules for that level were violated. The system identified a peak speed of approximately 16.54 and confirmed the exist\n  - (session_summary) The user inquired about the average berth and crane operations productivity for Berth B3 in 2015. The assistant reported that specific data for both metrics is unavailable in the current system record\n  - (session_summary) The user inquired about the causes of berth delays in Q3 2015, with the assistant identifying wind speed and crane operations as the primary contributing factors. Data analysis retrieved specific wind",
+              "memory_context_chars": 1182,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 0.0,
+              "lt_hit_session_ids": [
+                "87bacd8f-925",
+                "6ac5e3b5-0d3",
+                "fdb260cb-a31"
+              ],
+              "lt_hit_count": 3,
+              "lt_hit_top_score": 0.2666,
+              "final_answer": "### Current Assessment\nThe active policy framework retrieved for this session addresses vessel dimensional limits rather than environmental conditions. [rule] While operational data regarding tide levels is available in the system history, the specific regulatory rules currently loaded focus on ship specifications. [rule]\n\n### Evidence-Based Analysis\nThree specific policy rules were identified in the policy repository during this retrieval cycle. [rule] These rules regulate vessel length and capacity thresholds rather than tidal metrics. [rule] One rule flags vessels exceeding 400 meters in length for manual review. [rule] A second rule triggers safety protocols for vessels measuring 366 meters or longer. [rule] A third rule restricts terminal access for vessels with a capacity of 5000 TEU or less. [rule] No regulatory clauses were found specifically governing tidal levels or water depth restrictions. [rule]\n\n### Recommendation\nAs no explicit tidal policies are present in the current dataset, operators should consult external port authority guidelines for tide-dependent activities. [general knowledge] If vessel operations are involved, compliance with the identified length and capacity rules is required by policy. [rule] Manual verification of environmental constraints is advised before proceeding with tide-sensitive scheduling. [general knowledge]\n\n### Notes\nThe current rule set prioritizes vessel constraints over environmental metrics. [rule] Users should confirm if additional environmental documentation exists outside the current rule set. [general knowledge] The absence of tide-specific rules in this retrieval does not negate general maritime safety obligations. [general knowledge]",
+              "sources_used": [
+                "rules"
+              ],
+              "router_decision": {
+                "question_type": "policy_rule",
+                "answer_mode": "decision_support",
+                "needs_vector": false,
+                "needs_sql": false,
+                "needs_rules": true,
+                "needs_graph_reasoning": false,
+                "confidence": 0.9,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "rules"
+              ],
+              "answer_mode": "decision_support"
+            }
+          ]
+        },
+        {
+          "session_order": 2,
+          "session_id": "aab7c5bf68b7",
+          "description": "Fresh session — should retrieve session 1 via long-term",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 2,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "What do we know about sea level data at the port?",
+                "derived_from_sample_id": "V3_SQL_001",
+                "evaluation_focus": "cross_session_recall_entity",
+                "expected_sources": [
+                  "sql"
+                ],
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "lookup",
+                "expected_evidence_keywords": [
+                  "average",
+                  "tide",
+                  "2016",
+                  "environment",
+                  "tide_ft"
+                ],
+                "reference_answer": "The average tide level in 2016 was approximately 0.027 ft.",
+                "difficulty": "easy",
+                "golden_vector": null,
+                "golden_sql": {
+                  "expected_tables": {
+                    "environment": [
+                      "tide_ft"
+                    ]
+                  },
+                  "expected_aggregation": "AVG",
+                  "expected_year_filter": "2016"
+                },
+                "golden_rules": null,
+                "golden_graph": null,
+                "expected_memory_recall": {
+                  "from_session": 1,
+                  "key_fact": "tide"
+                },
+                "expected_cross_session_hit": true,
+                "expected_from_session_order": 1
+              },
+              "raw_query": "What do we know about sea level data at the port?",
+              "resolved_query": "What do we know about sea level data at the port?",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) The user inquired about the causes of berth delays in Q3 2015, with the assistant identifying wind speed and crane operations as the primary contributing factors. Data analysis retrieved specific wind\n  - (session_summary) The user inquired about the maximum wind speed recorded in 2015 and whether safety rules for that level were violated. The system identified a peak speed of approximately 16.54 and confirmed the exist\n  - (session_summary) The user inquired about the average berth and crane operations productivity for Berth B3 in 2015. The assistant reported that specific data for both metrics is unavailable in the current system record",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 5.998849868774414,
+              "lt_hit_session_ids": [
+                "6ac5e3b5-0d3",
+                "87bacd8f-925",
+                "fdb260cb-a31",
+                "950bc6d3266f"
+              ],
+              "lt_hit_count": 4,
+              "lt_hit_top_score": 0.2308,
+              "final_answer": "### Answer\nThe system database contains structured environmental records covering tidal levels and wave heights [sql]. These records span a timeframe beginning in January 2015 [sql]. Retrieved documentation focuses on security compliance rather than hydrology [doc].\n\n### Supporting Evidence\nStructured data queries confirm the existence of 87,672 environmental records within the system database [sql]. These records contain specific columns for tide elevation in feet and significant wave height in meters [sql]. Sampled values from January 2015 show tide levels fluctuating between approximately 1.36 and 2.01 feet [sql]. Concurrent wave height measurements in the same period ranged from roughly 0.89 to 1.09 meters [sql]. Retrieved annual reports from 2024 focus primarily on cybersecurity compliance and surveillance infrastructure rather than hydrological metrics [doc].\n\n### Notes\nThe available dataset reflects historical operational conditions from 2015 rather than current real-time telemetry [sql]. Users requiring up-to-date sea level information should verify if newer ingestion pipelines are active outside this dataset [general knowledge]. Standard maritime practice involves correlating tide data with vessel draft limits, though specific regulatory thresholds for this port are not defined in the current rule set [general knowledge].",
+              "sources_used": [
+                "documents",
+                "sql"
+              ],
+              "router_decision": {
+                "question_type": "hybrid_reasoning",
+                "answer_mode": "lookup",
+                "needs_vector": true,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.41,
+                "matched_keywords": [
+                  "data",
+                  "what do"
+                ],
+                "rationale": "Router selected: documents, structured operational data. Matched keywords: data, what do."
+              },
+              "expected_sources": [
+                "sql"
+              ],
+              "answer_mode": "lookup"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_002",
+      "pattern": "cross_session_paraphrase",
+      "sid_by_session_order": {
+        "1": "9cce73964834",
+        "2": "f1d992b3ffe7"
+      },
+      "sessions": [
+        {
+          "session_order": 1,
+          "session_id": "9cce73964834",
+          "description": "Establishes productivity + wind data",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 1,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "Tell me the 2015 mean wind speed measured at the port.",
+                "derived_from_sample_id": "V3_SQL_011",
+                "evaluation_focus": "session1_establish_productivity",
+                "expected_sources": [
+                  "sql"
+                ],
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "lookup",
+                "expected_evidence_keywords": [
+                  "mean",
+                  "wind speed",
+                  "2015",
+                  "environment",
+                  "wind_speed_ms"
+                ],
+                "reference_answer": "The mean wind speed in 2015 was roughly 5.14 m/s.",
+                "difficulty": "easy",
+                "golden_vector": null,
+                "golden_sql": {
+                  "expected_tables": {
+                    "environment": [
+                      "wind_speed_ms"
+                    ]
+                  },
+                  "expected_aggregation": "AVG",
+                  "expected_year_filter": "2015"
+                },
+                "golden_rules": null,
+                "golden_graph": null
+              },
+              "raw_query": "Tell me the 2015 mean wind speed measured at the port.",
+              "resolved_query": "Tell me the 2015 mean wind speed measured at the port.",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) The user inquired about the maximum wind speed recorded in 2015 and whether safety rules for that level were violated. The system identified a peak speed of approximately 16.54 and confirmed the exist\n  - (session_summary) The user inquired about the causes of berth delays in Q3 2015, with the assistant identifying wind speed and crane operations as the primary contributing factors. Data analysis retrieved specific wind\n  - (session_summary) The user inquired about sea level data at the port, discovering that the database holds structured records for tidal levels and wave heights starting in January 2015. However, the assistant's response",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 4.155158996582031,
+              "lt_hit_session_ids": [
+                "87bacd8f-925",
+                "6ac5e3b5-0d3",
+                "aab7c5bf68b7",
+                "fdb260cb-a31",
+                "950bc6d3266f"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.7254,
+              "final_answer": "### Answer\nThe mean wind speed measured at the port in 2015 was 5.140104526956818 [sql].\n\n### Data Details\nThis value represents the average from the environment table filtered for the year 2015 [sql]. The query returned exactly one row containing the aggregated metric [sql].\n\n### Notes\nThe database execution completed successfully with no errors [sql].",
+              "sources_used": [
+                "sql"
+              ],
+              "router_decision": {
+                "question_type": "structured_data",
+                "answer_mode": "lookup",
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.95,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "sql"
+              ],
+              "answer_mode": "lookup"
+            },
+            {
+              "turn_id": 2,
+              "session_order": 1,
+              "turn_spec": {
+                "turn_id": 2,
+                "raw_query": "Compared to expected values, what was the average tide level for 2016?",
+                "derived_from_sample_id": "V3_SQL_012",
+                "evaluation_focus": "session1_establish_related_metric",
+                "expected_sources": [
+                  "sql"
+                ],
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "comparison",
+                "expected_evidence_keywords": [
+                  "average",
+                  "tide level",
+                  "2016",
+                  "environment",
+                  "tide_ft"
+                ],
+                "reference_answer": "The 2016 average tide level was approximately 0.027 ft.",
+                "difficulty": "medium",
+                "golden_vector": null,
+                "golden_sql": {
+                  "expected_tables": {
+                    "environment": [
+                      "tide_ft"
+                    ]
+                  },
+                  "expected_aggregation": "AVG",
+                  "expected_year_filter": "2016"
+                },
+                "golden_rules": null,
+                "golden_graph": null
+              },
+              "raw_query": "Compared to expected values, what was the average tide level for 2016?",
+              "resolved_query": "Compared to expected values, what was the average tide level for 2016?",
+              "was_rewritten": false,
+              "memory_context": "[Recent turns]:\n  user: Tell me the 2015 mean wind speed measured at the port.\n  assistant: ### Answer\nThe mean wind speed measured at the port in 2015 was 5.140104526956818 [sql].\n\n### Data Details\nThis value represents the average from the environment table filtered for the year 2015 [sql]. The query returned exactly one row containing the aggregated metric [sql].\n\n##\n\n[Active entities]: metric_wind_speed, year_2015\n\n[Last evidence]: sql: tables=['environment'] rows=1 ok=True\n\n[Memories from prior sessions]:\n  - (session_summary) In this session, the user explored historical tide levels and regulatory policies, learning that the average tide level at the port in 2016 was approximately 0.0265 feet. While the assistant confirmed\n  - (session_summary) The user inquired about sea level data at the port, discovering that the database holds structured records for tidal levels and wave heights starting in January 2015. However, the assistant's response\n  - (session_summary) The user inquired about the maximum wind speed recorded in 2015 and whether safety rules for that level were violated. The system identified a peak speed of approximately 16.54 and confirmed the exist",
+              "memory_context_chars": 1184,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 14.762401580810547,
+              "lt_hit_session_ids": [
+                "950bc6d3266f",
+                "aab7c5bf68b7",
+                "87bacd8f-925",
+                "fdb260cb-a31",
+                "6ac5e3b5-0d3"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.7338,
+              "final_answer": "### Answer\nGrounded structured data is available for this query.\n\n### Supporting Evidence\n- The SQL plan used mean aggregation.",
+              "sources_used": [
+                "sql"
+              ],
+              "router_decision": {
+                "question_type": "structured_data",
+                "answer_mode": "lookup",
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.95,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "sql"
+              ],
+              "answer_mode": "comparison"
+            }
+          ]
+        },
+        {
+          "session_order": 2,
+          "session_id": "f1d992b3ffe7",
+          "description": "Heavy paraphrase — tests vector vs keyword",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 2,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "How efficient were terminal operations last year?",
+                "derived_from_sample_id": "V3_SQL_011",
+                "evaluation_focus": "cross_session_paraphrase",
+                "expected_sources": [
+                  "sql"
+                ],
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "lookup",
+                "expected_evidence_keywords": [
+                  "mean",
+                  "wind speed",
+                  "2015",
+                  "environment",
+                  "wind_speed_ms"
+                ],
+                "reference_answer": "The mean wind speed in 2015 was roughly 5.14 m/s.",
+                "difficulty": "easy",
+                "golden_vector": null,
+                "golden_sql": {
+                  "expected_tables": {
+                    "environment": [
+                      "wind_speed_ms"
+                    ]
+                  },
+                  "expected_aggregation": "AVG",
+                  "expected_year_filter": "2015"
+                },
+                "golden_rules": null,
+                "golden_graph": null,
+                "expected_memory_recall": {
+                  "from_session": 1,
+                  "key_fact": "productivity"
+                },
+                "expected_cross_session_hit": true,
+                "expected_from_session_order": 1
+              },
+              "raw_query": "How efficient were terminal operations last year?",
+              "resolved_query": "How efficient were terminal operations last year?",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) In this session, the user explored historical tide levels and regulatory policies, learning that the average tide level at the port in 2016 was approximately 0.0265 feet. While the assistant confirmed\n  - (session_summary) The user inquired about the causes of berth delays in Q3 2015, with the assistant identifying wind speed and crane operations as the primary contributing factors. Data analysis retrieved specific wind\n  - (session_summary) The user inquired about the maximum wind speed recorded in 2015 and whether safety rules for that level were violated. The system identified a peak speed of approximately 16.54 and confirmed the exist",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 0.0,
+              "lt_hit_session_ids": [
+                "950bc6d3266f",
+                "6ac5e3b5-0d3",
+                "87bacd8f-925",
+                "fdb260cb-a31",
+                "aab7c5bf68b7"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.2,
+              "final_answer": "### Answer\nGrounded structured data is available for this query.\n\n### Supporting Evidence\n- No supporting evidence summary available.",
+              "sources_used": [
+                "sql"
+              ],
+              "router_decision": {
+                "question_type": "structured_data",
+                "answer_mode": "lookup",
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.95,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "sql"
+              ],
+              "answer_mode": "lookup"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_003",
+      "pattern": "cross_session_rule_followup",
+      "sid_by_session_order": {
+        "1": "f6ddd23ec110",
+        "2": "ed3e5ecfcd3b"
+      },
+      "sessions": [
+        {
+          "session_order": 1,
+          "session_id": "f6ddd23ec110",
+          "description": "Retrieve wind policy rule",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 1,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "Under what atmospheric pressure condition should the port authority be alerted and emergency response teams prepared?",
+                "derived_from_sample_id": "V3_RUL_002",
+                "evaluation_focus": "session1_establish_wind_rule",
+                "expected_sources": [
+                  "rules"
+                ],
+                "needs_vector": false,
+                "needs_sql": false,
+                "needs_rules": true,
+                "needs_graph": false,
+                "answer_mode": "decision_support",
+                "expected_evidence_keywords": [
+                  "pressure",
+                  "below",
+                  "storm watch"
+                ],
+                "reference_answer": "Initiate storm watch and alert emergency teams when atmospheric pressure falls below 980 hPa.",
+                "difficulty": "easy",
+                "golden_vector": null,
+                "golden_sql": null,
+                "golden_rules": {
+                  "expected_rule_variables": [
+                    "pressure_hpa"
+                  ],
+                  "expected_sql_variables": [
+                    "pressure_hpa"
+                  ],
+                  "expected_rule_source": "synthetic_rule",
+                  "expected_rule_page": 0
+                },
+                "golden_graph": null
+              },
+              "raw_query": "Under what atmospheric pressure condition should the port authority be alerted and emergency response teams prepared?",
+              "resolved_query": "Under what atmospheric pressure condition should the port authority be alerted and emergency response teams prepared?",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) In this session, the user explored historical tide levels and regulatory policies, learning that the average tide level at the port in 2016 was approximately 0.0265 feet. While the assistant confirmed\n  - (session_summary) The user inquired about sea level data at the port, discovering that the database holds structured records for tidal levels and wave heights starting in January 2015. However, the assistant's response\n  - (session_summary) The user inquired about the causes of berth delays in Q3 2015, with the assistant identifying wind speed and crane operations as the primary contributing factors. Data analysis retrieved specific wind",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 11.460065841674805,
+              "lt_hit_session_ids": [
+                "950bc6d3266f",
+                "aab7c5bf68b7",
+                "6ac5e3b5-0d3",
+                "fdb260cb-a31",
+                "87bacd8f-925"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.2375,
+              "final_answer": "### Current Assessment\nPolicy records indicate a specific trigger condition for storm watch procedures involving atmospheric pressure. [rule] The system has located one matching regulation within the active rule set. [rule]\n\n### Evidence-Based Analysis\nThe identified rule mandates initiating storm watch procedures during rapid atmospheric pressure decline. [rule] A numerical threshold is also defined for this metric at 980 hPa. [rule] The logical operator specifies that alerts are required when pressure falls below this value. [rule] No other competing rules were retrieved for this specific variable. [rule]\n\n### Recommendation\nAlert the port authority and prepare emergency response teams if atmospheric pressure drops below 980 hPa. [rule] Teams should also stand by if a rapid decline in pressure is detected regardless of the absolute value. [rule] These steps comply with the documented storm watch protocols. [rule]\n\n### Notes\nThis guidance is strictly based on the retrieved policy rule. [rule] Operational staff should monitor sensors continuously to identify rapid changes. [general knowledge] Verification of current sensor data is recommended before executing escalation procedures. [general knowledge]",
+              "sources_used": [
+                "rules"
+              ],
+              "router_decision": {
+                "question_type": "policy_rule",
+                "answer_mode": "decision_support",
+                "needs_vector": false,
+                "needs_sql": false,
+                "needs_rules": true,
+                "needs_graph_reasoning": false,
+                "confidence": 0.92,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "rules"
+              ],
+              "answer_mode": "decision_support"
+            },
+            {
+              "turn_id": 2,
+              "session_order": 1,
+              "turn_spec": {
+                "turn_id": 2,
+                "raw_query": "And what are typical wind speeds in 2015?",
+                "derived_from_sample_id": "V3_SQL_005",
+                "evaluation_focus": "session1_support_data",
+                "expected_sources": [
+                  "sql"
+                ],
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "decision_support",
+                "expected_evidence_keywords": [
+                  "average",
+                  "wind speed",
+                  "2015",
+                  "normal range",
+                  "wind_speed_ms"
+                ],
+                "reference_answer": "The average wind speed in 2015 was around 5.14 m/s, which is typical and within normal operating conditions.",
+                "difficulty": "medium",
+                "golden_vector": null,
+                "golden_sql": {
+                  "expected_tables": {
+                    "environment": [
+                      "wind_speed_ms"
+                    ]
+                  },
+                  "expected_aggregation": "AVG",
+                  "expected_year_filter": "2015"
+                },
+                "golden_rules": null,
+                "golden_graph": null,
+                "expected_resolved_query_contains": [
+                  "wind",
+                  "2015"
+                ]
+              },
+              "raw_query": "And what are typical wind speeds in 2015?",
+              "resolved_query": "And what are typical wind speeds in 2015?",
+              "was_rewritten": false,
+              "memory_context": "[Recent turns]:\n  user: Under what atmospheric pressure condition should the port authority be alerted and emergency response teams prepared?\n  assistant: ### Current Assessment\nPolicy records indicate a specific trigger condition for storm watch procedures involving atmospheric pressure. [rule] The system has located one matching regulation within the active rule set. [rule]\n\n### Evidence-Based Analysis\nThe identified rule mandate\n\n[Active entities]: metric_pressure\n\n[Last evidence]: rules: Initiate storm watch procedures during rapid atmospheric pressure decline.\n\n[Memories from prior sessions]:\n  - (session_summary) The user inquired about the causes of berth delays in Q3 2015, with the assistant identifying wind speed and crane operations as the primary contributing factors. Data analysis retrieved specific wind\n  - (session_summary) The user inquired about the maximum wind speed recorded in 2015 and whether safety rules for that level were violated. The system identified a peak speed of approximately 16.54 and confirmed the exist\n  - (session_summary) The user explored port environmental metrics, specifically retrieving a 2015 mean wind speed of approximately 5.14. While the system confirmed data availability for the 2016 average tide level, it did",
+              "memory_context_chars": 1273,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 11.723518371582031,
+              "lt_hit_session_ids": [
+                "6ac5e3b5-0d3",
+                "87bacd8f-925",
+                "9cce73964834",
+                "aab7c5bf68b7",
+                "fdb260cb-a31"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.7166,
+              "final_answer": "### Answer\nThe average wind speed recorded in 2015 was 5.146267692927167 [sql] meters per second. The minimum speed was 0.0 [sql] meters per second and the maximum was 16.536371479889876 [sql] meters per second.\n\n### Data Details\n- Mean wind speed: 5.146267692927167 [sql] m/s\n- Minimum wind speed: 0.0 [sql] m/s\n- Maximum wind speed: 16.536371479889876 [sql] m/s\n\n### Notes\nThe dataset covers the full calendar year from 2015-01-01 [sql] to 2015-12-31 [sql].",
+              "sources_used": [
+                "sql"
+              ],
+              "router_decision": {
+                "question_type": "structured_data",
+                "answer_mode": "lookup",
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.95,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "sql"
+              ],
+              "answer_mode": "decision_support"
+            }
+          ]
+        },
+        {
+          "session_order": 2,
+          "session_id": "ed3e5ecfcd3b",
+          "description": "Apply rule in fresh session",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 2,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "What should we do when strong gusts are present?",
+                "derived_from_sample_id": "V3_RUL_002",
+                "evaluation_focus": "cross_session_rule_application",
+                "expected_sources": [
+                  "rules"
+                ],
+                "needs_vector": false,
+                "needs_sql": false,
+                "needs_rules": true,
+                "needs_graph": false,
+                "answer_mode": "decision_support",
+                "expected_evidence_keywords": [
+                  "pressure",
+                  "below",
+                  "storm watch"
+                ],
+                "reference_answer": "Initiate storm watch and alert emergency teams when atmospheric pressure falls below 980 hPa.",
+                "difficulty": "easy",
+                "golden_vector": null,
+                "golden_sql": null,
+                "golden_rules": {
+                  "expected_rule_variables": [
+                    "pressure_hpa"
+                  ],
+                  "expected_sql_variables": [
+                    "pressure_hpa"
+                  ],
+                  "expected_rule_source": "synthetic_rule",
+                  "expected_rule_page": 0
+                },
+                "golden_graph": null,
+                "expected_memory_recall": {
+                  "from_session": 1,
+                  "key_fact": "wind"
+                },
+                "expected_cross_session_hit": true,
+                "expected_from_session_order": 1
+              },
+              "raw_query": "What should we do when strong gusts are present?",
+              "resolved_query": "What should we do when strong gusts are present?",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) The user inquired about sea level data at the port, discovering that the database holds structured records for tidal levels and wave heights starting in January 2015. However, the assistant's response\n  - (session_summary) In this session, the user explored historical tide levels and regulatory policies, learning that the average tide level at the port in 2016 was approximately 0.0265 feet. While the assistant confirmed\n  - (session_summary) The user explored port environmental metrics, specifically retrieving a 2015 mean wind speed of approximately 5.14. While the system confirmed data availability for the 2016 average tide level, it did",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 7.525920867919922,
+              "lt_hit_session_ids": [
+                "aab7c5bf68b7",
+                "950bc6d3266f",
+                "9cce73964834",
+                "6ac5e3b5-0d3",
+                "87bacd8f-925"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.15,
+              "final_answer": "### Current Assessment\nBased on the retrieved regulatory data, there are no specific rules defining operational thresholds for strong gusts within the current port safety framework. While general safety protocols exist for mooring, fire prevention, and vessel transit, none explicitly mandate actions based on wind speed or gust intensity. Consequently, a definitive stop-or-go recommendation cannot be generated solely from the available rule evidence.\n\n### Evidence-Based Analysis\nThe analysis of the active rule set reveals three primary safety mandates that govern port operations:\n1.  **Mooring Safety:** Crew members handling lines during mooring and unmooring must wear approved personal protective equipment, including life jackets and safety helmets [rule].\n2.  **Fire Safety:** Hot work activities within terminal zones require a valid permit issued by the safety officer prior to ignition [rule].\n3.  **Vessel Transit:** Any vessel classified as unsafe is prohibited from entering or transiting port waters without prior written approval from the Harbour Master [rule].\n\nThe retrieved rules do not contain variables or thresholds related to wind speed, wave height, or gust duration [rule]. Structured data regarding historical environmental metrics exists in the system, but no real-time wind data was provided in the current context to trigger specific operational constraints [sql].\n\n### Recommendation\nGiven the absence of explicit wind-speed rules, operations should not be suspended or resumed based solely on automated rule matching. Instead, the following steps are advised:\n*   **Safety Assessment:** Evaluate whether strong gusts compromise the stability or safety of the vessel or ongoing operations [general knowledge].\n*   **Harbour Master Consultation:** If gusts are deemed to render the vessel unsafe, prior written approval from the Harbour Master is required before proceeding with entry or transit [rule].\n*   **Manual Verification:** Confirm current local weather advisories and specific port standing orders regarding high-wind conditions through manual channels [general knowledge].\n\n### Notes\n*   **Data Limitations:** The current rule engine did not identify any triggered rules for the \"strong gusts\" variable [rule].\n*   **Policy Gap:** Specific wind thresholds for suspension of mooring or transit are not present in the retrieved synthetic rules or handbook excerpts [rule].\n*   **Operational Caution:** While general maritime practice suggests caution during high winds, specific port policy must be verified manually to ensure compliance [general knowledge].",
+              "sources_used": [
+                "rules"
+              ],
+              "router_decision": {
+                "question_type": "policy_rule",
+                "answer_mode": "decision_support",
+                "needs_vector": false,
+                "needs_sql": false,
+                "needs_rules": true,
+                "needs_graph_reasoning": false,
+                "confidence": 0.92,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "rules"
+              ],
+              "answer_mode": "decision_support"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_004",
+      "pattern": "cross_session_topic_drift",
+      "sid_by_session_order": {
+        "1": "0ca87ea31d47",
+        "2": "ab380a72aa81"
+      },
+      "sessions": [
+        {
+          "session_order": 1,
+          "session_id": "0ca87ea31d47",
+          "description": "Tide topic",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 1,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "How much was the average wind speed recorded in 2015?",
+                "derived_from_sample_id": "V3_SQL_002",
+                "evaluation_focus": "session1_tide",
+                "expected_sources": [
+                  "sql"
+                ],
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "lookup",
+                "expected_evidence_keywords": [
+                  "average",
+                  "wind speed",
+                  "2015",
+                  "environment",
+                  "wind_speed_ms"
+                ],
+                "reference_answer": "The average wind speed in 2015 was approximately 5.14 m/s.",
+                "difficulty": "easy",
+                "golden_vector": null,
+                "golden_sql": {
+                  "expected_tables": {
+                    "environment": [
+                      "wind_speed_ms"
+                    ]
+                  },
+                  "expected_aggregation": "AVG",
+                  "expected_year_filter": "2015"
+                },
+                "golden_rules": null,
+                "golden_graph": null
+              },
+              "raw_query": "How much was the average wind speed recorded in 2015?",
+              "resolved_query": "How much was the average wind speed recorded in 2015?",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) The user inquired about the maximum wind speed recorded in 2015 and whether safety rules for that level were violated. The system identified a peak speed of approximately 16.54 and confirmed the exist\n  - (session_summary) The user explored port environmental metrics, specifically retrieving a 2015 mean wind speed of approximately 5.14. While the system confirmed data availability for the 2016 average tide level, it did\n  - (session_summary) The user inquired about the causes of berth delays in Q3 2015, with the assistant identifying wind speed and crane operations as the primary contributing factors. Data analysis retrieved specific wind",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 9.206533432006836,
+              "lt_hit_session_ids": [
+                "87bacd8f-925",
+                "9cce73964834",
+                "6ac5e3b5-0d3",
+                "f6ddd23ec110",
+                "aab7c5bf68b7"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.7953,
+              "final_answer": "### Answer\nThe average wind speed recorded in 2015 was 5.140104526956818 [sql].\n\n### Data Details\nThe calculation applied a mean aggregation to records dated between 2015-01-01 and 2016-01-01 [sql]. One aggregated row was generated for this query [sql].\n\n### Notes\nNo execution errors or data gaps were identified [sql].",
+              "sources_used": [
+                "sql"
+              ],
+              "router_decision": {
+                "question_type": "structured_data",
+                "answer_mode": "lookup",
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.95,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "sql"
+              ],
+              "answer_mode": "lookup"
+            },
+            {
+              "turn_id": 2,
+              "session_order": 1,
+              "turn_spec": {
+                "turn_id": 2,
+                "raw_query": "Show me the total TEU received at the yard in 2015.",
+                "derived_from_sample_id": "V3_SQL_003",
+                "evaluation_focus": "session1_tide_followup",
+                "expected_sources": [
+                  "sql"
+                ],
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "lookup",
+                "expected_evidence_keywords": [
+                  "total TEU",
+                  "received",
+                  "2015",
+                  "yard_operations",
+                  "teu_received"
+                ],
+                "reference_answer": "The total TEU received in 2015 was 941,944.",
+                "difficulty": "easy",
+                "golden_vector": null,
+                "golden_sql": {
+                  "expected_tables": {
+                    "yard_operations": [
+                      "teu_received"
+                    ]
+                  },
+                  "expected_aggregation": "SUM",
+                  "expected_year_filter": "2015"
+                },
+                "golden_rules": null,
+                "golden_graph": null
+              },
+              "raw_query": "Show me the total TEU received at the yard in 2015.",
+              "resolved_query": "Show me the total TEU received at the yard in 2015.",
+              "was_rewritten": false,
+              "memory_context": "[Recent turns]:\n  user: How much was the average wind speed recorded in 2015?\n  assistant: ### Answer\nThe average wind speed recorded in 2015 was 5.140104526956818 [sql].\n\n### Data Details\nThe calculation applied a mean aggregation to records dated between 2015-01-01 and 2016-01-01 [sql]. One aggregated row was generated for this query [sql].\n\n### Notes\nNo execution er\n\n[Active entities]: metric_wind_speed, year_2015, date_2015-01, date_2016-01\n\n[Last evidence]: sql: tables=['environment'] rows=1 ok=True\n\n[Memories from prior sessions]:\n  - (session_summary) The user inquired about sea level data at the port, discovering that the database holds structured records for tidal levels and wave heights starting in January 2015. However, the assistant's response\n  - (session_summary) In this session, the user explored historical tide levels and regulatory policies, learning that the average tide level at the port in 2016 was approximately 0.0265 feet. While the assistant confirmed\n  - (session_summary) The user inquired about the average berth and crane operations productivity for Berth B3 in 2015. The assistant reported that specific data for both metrics is unavailable in the current system record",
+              "memory_context_chars": 1211,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 7.120609283447266,
+              "lt_hit_session_ids": [
+                "aab7c5bf68b7",
+                "950bc6d3266f",
+                "fdb260cb-a31",
+                "6ac5e3b5-0d3",
+                "87bacd8f-925"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.515,
+              "final_answer": "### Answer\nGrounded structured data is available for this query.\n\n### Supporting Evidence\n- The SQL plan used sum aggregation.",
+              "sources_used": [
+                "sql"
+              ],
+              "router_decision": {
+                "question_type": "structured_data",
+                "answer_mode": "lookup",
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.95,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "sql"
+              ],
+              "answer_mode": "lookup"
+            }
+          ]
+        },
+        {
+          "session_order": 2,
+          "session_id": "ab380a72aa81",
+          "description": "Unrelated gate topic — negative test",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 2,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions?",
+                "derived_from_sample_id": "V3_VEC_003",
+                "evaluation_focus": "cross_session_negative_no_leak",
+                "expected_sources": [
+                  "vector"
+                ],
+                "needs_vector": true,
+                "needs_sql": false,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "lookup",
+                "expected_evidence_keywords": [
+                  "accrual basis",
+                  "enterprise fund",
+                  "$100,000",
+                  "capitalized",
+                  "GASB"
+                ],
+                "reference_answer": "Business-type activities are accounted for using the flow of economic resources measurement focus and accrual basis of accounting in an enterprise fund, and additions or asset improvements exceeding $100,000 that extend service life are capitalized.",
+                "difficulty": "easy",
+                "golden_vector": {
+                  "relevant_chunk_ids": [
+                    "248__c__2024__20__1"
+                  ],
+                  "relevant_parent_ids": [
+                    "248__p__2024__20"
+                  ],
+                  "relevant_source_files": [
+                    "annual-report-2024.pdf"
+                  ],
+                  "relevant_sections": [
+                    "2024"
+                  ],
+                  "expected_doc_types": [
+                    "annual_report"
+                  ],
+                  "expected_categories": [
+                    "operations"
+                  ],
+                  "expected_publish_year": 2024
+                },
+                "golden_sql": null,
+                "golden_rules": null,
+                "golden_graph": null,
+                "expected_cross_session_hit": false,
+                "expected_from_session_order": null
+              },
+              "raw_query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions?",
+              "resolved_query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activities, and what is the capitalization threshold for facility additions?",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) The user inquired about sea level data at the port, discovering that the database holds structured records for tidal levels and wave heights starting in January 2015. However, the assistant's response\n  - (session_summary) The user explored atmospheric pressure conditions for emergency alerts and requested 2015 wind speed statistics. The system provided specific wind data, including an average of 5.15 m/s and a maximum \n  - (session_summary) The user explored port environmental metrics, specifically retrieving a 2015 mean wind speed of approximately 5.14. While the system confirmed data availability for the 2016 average tide level, it did",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 10.612726211547852,
+              "lt_hit_session_ids": [
+                "aab7c5bf68b7",
+                "f6ddd23ec110",
+                "9cce73964834",
+                "87bacd8f-925",
+                "950bc6d3266f"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.6437,
+              "final_answer": "### Answer\nBased on the retrieved text segments from the 2024 Annual Report, the specific basis of accounting for business-type activities and the capitalization threshold for facility additions are not explicitly stated in the provided evidence. [doc]\n\n### Supporting Evidence\nThe most relevant document identified is the 2024 Annual Report, specifically page 4, which details the relationship between the Port Authority and component units such as the Retiree Health Benefits Trust. [doc]\nAnother retrieved document pertains to corporate financial statements from 2008, which lists capital obligations but does not reflect the 2024 reporting standards. [doc]\nNeither snippet includes a definition of the accounting basis used for business-type activities. [doc]\nNeither snippet specifies a monetary threshold for capitalizing facility additions. [doc]\nThe retrieved content focuses primarily on retiree health benefits and historical cash flow adjustments rather than current accounting policies. [doc]\n\n### Notes\nThe current search results provide limited context regarding the financial statement notes for the 2024 fiscal year. [doc]\nTo obtain the specific accounting basis and capitalization thresholds, a review of the complete \"Summary of Significant Accounting Policies\" within the full 2024 Annual Report is recommended. [general knowledge]",
+              "sources_used": [
+                "documents"
+              ],
+              "router_decision": {
+                "question_type": "document_lookup",
+                "answer_mode": "lookup",
+                "needs_vector": true,
+                "needs_sql": false,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.92,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "vector"
+              ],
+              "answer_mode": "lookup"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_id": "CS3_005",
+      "pattern": "cross_session_multi_hop",
+      "sid_by_session_order": {
+        "1": "328487dbbace",
+        "2": "a059f5d46f66",
+        "3": "6e0064b18722"
+      },
+      "sessions": [
+        {
+          "session_order": 1,
+          "session_id": "328487dbbace",
+          "description": "Tide data",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 1,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "How much was the average wind speed recorded in 2015?",
+                "derived_from_sample_id": "V3_SQL_002",
+                "evaluation_focus": "session1_tide_data",
+                "expected_sources": [
+                  "sql"
+                ],
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "lookup",
+                "expected_evidence_keywords": [
+                  "average",
+                  "wind speed",
+                  "2015",
+                  "environment",
+                  "wind_speed_ms"
+                ],
+                "reference_answer": "The average wind speed in 2015 was approximately 5.14 m/s.",
+                "difficulty": "easy",
+                "golden_vector": null,
+                "golden_sql": {
+                  "expected_tables": {
+                    "environment": [
+                      "wind_speed_ms"
+                    ]
+                  },
+                  "expected_aggregation": "AVG",
+                  "expected_year_filter": "2015"
+                },
+                "golden_rules": null,
+                "golden_graph": null
+              },
+              "raw_query": "How much was the average wind speed recorded in 2015?",
+              "resolved_query": "How much was the average wind speed recorded in 2015?",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) The user inquired about the maximum wind speed recorded in 2015 and whether safety rules for that level were violated. The system identified a peak speed of approximately 16.54 and confirmed the exist\n  - (session_summary) The user explored port environmental metrics, specifically retrieving a 2015 mean wind speed of approximately 5.14. While the system confirmed data availability for the 2016 average tide level, it did\n  - (session_summary) The user explored atmospheric pressure conditions for emergency alerts and requested 2015 wind speed statistics. The system provided specific wind data, including an average of 5.15 m/s and a maximum ",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 4.081249237060547,
+              "lt_hit_session_ids": [
+                "87bacd8f-925",
+                "f6ddd23ec110",
+                "9cce73964834",
+                "6ac5e3b5-0d3",
+                "0ca87ea31d47"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.7953,
+              "final_answer": "### Answer\nThe average wind speed recorded in 2015 [sql] was 5.140104526956818 [sql].\n\n### Data Details\nThe result set contained 1 [sql] row [sql]. The calculation utilized mean aggregation [sql].\n\n### Notes\nNo caveats were identified [sql].",
+              "sources_used": [
+                "sql"
+              ],
+              "router_decision": {
+                "question_type": "structured_data",
+                "answer_mode": "lookup",
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.95,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "sql"
+              ],
+              "answer_mode": "lookup"
+            }
+          ]
+        },
+        {
+          "session_order": 2,
+          "session_id": "a059f5d46f66",
+          "description": "Wind data",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 2,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "Was the average wind speed in 2015 within the normal operating range?",
+                "derived_from_sample_id": "V3_SQL_005",
+                "evaluation_focus": "session2_wind_data",
+                "expected_sources": [
+                  "sql"
+                ],
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "decision_support",
+                "expected_evidence_keywords": [
+                  "average",
+                  "wind speed",
+                  "2015",
+                  "normal range",
+                  "wind_speed_ms"
+                ],
+                "reference_answer": "The average wind speed in 2015 was around 5.14 m/s, which is typical and within normal operating conditions.",
+                "difficulty": "medium",
+                "golden_vector": null,
+                "golden_sql": {
+                  "expected_tables": {
+                    "environment": [
+                      "wind_speed_ms"
+                    ]
+                  },
+                  "expected_aggregation": "AVG",
+                  "expected_year_filter": "2015"
+                },
+                "golden_rules": null,
+                "golden_graph": null
+              },
+              "raw_query": "Was the average wind speed in 2015 within the normal operating range?",
+              "resolved_query": "Was the average wind speed in 2015 within the normal operating range?",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) The user inquired about the maximum wind speed recorded in 2015 and whether safety rules for that level were violated. The system identified a peak speed of approximately 16.54 and confirmed the exist\n  - (session_summary) The user explored atmospheric pressure conditions for emergency alerts and requested 2015 wind speed statistics. The system provided specific wind data, including an average of 5.15 m/s and a maximum \n  - (session_summary) The user explored port environmental metrics, specifically retrieving a 2015 mean wind speed of approximately 5.14. While the system confirmed data availability for the 2016 average tide level, it did",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 5.535602569580078,
+              "lt_hit_session_ids": [
+                "87bacd8f-925",
+                "f6ddd23ec110",
+                "9cce73964834",
+                "328487dbbace",
+                "6ac5e3b5-0d3"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.7762,
+              "final_answer": "### Answer\nThe average wind speed in 2015 was 5.140104526956818 [sql] m/s across 8760 [sql] records. Threshold data for the normal operating range is not present in the query results [sql].\n\n### Data Details\nMinimum wind speed: 0.0 [sql] m/s; Maximum wind speed: 16.536371479889876 [sql] m/s.\n\n### Notes\nNo operational range rules were provided in the execution context [sql].",
+              "sources_used": [
+                "sql"
+              ],
+              "router_decision": {
+                "question_type": "structured_data",
+                "answer_mode": "lookup",
+                "needs_vector": false,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.57,
+                "matched_keywords": [
+                  "average",
+                  "in 2015",
+                  "wind",
+                  "wind speed"
+                ],
+                "rationale": "Router selected: structured operational data. Matched keywords: average, in 2015, wind, wind speed."
+              },
+              "expected_sources": [
+                "sql"
+              ],
+              "answer_mode": "decision_support"
+            }
+          ]
+        },
+        {
+          "session_order": 3,
+          "session_id": "6e0064b18722",
+          "description": "Multi-hop retrieval — needs both prior sessions",
+          "turns": [
+            {
+              "turn_id": 1,
+              "session_order": 3,
+              "turn_spec": {
+                "turn_id": 1,
+                "raw_query": "Can you summarise what weather factors we discussed affect operations?",
+                "derived_from_sample_id": "V3_MULTI_001",
+                "evaluation_focus": "cross_session_multi_hop",
+                "expected_sources": [
+                  "vector",
+                  "sql"
+                ],
+                "needs_vector": true,
+                "needs_sql": true,
+                "needs_rules": false,
+                "needs_graph": false,
+                "answer_mode": "comparison",
+                "expected_evidence_keywords": [
+                  "environmental objectives",
+                  "management review",
+                  "EMS targets",
+                  "compliance status",
+                  "operational data"
+                ],
+                "reference_answer": "The manual requires EMS review against environmental targets; the operational statistics must then be checked to confirm whether current metrics (e.g., emissions, waste) meet those documented objectives.",
+                "difficulty": "hard",
+                "golden_vector": {
+                  "relevant_chunk_ids": [
+                    "8__c__p1__18__5"
+                  ],
+                  "relevant_source_files": [
+                    "manualbestmanagementports.pdf"
+                  ]
+                },
+                "golden_sql": {
+                  "expected_tables": {}
+                },
+                "golden_rules": null,
+                "golden_graph": null,
+                "expected_memory_recall": {
+                  "from_session": 1,
+                  "key_fact": "tide"
+                },
+                "expected_cross_session_hit": true,
+                "expected_from_session_order": [
+                  1,
+                  2
+                ]
+              },
+              "raw_query": "Can you summarise what weather factors we discussed affect operations?",
+              "resolved_query": "Can you summarise what weather factors we discussed affect operations?",
+              "was_rewritten": false,
+              "memory_context": "[Memories from prior sessions]:\n  - (session_summary) The user explored historical weather metrics by requesting the average wind speed recorded for the year 2015. In response, the system calculated a precise mean value of 5.140104526956818 using data ag\n  - (session_summary) The user explored atmospheric pressure conditions for emergency alerts and requested 2015 wind speed statistics. The system provided specific wind data, including an average of 5.15 m/s and a maximum \n  - (session_summary) The user explored port environmental metrics, specifically retrieving a 2015 mean wind speed of approximately 5.14. While the system confirmed data availability for the 2016 average tide level, it did",
+              "memory_context_chars": 700,
+              "resolve_latency_ms": 0.0,
+              "build_ctx_latency_ms": 9.049415588378906,
+              "lt_hit_session_ids": [
+                "328487dbbace",
+                "f6ddd23ec110",
+                "9cce73964834",
+                "aab7c5bf68b7",
+                "950bc6d3266f"
+              ],
+              "lt_hit_count": 5,
+              "lt_hit_top_score": 0.167,
+              "final_answer": "### Answer\n\nBased on the retrieved environmental documentation and recent session history, the weather factors identified as relevant to port operations include temperature, precipitation, sea level rise, wind speed, atmospheric pressure, and tide levels [doc]. Recent discussions specifically analyzed historical wind speed metrics, calculating a mean value of approximately 5.14 m/s for the year 2015 [doc]. Additionally, atmospheric pressure conditions were explored in the context of emergency alert systems, and tide level data was queried for operational planning [doc]. Environmental guidelines further categorize temperature, precipitation, and sea level rise as key climate change variables requiring risk assessment [doc].\n\n### Supporting Evidence\n\n**Retrieved Document Analysis**\n*   **Climate Variables:** The \"Climate Risk Information\" report published in February 2009 describes projections associated with regional climate change variables, specifically identifying temperature, precipitation, and sea level rise [doc].\n*   **Resilience Guidelines:** The PANYNJ Climate Resilience Design Guidelines (v1.2, updated 06/01/2018) provide a framework for addressing these environmental factors in infrastructure design [doc].\n*   **Session History:** Records from prior sessions confirm that users requested average wind speed statistics for 2015, resulting in a calculated mean of 5.14 m/s [doc].\n*   **Emergency & Planning:** Previous interactions included inquiries into atmospheric pressure conditions for emergency alerts and requests for 2016 average tide level data [doc].\n\n**Operational Context**\n*   While the documents highlight the variables themselves, general operational norms suggest these metrics are critical for determining vessel safety and cargo handling windows [general knowledge].\n*   Surveillance systems, such as smart cameras installed at strategic locations, support monitoring activities that may correlate with weather-dependent security protocols [doc].\n\n### Notes\n\n*   **Policy Thresholds:** The current evidence does not contain specific regulatory thresholds (e.g., maximum allowable wind speeds) for suspending operations [doc].\n*   **Data Availability:** Historical data exists for wind speed and tide levels, but specific real-time operational limits require verification against active port policies [general knowledge].\n*   **Documentation Scope:** The retrieved documents focus primarily on long-term climate resilience and risk information rather than immediate daily operational constraints [doc].",
+              "sources_used": [
+                "documents"
+              ],
+              "router_decision": {
+                "question_type": "document_lookup",
+                "answer_mode": "descriptive",
+                "needs_vector": true,
+                "needs_sql": false,
+                "needs_rules": false,
+                "needs_graph_reasoning": false,
+                "confidence": 0.9,
+                "matched_keywords": [],
+                "rationale": "LLM-routed"
+              },
+              "expected_sources": [
+                "vector",
+                "sql"
+              ],
+              "answer_mode": "comparison"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "counts": {
+      "conversations": 5,
+      "positive_turns": 4,
+      "negative_turns": 1
+    },
+    "cross_session_hit_rate": 0.5,
+    "correct_session_recall_rate": 0.5,
+    "cross_session_leak_rate": 0.0,
+    "avg_lt_top_score_positive": 0.187,
+    "avg_lt_top_score_negative": 0.6437,
+    "score_gap_pos_minus_neg": -0.4568
+  }
+}

@@ -416,13 +416,19 @@ def aggregate(
     rl = sum(r.get("resolve_latency_ms", 0.0) for r in per_turn_records) / n
     bl = sum(r.get("build_ctx_latency_ms", 0.0) for r in per_turn_records) / n
 
-    judges = [r for r in per_turn_records if r.get("judge_precision") is not None]
-    if judges:
-        prec = sum(r["judge_precision"] for r in judges) / len(judges)
-        cons = sum(r.get("judge_consistency", 0) for r in judges) / len(judges)
-        attr = sum(r.get("judge_attribution", 0) for r in judges) / len(judges)
-    else:
-        prec = cons = attr = None
+    # Judge subfields are independent — precision judge can succeed while
+    # faithfulness judge times out or is skipped (first turn has no history
+    # to judge against). Filter each subfield separately.
+    precs = [r["judge_precision"] for r in per_turn_records
+             if r.get("judge_precision") is not None]
+    conss = [r["judge_consistency"] for r in per_turn_records
+             if r.get("judge_consistency") is not None]
+    attrs = [r["judge_attribution"] for r in per_turn_records
+             if r.get("judge_attribution") is not None]
+    prec = sum(precs) / len(precs) if precs else None
+    cons = sum(conss) / len(conss) if conss else None
+    attr = sum(attrs) / len(attrs) if attrs else None
+    judges = precs  # for count reporting
 
     return MemoryMetrics(
         avg_coref_contains=contains,

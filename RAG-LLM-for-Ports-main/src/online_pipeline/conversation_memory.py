@@ -590,6 +590,26 @@ def _time_decay(age_days: float) -> float:
     return math.exp(-math.log(2) * age_days / _TIME_DECAY_HALFLIFE_DAYS)
 
 
+DEFAULT_SCORING_WEIGHTS: Dict[str, float] = {
+    # Phase B (embedder present) defaults — sum to 1.0.
+    # See docs/MEMORY_TECH_REPORT_CN.md for the design rationale.
+    "cos": 0.55,
+    "entity": 0.25,
+    "decay": 0.12,
+    "access": 0.03,
+    "importance": 0.05,
+}
+
+# Phase A (no embedder) default — `word_overlap` replaces `cos`.
+DEFAULT_SCORING_WEIGHTS_PHASE_A: Dict[str, float] = {
+    "word": 0.35,
+    "entity": 0.45,
+    "decay": 0.12,
+    "access": 0.03,
+    "importance": 0.05,
+}
+
+
 class LongTermMemory:
     """
     DuckDB-backed cross-session memory.
@@ -610,6 +630,9 @@ class LongTermMemory:
             Falls back to Phase-A path when an entry has no embedding yet
             (e.g. migrated legacy rows before backfill).
 
+    Both weight dicts can be overridden via the `scoring_weights` argument
+    for ablation studies (see `run_ablation.py`).
+
     The public API (`store`, `retrieve`, `store_session_summary`, `close`)
     is stable.
     """
@@ -618,6 +641,7 @@ class LongTermMemory:
         self,
         db_path: str | Path,
         embedder: Optional["BGEEmbedder"] = None,
+        scoring_weights: Optional[Dict[str, float]] = None,
     ) -> None:
         self.db_path = Path(db_path)
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
@@ -635,9 +659,17 @@ class LongTermMemory:
         except Exception as exc:                       # pragma: no cover — defensive
             logger.warning("vss extension unavailable (%s); will use Python cosine", exc)
         self.embedder = embedder
+        # Resolve weights: explicit override > embedder-aware default.
+        if scoring_weights is not None:
+            self.scoring_weights = dict(scoring_weights)
+        elif embedder is not None:
+            self.scoring_weights = dict(DEFAULT_SCORING_WEIGHTS)
+        else:
+            self.scoring_weights = dict(DEFAULT_SCORING_WEIGHTS_PHASE_A)
         logger.info(
-            "LongTermMemory (DuckDB) @ %s  [embedder=%s, vss=%s]",
+            "LongTermMemory (DuckDB) @ %s  [embedder=%s, vss=%s, weights=%s]",
             self.db_path, "BGE" if embedder else "none", self._vss_ok,
+            self.scoring_weights,
         )
         self._maybe_migrate_from_sqlite()
 
@@ -886,29 +918,30 @@ class LongTermMemory:
             imp = importance or _DEFAULT_ENTRY_WEIGHT
             importance_delta = imp - _DEFAULT_ENTRY_WEIGHT
 
+            w = self.scoring_weights
             if vec_query is not None:
-                # Phase-B blended score
+                # Phase-B blended score (configurable weights for ablation)
                 score = (
-                    max(cos_sim, 0.0) * 0.55
-                    + ent_overlap * 0.25
-                    + decay * 0.12
-                    + access_norm * 0.03
-                    + importance_delta * 0.05
+                    max(cos_sim, 0.0) * w.get("cos", 0.0)
+                    + ent_overlap * w.get("entity", 0.0)
+                    + decay * w.get("decay", 0.0)
+                    + access_norm * w.get("access", 0.0)
+                    + importance_delta * w.get("importance", 0.0)
                 )
                 threshold = 0.18
             else:
-                # Phase-A keyword fallback
+                # Phase-A keyword fallback (configurable weights for ablation)
                 content_words = set((content or "").lower().split())
                 word_overlap = (
                     len(q_words & content_words) / max(len(q_words), 1)
                     if q_words else 0.0
                 )
                 score = (
-                    word_overlap * 0.35
-                    + ent_overlap * 0.45
-                    + decay * 0.12
-                    + access_norm * 0.03
-                    + importance_delta * 0.05
+                    word_overlap * w.get("word", 0.0)
+                    + ent_overlap * w.get("entity", 0.0)
+                    + decay * w.get("decay", 0.0)
+                    + access_norm * w.get("access", 0.0)
+                    + importance_delta * w.get("importance", 0.0)
                 )
                 threshold = 0.08
 
@@ -988,6 +1021,7 @@ class MemoryManager:
         max_raw_turns: int = 10,
         use_embeddings: bool = True,
         embedder_device: str = "cuda",
+        scoring_weights: Optional[Dict[str, float]] = None,
     ) -> None:
         self.project_root = Path(project_root)
         if db_path is None:
@@ -1006,7 +1040,9 @@ class MemoryManager:
                     "degrades to Phase-A keyword ranking", exc,
                 )
 
-        self.long_term = LongTermMemory(db_path, embedder=embedder)
+        self.long_term = LongTermMemory(
+            db_path, embedder=embedder, scoring_weights=scoring_weights,
+        )
 
         # Opportunistic backfill: legacy rows imported from SQLite have no
         # embeddings. Compute them once so vector retrieval works immediately.

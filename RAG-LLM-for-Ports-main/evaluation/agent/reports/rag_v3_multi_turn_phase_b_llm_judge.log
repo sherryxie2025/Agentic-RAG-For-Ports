@@ -1,0 +1,128 @@
+Loading multi-turn dataset: C:\Users\25389\Agent_RAG\.claude\worktrees\modest-engelbart\RAG-LLM-for-Ports-main\evaluation\golden_dataset_v3_multi_turn.json
+  10 conversations, 31 turns
+
+Building agentic-RAG DAG with memory...
+  embeddings:  ON (Phase B BGE+vss)
+  llm-judge:   ON
+  memory_db:   storage\sql\memory_phaseB_judge2.duckdb
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 2843.36it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-base-en-v1.5
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 6679.58it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-base-en-v1.5
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 105/105 [00:00<00:00, 3407.07it/s]
+[1mBertForSequenceClassification LOAD REPORT[0m from: cross-encoder/ms-marco-MiniLM-L-6-v2
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+
+  [MT3_001] entity_anchored (3 turns) sid=efa22ac567f1
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=user: What was the average tide level at the port 
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.8s error=Request timed out. prompt=user: What was the average tide level at the port 
+
+  [MT3_002] mode_progression (3 turns) sid=ee2726813ac5
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=Given those numbers, should we adjust operations?
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=user: How much was the average wind speed recorded
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.7s error=Request timed out. prompt=user: How much was the average wind speed recorded
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 21.4s error=Request timed out. prompt=Given those numbers, should we adjust operations?
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Given those numbers, should we adjust operations?
+LLM router failed => falling back to rule-based
+SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+
+  [MT3_003] cross_source_verification (3 turns) sid=f9095f0d574a
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=user: What was the peak yard occupancy percentage 
+
+  [MT3_004] topic_switch (3 turns) sid=43e6251629d7
+SYNTH LLM error: APITimeoutError: Request timed out.
+SYNTH LLM error: APITimeoutError: Request timed out.
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=user: Was the average wind speed in 2015 within th
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Score it.
+
+  [MT3_005] long_summarisation (6 turns) sid=d5711055edb0
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=user: Who won Port of Seattle's airline noise awar
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.7s error=Request timed out. prompt=user: Who won Port of Seattle's airline noise awar
+SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=user: What was the worst vessel arrival delay in 2
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How does a vessel's LOA cause an ultra-large conta
+LLM router failed => falling back to rule-based
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=user: When should we deny new vessel arrivals due 
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=user: How does a vessel's LOA cause an ultra-large
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.7s error=Request timed out. prompt=user: How does a vessel's LOA cause an ultra-large
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Score it.
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Score it.
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 60.7s error=Request timed out. prompt=Score it.
+
+  [MT3_006] guardrail_in_conversation (3 turns) sid=87cd3a330096
+SYNTH LLM error: APITimeoutError: Request timed out.
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 31.4s error=Request timed out. prompt=user: Give me the mean tide level observed during 
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 26.8s error=Request timed out. prompt=user: Give me the mean tide level observed during 
+
+  [MT3_007] entity_anchored (3 turns) sid=88769a09b49d
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=user: Tell me the 2015 mean wind speed measured at
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.8s error=Request timed out. prompt=Is this documented anywhere?
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Score it.
+
+  [MT3_008] cross_source_verification (2 turns) sid=fa0027344123
+
+  [MT3_009] topic_switch (2 turns) sid=a5b097e9880c
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=Why does a vessel's IMO arrival drive the requirem
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Why does a vessel's IMO arrival drive the requirem
+LLM router failed => falling back to rule-based
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=vessel_entry ¡ú compliance
+
+  [MT3_010] mode_progression (3 turns) sid=8011a015b0c0
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why might that be happening?
+LLM router failed => falling back to rule-based
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 20.0s error=Request timed out. prompt=user: Under the 2019 Port Authority tariff, what h
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 31.0s error=Request timed out. prompt=What should we recommend doing about it?
+LLM router failed => falling back to rule-based
+SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+
+[checkpoint] Raw + per-turn written to evaluation\agent\reports\rag_v3_multi_turn_phase_b_llm_judge.json
+
+======================================================================
+  MEMORY EVALUATION (multi-turn)
+======================================================================
+  Conversations: 10  Turns: 31
+
+  Co-reference resolution:
+    contains_score (carry expected refs):  98.39%
+    exclusion_score (drop wrong context):  100.00%
+    rewrite_rate:                          3.23%
+
+  Recall:
+    overall memory_recall@k:               40.00%
+    forgetting curve by fact age:
+      age_1_turns: 42.86%
+      age_2_turns: 50.00%
+      age_5_turns: 0.00%
+
+  Entities & topic switch:
+    entity persistence:                    100.00%
+    topic-switch correct (no carry):       100.00%
+
+  Efficiency:
+    context overhead (chars / query):      23.898
+    resolve_followup latency:              1721.7 ms
+    build_context latency:                 250.8 ms
+
+  LLM judge (27 turns):
+    memory_precision (1-5):                2.19
+    faithfulness consistency (1-5):        3.85
+    faithfulness attribution (1-5):        4.00
+[final] Aggregated metrics appended to evaluation\agent\reports\rag_v3_multi_turn_phase_b_llm_judge.json

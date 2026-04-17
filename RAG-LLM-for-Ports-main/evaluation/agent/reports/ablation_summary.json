@@ -1,0 +1,108 @@
+{
+  "configs": [
+    "baseline",
+    "cos_only",
+    "no_decay",
+    "no_entity",
+    "equal",
+    "entity_heavy"
+  ],
+  "rows": [
+    {
+      "config": "baseline",
+      "weights": {
+        "cos": 0.55,
+        "entity": 0.25,
+        "decay": 0.12,
+        "access": 0.03,
+        "importance": 0.05
+      },
+      "cross_session_hit_rate": 0.5,
+      "correct_session_recall_rate": 0.5,
+      "cross_session_leak_rate": 1.0,
+      "avg_lt_top_score_positive": 0.4598,
+      "avg_lt_top_score_negative": 0.427,
+      "score_gap_pos_minus_neg": 0.0328
+    },
+    {
+      "config": "cos_only",
+      "weights": {
+        "cos": 1.0,
+        "entity": 0.0,
+        "decay": 0.0,
+        "access": 0.0,
+        "importance": 0.0
+      },
+      "cross_session_hit_rate": 1.0,
+      "correct_session_recall_rate": 1.0,
+      "cross_session_leak_rate": 1.0,
+      "avg_lt_top_score_positive": 0.6171,
+      "avg_lt_top_score_negative": 0.5303,
+      "score_gap_pos_minus_neg": 0.0868
+    },
+    {
+      "config": "no_decay",
+      "weights": {
+        "cos": 0.6,
+        "entity": 0.27,
+        "decay": 0.0,
+        "access": 0.05,
+        "importance": 0.08
+      },
+      "cross_session_hit_rate": 0.5,
+      "correct_session_recall_rate": 0.5,
+      "cross_session_leak_rate": 0.0,
+      "avg_lt_top_score_positive": 0.3987,
+      "avg_lt_top_score_negative": 0.599,
+      "score_gap_pos_minus_neg": -0.2003
+    },
+    {
+      "config": "no_entity",
+      "weights": {
+        "cos": 0.7,
+        "entity": 0.0,
+        "decay": 0.15,
+        "access": 0.05,
+        "importance": 0.1
+      },
+      "cross_session_hit_rate": 0.5,
+      "correct_session_recall_rate": 0.5,
+      "cross_session_leak_rate": 0.0,
+      "avg_lt_top_score_positive": 0.5929,
+      "avg_lt_top_score_negative": 0.5755,
+      "score_gap_pos_minus_neg": 0.0174
+    },
+    {
+      "config": "equal",
+      "weights": {
+        "cos": 0.2,
+        "entity": 0.2,
+        "decay": 0.2,
+        "access": 0.2,
+        "importance": 0.2
+      },
+      "cross_session_hit_rate": 0.25,
+      "correct_session_recall_rate": 0.25,
+      "cross_session_leak_rate": 0.0,
+      "avg_lt_top_score_positive": 0.4914,
+      "avg_lt_top_score_negative": 0.5021,
+      "score_gap_pos_minus_neg": -0.0107
+    },
+    {
+      "config": "entity_heavy",
+      "weights": {
+        "cos": 0.35,
+        "entity": 0.5,
+        "decay": 0.1,
+        "access": 0.0,
+        "importance": 0.05
+      },
+      "cross_session_hit_rate": 1.0,
+      "correct_session_recall_rate": 1.0,
+      "cross_session_leak_rate": 0.0,
+      "avg_lt_top_score_positive": 0.3066,
+      "avg_lt_top_score_negative": 0.2732,
+      "score_gap_pos_minus_neg": 0.0334
+    }
+  ]
+}

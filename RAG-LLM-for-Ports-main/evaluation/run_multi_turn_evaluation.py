@@ -255,6 +255,18 @@ def main() -> None:
     parser.add_argument("--skip-llm-judge", action="store_true")
     parser.add_argument("--output", type=Path,
                         default=REPORTS_DIR / "rag_v3_multi_turn.json")
+    parser.add_argument(
+        "--no-embeddings", action="store_true",
+        help="Disable BGE + DuckDB vss for long-term memory — forces the "
+             "Phase-A keyword + entity ranking path. Use for A/B diffs "
+             "against the Phase-B vector-retrieval run.",
+    )
+    parser.add_argument(
+        "--memory-db", type=Path, default=None,
+        help="Override the DuckDB file path for long-term memory. Required "
+             "when running two eval processes in parallel so they don't "
+             "contend on the default memory.duckdb lock.",
+    )
     args = parser.parse_args()
 
     print(f"Loading multi-turn dataset: {args.dataset}")
@@ -266,10 +278,18 @@ def main() -> None:
     print(f"  {len(convs)} conversations, {sum(len(c['turns']) for c in convs)} turns")
 
     print("\nBuilding agentic-RAG DAG with memory...")
+    print(f"  embeddings:  {'OFF (Phase A keyword-only)' if args.no_embeddings else 'ON (Phase B BGE+vss)'}")
+    print(f"  llm-judge:   {'OFF' if args.skip_llm_judge else 'ON'}")
+    print(f"  memory_db:   {args.memory_db or '<default>'}")
     # max_raw_turns=4 ensures MT3_005 (6 turns) triggers short-term
     # summarisation so Phase-C key_facts extraction is actually exercised.
     # Production default is 10.
-    mgr = MemoryManager(project_root=PROJECT_ROOT, max_raw_turns=4)
+    mgr = MemoryManager(
+        project_root=PROJECT_ROOT,
+        max_raw_turns=4,
+        use_embeddings=not args.no_embeddings,
+        db_path=args.memory_db,
+    )
     workflow = build_langgraph_workflow_with_memory(
         project_root=PROJECT_ROOT,
         memory_manager=mgr,
@@ -296,21 +316,32 @@ def main() -> None:
             all_scored_turns.append(scored)
             transcript.append({"role": "assistant", "content": turn_record["final_answer"]})
 
-    metrics = aggregate(per_turn_records=all_scored_turns, n_conversations=len(all_runs))
-    print_memory_report(metrics)
-
-    report = {
+    # Crash-safe: persist raw_runs + per_turn FIRST, then try to aggregate.
+    # That way a bug in aggregate() doesn't discard 30+ minutes of LLM calls.
+    partial_report = {
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "dataset": str(args.dataset.name),
         "evaluated_system": "agentic-rag DAG with conversation_memory",
         "skip_llm_judge": args.skip_llm_judge,
-        "metrics": metrics.to_dict(),
+        "use_embeddings": not args.no_embeddings,
+        "metrics": None,   # filled in below if aggregate succeeds
         "per_turn": all_scored_turns,
         "raw_runs": all_runs,
     }
     with open(args.output, "w", encoding="utf-8") as f:
-        json.dump(report, f, ensure_ascii=False, indent=2, default=str)
-    print(f"\nWrote {args.output}")
+        json.dump(partial_report, f, ensure_ascii=False, indent=2, default=str)
+    print(f"\n[checkpoint] Raw + per-turn written to {args.output}")
+
+    try:
+        metrics = aggregate(per_turn_records=all_scored_turns, n_conversations=len(all_runs))
+        print_memory_report(metrics)
+        partial_report["metrics"] = metrics.to_dict()
+        with open(args.output, "w", encoding="utf-8") as f:
+            json.dump(partial_report, f, ensure_ascii=False, indent=2, default=str)
+        print(f"[final] Aggregated metrics appended to {args.output}")
+    except Exception as exc:
+        print(f"\n[warning] aggregate() failed: {type(exc).__name__}: {exc}")
+        print(f"Raw per-turn data is still intact in {args.output} — re-aggregate offline.")
     mgr.close()
 
 

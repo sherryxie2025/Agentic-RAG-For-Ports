@@ -1,0 +1,82 @@
+Loading cross-session dataset: C:\Users\25389\Agent_RAG\.claude\worktrees\modest-engelbart\RAG-LLM-for-Ports-main\evaluation\golden_dataset_v3_cross_session.json
+  5 conversations, 11 sessions, 15 turns
+
+Building agentic-RAG DAG with memory...
+  config:      phaseB_bge_vss
+  embeddings:  ON (Phase B)
+  memory_db:   storage\sql\memory_cs_phaseB.duckdb
+  weights:     <default>
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 5948.73it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-base-en-v1.5
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 2414.45it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-base-en-v1.5
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 105/105 [00:00<00:00, 5273.39it/s]
+[1mBertForSequenceClassification LOAD REPORT[0m from: cross-encoder/ms-marco-MiniLM-L-6-v2
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+
+  [CS3_001] cross_session_entity_recall (2 sessions)
+    session 1 sid=6f559d7ce392  (2 turns)
+    session 2 sid=72eae855353a  (1 turns)
+
+  [CS3_002] cross_session_paraphrase (2 sessions)
+    session 1 sid=716c4895dd44  (2 turns)
+    session 2 sid=fc830e2f4ca2  (1 turns)
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How efficient were terminal operations last year?
+LLM router failed => falling back to rule-based
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.8s error=Request timed out. prompt=Query: How efficient were terminal operations last
+SYNTH LLM error: APITimeoutError: Request timed out.
+
+  [CS3_003] cross_session_rule_followup (2 sessions)
+    session 1 sid=42e622e93118  (2 turns)
+    session 2 sid=4466ddfe072a  (1 turns)
+
+  [CS3_004] cross_session_topic_drift (2 sessions)
+    session 1 sid=71abb7c64f16  (2 turns)
+SYNTH LLM error: APITimeoutError: Request timed out.
+    session 2 sid=0ac6fa9c3395  (1 turns)
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=According to the 2024 annual report, what basis of
+LLM router failed => falling back to rule-based
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.8s error=Request timed out. prompt=Query: According to the 2024 annual report, what b
+
+  [CS3_005] cross_session_multi_hop (3 sessions)
+    session 1 sid=f107d2d071db  (1 turns)
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=user: How much was the average wind speed recorded
+    session 2 sid=dca5fb05fa95  (1 turns)
+SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+    session 3 sid=3419fcb3cb92  (1 turns)
+
+[checkpoint] Raw + per-conv written to evaluation\agent\reports\rag_v3_cross_session_phase_b.json
+
+======================================================================
+  CROSS-SESSION EVALUATION  [phaseB_bge_vss]
+======================================================================
+  Conversations: 5
+  Positive turns (expect hit):  4
+  Negative turns (expect miss): 1
+
+  cross_session_hit_rate         :  0.75
+  correct_session_recall_rate    :  0.75
+  cross_session_leak_rate (neg)  :  0.0
+
+  avg LT top-score (positive)    :  0.4626
+  avg LT top-score (negative)    :  0.427
+  score gap (pos - neg)          :  0.0356
+[final] Aggregated metrics appended to evaluation\agent\reports\rag_v3_cross_session_phase_b.json

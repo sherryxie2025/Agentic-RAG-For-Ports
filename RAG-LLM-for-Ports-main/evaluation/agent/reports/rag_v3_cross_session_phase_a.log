@@ -1,0 +1,76 @@
+Loading cross-session dataset: C:\Users\25389\Agent_RAG\.claude\worktrees\modest-engelbart\RAG-LLM-for-Ports-main\evaluation\golden_dataset_v3_cross_session.json
+  5 conversations, 11 sessions, 15 turns
+
+Building agentic-RAG DAG with memory...
+  config:      phaseA_keyword_only
+  embeddings:  OFF (Phase A)
+  memory_db:   storage\sql\memory_cs_phaseA.duckdb
+  weights:     <default>
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 3313.62it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-base-en-v1.5
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 105/105 [00:00<00:00, 1233.52it/s]
+[1mBertForSequenceClassification LOAD REPORT[0m from: cross-encoder/ms-marco-MiniLM-L-6-v2
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+
+  [CS3_001] cross_session_entity_recall (2 sessions)
+    session 1 sid=950bc6d3266f  (2 turns)
+    session 2 sid=aab7c5bf68b7  (1 turns)
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=What do we know about sea level data at the port?
+LLM router failed => falling back to rule-based
+
+  [CS3_002] cross_session_paraphrase (2 sessions)
+    session 1 sid=9cce73964834  (2 turns)
+SYNTH LLM error: APITimeoutError: Request timed out.
+    session 2 sid=f1d992b3ffe7  (1 turns)
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: How efficient were terminal operations last
+SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Values list "e" does not have a column named "avg_wind_speed_ms"
+
+), pre-empting with rule-based
+SYNTH LLM error: APITimeoutError: Request timed out.
+
+  [CS3_003] cross_session_rule_followup (2 sessions)
+    session 1 sid=f6ddd23ec110  (2 turns)
+    session 2 sid=ed3e5ecfcd3b  (1 turns)
+
+  [CS3_004] cross_session_topic_drift (2 sessions)
+    session 1 sid=0ca87ea31d47  (2 turns)
+SYNTH LLM error: APITimeoutError: Request timed out.
+    session 2 sid=ab380a72aa81  (1 turns)
+
+  [CS3_005] cross_session_multi_hop (3 sessions)
+    session 1 sid=328487dbbace  (1 turns)
+    session 2 sid=a059f5d46f66  (1 turns)
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Was the average wind speed in 2015 within the norm
+LLM router failed => falling back to rule-based
+    session 3 sid=6e0064b18722  (1 turns)
+LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=user: Can you summarise what weather factors we di
+
+[checkpoint] Raw + per-conv written to evaluation\agent\reports\rag_v3_cross_session_phase_a.json
+
+======================================================================
+  CROSS-SESSION EVALUATION  [phaseA_keyword_only]
+======================================================================
+  Conversations: 5
+  Positive turns (expect hit):  4
+  Negative turns (expect miss): 1
+
+  cross_session_hit_rate         :  0.5
+  correct_session_recall_rate    :  0.5
+  cross_session_leak_rate (neg)  :  0.0
+
+  avg LT top-score (positive)    :  0.187
+  avg LT top-score (negative)    :  0.6437
+  score gap (pos - neg)          :  -0.4568
+[final] Aggregated metrics appended to evaluation\agent\reports\rag_v3_cross_session_phase_a.json
