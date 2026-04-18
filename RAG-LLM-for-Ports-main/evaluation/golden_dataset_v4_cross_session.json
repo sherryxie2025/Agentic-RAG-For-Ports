@@ -1,0 +1,820 @@
+{
+  "description": "Cross-session memory evaluation v4. Session-2 queries are free-form natural language (English, varying formality and specificity). Only session-1 establishment turns use from_sample_id. 25 positive + 10 negative conversations covering all 4 data sources and 5 answer modes.",
+  "version": "v4.0",
+  "generated_at": "2026-04-16T14:00:00",
+  "total_conversations": 35,
+  "positive_conversations": 25,
+  "negative_conversations": 10,
+  "coverage": {
+    "data_sources": {
+      "sql": 7,
+      "vector": 6,
+      "rules": 5,
+      "graph": 4,
+      "multi": 3
+    },
+    "answer_modes": {
+      "lookup": 5,
+      "comparison": 5,
+      "decision_support": 6,
+      "diagnostic": 5,
+      "descriptive": 4
+    },
+    "patterns": [
+      "semantic_paraphrase",
+      "precise_recall",
+      "casual_recall",
+      "applied_decision",
+      "comparative",
+      "instruction_style",
+      "topic_drift"
+    ]
+  },
+  "conversations": [
+    {
+      "conversation_id": "V4_001",
+      "pattern": "semantic_paraphrase",
+      "description": "S1: avg tide 2016. S2: recall with different vocabulary.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_001", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "What was the sea-level measurement we pulled last time?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "lookup",
+            "data_source_tag": "sql",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "tide 0.027 ft"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_002",
+      "pattern": "precise_recall",
+      "description": "S1: wind speed 2015. S2: exact number recall.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_002", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Remind me of the exact average anemometer reading from the 2015 records.",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "lookup",
+            "data_source_tag": "sql",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "wind 5.14 m/s"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_003",
+      "pattern": "casual_recall",
+      "description": "S1: total TEU 2015. S2: casual throughput question.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_003", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Give me the overall container throughput picture from the year we checked — ballpark number and any context.",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "descriptive",
+            "data_source_tag": "sql",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "TEU 941944"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_004",
+      "pattern": "applied_decision",
+      "description": "S1: peak yard occupancy 2015. S2: operational go/no-go based on that data.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_014", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Given the yard utilization figures we reviewed, should we activate the overflow protocol right now?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "decision_support",
+            "data_source_tag": "sql",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "occupancy 95%"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_005",
+      "pattern": "comparative",
+      "description": "S1: worst arrival delay 2015. S2: compare against benchmark.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_026", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "How did the longest ship waiting time we found stack up against the two-hour industry standard?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "comparison",
+            "data_source_tag": "sql",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "delay 4.0 hours"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_006",
+      "pattern": "instruction_style",
+      "description": "S1: gate transactions 2015. S2: direct instruction to pull numbers.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_008", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Summarize the truck gate throughput picture we looked at before. I need it for the quarterly ops review.",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "descriptive",
+            "data_source_tag": "sql",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "gate 1550621"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_007",
+      "pattern": "applied_decision",
+      "description": "S1: lowest pressure 2017. S2: whether to trigger storm watch.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_022", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Based on that barometric low we identified, was it severe enough to warrant the emergency weather protocol?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "decision_support",
+            "data_source_tag": "sql",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "pressure 996.67 hPa"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_008",
+      "pattern": "casual_recall",
+      "description": "S1: airline noise awards 2024. S2: casual who-won question.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_VEC_004", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Walk me through the airline noise award program and its winners. We reviewed this before.",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "descriptive",
+            "data_source_tag": "vector",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "Air Canada Frontier Air France"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_009",
+      "pattern": "comparative",
+      "description": "S1: GHG cargo emissions JFK vs EWR. S2: airport comparison recall.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_VEC_005", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Between Kennedy and Newark, which facility had the bigger carbon footprint from freight-related ground transport?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "comparison",
+            "data_source_tag": "vector",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "EWR 59561 JFK 56410 CO2e"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_010",
+      "pattern": "instruction_style",
+      "description": "S1: JFK Terminal One sponsors. S2: retrieve sponsor list for a meeting.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_VEC_010", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "For tomorrow's board briefing, get me the list of consortium members backing the new JFK terminal project.",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "lookup",
+            "data_source_tag": "vector",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "Lufthansa Air France Japan Airlines Korean Air Carlyle"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_011",
+      "pattern": "semantic_paraphrase",
+      "description": "S1: NPCC sea level rise projections. S2: paraphrased flooding risk question.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_VEC_014", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "What did the climate panel forecast for coastal inundation risk at mid-century and end-of-century?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "diagnostic",
+            "data_source_tag": "vector",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "sea level rise 11-24 inches 59 inches"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_012",
+      "pattern": "precise_recall",
+      "description": "S1: top 3 airlines by passengers 2015. S2: precise number recall.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_VEC_039", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "What were Delta's exact passenger numbers at the Port Authority airports in 2015, and how did that compare to JetBlue and American?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "comparison",
+            "data_source_tag": "vector",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "Delta 14.6 million"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_013",
+      "pattern": "comparative",
+      "description": "S1: 2011 budget revenues vs 2010. S2: year-over-year trend question.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_VEC_016", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Was the Port Authority financially better off in 2011 than the prior year, or did expenses eat into the gains?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "comparison",
+            "data_source_tag": "vector",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "net loss $49 million 6777 staffing"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_014",
+      "pattern": "applied_decision",
+      "description": "S1: wave height halt threshold. S2: current conditions go/no-go.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_RUL_001", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Waves are reading 2.8 meters on the harbor buoy right now. According to the safety rule we reviewed, do cranes need to stop?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "decision_support",
+            "data_source_tag": "rules",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "wave 2.5 m halt crane"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_015",
+      "pattern": "precise_recall",
+      "description": "S1: vessel LOA exception threshold. S2: exact number recall.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_RUL_006", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "At what exact length does a ship trigger the manual review flag? I know we checked this rule.",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "lookup",
+            "data_source_tag": "rules",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "LOA 400 meters exception"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_016",
+      "pattern": "casual_recall",
+      "description": "S1: crane productivity pause threshold. S2: casual recall.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_RUL_011", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Any idea what the minimum moves-per-hour figure was before we have to shut down a crane? We went through this.",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "lookup",
+            "data_source_tag": "rules",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "15 moves per hour"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_017",
+      "pattern": "applied_decision",
+      "description": "S1: wind gust boom-down rule. S2: real-time decision.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_RUL_018", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Wind sensor is showing 27 m/s gusts. Should all cranes be boomed down according to the rule we discussed?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "decision_support",
+            "data_source_tag": "rules",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "wind 25 m/s boom-down"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_018",
+      "pattern": "comparative",
+      "description": "S1: deep-draft tide restriction. S2: compare with current tide.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_RUL_017", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Current gauge shows 1.5 feet. Is that below the draft restriction cutoff we identified earlier?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "comparison",
+            "data_source_tag": "rules",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "tide below 2 feet restrict"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_019",
+      "pattern": "semantic_paraphrase",
+      "description": "S1: anchoring depth fork. S2: paraphrased anchorage question.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_GRA_001", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "What water depth range makes the channel junction eligible for small-vessel anchoring? We traced this in the knowledge graph.",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "diagnostic",
+            "data_source_tag": "graph",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "depth 6.5 7.5 metres anchor"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_020",
+      "pattern": "instruction_style",
+      "description": "S1: ULCV safety protocol trigger. S2: pull up the causal chain.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_GRA_002", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Bring up the graph analysis showing how vessel dimensions cascade into the ultra-large ship safety requirements.",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "diagnostic",
+            "data_source_tag": "graph",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "LOA 366 m ultra-large safety"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_021",
+      "pattern": "applied_decision",
+      "description": "S1: pressure storm-watch causal chain. S2: apply to current reading.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_GRA_004", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Barometer just dropped to 978 hPa. According to the causal pathway we mapped out, what procedures should fire automatically?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "decision_support",
+            "data_source_tag": "graph",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "pressure 980 hPa storm watch"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_022",
+      "pattern": "casual_recall",
+      "description": "S1: long swell arrival denial. S2: casual why-question.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_GRA_006", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Why exactly do we turn ships away when the swell period gets long? I remember we traced the logic before.",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "diagnostic",
+            "data_source_tag": "graph",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "dominant period 12 seconds deny arrivals"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_023",
+      "pattern": "precise_recall",
+      "description": "S1: multi-source EMS review (vector+sql). S2: specific compliance question.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_MULTI_001", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "In our environmental management review, did the actual operational metrics confirm we were hitting the documented EMS targets?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "descriptive",
+            "data_source_tag": "multi",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "EMS environmental objectives"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_024",
+      "pattern": "applied_decision",
+      "description": "S1: multi-source taxi time emissions check (sql+rules). S2: apply to current planning.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_MULTI_017", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "For the emissions compliance brief, do we need to flag any airports where ground taxi exceeded the threshold we evaluated?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "decision_support",
+            "data_source_tag": "multi",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "taxi time emissions threshold"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_025",
+      "pattern": "comparative",
+      "description": "S1: multi-source LGA economic impact (vector+graph). S2: recall the dollar figure and causal drivers.",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_MULTI_012", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "How much regional economic output did LaGuardia generate, and what were the main drivers linking airport activity to those dollars?",
+            "evaluation_focus": "cross_session_recall",
+            "expected_cross_session_hit": true,
+            "expected_from_session_order": 1,
+            "answer_mode": "diagnostic",
+            "data_source_tag": "multi",
+            "expected_memory_recall": {"from_session": 1, "key_fact": "LGA $18.7 billion economic impact"}
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_NEG_01",
+      "pattern": "topic_drift",
+      "description": "S1: tide data. S2: airline noise awards (unrelated).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_001", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Which carriers received the quiet-operations recognition at Seattle-Tacoma airport last year?",
+            "evaluation_focus": "cross_session_negative",
+            "expected_cross_session_hit": false,
+            "expected_from_session_order": null,
+            "answer_mode": "lookup"
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_NEG_02",
+      "pattern": "topic_drift",
+      "description": "S1: crane breakdown time. S2: HOT lane feasibility (unrelated).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_006", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "What were the conclusions of the Lincoln Tunnel toll-lane feasibility study?",
+            "evaluation_focus": "cross_session_negative",
+            "expected_cross_session_hit": false,
+            "expected_from_session_order": null,
+            "answer_mode": "lookup"
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_NEG_03",
+      "pattern": "topic_drift",
+      "description": "S1: wind speed 2015. S2: JFK terminal consortium (unrelated).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_002", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Who are the financial backers and airline partners in the JFK Terminal One redevelopment consortium?",
+            "evaluation_focus": "cross_session_negative",
+            "expected_cross_session_hit": false,
+            "expected_from_session_order": null,
+            "answer_mode": "lookup"
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_NEG_04",
+      "pattern": "topic_drift",
+      "description": "S1: arrival delay. S2: Rotterdam intangible assets (unrelated).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_007", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Why did the Port of Rotterdam's intangible fixed assets drop in the first half of 2025?",
+            "evaluation_focus": "cross_session_negative",
+            "expected_cross_session_hit": false,
+            "expected_from_session_order": null,
+            "answer_mode": "diagnostic"
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_NEG_05",
+      "pattern": "topic_drift",
+      "description": "S1: yard occupancy. S2: cybersecurity guidelines (unrelated).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_004", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "What audience do the IAPH maritime cybersecurity guidelines primarily target?",
+            "evaluation_focus": "cross_session_negative",
+            "expected_cross_session_hit": false,
+            "expected_from_session_order": null,
+            "answer_mode": "lookup"
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_NEG_06",
+      "pattern": "topic_drift",
+      "description": "S1: gate transactions. S2: rainwater harvesting treatment (unrelated).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_SQL_008", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "How does the port's stormwater harvesting system treat collected rainwater before reuse?",
+            "evaluation_focus": "cross_session_negative",
+            "expected_cross_session_hit": false,
+            "expected_from_session_order": null,
+            "answer_mode": "descriptive"
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_NEG_07",
+      "pattern": "topic_drift",
+      "description": "S1: wave height rule. S2: Antwerp-Bruges liquid bulk (unrelated).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_RUL_001", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "How is Antwerp-Bruges liquid bulk throughput distributed across petroleum, chemicals, and LNG categories?",
+            "evaluation_focus": "cross_session_negative",
+            "expected_cross_session_hit": false,
+            "expected_from_session_order": null,
+            "answer_mode": "comparison"
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_NEG_08",
+      "pattern": "topic_drift",
+      "description": "S1: anchorage depth (graph). S2: Port Authority accounting basis (unrelated).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_GRA_001", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "Does the Port Authority use accrual or cash-basis accounting for its enterprise activities?",
+            "evaluation_focus": "cross_session_negative",
+            "expected_cross_session_hit": false,
+            "expected_from_session_order": null,
+            "answer_mode": "lookup"
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_NEG_09",
+      "pattern": "topic_drift",
+      "description": "S1: crane productivity rule. S2: PATH pension contributions (unrelated).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_RUL_011", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "How much did PATH contribute to its employee pension plan in 2006, and what share of covered payroll was that?",
+            "evaluation_focus": "cross_session_negative",
+            "expected_cross_session_hit": false,
+            "expected_from_session_order": null,
+            "answer_mode": "lookup"
+          }]
+        }
+      ]
+    },
+    {
+      "conversation_id": "V4_NEG_10",
+      "pattern": "topic_drift",
+      "description": "S1: ultra-large vessel protocol (graph). S2: EWR charter scheduling (unrelated).",
+      "sessions": [
+        {
+          "session_order": 1,
+          "turns": [{"from_sample_id": "V3_GRA_002", "evaluation_focus": "session1_establish"}]
+        },
+        {
+          "session_order": 2,
+          "turns": [{
+            "raw_query": "What are the restrictions on scheduling charter flights during peak hours at Newark's international terminal?",
+            "evaluation_focus": "cross_session_negative",
+            "expected_cross_session_hit": false,
+            "expected_from_session_order": null,
+            "answer_mode": "descriptive"
+          }]
+        }
+      ]
+    }
+  ]
+}

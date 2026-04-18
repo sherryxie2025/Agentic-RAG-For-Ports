@@ -1,0 +1,1078 @@
+{
+  "summary": {
+    "total_samples": 50,
+    "top_k": 10,
+    "v1_config": "all-MiniLM-L6-v2 (384d) + fixed 400-char chunks (130K)",
+    "v2_config": "BGE-base-en-v1.5 (768d) + Small-to-Big 250-word children (16K)",
+    "avg_keyword_coverage_v1": 0.256,
+    "avg_keyword_coverage_v2": 0.896,
+    "avg_source_recall_v1": 1.0,
+    "avg_source_recall_v2": 1.0,
+    "verdict_distribution": {
+      "both_good": 17,
+      "v1_wins": 0,
+      "v2_wins": 31,
+      "both_bad": 2
+    }
+  },
+  "per_sample": [
+    {
+      "id": "V3_VEC_001",
+      "query": "In the Lincoln Tunnel HOT lane feasibility work, how was the amount of traffic diverting to alternate routes actually es",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "Rail Tunnel \nRail Tunnel \n-80,000 to  -110,000 \nRail Tunnel with Shuttle Service \nRail Tunnel with Chunnel Service \nRail Tunnel with AGV Technology \nRail Tunnel with Truck Access \nRail Tunnel with Tru",
+        "Lincoln Tunnel HOT Lane Feasibility Study \n \n \n \nDecember, 2009  Page 62  \nFINAL REPORT \n \nAs indicated by the results in the table, the average vehicle and person travel times experienced in \nthe cor",
+        "Lincoln Tunnel HOT Lane Feasibility Study \n \n \n \nDecember, 2009  Page 10  \nFINAL REPORT \n \nthe express lanes. As shown in Figure 4, th e peak demand on NJ 495 during the PM hours is \nfrom 3-5 p.m. wit"
+      ],
+      "v2_top3_snippets": [
+        "a separate express link was added to replicate the proposed HOT lane. Traffic assignments were run using a range of alternative time penalties to test pricing in the proposed HOT lane. These tests ind",
+        "of the Project Advisory Committee was held midway through the course of the study to provide a status report on the project, to obtain agreement on the source of growth assumptions, and to present the",
+        "earlier or later on the proposed Lincoln Tunnel HOT Lane 4. Driving in a registered carpool (three or more occupants) on the proposed Lincoln Tunnel HOT Lane FINAL REPORT 5. Riding a bus on the propos"
+      ],
+      "expected_keywords": [
+        "travel behavior choice model",
+        "BPM",
+        "alternate routes",
+        "stated preference",
+        "diversion"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_002",
+      "query": "For the Lincoln Tunnel HOT lane study, which alternative delivered the lowest minutes-per-vehicle during the 7-9 AM peak",
+      "answer_mode": "comparison",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "New rail trips using the Tunnel, diverted from \ntruck trips \n$16.6  $17.1  $1.5  $56.0  \nExisting rail trips that benefit from  \nusing the Tunnel \n$1.3  $0.6  $0.0  $2.8  \nBusiness oriented highway tr",
+        "New rail trips using the Tunnel, diverted from \ntruck trips \n$24.0 $25.5 $1.0 $76.6 \nExisting rail trips that benefit from using the  \nTunnel \n$7.6 $7.2 $0.07 $15.2 \nBusiness oriented highway trips be",
+        "New rail trips using the tunnel, diverted from truck \ntrips \n$7.2  $7.7  $0.2  $16.2  \nExisting rail trips that benefit from using the \nTunnel \n$0.1  $0.1  $0.0  $0.2  \nBusiness oriented highway trips"
+      ],
+      "v2_top3_snippets": [
+        "time - 6 minutes Same as Peak Period Option 2 time - 9 minutes Lincoln Tunnel 30 minutes 15 minutes Option 3 HOT Lane at Time shift 45 minutes 30 minutes a different amount 60 minutes 45 minutes time ",
+        "traffic is diverted to the proposed HOT lane and the total demand shown in all the pie charts is the same. In the pie chart for the No-Build condition in Figure 25, low-occupancy vehicular traffic con",
+        "earlier or later on the proposed Lincoln Tunnel HOT Lane 4. Driving in a registered carpool (three or more occupants) on the proposed Lincoln Tunnel HOT Lane FINAL REPORT 5. Riding a bus on the propos"
+      ],
+      "expected_keywords": [
+        "Alternative 2A",
+        "22.5 minutes",
+        "20.4 minutes",
+        "peak hours",
+        "No-Build"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_003",
+      "query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activiti",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "12 ASTAR AIR CARGO, INC. 57,295                                   62.6%\n13 KALITTA AIR LLC 54,981                                   64.5%\n14 AIR FRANCE 53,231                                   66.4%\n1",
+        "Auto-Handling Facilities 77,212 73,941 5 1.4\nContainer Terminals 3,857,400 4,480,318 15 0.5\nWarehouses 208,020 142,078 12 0.6",
+        "12 KALITTA AIR LLC 55,416                                   63.2%\n13 EVA 53,218                                   65.1%\n14 DHL /ASTAR AIR CARGO, INC. 48,517                                   66.9%\n15 "
+      ],
+      "v2_top3_snippets": [
+        "(PATH), the Newark Legal and Communications Center Urban Renewal Corporation, the New York and New Jersey Railroad Corporation, WTC Retail LLC, Port District Capital Projects LLC, Port Authority Insur",
+        "The Port Authority’s activities are accounted for using the flow of economic resources measurement focus and the accrual basis of accounting. All assets, liabilities, net assets, revenues and expenses",
+        "The Port Authority’s activities are accounted for using the flow of economic resources measurement focus and the accrual basis of accounting. All assets, liabilities, net assets, revenues and expenses"
+      ],
+      "expected_keywords": [
+        "accrual basis",
+        "enterprise fund",
+        "$100,000",
+        "capitalized",
+        "GASB"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_004",
+      "query": "Who won Port of Seattle's airline noise awards in 2024, and what is the purpose of the StART forum?",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "concourse, which opened in December \n2001.  With an additional 600,000 square \nfeet of space, the facility was converted \ninto a three-level terminal with two levels \nfor departures. The concourse has",
+        "US Airways’ $200 million terminal opened in \nSeptember 1992.  This 12-gate terminal is \nconnected to the airline’s Shuttle Terminal \nand features approximately 300,000 square \nfeet of floor space and ",
+        "opened in September 1992.  This 12-\ngate terminal is connected to the \nairline’s Shuttle Terminal and features \napproximately 300,000 square feet of \nfloor space and a food and retail \nconcessions cou"
+      ],
+      "v2_top3_snippets": [
+        "record of achievement in the scoring categories. A third award is given to an airline that showed significant noise improvement or made an impactful change that lessened their noise over the course of",
+        "ENVIRONMENT AND SUSTAINABILITY 2024 ANNUAL REPORT The Port of Seattle is privileged to operate amidst extraordinary natural resources and a community deeply invested in environmental stewardship. Reco",
+        "pilot program approach in 2025. Encouraging and Recognizing Airline Noise-Reduction Practices The Port of Seattle’s Fly Quiet Awards program celebrates airlines who go the extra mile to reduce aircraf"
+      ],
+      "expected_keywords": [
+        "Air Canada",
+        "Frontier Airlines",
+        "Air France",
+        "StART",
+        "Stakeholder Advisory"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_005",
+      "query": "Which Port Authority airports dominated 2023 GHG emissions from air cargo attracted travel, and what were the combined C",
+      "answer_mode": "comparison",
+      "v1_keyword_coverage": 0.6,
+      "v2_keyword_coverage": 0.6,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_006",
+      "query": "What are the rules for scheduling charter operations and using hardstands Amelia and Lindy at Newark's international fac",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.8,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_007",
+      "query": "What action did the Port Authority take in July 2001 against American Airlines and Air Canada at EWR based on the Gate U",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "As a result of the Gate Utilization Assessm ent for 2001, United Airlines and US Airways \nwere notified that their facilities at EWR were the least effectively utilized in comparison \nto the average d",
+        "2 United Parcel 194,894 31.64%\n3 United 132,315 37.98%\n4 Delta 128,195 44.11%\n5 American 73,368 47.63%\n6 Cathay Pacific 69,889 50.97%\n7 British Airways 54,863 53.60%\n8 China Airlines (CAL) 50,931 56.0",
+        "8 CHINA AIRLINES (CAL) 55,682                                   59.9%\n9 ASIANA 51,283                                   62.5%\n10 LUFTHANSA CARGO 49,745                                   65.1%\n11 CATHA"
+      ],
+      "v2_top3_snippets": [
+        "were notified that their facilities at EWR were the least effectively utilized in comparison to the average daily departing revenue seats per gate of all Master Airlines. These notices were provided b",
+        "terminate their leases with respect to underutilized space. These notices were also provided by the Port Authority on July 23, 2001 and are included in Appendix A to this Competition Plan Update. Each",
+        "departing revenue seats. The assessment showed that US Airways and Air Canada made the least efficient use of the domestic gates at EWR in terms of average daily departing revenue seats per gate. Delt"
+      ],
+      "expected_keywords": [
+        "American Airlines",
+        "Air Canada",
+        "underutilized",
+        "terminate",
+        "July 23, 2001"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_008",
+      "query": "Under the 2019 Port Authority tariff, what happens if cargo gets wet or fire-damaged on a wharf, and who is liable for d",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "and salvage operations, bunker barge loading, sport fishing launching, marine research, \nCoast Guard operations, marine-oriented fire protection, storage of equipment for dredging \nand waterfront cons",
+        "and salvage operations, bunker barge loading, sport fishing launching, marine research, \nCoast Guard operations, marine-oriented fire protection, storage of equipment for dredging \nand waterfront cons",
+        "industry:\n i. Port terminals; \n ii. Domestic harbour craft; \n iii. Future marine fuels, bunkering standards and infrastructure; \n iv. Singapore Registry of Ships; \n v. Efforts at IMO and other interna"
+      ],
+      "v2_top3_snippets": [
+        "owner and general agent as well as the watercraft shall be liable therefore. All charges are payable in New York funds at the office of the Treasurer of the Port Authority. SUBRULE 34-655 ISSUED 25 JA",
+        "or Overheight Cargo, Movement of P Passenger Wharfage Passengers Penalty Charges on Schedule of Rates, Authorization to Use and Permission Port Authority Issued Marine Terminal Identification Card Por",
+        "date and hour damage occurred, the names and addresses or descriptions of witnesses and other persons, watercraft, or instrumentalities involved in the damage, and all other available pertinent facts "
+      ],
+      "expected_keywords": [
+        "wet or fire damaged",
+        "permission",
+        "not liable",
+        "watercraft",
+        "subrule"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_009",
+      "query": "How is Rotterdam's hinterland strategy tackling road and rail freight accessibility, and what did they do in early 2024 ",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "For each of these types of freight movements, data will be collected regarding commodity and \nvehicle ﬂ ows. Several sources of data will be used for this effort, including existing regional models, \n",
+        "logistics step by step. This is happening at several points in the chain. For example, we are \nworking with the City of Rotterdam and other organisations to introduce smart traffic lights that \ncan re",
+        "Rail\nThe Dutch government introduced the Rail Freight Transport Measures Package with the aim of \nenabling and facilitating the growth of rail freight transport. In 2021, the Port of Rotterdam \nAuthor"
+      ],
+      "v2_top3_snippets": [
+        "part of the hinterland transport to and from Rotterdam, reliable waterways are absolutely essential. In consultations within the MIRT programmes for the east, south-east and south freight transport co",
+        "part of the hinterland transport to and from Rotterdam, reliable waterways are absolutely essential. In consultations within the MIRT programmes for the east, south-east and south freight transport co",
+        "on the hinterland, for example using the ‘Melding Container Achterland’ (Hinterland Container Report) application with the aim of also connecting as many inland terminals as possible. Portbase manages"
+      ],
+      "expected_keywords": [
+        "Zuid-Holland Bereikbaar",
+        "Maas Delta Tunnel",
+        "charging station",
+        "Waalhaven",
+        "zero-emission"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_010",
+      "query": "Who are the sponsors in the JFK Terminal One redevelopment lease that the Board considered in November 2019?",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 0.8,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "nation’s first privatized commercial \nairport under a 99-year lease agreement \nwith National Express.   \n \nIn 2007 the Port Authority purchased the \nremaining 93 years of this lease. \n \nDE VELOPMENT \n",
+        "$150 million in the original construction \nof the airport. Since then, the Port \nAuthority has invested more than $7.2 \nbillion in JFK.\nREDEVELOPMENT\nRecent JFK redevelopment works \nincludes several m",
+        "$150 million in the original construction \nof the airport. Since then, the Port \nAuthority has invested more than $7.6 \nbillion in JFK.\nREDEVELOPMENT\nMajor JFK redevelopment work includes \nseveral pro"
+      ],
+      "v2_top3_snippets": [
+        "consortium of the airlines which currently operate John F. Kennedy International Airport Terminal 1 and development and financial partners led by The Carlyle Group, JLC Infrastructure and Ullico, whic",
+        "action with respect to contracts for construction, professional and advisory services and such other contracts and agreements as may be necessary to effectuate the foregoing project, pursuant to autho",
+        "before execution. ( ) - 2 - Draft – November 19, 2019 In addition to the foregoing, it is recommended that the Board approve $515 million in Port Authority expenditures for infrastructure upgrades ass"
+      ],
+      "expected_keywords": [
+        "Lufthansa",
+        "Air France",
+        "Japan Airlines",
+        "Korean Air",
+        "Carlyle"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_011",
+      "query": "Per the 2018 VRCA port operating handbook, what must a vessel's master do immediately after a collision or grounding in ",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 1.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_012",
+      "query": "What did the 1990 Port of Long Beach master plan list as Phase I and Phase II road and rail transportation improvements,",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 0.6,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "Federal Support\nThe Port Authority’s airports were provided approximately $433 million to be utilized over a four-\nyear period under the airport funding provision contained in the America Rescue Plan ",
+        "an air cargo center. \n• The Central Terminal Area was \nconstructed and opened in 1973. \nOther construction during the early \n1970s included the Port Authority \nAdministration Building, the Central \nHe",
+        "2. Grants and Contributions in Aid of Construction \n \n Subsequent to September 11, 2001, the Port Authority entered into various \nagreements with federal and state agencies for programs associated wi"
+      ],
+      "v2_top3_snippets": [
+        "Corridor and associated improvements for meeting the increasing demand for high capacity rail and highways. 2) Port Access Demonstration Project - Phase I/II In 1982 and 1987, the Port of Long Beach, ",
+        "Corridor and associated improvements for meeting the increasing demand for high capacity rail and highways. 2) Port Access Demonstration Project - Phase I/II In 1982 and 1987, the Port of Long Beach, ",
+        "region, and substantially reduced impacts of trains at grade crossings and in residential areas. Recommendations/Implementation Program a) Provide improved planning assistance in the areas of rail and"
+      ],
+      "expected_keywords": [
+        "Gerald Desmond Bridge",
+        "Harbor Scenic Drive",
+        "Anaheim Street",
+        "73.3",
+        "Ocean Boulevard"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_013",
+      "query": "During the March 2016 PRC meeting, what change did PATH agree to make to the early-morning Newark-WTC schedule and why?",
+      "answer_mode": "decision_support",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "WTC Transportation Hub project.  Construction of the WTC Transportation Hub \ncommenced on September 6, 2005 and is presently scheduled for completion between \nthe fourth quarter of 2013 and the second",
+        "the Port Authority, PATH, 1 World Trade Center LLC, WTC Retail LLC, and the \nSilverstein net lessees, a development schedule for Towers 2, 3 and 4 was established, \nproviding for the Port Authority to",
+        "23, 2003 at the temporary PATH station at the World Trade Center site. \n \nOn July 28, 2005, the Board of Commissioners of the Port Authority authorized the \nWorld Trade Center Transportation Hub proje"
+      ],
+      "v2_top3_snippets": [
+        "indicated that Capital Program updates would be forthcoming during the next couple of months  PRC member mentioned the idea of PATH providing shuttle service between Harrison and Newark during a serv",
+        "PATH Riders’ Council Meeting Minutes – March 23, 2016 – 6:00 PM to 8:00 PM Journal Square Transportation Center Meeting Agenda I. Call to Order/Agenda Review II. Welcome III. Update: Early AM Train Sc",
+        "current train crews already built into the schedule. The next schedule adjustment will be on May 1 2016. o New addition to schedule: NWK-WTC train leaves Newark at 5:25 AM, arrives at Journal Square ("
+      ],
+      "expected_keywords": [
+        "5:25 AM",
+        "Newark",
+        "World Trade Center",
+        "additional early morning train",
+        "May 1 2016"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_014",
+      "query": "What does the NPCC project for sea level rise by the 2050s and 2080s, and how does that affect 1-in-100 year coastal flo",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "17 San Sal, Bahamas 691                                 691 \n18 Belize, Belize 668                                 668 \n19 Tegucig, Honduras 645                                 645 \n20 Vancouver, Cana",
+        "37 Providenciales,Turks & Caicos Islands -               -               22                -                                     22 \n38 Calgary,Canada Alberta -               -               18       ",
+        "5 Fort Lauderdale, FL, US                1,014,910 95.3% 61.8% B6 73.9% DL 25.4%\n6 Las Vegas, Nevada, US                   977,680 92.1% 75.0% B6 42.8% DL 29.4%\n7 Miami, Florida, US                   "
+      ],
+      "v2_top3_snippets": [
+        "specialists, adaptation experts, and engineers, as well as representatives from the insurance and legal sectors. The climate change projections include a summary of baseline and projected climate cond",
+        "new, duly adopted, final FIRMs. The preliminary maps represent the Best Available Flood Hazard Data (BAFHD) at this time, but are based on current conditions and do not account for projected sea-level",
+        "to accommodate flooding/sea level rise • Watertight sealing of ductbanks, conduits, or other penetrations to a structure below the SLR DFE, whether vacant, occupied, or abandoned, for storm resilience"
+      ],
+      "expected_keywords": [
+        "11 to 24 inches",
+        "59 inches",
+        "2050s",
+        "sea level rise",
+        "5 percent chance"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_015",
+      "query": "What does the 2010 airport traffic report say about how LaGuardia's passenger volume by market is broken down across dom",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.6,
+      "v2_keyword_coverage": 0.8,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_016",
+      "query": "What did the 2011 Port Authority budget project for revenues, net loss, and staffing compared with 2010?",
+      "answer_mode": "comparison",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "Operating Expenses \n \n \nOperating expenses total $ 1.6 billion—an \nincrease of $ 12.2 million or 0.8% compared to \nthe 2014 b udget.  Aviation’s expenses support \ncontinued operations and maintenance ",
+        "Total Operating Expenses $1,557,926  $1,599,234  $1,596,701  $1,667,519  \n \n2017 Capital Budget Overview  \nAviation’s 2017 Capital Budget provides for $989 million in expenditures. The 2017 Capital Bu",
+        "Rescue and Fire Fighting (ARFF) services.      \n \n Core operating expenses are flat at 1 .1% over last year’s budget, which is less than the \nexpected regional rate of inflation of 2.1%, and represen"
+      ],
+      "v2_top3_snippets": [
+        "activity levels at Port Authority facilities will generate 2011 revenues in the amount of $3.7 billion, representing a $30 million increase over the 2010 budget. However, due to increased depreciation",
+        "2011 Budget Summary 2011 BUDGET SUMMARY 2011 Operating Budget Highlights The impact of the worst economic downturn since the Great Depression has continued to negatively impact the Port Authority. Yet",
+        "as PATH, regional ferry services, and the bus terminals, as well as port terminals. The graph below illustrates this split and compares 2010 net income to 2009. Port Authority of New York & New Jersey"
+      ],
+      "expected_keywords": [
+        "$3.7 billion",
+        "net loss",
+        "$49 million",
+        "6,777",
+        "staffing"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_017",
+      "query": "What key design features should Teterboro pilots be aware of for the RNAV (GPS) X Runway 19 approach, including offset a",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "represents the formal Federal Environmental Finding; additional coordination with the \nFAA may be necessary for this project with regard to an Airport Layout Plan Approval, \nAirspace Review, and any p",
+        "and functions \n \n• Provide for all proposed connectivity to and from the new Terminal A \n \n• Maintain some form of access to the existing Terminal A building \n \n• Avoid significant impacts to the Peri",
+        "an expansive lobby with 37 check-in \nstations, several check-in kiosks, shared-\nuse terminal equipment, a checkpoint \nlane with the latest generation AIT full-\nbody scanner, two Explosive Detection \nS"
+      ],
+      "v2_top3_snippets": [
+        "reduce aircraft noise impacts at the nearby Hackensack University Medical Center (HUMC) located 1.48 nm from runway threshold, and surrounding residential areas, and will only be used in VMC. When ATI",
+        "Reverse thrust at power settings other than idle power should be avoided, except when necessary for operational safety. VFR (And Visual Approaches) 1) Initial inbound altitude for noise sensitive area",
+        "operation on October 29, 1975. A new tower is in preliminary design and is expected to enter operation in 2016. RUNWAYS Teterboro Airport consists of a two- runway configuration. Runway 6-24 (NE/SW) i"
+      ],
+      "expected_keywords": [
+        "13-degree offset",
+        "LP MDA",
+        "WABC",
+        "Visual Descent Point",
+        "HUMC"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_018",
+      "query": "At the September 2015 PATH PRC meeting, which three working groups were formally adopted and who was elected Chair?",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.4,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_019",
+      "query": "What treatment steps are recommended for harvested rainwater in the PANYNJ green infrastructure design manual, from init",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 0.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_bad"
+    },
+    {
+      "id": "V3_VEC_020",
+      "query": "What long-term GHG reduction target did PANYNJ set in its 2006 inventory effort, and which consultants helped build the ",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        " Costs for materials, equipment and other items decreased $51 million in 2009   \nprimarily due to a $30 million year-to-year decrease in the operating expense \nprovision for pollution remediation obl",
+        "Management’s Discussion and Analysis (Unaudited) \n(continued)               \n \n13 \n \n2011 vs. 2010 \n \nOperating expenses totaled $2.6 billion in 2011, a $34 million decrease from 2010.  The \nyear-to-y",
+        "Management’s Discussion and Analysis \n(continued)               \n \n   14 \nContributions, Passenger Facility Charges and Grants \n \n               2011                2010             2009 \n  (In thousa"
+      ],
+      "v2_top3_snippets": [
+        "the Howland Hook Marine Terminal; the Port Authority Bus Terminal and the 16-acre World Trade Center site in Lower Manhattan. As a cornerstone in its broader sustainability program, PANYNJ is implemen",
+        "This report provides an update of the PANYNJ’s GHG and CAP emissions for calendar year 2008. The inventory includes direct PANYNJ emissions (e.g. energy use at administration buildings and employee tr",
+        "GHG reduction measures maintain and enhance CAP reduction strategies. Accordingly, the Port Authority began annual inventories to track GHG and CAP emissions, and seeks to decrease emissions by promot"
+      ],
+      "expected_keywords": [
+        "80 percent",
+        "2050",
+        "Southern Research Institute",
+        "Pechan",
+        "baseline"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_021",
+      "query": "In the 2007 financial statements, how much land and construction in progress did the Port Authority report at year-end a",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 0.4,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "& Financial Income generated on Reserve Funds 2,062,683 1,241,014 1,455,712 1,284,671 \nDirect Investment in Facilities (1,473,432) (1,572,878) (1,971,709) (1,649,925) \nChange in appropriation for self",
+        "Grants and Contributions, Insurance\nand Miscellaneous Revenues 616               556          60             10.8%\nPassenger Facility Charges 215               217          (2)              -0.9%\nTota",
+        "Port Commerce Net Capital Expenditures by Facility (In thousands) \n2014 Actual 2015 Budget 2015 Estimate 2016 Budget \nPort Newark $62,935 $67,858 $59,120 $60,550 \nElizabeth - PA Marine Terminal 36,063"
+      ],
+      "v2_top3_snippets": [
+        "years ended December 31, 2006 and December 31, 2005. This section has been prepared by management of the Port Authority and should be read in conjunction with the financial statements and the notes th",
+        "supplemental information. The basic financial statements, which are included in the Financial Section of this report, comprise the following: the Consolidated Statements of Net Assets, the Consolidate",
+        "Funds (Pursuant to Port Authority bond resolutions) Year ended December 31, 2007 General Consolidated Reserve Bond Reserve Combined Combined Fund Fund Total Total (In thousands) Balance, January 1 1,1"
+      ],
+      "expected_keywords": [
+        "810,610",
+        "4,130,738",
+        "399,230",
+        "construction in progress",
+        "land"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_022",
+      "query": "For the JFK Taxiway FH environmental assessment, what NEPA status is Phase III of Terminal 4's Concourse A expansion in,",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "PA Auto Marine Terminal 61,353           96,525            54,353           841\nTotal - Port Commerce 246,165         295,758          241,476         285,470        \nDevelopment\nHoboken Waterfront De",
+        "4\nJohn F. Kennedy International Airport\n•  Terminal 4: The 1.5-million-square-foot, common-use \nTerminal 4 opened in May 2001 and contains 36 gates. \nTerminal 4 includes separate levels for departures",
+        "PA Auto Marine Terminal 1,800 750              500 223\nRed Hook Container Terminal 90 990              1,440 254\nTotal - Port Commerce 214,092 208,929       263,348 259,837\nEconomic & Waterfront Devel"
+      ],
+      "v2_top3_snippets": [
+        "FAA in July 2010. Work was completed in May 2013. Phase II includes an extension of Concourse B of Terminal 4 and loading bridges on Terminal 2. A Categorical Exclusion was received on Phase II in Apr",
+        "partnered with the Port Authority and Terminal 4 to construct a new state-of- the-art terminal space at Terminal 4, replacing the antiquated space it occupied in Terminal 3. The $1.2 billion expansion",
+        "with state agencies on airport access issues; and collaboration with terminal developers. CENTRAL TERMINAL AREA JFK has six airline terminals surrounded by a dual ring of peripheral taxiways. The orig"
+      ],
+      "expected_keywords": [
+        "Phase III",
+        "16 additional gates",
+        "Concourse A",
+        "NEPA",
+        "Terminal 4"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_023",
+      "query": "How does the governance model of a port (local, national, or private) influence data ownership and shipping efficiency p",
+      "answer_mode": "comparison",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "Port Reform Toolkit - Module 3: Port Governance\n26\n3.5.3 Financial capability\nFinancial power is a crucial element for port authorities to adopt a facilitating and entrepreneurial \nrole, such as becom",
+        "rapid growth in the small package expedited service and the Just-In-Time inventory practice \ntogether make air cargo an important part of the aviation impact. \n \nIn 2004, the region’s three major airp",
+        "The Industry requires cargo and passenger transportation providers, financial \nand insurance institutions, security firms, information services, freight \nforwarders, customhouse brokers, wholesalers a"
+      ],
+      "v2_top3_snippets": [
+        "of port authorities to organize data ownership and data sharing varies per port. First the power of the port authority to organize data ownership and sharing depends on the power of the port authority",
+        "of port authorities to organize data ownership and data sharing varies per port. First the power of the port authority to organize data ownership and sharing depends on the power of the port authority",
+        "hinterland infrastructure, port governance is an essential determinant of port performance (De Langen 2004). Port authorities play a central role in port governance. Regardless of the ownership and ma"
+      ],
+      "expected_keywords": [
+        "local community",
+        "national authority",
+        "private parties",
+        "data ownership",
+        "real estate"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_024",
+      "query": "What is the purpose of the revealed-preference telephone survey in the cross-Hudson freight EIS methodology, and roughly",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.6,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_025",
+      "query": "What does the 2015 ground support equipment profile show about diesel GSE utilization across JFK, EWR, and LGA?",
+      "answer_mode": "comparison",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "number of diesel deicers at Port Authority airports, these emissions were modeled separately, using the equipment \nprofile of the most similar unit in AEDT’s GSE database with regard to horsepower and",
+        "emissions (WRI, 2006) and are shown in Table 7-13. \nTable 7-13.  Bus and Rail Commuting Emission Factors \nTrain Type kg CO 2/mile \nUS Intercity Rail (i.e., Amtrak) 0.314 \nUS Transit Rail (e.g., subway",
+        "emissions (WRI, 2006) and are shown in Table 7-9. \nTable 7-9. Bus and Rail Commuting Emission Factors \nTrain Type kg CO\n2/mile \nUS Intercity Rail (i.e., Amtrak) 0.314 \nUS Transit Rail (e.g., subway, P"
+      ],
+      "v2_top3_snippets": [
+        "2017). 8.2.1 Activity Data GSE inventories were provided by the Port Authority (Port Authority 2016c) for the three large international airports (i.e., JFK, EWR and LGA). These inventories are based o",
+        "and lower emissions compared to a scenario without supplied PCA and gate electrification. Table 8-5: 2015 Aircraft GHG Emissions by Airport (metric tons) Airport CO2e CO2 Biogenic CO2 CH4 N2O JFK 937,",
+        "airlines/Port Authority and the equivalent equipment type from the GSE database in AEDT. This crosswalk enables the assignment of default GSE parameters, most notably the average annual utilization ho"
+      ],
+      "expected_keywords": [
+        "diesel",
+        "1,556,883",
+        "829,313",
+        "579,711",
+        "JFK"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_026",
+      "query": "Why have port operators been prioritizing risk and resilience so heavily since COVID-19, according to the IAPH guideline",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        " By redefining the mission and role of each stage  of a vessel’s arrival, ports can \nsignificantly improve their efficiency, security, and environmental impact.",
+        "in operational capacity, sector vulnerabilities, and responsiveness to disruption. This makes it \nespecially valuable to governments, port authorities, shipping lines, and development partners \nseekin",
+        "place in the 1980s and 1990s (Brooks and Farrell 2019).\n3.8 Summary and Conclusions\nThe role of port authorities has fundamentally changed over time. As a result of reforms which \naimed to transfer op"
+      ],
+      "v2_top3_snippets": [
+        "1-16-1 Kaigan, Minato-ku, Tokyo 105-0022, Japan Website: https://iaphworldports.org Tel: +81-3-5403-2770 Fax: +81-3-5403-76 CONTENTS PAGE About IAPH Preface Foreword Risk and resilience in context 1. ",
+        "for Climate and Energy and Data Collaboration. Applying the same pragmatic approach by the Taskforce, this guideline is the first IAPH tool produced by expert regular and associate members from this C",
+        "around the world are reporting significant increases in cyber-threat activities, particularly since the outbreak of the COVID-19 pandemic. Between February and May of 2020 alone, the maritime industry"
+      ],
+      "expected_keywords": [
+        "essential workers",
+        "supply chain",
+        "business continuity",
+        "resilience maturity",
+        "technology"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_027",
+      "query": "What key changes were made between older and 2006 attracted-travel calculations for aviation passengers in the PANYNJ GH",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.4,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_028",
+      "query": "Why did the Port of Rotterdam's intangible fixed assets drop in the first half of 2025, and how large was the IT reclass",
+      "answer_mode": "diagnostic",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 0.2,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_bad"
+    },
+    {
+      "id": "V3_VEC_029",
+      "query": "How did JFK's international freight traffic perform in the July 2019 monthly report, and how did it compare with domesti",
+      "answer_mode": "comparison",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "68 \n \n \n \nJFK 3.4.1 2009 Revenue Freight by Airline\nTop 15 Carriers\nRANK AIRLINE CUMULATIVE %\n1 AMERICAN 113,624 9.8%\n2 FEDERAL EXPRESS 108,538 19.2%\n3 KOREAN 61,912 24.6%\n4 DELTA 59,140 29.7%\n5 CHINA",
+        "58 \n \n \nJFK 3.4.1 page 1 2006 Revenue Freight by Airline\nTop 15 Carriers\nRANK AIRLINE CUMULATIVE %\n1 AMERICAN 177,327 10.4%\n2 FEDERAL EXPRESS 149,382 19.2%\n3 KOREAN 91,583 24.5%\n4 CHINA AIRLINES (CAL)",
+        "JFK 3.4.1 page 1 2007 Revenue Freight by Airline\nTop 15 Carriers\nRANK AIRLINE CUMULATIVE %\n1 AMERICAN 160,945 9.7%\n2 FEDERAL EXPRESS 143,257 18.4%\n3 KOREAN 81,795 23.3%\n4 CHINA AIRLINES (CAL) 71,236 2"
+      ],
+      "v2_top3_snippets": [
+        "percent). JFK also led the region in domestic passenger gain (+182,648 travelers) and growth rate (+9.4 percent), handling a record 2.13 million passengers. JFK was the only facility that grew its tot",
+        "by 1.4 percent (+39,198 seats). Total cargo volume at JFK (which represents about 60 percent of the region’s total freight) fell by 4.6 percent (-5,468 tons). The fall was led by the international sec",
+        "percent), while reaching a record 2.483 million travelers. Carriers their domestic seats by 3.8 percent (+106,714 seats – highest among our airports). JFK’s total cargo activity (about 60 percent of t"
+      ],
+      "expected_keywords": [
+        "7.5 percent",
+        "11.5 percent",
+        "international",
+        "domestic",
+        "10.6 percent"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_030",
+      "query": "Does the Port Authority's minimum wage policy apply to part-time workers and to employees under a collective bargaining ",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.4,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_031",
+      "query": "Based on the December 2018 PATH turnstile report, what do weekday entry patterns look like at Journal Square across the ",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "PATH Ridership Report \nJune 2018\n222,972\n703,894\n546,464\n434,705\n495,978\n726,830\n1,530,518\n149,052\n136,601\n244,320\n240,100\n916,403\n757,184\n7,105,021\nAverage \nWeekday\nAverage \nSaturday\nAverage \nSunday\n",
+        "PATH Ridership Report \nMay 2013\n184,910\n701,278\n428,468\n396,626\n515,562\n641,058\n1,150,940\n119,199\n138,928\n247,427\n200,529\n945,789\n718,832\n6,389,546\nAverage \nWeekday\nAverage \nSaturday\nAverage \nSunday\nA",
+        "PATH Ridership Report \nJune 2013\n176,063\n671,466\n411,020\n379,530\n483,775\n623,957\n1,106,466\n119,985\n129,884\n242,792\n192,088\n916,193\n690,271\n6,143,490\nAverage \nWeekday\nAverage \nSaturday\nAverage \nSunday\n"
+      ],
+      "v2_top3_snippets": [
+        "PM 8:00:00 PM 9:00:00 PM 10:00:00 PM 11:00:00 PM Total Journal Square Avg Weekday Entry Avg Saturday Entry Avg Sunday Entry Avg Weekday Exit Avg Saturday Exit Avg Sunday Exit Avg Holiday Entries Avg H",
+        "AM 4:00:00 AM 5:00:00 AM 6:00:00 AM 7:00:00 AM 8:00:00 AM 9:00:00 AM 10:00:00 AM 11:00:00 AM 12:00:00 PM 1:00:00 PM 2:00:00 PM 3:00:00 PM 4:00:00 PM 5:00:00 PM 6:00:00 PM 7:00:00 PM 8:00:00 PM 9:00:00",
+        "PM 9:00:00 PM 10:00:00 PM 11:00:00 PM Total Journal Square Avg Weekday Entry Avg Saturday Entry Avg Sunday Entry Avg Weekday Exit Avg Saturday Exit Avg Sunday Exit Avg Holiday Entries Avg Holiday Exit"
+      ],
+      "expected_keywords": [
+        "Journal Square",
+        "weekday entry",
+        "turnstile",
+        "December 2018",
+        "hourly"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_032",
+      "query": "What is the Human Capital Coalition for the Energy Transition in Rotterdam and which partners signed it?",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "transition to a climate-neutral port.\nAs such, we are joining forces with 7 leading players from the energy and chemical sectors. T ogether with Air \nLiquide, BASF, Borealis, ExxonMobil, INEOS, Fluxys",
+        "emissions by 49% by 2030 compared with 1990 and expect a more ambitious target in line with \n‘Fit for 55’. This is in conformity with the Dutch climate agreement. By 2021, we will have taken \nimportan",
+        "with the Port of Antwerp-Bruges on energy \ntransition cooperation. Specifically, this \nMOU partnership will explore the feasibility \nof establishing a green corridor between \nthe ports of Houston and "
+      ],
+      "v2_top3_snippets": [
+        "introduced to the port of Rotterdam each year. Further initiatives include the development of the toolbox inclusievehaven.nl, designed to enhance inclusivity and diversity within the port business com",
+        "introduced to the port of Rotterdam each year. Further initiatives include the development of the toolbox inclusievehaven.nl, designed to enhance inclusivity and diversity within the port business com",
+        "such as coal, LNG, and hydrogen. Activities Safe and inclusive port The Port of Rotterdam Authority contributes to a safe and inclusive port through various initiatives, including attracting (new) tal"
+      ],
+      "expected_keywords": [
+        "Deltalinqs",
+        "Rotterdam University",
+        "STC",
+        "Municipality of Rotterdam",
+        "energy transition"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_033",
+      "query": "How dramatically did maritime cyber attacks rise during COVID-19, and who is the main audience for the IAPH cybersecurit",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.6,
+      "v2_keyword_coverage": 0.8,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_034",
+      "query": "In 2006, how much did PATH contribute toward employee benefit plans as a share of covered payroll, and what vesting peri",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "2010   $41,653 10.0%     $34,116 16.4% \n 2009   $29,526   7.1%      $32,960 15.6% \n 2008   $31,052   7.9%     $34,718 16.1% \n  \nThese contributions cover the entire funding requirements for the curren",
+        "Total Uses $6,343 $6,706 ($363) -5.4%\nSignificant Highlights/Challenges:\nD The proposed decrease in the operating  budget reflects aggressive cost containment efforts.  Through\nthese efforts, the agen",
+        "participation in retirement incentive programs, are as follows: \n \n  Year   % of   % of \nEnded ERS Covered Payroll PFRS Covered Payroll \n           ($ In thousands) \n \n 2006 $37,193 6.7%   $31,210 5.6"
+      ],
+      "v2_top3_snippets": [
+        "are defined in the various collective bargaining agreements; no employee contributions are required. Eligibility for all benefits prior to normal retirement requires the completion of at least five ye",
+        "are defined in the various collective bargaining agreements; no employee contributions are required. Eligibility for all benefits prior to normal retirement requires the completion of at least five ye",
+        "of at least five years of vested service and depends upon years of credited service and monthly benefit rates in effect at the time of retirement. Trustees, appointed by the various unions, are respon"
+      ],
+      "expected_keywords": [
+        "5.4%",
+        "$4 million",
+        "five years",
+        "vested service",
+        "collective bargaining"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_035",
+      "query": "How is Antwerp-Bruges' liquid bulk traffic distributed by product type, and how does its total throughput stack up again",
+      "answer_mode": "comparison",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "32\nPort in figures – 2023\nMultimodal port\nBarge and rail\n“High flexibility in volume and type of cargo \nand frequent connections to the main \nEuropean markets.”\n • 101.2 million tonnes of goods  throu",
+        "Port of Antwerp-Bruges\n49\nNotes\nAbout Port of \nAntwerp-Bruges\nWith an overall throughput of 287 million tonnes \nper year, Port of Antwerp-Bruges is a critical hub in \nworldwide trade and industry. The",
+        "90  European destinations in 6 countries\n • 92 barge operators with frequent calls, \n including 22 container operators\n49,000\ninland vessels \nper year\nInland navigation accessibility\nZEEBRUGGE ANTWERP"
+      ],
+      "v2_top3_snippets": [
+        "other port are the various services so keenly aligned to one another. The port of Antwerp-Bruges is therefore the European distribution hub par excellence. *only figure for Antwerp 750,000 m3 storage ",
+        "platform is therefore the LNG hub for Northwest Europe. That infrastructure can also be used for other alternative fuels in the future. 65.1% 17.9% 16.3% 0.7% Distribution of liquid bulk in tonnes Pet",
+        "now being considered. Throughput and future-resilient portfolio Its geographical location means that the Port of Rotterdam is the gateway to the European hinterland and an important hub in internation"
+      ],
+      "expected_keywords": [
+        "petroleum derivatives",
+        "chemicals",
+        "LNG",
+        "90,644,822",
+        "Rotterdam"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_036",
+      "query": "What are the three focus areas of Rotterdam's Smart Port roadmap and what does each emphasize?",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.8,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_037",
+      "query": "Why did the Port Authority enter pay-fixed receive-variable interest rate swaps in 2003, and how are they matched agains",
+      "answer_mode": "decision_support",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "marine terminals; b.) PILOT payments to the City of New York related to the WTC; and, c.) \npayments to aviation concessionaires for rent relief authorized under the Coronavirus Response \nand Relief Su",
+        "notes.  While the Port Authority increased its aggregate debt service payments by \napproximately $145 million over the life of the refunded consolidated bonds, the \neconomic gain resulting from the de",
+        "(NYSDOT); and b) rent relief payables to aviation concessionaires and terminal operators authorized under ARPA federal funding. \nThese increases were partially offset by: c)  decreased payments to avi"
+      ],
+      "v2_top3_snippets": [
+        "3. Interest Rate Exchange Contracts (Swaps) The Port Authority records interest rate exchange contracts pursuant to the settlement method of accounting whereby cash paid or received under the terms of",
+        "to enter into interest rate swaps for the purpose of managing and controlling interest rate risk in connection with Port Authority obligations designated at the time of entering into interest rate swa",
+        "credited to the related interest expense account for the purpose of managing interest rate exposure. Each swap transaction involves the exchange of fixed and variable rate interest payment obligations"
+      ],
+      "expected_keywords": [
+        "pay-fixed",
+        "Versatile Structure Obligation",
+        "synthetic fixed rate",
+        "notional",
+        "refunding"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_038",
+      "query": "In 2010 which PANYNJ construction facility produced the highest NOx emissions, and what was the total across all facilit",
+      "answer_mode": "comparison",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "The TWA Flight Center is vacant; American Airlines acquired TWA’s assets in 2001 and\nsubsequently vacated the building in 2002 when TWA’s lease expired.",
+        "international Terminal 1, opened in \nMay 1998 on the site of the old Eastern \nAirlines Terminal.   \n• Delta Air Lines operates Terminals 2 \nand 3.  Delta invested about $150 \nmillion to renovate the t",
+        "The CTA also includes a central heating and \nair-conditioning plant. \n \nTerminals \n• A consortium of airlines – Air France, \nJapan Airlines, Korean Air and \nLufthansa – built the 11-gate \ninternationa"
+      ],
+      "v2_top3_snippets": [
+        "will be reported every five years. Scope 1 and 2 inventories will continue on an annual basis. The Port Authority’s 2010 GHG emissions inventory was verified in March 2013 by a third-party verificatio",
+        "Management, Law, Human Resources, Media and Marketing, Planning, Government Affairs, Finance, and Environmental and Energy Program Departments, along with support staff from the PANYNJ’s Engineering, ",
+        "This report provides an update of the PANYNJ’s GHG and CAP emissions for calendar year 2008. The inventory includes direct PANYNJ emissions (e.g. energy use at administration buildings and employee tr"
+      ],
+      "expected_keywords": [
+        "World Trade Center",
+        "12.02",
+        "19.03",
+        "NOx",
+        "construction"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_039",
+      "query": "Which airlines were the top three revenue passenger carriers at the PANYNJ airports in 2015 and what was Delta's combine",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.8,
+      "v2_keyword_coverage": 0.8,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_040",
+      "query": "What does Executive Order 12898 require federal agencies to do, and which USDOT orders and FHWA orders carry out environ",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.4,
+      "v2_keyword_coverage": 0.8,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_041",
+      "query": "What methods did the Port Authority use to measure customer service performance at its airports, and how did EWR perform",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "slight increase over the prior 12 months’ \nfigure of 7.1%. \nDecrease in flight delays over the same period \nin the previous year. \nCustomer Satisfaction \nMeet or exceed industry benchmark in annual cu",
+        "2014) \n• Less than 5.3% of total operations \ndelayed  \nCustomer \nSatisfaction \n• Meet or exceed industry benchmark in annual customer \nsatisfaction survey for all Port Authority airport terminals  \n• ",
+        "passengers (departing and arriving)  in annual customer satisfaction survey for all Port Authority airport terminals • Departing passenger satisfaction declined from 2014 • The share of highly satisfi"
+      ],
+      "v2_top3_snippets": [
+        "were measured. Jointly, the Port Authority, J. D. Power & Associates and the airport community focused on the key drivers of customer satisfaction, which include access to, from, and around the airpor",
+        "were notified that their facilities at EWR were the least effectively utilized in comparison to the average daily departing revenue seats per gate of all Master Airlines. These notices were provided b",
+        "Port Street Corridor improvement construction • Begin design for Public Safety space at Port Newark Administration building to replace space damaged by Hurricane Sandy • Start construction of Port Jer"
+      ],
+      "expected_keywords": [
+        "J. D. Power",
+        "mystery shops",
+        "Airport Service Standards",
+        "four first place",
+        "Terminal C"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_042",
+      "query": "What categories of emissions does the 2008 PANYNJ GHG & CAP inventory break out for mobile sources and construction equi",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "2012 MULTI-FACILITY EMISSIONS INVENTORY \n \nStarcrest Consulting Group, LLC  August 2014  \n5\n1.1.3 Major Changes in 2012 \nDifferences between the 2012 inventory an d the previous 2010 inventory include",
+        "Appendix 3. \nVEHICLE EMISSIONS DATA \nVehicular exhaust emission factors were com puted using the EPA Mobile Source Emissions \nModel, MOBILE6.2. This is the latest, recently re leased emissions model, ",
+        "6.2. EMISSION FACTORS AND OTHER PARAMETERS \nEmissions of HFCs and PFCs from refrigeration and air conditioning equipment result from the manufacturing \nprocess, leakage over the operational life of th"
+      ],
+      "v2_top3_snippets": [
+        "This report provides an update of the PANYNJ’s GHG and CAP emissions for calendar year 2008. The inventory includes direct PANYNJ emissions (e.g. energy use at administration buildings and employee tr",
+        "Inventory This category covers CHE at five of the PANYNJ leased container terminals, including:  American Stevedoring, Inc. (ASI)/Brooklyn Port Authority Marine Terminal;  New York Container Termina",
+        "Addendum to PANYNJ GHG and CAP Emission Inventory Report CY2010 June 2015 The Port Authority’s 2010 GHG emissions inventory was recently verified by a third-party verification body and was found to be"
+      ],
+      "expected_keywords": [
+        "on-road fleet",
+        "non-road fleet",
+        "construction equipment",
+        "employee commuting",
+        "CO2 equivalent"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_043",
+      "query": "What prompted the Port of Long Beach to launch its Green Port Policy in 2005, and what was happening at Pier T and the A",
+      "answer_mode": "diagnostic",
+      "v1_keyword_coverage": 0.6,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_044",
+      "query": "What major electrical, runway, and flood protection capital projects were budgeted for JFK in the 2017 PANYNJ budget boo",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 0.4,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "6 \nThe 2009 Budget totals $6.7 billion and provides for $2.5 billion in expenses to operate \nthe agency’s facilities, $3.3 billion in gross capital expenditures to build and improve \nupon the region’s",
+        "and the transfer of an additional $906 million in capital expenditures to completed \nconstruction in 2012, including $281 million of investment at Port Authority aviation \nfacilities, including approx",
+        "amenities. The $13 billion JFK plan is 90 percent funded through a record-setting $12 billion in private \nfunding.  \nBeyond the airports, the Capital Plan includes 2019 spending for multiple other key"
+      ],
+      "v2_top3_snippets": [
+        "airports, seaports and surface transportation facilities with state-of-art infrastructure, while also focuses on maintaining these assets in a state of good repair and improving resiliency in the post",
+        "The 2011 capital priorities focus on addressing current challenges that include aging infrastructure, safety and security, congestion/delays and federal caps on flights per hour imposed by the FAA, an",
+        "work continues to advance the planning for the airport’s transformational redevelopment, which, once completed, will result in two new world-class international terminal complexes, centralized ground "
+      ],
+      "expected_keywords": [
+        "Runway 4R-22L",
+        "substation",
+        "floodgates",
+        "tide gates",
+        "bollard"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_045",
+      "query": "What hydrologic methods can designers use to calculate design-storm volume and peak flow for green infrastructure, and w",
+      "answer_mode": "decision_support",
+      "v1_keyword_coverage": 0.4,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_046",
+      "query": "Which IPCC Assessment Report's global warming potentials does PANYNJ use for its 2015 inventory, and why?",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.4,
+      "v2_keyword_coverage": 0.8,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_047",
+      "query": "What are the three operating regions of the PANYNJ Tunnels, Bridges & Terminals department, and what eastbound vehicle v",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.4,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_048",
+      "query": "What is the Port Authority's definition of a false claim, and what examples does the policy give to illustrate it?",
+      "answer_mode": "descriptive",
+      "v1_keyword_coverage": 0.0,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "The Port Authority reserves, the unqualified right , at any tim e and in its sole discretion, to \nchange or m odify this RFP, to reject any a nd all proposals on the basi s of an evaluation of \nthe fa",
+        "interference in the conduct of the Inspector General’s responsibilities; \nh. Make recommendations to the Chairman of the Port Authority concerning the size, \ncomposition, and organization of Board Com",
+        "interference in the conduct of the Inspector General’s responsibilities; \nh. Make recommendations to the Chairman of the Port Authority concerning the size, \ncomposition, and organization of Board Com"
+      ],
+      "v2_top3_snippets": [
+        "THE PORT AUTHORITY’S FALSE CLAIMS POLICY The Port Authority is a public agency committed to safeguarding the public’s money. To do that, we need your help in stopping false claims. And if you help us ",
+        "claims policy during the fall of 2017. The false claims policy you are now reading has been reviewed and approved by the Board. It is binding. What all this means is simple: if you see or hear informa",
+        "is paying for certain materials, we expect to get them. If firms are ripping us off --- by lying about how much time a job takes, for example --- we will act to protect ourselves. Making a false claim"
+      ],
+      "expected_keywords": [
+        "intentionally",
+        "material false statement",
+        "general contractor",
+        "engineering",
+        "safety inspections"
+      ],
+      "expected_sources": []
+    },
+    {
+      "id": "V3_VEC_049",
+      "query": "Why did the Port of Long Beach Harbor Commissioners ask for a new Green Port Policy in 2004 even though the Healthy Harb",
+      "answer_mode": "diagnostic",
+      "v1_keyword_coverage": 0.6,
+      "v2_keyword_coverage": 1.0,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_050",
+      "query": "In the 2010 airport traffic report data for smaller US markets, which carrier tends to dominate service to places like R",
+      "answer_mode": "lookup",
+      "v1_keyword_coverage": 0.2,
+      "v2_keyword_coverage": 0.8,
+      "v1_source_recall": 1.0,
+      "v2_source_recall": 1.0,
+      "verdict": "v2_wins",
+      "v1_top3_snippets": [
+        "8 Cathay Pacific 57,835 55.5%\n9 Korean 52,914 58.2%\n10 China Airlines (Cal) 48,589 60.6%\n11 Asiana 47,241 63%\n12 Eva 44,005 65.1%\n13 Virgin Atlantic 42,018 67.2%\n14 Tnt 40,260 69.2%\n15 Abx Air Inc. 37",
+        "15 SOUTHWEST AIRLINES              622,930                        -               622,930 87.7%\n16 FRONTIER AIRLINES              586,284                        -               586,284 88.2%\n17 EL AL ",
+        "10 Swiss Int'l Air Lines Ltd 6,695 95.4%\n11 Delta 6,383 96.3%\n12 El Al 5,105 97.0%\n13 Cathay Pacific 3,672 97.5%\n14 Air Portugal(TAP) 3,274 98.0%\n15 Southwest Airlines 2,591 98.3%\nOthers 11,721 100.0%"
+      ],
+      "v2_top3_snippets": [
+        "US (BDL) 118,532 (20.9) SAN ANTONIO TX, US (SAT) 117,840 (8.1) SAN DIEGO CA, US (SAN) 114,673 (12.9) CHARLOTTE NC, US (CLT) 109,566 (10.0) BALTIMORE MD, US (BWI) 100,363 (1.8) FORT WORTH TX, US (AFW) ",
+        "NORFOLK/VA B/PT/CH, VA, US 4.98 7.6 14.58 ORLANDO, FLORIDA, US 13.78 9.28 39.06 PONCE, PUERTO RICO (US) RALEIGH/DURHAM, NC, US 6.56 11.86 19.69 38.11 RICHMOND INTL, RICHMND, VA, US 4.72 7.53 15.25 ROA",
+        "Honolulu (Intl) , HI Minneapolis/St Pa , MN Boston , MA Portland , OR Houston , TX St Louis , MO Sacramento , CA Kahului, Maui , HI Detroit , MI Christiansted , VI Raleigh/Durham , NC Palm Springs , C"
+      ],
+      "expected_keywords": [
+        "Continental",
+        "CO",
+        "Raleigh",
+        "Honolulu",
+        "Austin"
+      ],
+      "expected_sources": []
+    }
+  ]
+}

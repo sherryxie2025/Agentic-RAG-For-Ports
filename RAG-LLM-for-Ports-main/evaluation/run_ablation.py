@@ -60,6 +60,7 @@ def run_one_config(
     name: str,
     weights: Dict[str, float],
     limit: Optional[int],
+    dataset_path: Optional[Path] = None,
 ) -> Path:
     db_path = STORAGE_SQL / f"memory_ablation_{name}.duckdb"
     out_path = REPORTS_DIR / f"rag_v3_cross_session_{name}.json"
@@ -78,6 +79,8 @@ def run_one_config(
     ]
     if limit is not None:
         cmd += ["--limit", str(limit)]
+    if dataset_path is not None:
+        cmd += ["--dataset", str(dataset_path)]
 
     print(f"\n{'=' * 70}")
     print(f"  [ablation] running config: {name}")
@@ -144,6 +147,10 @@ def main() -> None:
         "--configs", type=str, default=None,
         help="Comma-separated subset of configs to run (default: all 6)",
     )
+    parser.add_argument(
+        "--dataset", type=Path, default=None,
+        help="Override the cross-session dataset path (default: v3 cross_session)",
+    )
     args = parser.parse_args()
 
     to_run = list(CONFIGS.keys())
@@ -155,7 +162,8 @@ def main() -> None:
 
     paths: Dict[str, Path] = {}
     for name in to_run:
-        paths[name] = run_one_config(name, CONFIGS[name], args.limit)
+        paths[name] = run_one_config(name, CONFIGS[name], args.limit,
+                                     dataset_path=args.dataset)
 
     summary = summarise(paths)
     print_summary(summary)

@@ -51,6 +51,11 @@ from online_pipeline import (
 )
 from online_pipeline.conversation_memory import extract_entities
 
+from eval_answer_e2e import (
+    score_answer_e2e,
+    aggregate_answer_quality,
+    print_answer_quality_report,
+)
 
 # ---------------------------------------------------------------------------
 # Weight-string parser
@@ -78,6 +83,7 @@ def run_conversation(
     workflow,
     memory_manager: MemoryManager,
     conv: Dict[str, Any],
+    base_samples: Optional[Dict[str, Dict[str, Any]]] = None,
 ) -> Dict[str, Any]:
     """Run all sessions of one cross-session conversation sequentially."""
     print(f"\n  [{conv['conversation_id']}] {conv['pattern']} "
@@ -94,7 +100,15 @@ def run_conversation(
 
         per_turn_outputs: List[Dict[str, Any]] = []
         for turn_idx, turn_spec in enumerate(sess["turns"], start=1):
-            raw_query = turn_spec["raw_query"]
+            # Resolve raw_query: explicit in turn_spec, or inherited from
+            # the base sample referenced by from_sample_id.
+            raw_query = turn_spec.get("raw_query")
+            if not raw_query and turn_spec.get("from_sample_id") and base_samples:
+                bs = base_samples.get(turn_spec["from_sample_id"], {})
+                raw_query = bs.get("query", "")
+            if not raw_query:
+                print(f"      ! turn {turn_idx}: no raw_query and no base sample — skipping")
+                continue
 
             t0 = time.time()
             resolved, was_rewritten = memory_manager.resolve_followup(sid, raw_query)
@@ -129,6 +143,16 @@ def run_conversation(
 
             memory_manager.record_assistant_turn(sid, state_out)
 
+            # End-to-end answer quality
+            answer_text = (state_out.get("final_answer") or {}).get("answer", "")
+            aq = score_answer_e2e(
+                answer_text=answer_text,
+                final_answer=state_out.get("final_answer") or {},
+                evidence_bundle=state_out.get("evidence_bundle"),
+                turn_spec=turn_spec,
+                base_samples=base_samples,
+            )
+
             per_turn_outputs.append({
                 "turn_id": turn_idx,
                 "session_order": order,
@@ -143,11 +167,12 @@ def run_conversation(
                 "lt_hit_session_ids": lt_session_ids_hit,
                 "lt_hit_count": len(lt_hits),
                 "lt_hit_top_score": lt_hits[0]["score"] if lt_hits else 0.0,
-                "final_answer": (state_out.get("final_answer") or {}).get("answer", ""),
+                "final_answer": answer_text,
                 "sources_used": (state_out.get("final_answer") or {}).get("sources_used", []),
                 "router_decision": state_out.get("router_decision"),
                 "expected_sources": turn_spec.get("expected_sources"),
                 "answer_mode": turn_spec.get("answer_mode"),
+                "answer_quality": aq,
             })
 
         session_records.append({
@@ -350,6 +375,16 @@ def main() -> None:
           f"{sum(len(c['sessions']) for c in convs)} sessions, "
           f"{sum(sum(len(s['turns']) for s in c['sessions']) for c in convs)} turns")
 
+    # Load base samples so session-1 turns with `from_sample_id` can
+    # resolve their raw_query from the golden dataset.
+    base_path = EVAL_ROOT / "golden_dataset_v3_rag.json"
+    base_samples: Dict[str, Dict[str, Any]] = {}
+    if base_path.exists():
+        with open(base_path, "r", encoding="utf-8") as f:
+            base_data = json.load(f)
+        base_samples = {s["id"]: s for s in base_data.get("samples", [])}
+        print(f"  base samples loaded: {len(base_samples)}")
+
     weights = parse_weights(args.weights)
     print("\nBuilding agentic-RAG DAG with memory...")
     print(f"  config:      {args.config_label}")
@@ -373,7 +408,7 @@ def main() -> None:
     all_conv_scores: List[Dict[str, Any]] = []
 
     for conv in convs:
-        run = run_conversation(workflow, mgr, conv)
+        run = run_conversation(workflow, mgr, conv, base_samples=base_samples)
         all_runs.append(run)
         conv_score = score_conversation(run)
         all_conv_scores.append(conv_score)
@@ -396,7 +431,20 @@ def main() -> None:
     try:
         agg = aggregate(all_conv_scores)
         print_report(agg, args.config_label)
+
+        # End-to-end answer quality aggregate across all turns
+        all_aq = []
+        for run in all_runs:
+            for sess in run.get("sessions", []):
+                for t in sess.get("turns", []):
+                    if t.get("answer_quality"):
+                        all_aq.append(t["answer_quality"])
+        aq_agg = aggregate_answer_quality(all_aq) if all_aq else {}
+        if aq_agg:
+            print_answer_quality_report(aq_agg, label=f"[cross-session {args.config_label}]")
+
         partial_report["aggregate"] = agg
+        partial_report["answer_quality"] = aq_agg
         with open(args.output, "w", encoding="utf-8") as f:
             json.dump(partial_report, f, ensure_ascii=False, indent=2, default=str)
         print(f"[final] Aggregated metrics appended to {args.output}")

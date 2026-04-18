@@ -41,6 +41,11 @@ from online_pipeline import (
 )
 from online_pipeline.conversation_memory import extract_entities
 
+from eval_answer_e2e import (
+    score_answer_e2e,
+    aggregate_answer_quality,
+    print_answer_quality_report,
+)
 from eval_memory import (
     coref_resolution_score,
     memory_recall_at_k,
@@ -62,6 +67,7 @@ def run_conversation(
     workflow,
     memory_manager: MemoryManager,
     conv: Dict[str, Any],
+    base_samples: Optional[Dict[str, Dict[str, Any]]] = None,
 ) -> Dict[str, Any]:
     """Run one multi-turn conversation through the DAG. Returns per-turn records."""
     sid = memory_manager.start_session()
@@ -145,6 +151,9 @@ def run_conversation(
             "summaries_after_turn": summaries_snapshot,
             "key_facts_after_turn": key_facts_snapshot,
             "final_answer": (state_out.get("final_answer") or {}).get("answer", ""),
+            "_final_answer_dict": state_out.get("final_answer") or {},
+            "_evidence_bundle": state_out.get("evidence_bundle"),
+            "_base_samples": base_samples,
             "sources_used": (state_out.get("final_answer") or {}).get("sources_used", []),
             "router_decision": state_out.get("router_decision"),
             "expected_sources": turn_spec.get("expected_sources"),
@@ -225,6 +234,15 @@ def score_turn(
                 judge_cons = faith_out["consistency"]
                 judge_attr = faith_out["attribution"]
 
+    # --- End-to-end answer quality (reuse eval_answer_quality metrics) ---
+    answer_quality = score_answer_e2e(
+        answer_text=turn_record.get("final_answer", ""),
+        final_answer=turn_record.get("_final_answer_dict") or {},
+        evidence_bundle=turn_record.get("_evidence_bundle"),
+        turn_spec=spec,
+        base_samples=turn_record.get("_base_samples"),
+    )
+
     return {
         "turn_id": turn_record["turn_id"],
         "evaluation_focus": spec.get("evaluation_focus"),
@@ -239,6 +257,7 @@ def score_turn(
         "judge_precision": judge_prec,
         "judge_consistency": judge_cons,
         "judge_attribution": judge_attr,
+        "answer_quality": answer_quality,
     }
 
 
@@ -277,6 +296,16 @@ def main() -> None:
         convs = convs[: args.limit]
     print(f"  {len(convs)} conversations, {sum(len(c['turns']) for c in convs)} turns")
 
+    # Load base samples for answer quality scoring (turns with from_sample_id
+    # inherit reference_answer and expected_evidence_keywords)
+    base_path = EVAL_ROOT / "golden_dataset_v3_rag.json"
+    base_samples: Dict[str, Dict[str, Any]] = {}
+    if base_path.exists():
+        with open(base_path, "r", encoding="utf-8") as f:
+            base_data = json.load(f)
+        base_samples = {s["id"]: s for s in base_data.get("samples", [])}
+        print(f"  base samples loaded: {len(base_samples)}")
+
     print("\nBuilding agentic-RAG DAG with memory...")
     print(f"  embeddings:  {'OFF (Phase A keyword-only)' if args.no_embeddings else 'ON (Phase B BGE+vss)'}")
     print(f"  llm-judge:   {'OFF' if args.skip_llm_judge else 'ON'}")
@@ -299,7 +328,7 @@ def main() -> None:
     all_scored_turns: List[Dict[str, Any]] = []
 
     for conv in convs:
-        run = run_conversation(workflow, mgr, conv)
+        run = run_conversation(workflow, mgr, conv, base_samples=base_samples)
         all_runs.append(run)
 
         # Build the rolling conversation transcript for the LLM judge
@@ -335,7 +364,16 @@ def main() -> None:
     try:
         metrics = aggregate(per_turn_records=all_scored_turns, n_conversations=len(all_runs))
         print_memory_report(metrics)
+
+        # End-to-end answer quality aggregate
+        aq_scores = [s.get("answer_quality", {}) for s in all_scored_turns
+                     if s.get("answer_quality")]
+        aq_agg = aggregate_answer_quality(aq_scores) if aq_scores else {}
+        if aq_agg:
+            print_answer_quality_report(aq_agg, label="[multi-turn]")
+
         partial_report["metrics"] = metrics.to_dict()
+        partial_report["answer_quality"] = aq_agg
         with open(args.output, "w", encoding="utf-8") as f:
             json.dump(partial_report, f, ensure_ascii=False, indent=2, default=str)
         print(f"[final] Aggregated metrics appended to {args.output}")

@@ -289,6 +289,7 @@ class ShortTermMemory:
         self.key_facts: List[KeyFactRecord] = []
         self.active_entities: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
         self.last_evidence_digest: Dict[str, str] = {}   # source -> short text
+        self.dominant_answer_mode: Optional[str] = None  # set by record_assistant_turn
         self._turn_counter = 0
 
     # ------ writes ------
@@ -419,9 +420,13 @@ class ShortTermMemory:
                     {
                         "role": "system",
                         "content": (
-                            "Summarise this port-operations chat in 2-3 sentences. "
-                            "Preserve berth/crane/vessel IDs, dates, numeric thresholds, "
-                            "and the assistant's key conclusions."
+                            "Write a FACTUAL summary of these port-operations turns. "
+                            "Rules:\n"
+                            "1. Lead with CONCRETE CONCLUSIONS and numbers, not 'the user asked'. "
+                            "   Include every berth/crane/vessel ID, date, numeric value with unit, "
+                            "   and rule reference that appeared.\n"
+                            "2. State whether thresholds were exceeded or met.\n"
+                            "3. Keep to 2-3 sentences. No preamble."
                         ),
                     },
                     {"role": "user", "content": body},
@@ -1084,9 +1089,16 @@ class MemoryManager:
                     {
                         "role": "system",
                         "content": (
-                            "Summarise this port decision-support session in 2-3 sentences. "
-                            "Capture (a) what topics the user explored, (b) key answers/numbers "
-                            "given, (c) any unresolved questions."
+                            "Write a FACTUAL summary of this port-operations session. "
+                            "Rules:\n"
+                            "1. Lead with the CONCRETE CONCLUSION, not 'the user asked about'. "
+                            "   BAD:  'The user explored tide data.'\n"
+                            "   GOOD: 'Average tide at the port in 2016 was 1.4 m (below the 2.5 m restriction threshold).'\n"
+                            "2. MUST include every specific number, unit, date, berth/crane/vessel ID, "
+                            "   and rule reference (e.g. R-14) that appeared in the conversation.\n"
+                            "3. State whether any rule threshold was exceeded or met.\n"
+                            "4. Note any unresolved question.\n"
+                            "5. Keep to 2-4 sentences. No preamble."
                         ),
                     },
                     {"role": "user", "content": body},
@@ -1099,9 +1111,52 @@ class MemoryManager:
             summary = ""
         if not summary:
             summary = f"Session {session_id}: {len(st.turns)} turns"
-        return self.long_term.store_session_summary(
-            session_id, summary, st.all_entities()
+
+        all_ents = st.all_entities()
+
+        # Store the narrative summary (coarse, for context retrieval)
+        entry_id = self.long_term.store_session_summary(
+            session_id, summary, all_ents
         )
+
+        # Industry best practice (A-Mem / ChatGPT Memory / Zettelkasten):
+        # ALSO store each key_fact as a SEPARATE long-term entry. Atomic
+        # facts like "Berth B3 2016 tide = 1.4 m" embed to very different
+        # vector-space locations, solving the "69 narrative summaries all
+        # cluster together" problem. The narrative summary gives coarse
+        # context; the atomic facts give precise retrieval targets.
+        facts_from_st = st.key_facts or []
+        if not facts_from_st:
+            # Session was too short to trigger _summarise_oldest_half (no
+            # key_facts generated). Extract directly from the raw turns.
+            turn_text = "\n".join(
+                (t.get("content") or "")[:200] for t in st.turns
+                if t.get("role") == "assistant"
+            )
+            if turn_text.strip():
+                facts_from_st = [
+                    KeyFactRecord(fact=f, from_turn_ids=[], entities=extract_entities(f),
+                                  extracted_at=datetime.now().isoformat(timespec="seconds"))
+                    for f in extract_key_facts(turn_text, max_facts=5)
+                ]
+
+        for kf in facts_from_st:
+            fact_text = kf.get("fact", "")
+            if not fact_text.strip():
+                continue
+            fact_ents = kf.get("entities", [])
+            self.long_term.store(
+                entry_type="key_fact",
+                content=fact_text,
+                entities=fact_ents,
+                session_id=session_id,
+            )
+
+        logger.info(
+            "end_session %s: 1 summary + %d key_facts written to long-term",
+            session_id, len(facts_from_st),
+        )
+        return entry_id
 
     # ------ recording (called by workflow caller) ------
 

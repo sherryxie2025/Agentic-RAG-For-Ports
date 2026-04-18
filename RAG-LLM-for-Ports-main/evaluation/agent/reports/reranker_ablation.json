@@ -1,0 +1,539 @@
+{
+  "summary": {
+    "total_samples": 50,
+    "retrieve_k": 40,
+    "rerank_top_k": 10,
+    "model_a": "cross-encoder/ms-marco-MiniLM-L-6-v2 (6L, 22M)",
+    "model_b": "BAAI/bge-reranker-v2-m3 (24L, 568M)",
+    "avg_kw_no_rerank": 0.896,
+    "avg_kw_model_a": 0.912,
+    "avg_kw_model_b": 0.908,
+    "avg_latency_a_ms": 2607.3,
+    "avg_latency_b_ms": 46349.3,
+    "verdict": {
+      "both_good": 46,
+      "a_wins": 0,
+      "b_wins": 1,
+      "both_bad": 3
+    }
+  },
+  "per_sample": [
+    {
+      "id": "V3_VEC_001",
+      "query": "In the Lincoln Tunnel HOT lane feasibility work, how was the amount of traffic diverting to alternate routes actually es",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 2368.4,
+      "model_b_latency_ms": 41102.4,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_002",
+      "query": "For the Lincoln Tunnel HOT lane study, which alternative delivered the lowest minutes-per-vehicle during the 7-9 AM peak",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3605.3,
+      "model_b_latency_ms": 48078.1,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_003",
+      "query": "According to the 2024 annual report, what basis of accounting does the Port Authority use for its business-type activiti",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3389.4,
+      "model_b_latency_ms": 47882.1,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_004",
+      "query": "Who won Port of Seattle's airline noise awards in 2024, and what is the purpose of the StART forum?",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1560.0,
+      "model_b_latency_ms": 46472.7,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_005",
+      "query": "Which Port Authority airports dominated 2023 GHG emissions from air cargo attracted travel, and what were the combined C",
+      "no_rerank_kw": 0.6,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3596.3,
+      "model_b_latency_ms": 48077.8,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_006",
+      "query": "What are the rules for scheduling charter operations and using hardstands Amelia and Lindy at Newark's international fac",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1545.3,
+      "model_b_latency_ms": 40622.3,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_007",
+      "query": "What action did the Port Authority take in July 2001 against American Airlines and Air Canada at EWR based on the Gate U",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3296.5,
+      "model_b_latency_ms": 45528.9,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_008",
+      "query": "Under the 2019 Port Authority tariff, what happens if cargo gets wet or fire-damaged on a wharf, and who is liable for d",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3096.6,
+      "model_b_latency_ms": 46673.8,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_009",
+      "query": "How is Rotterdam's hinterland strategy tackling road and rail freight accessibility, and what did they do in early 2024 ",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1749.9,
+      "model_b_latency_ms": 44684.6,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_010",
+      "query": "Who are the sponsors in the JFK Terminal One redevelopment lease that the Board considered in November 2019?",
+      "no_rerank_kw": 0.8,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1831.5,
+      "model_b_latency_ms": 48633.7,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_011",
+      "query": "Per the 2018 VRCA port operating handbook, what must a vessel's master do immediately after a collision or grounding in ",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1756.4,
+      "model_b_latency_ms": 42015.7,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_012",
+      "query": "What did the 1990 Port of Long Beach master plan list as Phase I and Phase II road and rail transportation improvements,",
+      "no_rerank_kw": 0.6,
+      "model_a_kw": 0.6,
+      "model_b_kw": 0.6,
+      "model_a_latency_ms": 1781.4,
+      "model_b_latency_ms": 45432.9,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_013",
+      "query": "During the March 2016 PRC meeting, what change did PATH agree to make to the early-morning Newark-WTC schedule and why?",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1874.8,
+      "model_b_latency_ms": 47663.4,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_014",
+      "query": "What does the NPCC project for sea level rise by the 2050s and 2080s, and how does that affect 1-in-100 year coastal flo",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1697.2,
+      "model_b_latency_ms": 45781.3,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_015",
+      "query": "What does the 2010 airport traffic report say about how LaGuardia's passenger volume by market is broken down across dom",
+      "no_rerank_kw": 0.8,
+      "model_a_kw": 0.6,
+      "model_b_kw": 0.8,
+      "model_a_latency_ms": 3579.2,
+      "model_b_latency_ms": 47932.6,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_016",
+      "query": "What did the 2011 Port Authority budget project for revenues, net loss, and staffing compared with 2010?",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3320.7,
+      "model_b_latency_ms": 47390.8,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_017",
+      "query": "What key design features should Teterboro pilots be aware of for the RNAV (GPS) X Runway 19 approach, including offset a",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3570.2,
+      "model_b_latency_ms": 48725.4,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_018",
+      "query": "At the September 2015 PATH PRC meeting, which three working groups were formally adopted and who was elected Chair?",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1671.4,
+      "model_b_latency_ms": 48516.7,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_019",
+      "query": "What treatment steps are recommended for harvested rainwater in the PANYNJ green infrastructure design manual, from init",
+      "no_rerank_kw": 0.0,
+      "model_a_kw": 0.4,
+      "model_b_kw": 0.0,
+      "model_a_latency_ms": 1771.1,
+      "model_b_latency_ms": 48725.1,
+      "verdict": "both_bad"
+    },
+    {
+      "id": "V3_VEC_020",
+      "query": "What long-term GHG reduction target did PANYNJ set in its 2006 inventory effort, and which consultants helped build the ",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1861.0,
+      "model_b_latency_ms": 45676.2,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_021",
+      "query": "In the 2007 financial statements, how much land and construction in progress did the Port Authority report at year-end a",
+      "no_rerank_kw": 0.4,
+      "model_a_kw": 0.4,
+      "model_b_kw": 0.4,
+      "model_a_latency_ms": 3561.6,
+      "model_b_latency_ms": 48012.9,
+      "verdict": "both_bad"
+    },
+    {
+      "id": "V3_VEC_022",
+      "query": "For the JFK Taxiway FH environmental assessment, what NEPA status is Phase III of Terminal 4's Concourse A expansion in,",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3220.1,
+      "model_b_latency_ms": 47696.3,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_023",
+      "query": "How does the governance model of a port (local, national, or private) influence data ownership and shipping efficiency p",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1757.6,
+      "model_b_latency_ms": 42472.4,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_024",
+      "query": "What is the purpose of the revealed-preference telephone survey in the cross-Hudson freight EIS methodology, and roughly",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1655.0,
+      "model_b_latency_ms": 46204.9,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_025",
+      "query": "What does the 2015 ground support equipment profile show about diesel GSE utilization across JFK, EWR, and LGA?",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3588.1,
+      "model_b_latency_ms": 48544.3,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_026",
+      "query": "Why have port operators been prioritizing risk and resilience so heavily since COVID-19, according to the IAPH guideline",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1935.6,
+      "model_b_latency_ms": 47790.4,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_027",
+      "query": "What key changes were made between older and 2006 attracted-travel calculations for aviation passengers in the PANYNJ GH",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3542.3,
+      "model_b_latency_ms": 48058.1,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_028",
+      "query": "Why did the Port of Rotterdam's intangible fixed assets drop in the first half of 2025, and how large was the IT reclass",
+      "no_rerank_kw": 0.2,
+      "model_a_kw": 0.4,
+      "model_b_kw": 0.6,
+      "model_a_latency_ms": 3333.1,
+      "model_b_latency_ms": 47596.7,
+      "verdict": "b_wins",
+      "a_top3": [
+        "figures. Exemption from required consolidation Port of Rotterdam Authority has made use of the exemption from the requirement to consolidate the detai",
+        "figures. Exemption from required consolidation Port of Rotterdam Authority has made use of the exemption from the requirement to consolidate the detai",
+        "a resilient and safe port Operating result for Port of Rotterdam Authority stable Throughput in the port of Rotterdam decreased by 4.1% in the first h"
+      ],
+      "b_top3": [
+        "amounted to €136.1 million, including capital contributions to participating interests (first half of 2024: €164.4 million). The largest investment in",
+        "amounted to €136.1 million, including capital contributions to participating interests (first half of 2024: €164.4 million). The largest investment in",
+        "figures. Exemption from required consolidation Port of Rotterdam Authority has made use of the exemption from the requirement to consolidate the detai"
+      ],
+      "expected_kw": [
+        "8.4 million",
+        "amortisation",
+        "6.1 million",
+        "prepayments",
+        "IT"
+      ]
+    },
+    {
+      "id": "V3_VEC_029",
+      "query": "How did JFK's international freight traffic perform in the July 2019 monthly report, and how did it compare with domesti",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3548.8,
+      "model_b_latency_ms": 48075.1,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_030",
+      "query": "Does the Port Authority's minimum wage policy apply to part-time workers and to employees under a collective bargaining ",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3344.2,
+      "model_b_latency_ms": 47688.8,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_031",
+      "query": "Based on the December 2018 PATH turnstile report, what do weekday entry patterns look like at Journal Square across the ",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 0.8,
+      "model_a_latency_ms": 3610.0,
+      "model_b_latency_ms": 47788.4,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_032",
+      "query": "What is the Human Capital Coalition for the Energy Transition in Rotterdam and which partners signed it?",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1288.3,
+      "model_b_latency_ms": 38603.3,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_033",
+      "query": "How dramatically did maritime cyber attacks rise during COVID-19, and who is the main audience for the IAPH cybersecurit",
+      "no_rerank_kw": 0.8,
+      "model_a_kw": 0.8,
+      "model_b_kw": 0.8,
+      "model_a_latency_ms": 3342.9,
+      "model_b_latency_ms": 47169.4,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_034",
+      "query": "In 2006, how much did PATH contribute toward employee benefit plans as a share of covered payroll, and what vesting peri",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1702.9,
+      "model_b_latency_ms": 47069.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_035",
+      "query": "How is Antwerp-Bruges' liquid bulk traffic distributed by product type, and how does its total throughput stack up again",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3487.9,
+      "model_b_latency_ms": 48678.7,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_036",
+      "query": "What are the three focus areas of Rotterdam's Smart Port roadmap and what does each emphasize?",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1455.7,
+      "model_b_latency_ms": 38189.8,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_037",
+      "query": "Why did the Port Authority enter pay-fixed receive-variable interest rate swaps in 2003, and how are they matched agains",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3160.3,
+      "model_b_latency_ms": 47054.3,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_038",
+      "query": "In 2010 which PANYNJ construction facility produced the highest NOx emissions, and what was the total across all facilit",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3306.5,
+      "model_b_latency_ms": 47360.3,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_039",
+      "query": "Which airlines were the top three revenue passenger carriers at the PANYNJ airports in 2015 and what was Delta's combine",
+      "no_rerank_kw": 0.8,
+      "model_a_kw": 0.8,
+      "model_b_kw": 0.8,
+      "model_a_latency_ms": 3468.9,
+      "model_b_latency_ms": 47850.1,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_040",
+      "query": "What does Executive Order 12898 require federal agencies to do, and which USDOT orders and FHWA orders carry out environ",
+      "no_rerank_kw": 0.8,
+      "model_a_kw": 0.8,
+      "model_b_kw": 0.8,
+      "model_a_latency_ms": 1630.1,
+      "model_b_latency_ms": 46860.4,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_041",
+      "query": "What methods did the Port Authority use to measure customer service performance at its airports, and how did EWR perform",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1510.4,
+      "model_b_latency_ms": 44859.6,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_042",
+      "query": "What categories of emissions does the 2008 PANYNJ GHG & CAP inventory break out for mobile sources and construction equi",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 0.4,
+      "model_b_kw": 0.4,
+      "model_a_latency_ms": 1963.9,
+      "model_b_latency_ms": 47905.9,
+      "verdict": "both_bad"
+    },
+    {
+      "id": "V3_VEC_043",
+      "query": "What prompted the Port of Long Beach to launch its Green Port Policy in 2005, and what was happening at Pier T and the A",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3249.6,
+      "model_b_latency_ms": 47244.2,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_044",
+      "query": "What major electrical, runway, and flood protection capital projects were budgeted for JFK in the 2017 PANYNJ budget boo",
+      "no_rerank_kw": 0.4,
+      "model_a_kw": 0.6,
+      "model_b_kw": 0.6,
+      "model_a_latency_ms": 3530.2,
+      "model_b_latency_ms": 48180.1,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_045",
+      "query": "What hydrologic methods can designers use to calculate design-storm volume and peak flow for green infrastructure, and w",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3239.1,
+      "model_b_latency_ms": 47419.7,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_046",
+      "query": "Which IPCC Assessment Report's global warming potentials does PANYNJ use for its 2015 inventory, and why?",
+      "no_rerank_kw": 0.8,
+      "model_a_kw": 0.8,
+      "model_b_kw": 0.8,
+      "model_a_latency_ms": 3310.3,
+      "model_b_latency_ms": 47097.3,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_047",
+      "query": "What are the three operating regions of the PANYNJ Tunnels, Bridges & Terminals department, and what eastbound vehicle v",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1833.4,
+      "model_b_latency_ms": 47166.9,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_048",
+      "query": "What is the Port Authority's definition of a false claim, and what examples does the policy give to illustrate it?",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1735.1,
+      "model_b_latency_ms": 43250.8,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_049",
+      "query": "Why did the Port of Long Beach Harbor Commissioners ask for a new Green Port Policy in 2004 even though the Healthy Harb",
+      "no_rerank_kw": 1.0,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 1598.5,
+      "model_b_latency_ms": 42114.0,
+      "verdict": "both_good"
+    },
+    {
+      "id": "V3_VEC_050",
+      "query": "In the 2010 airport traffic report data for smaller US markets, which carrier tends to dominate service to places like R",
+      "no_rerank_kw": 0.8,
+      "model_a_kw": 1.0,
+      "model_b_kw": 1.0,
+      "model_a_latency_ms": 3533.2,
+      "model_b_latency_ms": 47847.0,
+      "verdict": "both_good"
+    }
+  ]
+}

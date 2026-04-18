@@ -585,7 +585,236 @@ score = cos × 0.55 + entity × 0.25 + decay × 0.12 + access × 0.03 + importan
 
 ---
 
-## 模块 10：A/B 对比实验（多轮 + 跨 session 两个维度）
+## 模块 10：Chunking + Embedding 消融实验
+
+### 现象
+
+项目从 v1（all-MiniLM + 400 字符固定切分）升级到 v2（BGE-base + Small-to-Big 250 词语义切分），但报告里只写了"MTEB score 高所以换了"。**没有用实际 bad case 解释为什么要换。**
+
+### 分析问题
+
+设计了一个 head-to-head 对比实验：同样的 query，分别在两个 Chroma collection 上检索，比较结果。
+
+### 实验设计
+
+**数据集**: `golden_dataset_v3_rag.json` 中 `needs_vector=True` 的 50 个样本。每个样本有：
+- `query`：用户问题
+- `expected_evidence_keywords`：答案中应该包含的关键词列表（人工标注的 golden 字段）
+- `golden_vector.expected_source_files`：应该命中的源文件
+
+**对比配置**:
+
+| | v1 | v2 |
+|---|---|---|
+| Embedding | all-MiniLM-L6-v2 (384d) | BGE-base-en-v1.5 (768d) |
+| Chunking | 固定 400 字符（130,317 chunks） | Small-to-Big 250 词子块（16,124 chunks） |
+| Chroma collection | `port_documents` | `port_documents_v2` |
+
+**为什么 v1 有 130K 个 chunk 而 v2 只有 16K？** 因为**单位不同**：
+- v1 的 400 字符 ≈ 80 词/chunk
+- v2 的 250 词 ≈ 1250 字符/chunk
+
+v2 的每个 chunk 实际比 v1 大 3 倍多，所以同样的文档 v1 切出 8 倍的碎片。
+
+**评估流程（无 LLM 调用，纯检索+统计）**:
+1. 对每个 golden 样本的 query，分别在 v1 和 v2 的 collection 上做 top-10 检索
+2. 把检索到的 10 个 chunk 的文本拼起来，数里面包含了多少 golden `expected_evidence_keywords` → **keyword coverage**（0% = 一个都没命中，100% = 全命中）
+3. 检查检索到的 chunk 是否来自正确的源文件 → **source recall**
+4. 按 keyword coverage 是否 ≥ 30% 把每个 query 分为 v1_wins / v2_wins / both_good / both_bad
+
+**举例说明评估过程（V3_VEC_001）**:
+
+```
+query:   "In the Lincoln Tunnel HOT lane feasibility work, how was the
+          amount of traffic diverting to alternate routes estimated?"
+
+expected_evidence_keywords:
+    ['travel behavior choice model', 'BPM', 'alternate routes',
+     'stated preference', 'diversion']
+
+步骤 1：v1 检索 top-10
+    v1 top-1: "Rail Tunnel Rail Tunnel -80,000 to -110,000 Rail Tunnel
+               with Shuttle Service Rail C..."
+    v1 top-2: "New rail trips using the Tunnel, diverted from truck trips
+               $16.6 $17.1..."
+    ... (10 个 chunk 的文本拼在一起)
+
+步骤 2：数 keyword coverage
+    拼接后的文本里搜索每个 keyword：
+      'travel behavior choice model' → NOT FOUND
+      'BPM'                         → NOT FOUND
+      'alternate routes'            → NOT FOUND
+      'stated preference'           → NOT FOUND
+      'diversion'                   → NOT FOUND
+    v1 keyword coverage = 0/5 = 0%
+
+步骤 3：v2 检索 top-10
+    v2 top-1: "a separate express link was added to replicate the proposed
+               HOT lane. Traffic assignments were run u..."
+    ... (10 个 chunk)
+
+步骤 4：数 keyword coverage
+      'travel behavior choice model' → FOUND (in chunk #3)
+      'BPM'                         → FOUND (in chunk #1)
+      'alternate routes'            → FOUND (in chunk #1)
+      'stated preference'           → FOUND (in chunk #5)
+      'diversion'                   → FOUND (in chunk #2)
+    v2 keyword coverage = 5/5 = 100%
+
+步骤 5：分类
+    v1=0% < 30%, v2=100% ≥ 30% → verdict = "v2_wins"
+```
+
+**v1 失败的根因**: all-MiniLM (384d) 把 "HOT lane tunnel" 和 "Rail Tunnel" 编码到了向量空间的同一区域（都含 "tunnel"），检索到的全是 Rail Tunnel 的表格碎片。BGE (768d) 有足够维度区分这两个子主题，命中了正确的 HOT lane 分析段落。
+
+### 结果
+
+| 指标 | v1 | v2 | Δ |
+|---|---|---|---|
+| Avg keyword coverage | 25.60% | **89.60%** | **+64pp** |
+| Source recall | 100% | 100% | 0 |
+
+| 分类 | 数量 | 比例 |
+|---|---|---|
+| Both good | 17 | 34% |
+| **v1 wins** | **0** | **0%** ← v1 没赢过一次 |
+| **v2 wins** | **31** | **62%** |
+| Both bad | 2 | 4% |
+
+### 三类 Bad Case 根因
+
+**类型 1: MiniLM 混淆近义子主题**
+
+V3_VEC_001: "HOT lane" vs "Rail Tunnel" — 都含 "tunnel"，MiniLM 分不开。
+V3_VEC_004: "airline noise awards" vs "airport concourse" — 都含 "airport"，MiniLM 映射到同一区域。
+
+**面试话术**: "384 维向量空间把港口领域的近义子主题（HOT lane tunnel vs Rail Tunnel）编码到同一区域。768 维空间的表达力足够区分。"
+
+**类型 2: 固定切分打断复合概念**
+
+V3_VEC_003: "accrual basis accounting" — 400 字符把会计方法段落切成 3 个碎片（每片只有表格行 "ASTAR AIR CARGO 57,295"），不含完整描述。250 词语义切分保留了完整段落。
+
+**面试话术**: "400 字符 ≈ 80 个英文词，'accrual basis enterprise fund' 描述有 200 词，被 v1 切成 3 片每片不完整。v2 按段落边界切，保留完整概念。"
+
+**类型 3: 小 chunk 丢失命名实体上下文**
+
+V3_VEC_004: "noise" 出现在几十个 chunk（环境噪音、机场噪音、设备噪音），"award" 也到处出现。v1 的 80 词 chunk 没法同时包含两者，v2 的 250 词 chunk 把 "noise award program" 保持在一个完整段落里。
+
+### 2×2 隔离实验（补全缺失的两个 cell）
+
+上面的 v1 vs v2 对比同时换了两个变量，无法分离每个变量的贡献。为此补跑了两个缺失的组合：
+
+- **Cell C**: MiniLM + v2 的 250 词语义 chunks（取 v2 的 16,124 chunks，用 MiniLM 重新 encode，内存 cosine 检索）
+- **Cell D**: BGE + v1 的 400 字符 chunks（对每个 query 从 v1 collection 取 top-500 候选，用 BGE 重新 encode + 重排 top-10）
+
+**2×2 矩阵**（每个格子是 avg keyword coverage，定义见下方）:
+
+| | 400字符固定切分 | 250词语义切分 | Δ（Chunking 贡献）|
+|---|---|---|---|
+| **MiniLM (384d)** | 25.60% | **81.20%** | **+55.60pp** |
+| **BGE (768d)** | **56.80%** | **89.60%** | **+32.80pp** |
+| **Δ（Embedding 贡献）** | **+31.20pp** | **+8.40pp** | |
+
+**指标定义（avg keyword coverage）**:
+
+- 数据集：`golden_dataset_v3_rag.json` 中 `needs_vector=True` 的 50 个样本
+- 每个样本有人工标注的 `expected_evidence_keywords`（答案中应该出现的关键词列表）
+- 计算方法：
+
+```
+对每个样本 i：
+  1. 用 query_i 在某个 Chroma collection（或内存向量库）检索 top-10 chunks
+  2. 把 10 个 chunk 的文本拼成一个长字符串 T
+  3. keyword_coverage_i = |{kw ∈ expected_keywords_i : kw.lower() 出现在 T.lower() 中}|
+                          / |expected_keywords_i|
+
+avg keyword coverage = (1/50) × Σ keyword_coverage_i
+```
+
+例：`expected_keywords = ['accrual basis', 'enterprise fund', '$100,000', 'GASB']`，
+top-10 拼起来只含 'accrual basis' 和 'GASB' → coverage_i = 2/4 = 50%。
+
+**分离贡献（从 v1 的 25.6% 到 v2 的 89.6% 总计 +64pp）**:
+
+| 贡献来源 | 幅度 | 占总提升比例 | 计算方式 |
+|---|---|---|---|
+| **Chunking 单独** | **+32.80pp** | **51%** ← 主力 | BGE_250词(89.6%) − BGE_400字符(56.8%) |
+| Embedding 单独 | +8.40pp | 13% | BGE_250词(89.6%) − MiniLM_250词(81.2%) |
+| **交互效应** | **+22.80pp** | **36%** | 总(64.0%) − chunking(32.8%) − embedding(8.4%) |
+| **总计** | **+64.00pp** | 100% | BGE_250词(89.6%) − MiniLM_400字符(25.6%) |
+
+**关键洞察**:
+
+1. **Chunking 是主力（+32.8pp），Embedding 贡献相对小（+8.4pp）** — chunking 的 ROI 是 embedding 的 4 倍。
+2. **交互效应很大（+22.8pp，占 36%）** — BGE 的 768 维空间需要完整语义单元才能发挥区分力。喂它 80 词碎片（400 字符），即使模型更强也只得到 56.8%；喂它 250 词完整段落才跳到 89.6%。
+3. **即使不换 embedding，只换 chunking 就能从 25.6% → 81.2%（+55.6pp）** — 如果只做一件事，换 chunking 的 ROI 远高于换 embedding。
+
+**面试话术**:
+
+> "我做了 2×2 隔离实验分离两个变量。Chunking 贡献是 Embedding 的 4 倍（+32.8pp vs +8.4pp）。更重要的是交互效应占 36%——好模型需要好 chunk 才能发挥，两者是乘性关系。如果只能做一件事，换 chunking 能把 keyword coverage 从 25.6% 拉到 81.2%；只换 embedding 只能到 56.8%。"
+
+### 脚本位置
+
+- `evaluation/run_chunk_embed_ablation.py` — v1 vs v2 head-to-head（~2 分钟）
+- `evaluation/run_chunk_embed_isolation.py` — 2×2 隔离实验（~5 分钟）
+- 结果: `evaluation/agent/reports/chunk_embed_ablation.json` + `chunk_embed_isolation.json`
+
+---
+
+## 模块 10.5：向量库选择（ChromaDB vs 其他方案）
+
+### 现象
+
+面试常问："为什么用 ChromaDB？考虑过 Milvus / Qdrant / FAISS 吗？"
+
+### 分析问题
+
+**同样的 embedding + 同样的 HNSW 参数下，向量库对检索精度的影响 < 1%**。差异在工程维度（部署、并发、运维、扩展性），不在检索质量。因此这不是一个需要跑精度实验的问题，而是一个需要根据项目约束做工程权衡的问题。
+
+### 原因
+
+选 ChromaDB 基于三条工程理由：
+
+**1. 数据规模不需要分布式**：16,124 个 250 词 child chunks × 768d float ≈ 47MB 向量数据。ChromaDB 的内存 HNSW 在这个规模下 p99 延迟 < 10ms。上 Milvus 是用大炮打蚊子。
+
+**2. 嵌入式 = 零运维 = 快速迭代**：项目处于 PoC → 评测 → 调优的高频迭代阶段。ChromaDB 一个 `PersistentClient(path=...)` 就跑起来，不需要装 Docker / etcd / MinIO。降低的不是性能成本而是开发摩擦。
+
+**3. 生态兼容**：`collection.query(query_embeddings=...)` 和 sentence-transformers / LangChain 原生兼容，无序列化开销。
+
+### 措施（技术对比表）
+
+| 维度 | ChromaDB | Milvus | Qdrant | FAISS |
+|---|---|---|---|---|
+| 部署方式 | 嵌入式（单文件） | 分布式（需 etcd + MinIO） | 单机 / 分布式 | 库（无服务层） |
+| 运维成本 | 零 | 高（3 个组件） | 中（一个二进制） | 零（但要自己写 API） |
+| 当前数据量适配 | ✅ 16K chunks | 过度 | 合适 | 合适 |
+| 生产扩展（10M+） | ❌ 单机瓶颈 | ✅ 水平扩展 | ✅ 分片 | ⚠️ 需自建分布式层 |
+| 并发 | 单写 | 多读多写 | 多读多写 | 需自己加锁 |
+| 过滤 + 向量联合查询 | 基础 | 好 | **最好**（Payload Index） | 无（需 post-filter） |
+| ANN 算法 | HNSW（不可调） | HNSW / IVF / DiskANN | HNSW（可调 M/ef） | 全系列 |
+| 适合阶段 | **原型 / PoC / 小规模生产** | 大规模生产 | 中大规模生产 | 研究 / 批检索 |
+
+### 什么时候该换
+
+| 触发条件 | 换成什么 | 理由 |
+|---|---|---|
+| Chunk 数 > 1M | Milvus | 需要 IVF_PQ 压缩 + 分布式 shard |
+| QPS > 50 并发 | Qdrant | Rust 写的，单机吞吐最高 |
+| 需要 metadata 复杂过滤 | Qdrant | Payload Index 支持联合索引 |
+| 纯研究 / 离线批检索 | FAISS | 裸库，灵活度最高 |
+| 已有 K8s 集群 | Milvus | Helm chart 一键部署 |
+
+### 结果
+
+当前选择在项目约束下**合理且经济**。不需要精度实验（向量库间精度差异可忽略），需要的是根据规模 / 并发 / 运维约束做工程判断。
+
+**面试话术**:
+
+> "选 ChromaDB 不是因为它最好，是因为它在当前阶段**够用且摩擦最低**。16K chunks / 47MB 向量数据不需要分布式。精度上向量库之间没有差异——同样的 HNSW + 同样的 embedding，ChromaDB 和 Qdrant 的 recall 几乎一样。差异在工程维度。如果上生产（chunk > 1M 或 QPS > 50），会换 Qdrant（单机高吞吐 + Payload Index）或 Milvus（分布式）。"
+
+---
+
+## 模块 11：A/B 对比实验（多轮 + 跨 session 两个维度）
 
 ### 现象
 
