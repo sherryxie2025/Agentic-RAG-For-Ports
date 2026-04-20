@@ -1,0 +1,664 @@
+======================================================================
+  FINAL RAG EVALUATION ¡ª Agentic RAG DAG + v2 data + golden v3
+======================================================================
+
+Dataset: golden_dataset_v3_rag.json
+Samples: 205
+
+--- Running DAG workflow on samples (workers=3) ---
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 8072.83it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-base-en-v1.5
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 105/105 [00:00<00:00, 8520.88it/s]
+[1mBertForSequenceClassification LOAD REPORT[0m from: cross-encoder/ms-marco-MiniLM-L-6-v2
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+  [3/205] V3_VEC_003: 83.3s
+12:46:33 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.9s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+12:46:33 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+  [1/205] V3_VEC_001: 98.3s
+  [4/205] V3_VEC_004: 66.6s
+  [2/205] V3_VEC_002: 160.6s
+  [5/205] V3_VEC_005: 70.9s
+  [7/205] V3_VEC_007: 93.6s
+  [8/205] V3_VEC_008: 106.7s
+  [6/205] V3_VEC_006: 126.8s
+12:50:10 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Per the 2018 VRCA port operating handbook, what mu
+12:50:10 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [9/205] V3_VEC_009: 74.8s
+  [10/205] V3_VEC_010: 66.7s
+12:51:11 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+12:51:11 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+12:51:16 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=During the March 2016 PRC meeting, what change did
+12:51:16 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [12/205] V3_VEC_012: 59.1s
+  [11/205] V3_VEC_011: 171.1s
+12:52:44 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=During the March 2016 Policy and Finance Committee
+12:52:46 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+12:52:46 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [13/205] V3_VEC_013: 150.1s
+  [14/205] V3_VEC_014: 151.1s
+  [15/205] V3_VEC_015: 100.2s
+  [16/205] V3_VEC_016: 95.6s
+  [17/205] V3_VEC_017: 55.4s
+12:55:25 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+12:55:25 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+  [20/205] V3_VEC_020: 37.8s
+  [18/205] V3_VEC_018: 109.9s
+  [19/205] V3_VEC_019: 95.5s
+12:56:31 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=For the JFK Taxiway FH environmental assessment, w
+12:56:31 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+12:56:57 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How does the governance model of a port (local, na
+12:56:57 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [21/205] V3_VEC_021: 118.0s
+  [22/205] V3_VEC_022: 106.4s
+12:57:58 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: How does the governance model management st
+12:58:06 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Table "vc" does not have a column named "call_id"
+
+Candidate bindi), pre-empting with rule-based
+12:58:18 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=What does the 2015 ground support equipment profil
+12:58:18 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [24/205] V3_VEC_024: 90.1s
+  [23/205] V3_VEC_023: 165.1s
+  [25/205] V3_VEC_025: 113.0s
+  [27/205] V3_VEC_027: 48.9s
+13:00:11 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why did the Port of Rotterdam's intangible fixed a
+13:00:11 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [26/205] V3_VEC_026: 79.5s
+13:01:12 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 61.3s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+13:01:12 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+13:01:26 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:02:02 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:02:11 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 59.1s error=Request timed out. prompt=Why did the Port of Rotterdam's intangible fixed a
+13:02:11 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+13:02:11 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [30/205] V3_VEC_030: 128.7s
+  [28/205] V3_VEC_028: 182.6s
+  [29/205] V3_VEC_029: 167.3s
+13:03:18 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How dramatically did maritime cyber attacks rise d
+13:03:18 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [32/205] V3_VEC_032: 57.0s
+  [31/205] V3_VEC_031: 96.4s
+13:04:30 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: How dramatically did maritime cyber securit
+13:05:01 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=How dramatically did maritime cyber security incid
+13:05:01 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+13:05:01 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [35/205] V3_VEC_035: 69.7s
+13:05:25 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: In 2006, how much did PATH contribute towar
+13:05:29 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+13:05:32 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [33/205] V3_VEC_033: 183.8s
+13:05:55 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [34/205] V3_VEC_034: 160.3s
+  [36/205] V3_VEC_036: 78.0s
+13:07:14 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 32.0s error=Request timed out. prompt=Why did the Port Authority enter into pay-fixed re
+13:07:14 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+13:07:15 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [38/205] V3_VEC_038: 63.4s
+13:07:51 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+13:07:54 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=What does Executive Order 12898 require federal ag
+13:07:54 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [39/205] V3_VEC_039: 86.1s
+  [37/205] V3_VEC_037: 142.5s
+  [42/205] V3_VEC_042: 38.3s
+13:09:23 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=What prompted the Port of Long Beach to launch its
+13:09:23 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [41/205] V3_VEC_041: 87.1s
+  [40/205] V3_VEC_040: 156.0s
+13:10:09 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:10:31 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [44/205] V3_VEC_044: 87.2s
+13:10:59 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [43/205] V3_VEC_043: 128.0s
+13:11:23 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:11:26 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Which IPCC Assessment Report's global warming pote
+13:11:26 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [45/205] V3_VEC_045: 108.1s
+13:12:25 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: Which Intergovernmental Panel on Climate Ch
+  [47/205] V3_VEC_047: 109.5s
+13:12:56 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Which Intergovernmental Panel on Climate Change As
+13:12:56 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+13:12:57 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+13:13:20 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why did the Port of Long Beach Harbor Commissioner
+13:13:20 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [48/205] V3_VEC_048: 99.4s
+13:13:35 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+13:13:58 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=In the 2010 airport traffic report data for smalle
+13:13:58 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [46/205] V3_VEC_046: 185.7s
+13:14:37 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "shipping_line" not found in FROM clause!
+Candid), pre-empting with rule-based
+  [51/205] V3_SQL_001: 85.9s
+  [49/205] V3_VEC_049: 166.2s
+  [50/205] V3_VEC_050: 134.5s
+  [53/205] V3_SQL_003: 41.3s
+  [54/205] V3_SQL_004: 60.8s
+13:16:48 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Was the average wind speed in 2015 within the norm
+13:16:48 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [52/205] V3_SQL_002: 93.7s
+13:17:13 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Find the total crane breakdown time in 2015.
+13:17:13 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+13:17:48 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Conversion Error: Could not convert string 'POLB2015000001' to INT64 when castin), falling back to rule-based
+  [55/205] V3_SQL_005: 113.4s
+13:18:14 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+13:18:14 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+  [57/205] V3_SQL_007: 100.6s
+  [56/205] V3_SQL_006: 134.4s
+  [58/205] V3_SQL_008: 64.5s
+13:19:27 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Is the 2016 average tide level considered within t
+13:19:27 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [59/205] V3_SQL_009: 67.9s
+  [60/205] V3_SQL_010: 94.0s
+  [61/205] V3_SQL_011: 80.2s
+  [62/205] V3_SQL_012: 80.5s
+  [63/205] V3_SQL_013: 81.4s
+  [64/205] V3_SQL_014: 93.4s
+  [65/205] V3_SQL_015: 81.4s
+  [66/205] V3_SQL_016: 68.3s
+  [67/205] V3_SQL_017: 87.6s
+  [68/205] V3_SQL_018: 79.0s
+  [69/205] V3_SQL_019: 77.9s
+  [70/205] V3_SQL_020: 75.8s
+  [71/205] V3_SQL_021: 78.5s
+  [72/205] V3_SQL_022: 80.7s
+13:25:40 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Compared to safe navigation limits, what was the a
+13:25:40 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+13:26:00 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+13:26:00 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+13:26:28 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [73/205] V3_SQL_023: 95.3s
+  [75/205] V3_SQL_025: 59.4s
+  [74/205] V3_SQL_024: 98.0s
+13:27:12 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Table "vc" does not have a column named "vessel_name"
+
+Candidate b), pre-empting with rule-based
+  [76/205] V3_SQL_026: 77.0s
+  [77/205] V3_SQL_027: 68.5s
+  [78/205] V3_SQL_028: 93.5s
+  [80/205] V3_SQL_030: 71.4s
+  [79/205] V3_SQL_029: 75.9s
+13:29:42 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:30:02 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [81/205] V3_RUL_001: 128.8s
+  [83/205] V3_RUL_003: 88.7s
+  [82/205] V3_RUL_002: 102.2s
+  [84/205] V3_RUL_004: 121.8s
+  [86/205] V3_RUL_006: 111.0s
+  [85/205] V3_RUL_005: 132.7s
+13:33:02 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=When should small feeder vessels be routed to Pier
+13:33:02 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+13:33:12 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 11.7s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=10)
+13:33:12 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+13:34:00 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "vessel_name" not found in FROM clause!
+Candidat), pre-empting with rule-based
+13:34:00 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [89/205] V3_RUL_009: 95.6s
+  [87/205] V3_RUL_007: 113.8s
+  [88/205] V3_RUL_008: 119.9s
+13:34:48 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Which vessels should be redirected to a satellite 
+13:34:48 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+13:35:09 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:35:33 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:35:34 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: Which vessels ships should be redirected di
+13:35:38 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "vessel_capacity_teu" not found in FROM clause!
+), pre-empting with rule-based
+13:35:44 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:36:01 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [91/205] V3_RUL_011: 108.5s
+  [90/205] V3_RUL_010: 120.7s
+  [92/205] V3_RUL_012: 126.7s
+13:37:33 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+13:37:33 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+  [94/205] V3_RUL_014: 79.5s
+  [95/205] V3_RUL_015: 97.2s
+  [93/205] V3_RUL_013: 131.8s
+13:38:27 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:38:57 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:39:03 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:39:03 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [96/205] V3_RUL_016: 108.9s
+13:39:38 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:39:43 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [97/205] V3_RUL_017: 107.1s
+13:40:15 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [98/205] V3_RUL_018: 109.2s
+13:40:44 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:41:04 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [99/205] V3_RUL_019: 102.6s
+13:41:40 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How does a vessel's LOA cause an ultra-large conta
+13:41:40 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+13:41:40 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:41:46 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: Why does channel depth water depth navigabl
+  [100/205] V3_RUL_020: 128.6s
+  [102/205] V3_GRA_002: 92.9s
+  [101/205] V3_GRA_001: 175.8s
+  [103/205] V3_GRA_003: 94.4s
+13:43:50 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: What sequence of events links a rapid decre
+  [104/205] V3_GRA_004: 148.2s
+  [105/205] V3_GRA_005: 127.5s
+13:45:43 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:46:19 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:46:41 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [106/205] V3_GRA_006: 183.4s
+  [108/205] V3_GRA_008: 99.7s
+13:47:23 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:47:28 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How does a low vessel TEU capacity cause redirecti
+13:47:28 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+13:47:36 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "vessel_name" not found in FROM clause!
+Candidat), pre-empting with rule-based
+  [107/205] V3_GRA_007: 160.4s
+  [110/205] V3_GRA_010: 85.8s
+  [109/205] V3_GRA_009: 115.0s
+13:48:54 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=What causal chain links inbound vessel communicati
+13:48:54 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+13:49:15 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why does a vessel's IMO-registered gross tonnage c
+13:49:15 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+13:49:20 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "vessel_name" not found in FROM clause!
+Candidat), pre-empting with rule-based
+13:49:25 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: What causal chain links inbound vessel comm
+13:49:30 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "vessel_name" not found in FROM clause!
+Candidat), pre-empting with rule-based
+  [113/205] V3_GRA_013: 88.2s
+  [112/205] V3_GRA_012: 109.4s
+  [111/205] V3_GRA_011: 147.5s
+13:50:43 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why does a vessel's tug requirement cause it to fo
+13:50:43 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+13:51:30 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: How does a slow steaming reduced speed stat
+13:51:34 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: Why does a vessel ship's tug requirement tu
+13:51:38 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "vessel_capacity_teu" not found in FROM clause!
+), pre-empting with rule-based
+13:52:01 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=How does a slow steaming reduced speed status afte
+13:52:01 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+13:52:02 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+13:52:04 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Why does a vessel ship's tug requirement tug assis
+13:52:04 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+13:52:04 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [115/205] V3_GRA_015: 139.8s
+13:52:35 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [116/205] V3_MULTI_001: 137.6s
+  [114/205] V3_GRA_014: 165.7s
+13:54:13 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+13:54:13 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+  [118/205] V3_MULTI_003: 101.0s
+13:54:19 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "vessel_capacity_teu" not found in FROM clause!
+), pre-empting with rule-based
+  [117/205] V3_MULTI_002: 106.8s
+13:54:50 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2024 Annual Report lists the Trust's fixed-inc
+13:54:50 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [119/205] V3_MULTI_004: 140.8s
+13:55:51 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+13:55:51 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+13:55:52 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [120/205] V3_MULTI_005: 121.9s
+13:56:29 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:56:31 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.7s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+13:56:31 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+13:57:02 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: The 2007 Airport Traffic Report shows sched
+13:57:10 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:57:23 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:57:29 | ERROR   | online_pipeline.answer_synthesizer | SYNTH LLM error: APITimeoutError: Request timed out.
+  [121/205] V3_MULTI_006: 188.9s
+13:57:59 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:58:00 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [122/205] V3_MULTI_007: 187.6s
+  [123/205] V3_MULTI_008: 137.2s
+13:59:02 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: The 2006 fiscal year financial statement re
+13:59:07 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The Maher terminal tariff says cargo left over 30 
+13:59:07 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+13:59:12 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:59:36 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+13:59:57 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: The 2009 financial statement financial repo
+  [124/205] V3_MULTI_009: 153.5s
+14:00:06 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:00:28 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [126/205] V3_MULTI_011: 124.9s
+  [125/205] V3_MULTI_010: 147.0s
+14:01:38 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=The 2017 Airport Traffic Report says LaGuardia Air
+14:01:38 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+14:01:39 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+14:01:55 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: The 2006 LGA passenger throughput report id
+14:02:03 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "shipping_line" not found in FROM clause!
+Candid), pre-empting with rule-based
+14:02:07 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+14:02:17 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: The 2010 Budget report indicates the George
+  [127/205] V3_MULTI_012: 152.7s
+14:02:48 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=The 2010 Budget report indicates the George Washin
+14:02:48 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+14:02:49 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+14:03:13 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [128/205] V3_MULTI_013: 164.4s
+  [129/205] V3_MULTI_014: 160.6s
+14:03:42 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [130/205] V3_MULTI_015: 94.5s
+14:04:51 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: Using the actual 2023 aircraft taxi-in and 
+14:04:58 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [131/205] V3_MULTI_016: 92.4s
+14:05:23 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:05:32 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.9s error=Request timed out. prompt=Query: Given current wage salary compensation and 
+14:05:38 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [132/205] V3_MULTI_017: 135.4s
+14:06:01 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:06:19 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.9s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+14:06:19 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+14:06:20 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Given the actual contract-services spending for C&
+14:06:20 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [133/205] V3_MULTI_018: 136.3s
+14:06:27 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:06:42 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [134/205] V3_MULTI_019: 134.3s
+  [135/205] V3_MULTI_020: 82.7s
+14:07:50 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:08:20 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [136/205] V3_MULTI_021: 138.6s
+  [138/205] V3_MULTI_023: 94.5s
+  [137/205] V3_MULTI_022: 137.3s
+14:09:31 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Conversion Error: Unimplemented type for cast (BIGINT -> TIMESTAMP) when casting), falling back to rule-based
+  [139/205] V3_MULTI_024: 92.0s
+14:10:24 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Recent 2018 labor wage compensation policy comment
+14:10:24 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+14:10:24 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+14:10:53 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: How do the Harbor District oil-production l
+  [140/205] V3_MULTI_025: 132.6s
+14:11:07 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:11:40 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: How do Port Authority Trans-Hudson station 
+14:11:40 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [141/205] V3_MULTI_026: 152.4s
+14:12:08 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:12:19 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Query: How do the John F. Kennedy International Ai
+14:12:25 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Table "v" does not have a column named "vessel_name"
+
+Candidate bi), pre-empting with rule-based
+14:12:37 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:12:46 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [142/205] V3_MULTI_027: 169.4s
+14:13:11 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:13:27 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.7s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+14:13:27 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+  [143/205] V3_MULTI_028: 158.9s
+14:13:58 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: How do the LGA operating-lease and airport-
+14:14:23 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:14:57 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [144/205] V3_MULTI_029: 202.6s
+  [145/205] V3_MULTI_030: 156.0s
+  [146/205] V3_MULTI_031: 126.3s
+14:16:42 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: The Geelong port terminal harbor operating 
+14:16:46 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: Verify 2010 Airport Traffic Report data for
+14:16:47 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "vessel_name" not found in FROM clause!
+Candidat), pre-empting with rule-based
+14:16:54 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:16:54 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+14:16:54 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+14:17:25 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:17:31 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [148/205] V3_MULTI_033: 115.8s
+14:17:45 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [147/205] V3_MULTI_032: 158.5s
+  [149/205] V3_MULTI_034: 150.7s
+14:18:49 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+14:18:49 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+14:19:20 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: The Lincoln Tunnel HOT-lane feasibility stu
+14:19:27 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:19:34 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.9s error=Request timed out. prompt=Query: The scoping comments response discusses how
+14:19:56 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:20:05 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.9s error=Request timed out. prompt=The scoping comments response discusses how cleane
+14:20:05 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations']
+14:20:06 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+14:20:17 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=vessel_entry ¡ú berth_operations ¡ú congestion
+  [150/205] V3_MULTI_035: 165.6s
+14:20:30 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [152/205] V3_MULTI_037: 155.6s
+  [151/205] V3_MULTI_036: 190.7s
+14:21:46 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: The 2019 Fiscal Budget Document cites an $8
+14:22:04 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 61.2s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+14:22:04 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+14:22:35 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: The 2017 Airport Traffic Report states EWR 
+  [153/205] V3_MULTI_038: 133.1s
+14:22:44 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: The 2019 Budget Book publication outlines r
+14:23:13 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [154/205] V3_MULTI_039: 162.1s
+14:23:49 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:23:50 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: 2018 Newark Airport wage-comment testimony 
+14:24:12 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [155/205] V3_MULTI_040: 184.9s
+14:24:47 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:24:49 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Given 2011 annual data on airport markets (Akron/C
+14:24:49 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+14:25:03 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [156/205] V3_MULTI_041: 176.4s
+14:25:41 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:25:58 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: Using 2011 annual statistical data regardin
+14:26:03 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Given the current CHRC and SIDA Training data at E
+14:26:03 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [157/205] V3_MULTI_042: 156.2s
+14:26:26 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [158/205] V3_MULTI_043: 151.0s
+14:27:08 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Query: Given the current CHRC and Security Identif
+14:27:45 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Query: Given 2018 Port Authority Trans-Hudson Chri
+14:27:45 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Query: The Singapore PORTNET document describes pr
+14:27:54 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Table "v" does not have a column named "vessel_name"
+
+Candidate bi), pre-empting with rule-based
+  [159/205] V3_MULTI_044: 143.1s
+14:28:16 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Find causal paths between: gate_operations, gate_c
+  [161/205] V3_MULTI_046: 137.9s
+  [160/205] V3_MULTI_045: 193.1s
+14:29:35 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: The 2010 Fiscal Budget notes $93 Million pr
+14:29:38 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 1990 Port Master Plan describes the Ford/Melam
+14:29:38 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+14:29:53 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2000 EWR Competition Plan claims an average tr
+14:29:53 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+14:29:53 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:30:34 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:30:43 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: The 1990 Port Master Plan strategic plannin
+  [162/205] V3_MULTI_047: 177.2s
+14:30:53 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+14:30:53 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+14:31:14 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=The 1990 Port Master Plan strategic planning docum
+14:31:14 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['environmental_conditions', 'berth_operations']
+14:31:15 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:31:15 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+14:31:23 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=What's the best pizza recipe?
+14:31:23 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+14:31:23 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Query: The 2000 EWR Competition Plan claims an ave
+14:31:51 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:31:51 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+14:31:54 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=The 2000 EWR Competition Plan claims an average tr
+14:31:54 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [165/205] V3_GUARD_OOD_001: 84.5s
+  [163/205] V3_MULTI_048: 195.1s
+  [164/205] V3_MULTI_049: 187.0s
+14:32:48 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Tell me a joke about cats
+14:32:48 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+14:33:48 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+14:33:48 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+14:33:51 | ERROR   | online_pipeline.llm_client | LLM_RAW_POST FAILED: 60.8s error=HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Read timed out. (read timeout=60)
+14:33:51 | WARNING | online_pipeline.query_rewriter | LLM rewrite returned empty or unparseable response
+  [167/205] V3_GUARD_OOD_003: 91.8s
+  [166/205] V3_GUARD_OOD_002: 119.1s
+  [168/205] V3_GUARD_OOD_004: 113.3s
+  [169/205] V3_GUARD_EMPTY_001: 105.8s
+  [170/205] V3_GUARD_EMPTY_002: 85.9s
+  [171/205] V3_GUARD_EMPTY_003: 91.6s
+14:36:43 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [172/205] V3_GUARD_IMPOS_001: 74.7s
+14:37:26 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [174/205] V3_GUARD_IMPOS_003: 104.2s
+  [173/205] V3_GUARD_IMPOS_002: 130.1s
+14:37:55 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:38:23 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Crane productivity dropped to 15 moves per hour. D
+14:38:23 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+14:38:29 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:38:56 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [175/205] V3_GUARD_CONF_001: 131.7s
+14:39:31 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [177/205] V3_GUARD_CONF_003: 116.3s
+  [176/205] V3_GUARD_CONF_002: 134.5s
+14:40:43 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [178/205] V3_GUARD_DVS_001: 114.2s
+14:41:16 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [179/205] V3_GUARD_DVS_002: 93.3s
+14:41:31 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Does the 2015 operating handbook's crane speed lim
+14:41:31 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [180/205] V3_GUARD_DVR_001: 112.5s
+  [182/205] V3_GUARD_AMB_001: 65.4s
+14:42:39 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Query: Does the 2015 operating handbook's crane, q
+  [183/205] V3_GUARD_AMB_002: 74.3s
+  [184/205] V3_GUARD_AMB_003: 69.9s
+  [181/205] V3_GUARD_DVR_002: 158.8s
+14:44:44 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Query: What caused the 100% shutdown or stoppage o
+14:45:05 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Conversion Error: Could not convert string 'POLB2015000001' to INT64 when castin), falling back to rule-based
+14:45:15 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=What caused the 100% shutdown or stoppage of all c
+  [185/205] V3_GUARD_FALSE_001: 150.9s
+14:46:01 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Can you update the DuckDB crane_operations table t
+14:46:01 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [186/205] V3_GUARD_FALSE_002: 161.0s
+  [187/205] V3_GUARD_FALSE_003: 164.6s
+14:46:53 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [188/205] V3_GUARD_REFUSE_001: 90.1s
+  [189/205] V3_GUARD_REFUSE_002: 69.6s
+  [190/205] V3_META_DT_001: 74.8s
+  [191/205] V3_META_DT_002: 67.9s
+  [193/205] V3_META_DT_004: 61.0s
+  [192/205] V3_META_DT_003: 76.6s
+  [194/205] V3_META_DT_005: 60.7s
+  [196/205] V3_META_YR_001: 69.9s
+  [195/205] V3_META_DT_006: 82.1s
+  [197/205] V3_META_YR_002: 78.0s
+14:50:33 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=What did the 2018 handbook specifically define for
+14:50:33 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+14:51:24 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Query: What did the 2018 handbook manual specifica
+  [198/205] V3_META_YR_003: 91.1s
+14:51:30 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+14:51:59 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [200/205] V3_META_YR_005: 96.1s
+  [199/205] V3_META_YR_004: 148.6s
+  [202/205] V3_META_CAT_002: 64.4s
+  [201/205] V3_META_CAT_001: 116.4s
+  [203/205] V3_META_CAT_003: 54.4s
+  [205/205] V3_META_CAT_005: 60.5s
+  [204/205] V3_META_CAT_004: 110.9s
+
+--- Computing metrics ---
+
+
+======================================================================
+  ROUTING EVALUATION
+======================================================================
+  Samples evaluated: 205
+  Exact-match rate:  49.76%
+  Over-routing:      43.41%  (extra sources activated)
+  Under-routing:     1.46%  (missing sources)
+
+  Question-type accuracy: 0.00%
+  Answer-mode accuracy:   56.59%
+
+  Per-Capability Metrics:
+  Capability          P        R       F1    TP    FP    FN
+  vector          0.664    0.890    0.761    89    45    11
+  sql             0.578    0.940    0.716    63    46     4
+  rules           0.663    1.000    0.797    57    29     0
+  graph           0.760    0.905    0.826    38    12     4
+
+  Micro-avg: P=0.652  R=0.929  F1=0.766
+  Macro-avg: P=0.666  R=0.934  F1=0.775
+
+======================================================================
+  RETRIEVAL EVALUATION
+======================================================================
+
+  VECTOR (81 samples)
+    chunk_recall@5          : 0.6125
+    chunk_recall@20         : 0.6500
+    chunk_precision@5       : 0.1225
+    chunk_mrr               : 0.4715
+    chunk_ndcg@10           : 0.4658
+    chunk_samples           : 80
+    recall@5                : 0.6125
+    recall@20               : 0.6500
+    precision@5             : 0.1225
+    mrr                     : 0.4715
+    ndcg@10                 : 0.4658
+    source_recall@5         : 0.8272
+    source_recall@20        : 0.8395
+    source_precision@5      : 0.5037
+    source_mrr              : 0.7412
+    source_ndcg@10          : 2.0157
+    source_samples          : 81
+
+  SQL (67 samples)
+    table_f1                : 1.0000
+    execution_ok_rate       : 0.9403
+
+  RULES (23 samples)
+    variable_recall         : 0.3913
+    variable_precision      : 0.3406
+
+  GRAPH (42 samples)
+    entity_recall           : 0.0119
+    relationship_recall     : 0.0952
+    path_found_rate         : 0.7381
+
+  RERANKING LIFT (70 samples)
+    ndcg@5_lift             : +0.0797
+    recall@5_lift           : +0.1286
+    top1_hit_before         : +0.3857
+    top1_hit_after          : +0.4429
+    top1_lift               : +0.0571
+
+======================================================================
+  ANSWER QUALITY EVALUATION
+======================================================================
+  Samples: 205
+
+  Objective metrics:
+    Keyword coverage:    59.91%
+    Citation validity:   100.00%
+    Numerical accuracy:  59.33%
+
+  Grounding distribution: {'fully_grounded': 154, 'llm_fallback': 51}
+
+======================================================================
+  GUARDRAIL EVALUATION
+======================================================================
+  Guardrail Type               Pass Rate  Samples
+  ------------------------------------------------
+  ambiguous_query                  0.00%        3  [FAIL]
+  doc_vs_rule_conflict            50.00%        2  [WARN]
+  doc_vs_sql_conflict              0.00%        2  [FAIL]
+  empty_evidence                  33.33%        3  [FAIL]
+  evidence_conflict              100.00%        3  [PASS]
+  false_premise                    0.00%        3  [FAIL]
+  impossible_query               100.00%        3  [PASS]
+  out_of_domain                  100.00%        4  [PASS]
+  refusal_appropriate              0.00%        2  [FAIL]
+
+======================================================================
+  LATENCY EVALUATION
+======================================================================
+  Samples: 205
+
+  Stage                         mean      p50      p95      p99      max  (seconds)
+  ---------------------------------------------------------------------------
+  end_to_end                  113.45   108.55   183.25   193.00   202.63
+
+  Iteration distribution: {1: 205}
+  Re-plan trigger rate:   0.00%
+
+  ReAct observation stats:
+    Total observations:   0
+    Avg per query:        0.00
+    Abort-replan rate:    0.00%
+    Modify-next rate:     0.00%
+
+>> Wrote C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\agent\reports\rag_v2_n205_final.json

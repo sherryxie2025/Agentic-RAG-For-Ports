@@ -1,0 +1,574 @@
+======================================================================
+  FINAL RAG EVALUATION ¡ª Agentic RAG DAG + v2 data + golden v3
+======================================================================
+
+Dataset: golden_dataset_v3_rag.json
+Samples: 205
+
+--- Running DAG workflow on samples (workers=3) ---
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 3964.71it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-base-en-v1.5
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 105/105 [00:00<00:00, 3483.64it/s]
+[1mBertForSequenceClassification LOAD REPORT[0m from: cross-encoder/ms-marco-MiniLM-L-6-v2
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+  [3/205] V3_VEC_003: 77.4s
+  [2/205] V3_VEC_002: 88.4s
+  [1/205] V3_VEC_001: 94.1s
+03:47:38 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [4/205] V3_VEC_004: 57.3s
+  [6/205] V3_VEC_006: 73.7s
+  [5/205] V3_VEC_005: 84.2s
+  [7/205] V3_VEC_007: 54.7s
+  [9/205] V3_VEC_009: 53.1s
+  [10/205] V3_VEC_010: 54.7s
+  [8/205] V3_VEC_008: 79.7s
+  [11/205] V3_VEC_011: 55.3s
+  [12/205] V3_VEC_012: 50.9s
+03:50:36 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=What does the NPCC project for sea level rise by t
+03:50:36 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [13/205] V3_VEC_013: 68.4s
+  [15/205] V3_VEC_015: 54.3s
+03:51:43 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=weather_conditions ¡ú storm_event ¡ú operational_dis
+03:51:44 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['disruption', 'weather_conditions']
+03:51:45 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [16/205] V3_VEC_016: 66.5s
+03:52:10 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [17/205] V3_VEC_017: 80.0s
+  [18/205] V3_VEC_018: 57.1s
+  [14/205] V3_VEC_014: 160.0s
+03:53:16 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=In the 2007 financial statements, how much land an
+03:53:16 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [19/205] V3_VEC_019: 63.4s
+  [20/205] V3_VEC_020: 54.4s
+03:54:02 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 46.1s error=Request timed out. prompt=Query: In the 2007 financial statements, how much 
+  [22/205] V3_VEC_022: 58.6s
+  [23/205] V3_VEC_023: 60.9s
+  [21/205] V3_VEC_021: 121.9s
+  [24/205] V3_VEC_024: 67.2s
+  [26/205] V3_VEC_026: 71.3s
+  [25/205] V3_VEC_025: 82.4s
+03:56:29 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why did the Port of Rotterdam's intangible fixed a
+03:56:29 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+03:56:32 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How did JFK's international freight traffic perfor
+03:56:32 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [27/205] V3_VEC_027: 58.3s
+03:57:12 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Does the Port Authority's minimum wage policy appl
+03:57:12 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+03:57:15 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.8s error=Request timed out. prompt=Query: Why did the Port of Rotterdam's intangible 
+  [29/205] V3_VEC_029: 82.7s
+03:57:45 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Why did the Port of Rotterdam's intangible fixed a
+  [28/205] V3_VEC_028: 160.5s
+  [31/205] V3_VEC_031: 84.6s
+  [30/205] V3_VEC_030: 134.7s
+03:59:54 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: How dramatically did maritime cyber attacks
+  [32/205] V3_VEC_032: 76.1s
+04:00:02 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: In 2006, how much did PATH contribute towar
+  [34/205] V3_VEC_034: 93.2s
+04:00:58 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: How is Antwerp-Bruges' liquid bulk traffic 
+  [33/205] V3_VEC_033: 134.7s
+  [36/205] V3_VEC_036: 55.1s
+  [35/205] V3_VEC_035: 97.1s
+04:01:34 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why did the Port Authority enter pay-fixed receive
+04:01:34 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:02:30 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: Which airlines were the top three revenue p
+04:02:49 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=vessel_scheduling ¡ú operational_disruption ¡ú compl
+04:02:49 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['disruption', 'compliance']
+04:02:49 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [38/205] V3_VEC_038: 108.6s
+  [39/205] V3_VEC_039: 101.5s
+  [37/205] V3_VEC_037: 140.0s
+  [42/205] V3_VEC_042: 54.8s
+  [41/205] V3_VEC_041: 69.9s
+04:04:55 | ERROR   | online_pipeline.answer_synthesizer | SYNTH LLM error: APITimeoutError: Request timed out.
+  [40/205] V3_VEC_040: 101.9s
+  [43/205] V3_VEC_043: 66.0s
+  [44/205] V3_VEC_044: 65.8s
+  [45/205] V3_VEC_045: 68.6s
+  [46/205] V3_VEC_046: 70.4s
+  [48/205] V3_VEC_048: 54.8s
+  [47/205] V3_VEC_047: 103.6s
+  [49/205] V3_VEC_049: 62.6s
+04:08:09 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Table "v" does not have a column named "shipping_line"
+
+Candidate ), pre-empting with rule-based
+  [51/205] V3_SQL_001: 56.4s
+  [52/205] V3_SQL_002: 60.8s
+  [50/205] V3_VEC_050: 105.0s
+  [53/205] V3_SQL_003: 76.8s
+  [55/205] V3_SQL_005: 67.0s
+  [54/205] V3_SQL_004: 73.4s
+  [56/205] V3_SQL_006: 72.3s
+  [58/205] V3_SQL_008: 58.5s
+  [57/205] V3_SQL_007: 74.7s
+04:11:21 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Is the 2016 average tide level considered within t
+04:11:21 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [59/205] V3_SQL_009: 72.9s
+  [61/205] V3_SQL_011: 73.0s
+04:12:56 | ERROR   | online_pipeline.answer_synthesizer | SYNTH LLM error: APITimeoutError: Request timed out.
+  [60/205] V3_SQL_010: 124.7s
+  [62/205] V3_SQL_012: 67.7s
+  [63/205] V3_SQL_013: 58.5s
+04:13:26 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=How high did peak yard occupancy climb in 2015 com
+04:13:26 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [65/205] V3_SQL_015: 52.6s
+  [66/205] V3_SQL_016: 41.6s
+04:14:36 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "gate_date" not found in FROM clause!
+Candidate ), pre-empting with rule-based
+  [67/205] V3_SQL_017: 48.2s
+  [64/205] V3_SQL_014: 105.1s
+  [68/205] V3_SQL_018: 56.8s
+  [69/205] V3_SQL_019: 57.9s
+  [70/205] V3_SQL_020: 58.9s
+  [71/205] V3_SQL_021: 52.6s
+  [73/205] V3_SQL_023: 56.5s
+  [72/205] V3_SQL_022: 86.9s
+04:17:18 | ERROR   | online_pipeline.answer_synthesizer | SYNTH LLM error: APITimeoutError: Request timed out.
+  [74/205] V3_SQL_024: 90.0s
+  [75/205] V3_SQL_025: 81.8s
+  [77/205] V3_SQL_027: 43.2s
+  [78/205] V3_SQL_028: 52.8s
+04:19:03 | ERROR   | online_pipeline.answer_synthesizer | SYNTH LLM error: APITimeoutError: Request timed out.
+  [76/205] V3_SQL_026: 118.4s
+  [79/205] V3_SQL_029: 68.9s
+  [80/205] V3_SQL_030: 52.0s
+  [82/205] V3_RUL_002: 62.0s
+  [81/205] V3_RUL_001: 70.1s
+04:20:41 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [83/205] V3_RUL_003: 67.9s
+04:21:13 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [84/205] V3_RUL_004: 70.3s
+  [85/205] V3_RUL_005: 70.1s
+  [86/205] V3_RUL_006: 51.4s
+04:21:55 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+04:22:16 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [88/205] V3_RUL_008: 78.2s
+  [87/205] V3_RUL_007: 79.7s
+  [89/205] V3_RUL_009: 71.4s
+04:23:12 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Which vessels should be redirected to a satellite 
+04:23:12 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:23:14 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [91/205] V3_RUL_011: 71.7s
+  [92/205] V3_RUL_012: 63.4s
+04:24:16 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+04:24:22 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [90/205] V3_RUL_010: 129.6s
+  [93/205] V3_RUL_013: 57.9s
+  [94/205] V3_RUL_014: 55.2s
+  [97/205] V3_RUL_017: 58.7s
+  [95/205] V3_RUL_015: 73.8s
+  [96/205] V3_RUL_016: 83.0s
+04:26:20 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [98/205] V3_RUL_018: 78.3s
+  [100/205] V3_RUL_020: 62.9s
+  [99/205] V3_RUL_019: 76.2s
+04:27:39 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why does channel depth determine whether shallow-d
+04:27:39 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:27:47 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How does a vessel's LOA cause an ultra-large conta
+04:27:47 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:27:51 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why does a vessel's IMO arrival drive the requirem
+04:27:51 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:28:29 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Table "v" does not have a column named "vessel_loa_meters"
+
+Candid), pre-empting with rule-based
+04:28:37 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.7s error=Request timed out. prompt=Query: Why does a vessel's IMO (International Mari
+04:28:52 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=tide_ft ¡ú vessel_entry ¡ú navigation
+04:28:52 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['navigation', 'tide_level_m']
+04:28:52 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+04:28:52 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+04:28:58 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+04:29:08 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.9s error=Request timed out. prompt=Why does a vessel's IMO (International Maritime Or
+  [101/205] V3_GRA_001: 137.6s
+  [102/205] V3_GRA_002: 131.7s
+  [103/205] V3_GRA_003: 132.4s
+04:29:59 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How does water temperature influence the decision 
+04:29:59 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:30:04 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why do long dominant wave periods lead the port to
+04:30:04 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [104/205] V3_GRA_004: 84.8s
+  [105/205] V3_GRA_005: 93.5s
+  [106/205] V3_GRA_006: 108.7s
+04:31:32 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How does vessel LOA drive the generation of an exc
+04:31:32 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:32:10 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Conversion Error: Could not convert string 'POLB2015000001' to INT64 when castin), falling back to rule-based
+  [107/205] V3_GRA_007: 90.0s
+04:32:35 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=MATCH (vessel_entry:Operations)-[:MEASURES]->(vess
+04:32:35 | WARNING | online_pipeline.graph_reasoner | GRAPH: no reasoning paths found between entities ['berth_operations', 'disruption']
+04:32:36 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+  [109/205] V3_GRA_009: 98.1s
+04:33:03 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Graph reasoning was requested but no strong graph path was found.
+04:33:31 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why does vessel ownership drive the requirement to
+04:33:31 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [108/205] V3_GRA_008: 151.1s
+  [110/205] V3_GRA_010: 101.9s
+04:34:30 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=vessel_entry ¡ú compliance
+04:34:33 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why does a vessel's IMO-registered gross tonnage c
+04:34:33 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [111/205] V3_GRA_011: 121.9s
+04:35:32 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How does a slow-steaming status after in-port repa
+04:35:32 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [112/205] V3_GRA_012: 122.1s
+04:36:06 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why does a vessel's tug requirement cause it to fo
+04:36:06 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [113/205] V3_GRA_013: 128.4s
+04:36:15 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Conversion Error: Could not convert string 'POLB2015000001' to INT64 when castin), falling back to rule-based
+04:36:42 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The environmental management manual states that Ma
+04:36:42 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [114/205] V3_GRA_014: 120.2s
+04:37:07 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=vessel_entry ¡ú vessel_scheduling ¡ú compliance
+  [115/205] V3_GRA_015: 119.3s
+04:37:44 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=weather_conditions ¡ú operational_disruption ¡ú bert
+04:37:45 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+04:37:57 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "vessel_name" not found in FROM clause!
+Candidat), pre-empting with rule-based
+04:38:17 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [117/205] V3_MULTI_002: 106.3s
+  [116/205] V3_MULTI_001: 159.0s
+  [118/205] V3_MULTI_003: 110.0s
+04:40:35 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: The 2024 Annual Report lists the Trust's fi
+  [119/205] V3_MULTI_004: 124.6s
+  [120/205] V3_MULTI_005: 135.8s
+  [121/205] V3_MULTI_006: 117.5s
+04:41:23 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2007 Airport Traffic Report shows scheduled, c
+04:41:23 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:41:52 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2006 financial statement reports interest expe
+04:41:52 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [124/205] V3_MULTI_009: 103.4s
+  [123/205] V3_MULTI_008: 126.2s
+  [122/205] V3_MULTI_007: 144.7s
+04:43:36 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2009 financial statement's 2010 Capital Plan a
+04:43:36 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:43:48 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2017 Airport Traffic Report says LGA generated
+04:43:48 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:43:59 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [126/205] V3_MULTI_011: 75.0s
+04:44:34 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.7s error=Request timed out. prompt=Query: The 2017 Airport Traffic Report says LGA ge
+04:44:41 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+04:45:05 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=The 2017 Airport Traffic Report says LGA generated
+  [125/205] V3_MULTI_010: 133.4s
+04:45:41 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: The 2006 LGA traffic report notes a monthly
+04:45:49 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2010 Budget shows George Washington Bridge ope
+04:45:49 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:46:12 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=The 2006 LGA traffic report notes a monthly patter
+  [127/205] V3_MULTI_012: 189.1s
+  [128/205] V3_MULTI_013: 135.3s
+  [129/205] V3_MULTI_014: 111.3s
+04:47:56 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [130/205] V3_MULTI_015: 94.2s
+04:48:16 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: Using the actual 2023 taxi-in/taxi-out time
+  [131/205] V3_MULTI_016: 114.9s
+  [132/205] V3_MULTI_017: 111.6s
+04:49:08 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Given the 1999 Terminal A scheduled gate-utilizati
+04:49:08 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [133/205] V3_MULTI_018: 97.4s
+04:49:51 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [135/205] V3_MULTI_020: 94.7s
+04:50:42 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Parser Error: syntax error at or near "UNION"
+
+LINE 2: UNION ALL
+        ^), pre-empting with rule-based
+04:50:43 | ERROR   | online_pipeline.answer_synthesizer | SYNTH LLM error: APITimeoutError: Request timed out.
+  [134/205] V3_MULTI_019: 125.0s
+04:51:07 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Recent 2015 WTC development operating expenses sho
+04:51:07 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:51:14 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.7s error=Request timed out. prompt=Given recent acid-discharge and recreational divin
+04:51:14 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [136/205] V3_MULTI_021: 100.8s
+04:51:50 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Recent Port of Los Angeles container and revenue m
+04:51:50 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:52:00 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.7s error=Request timed out. prompt=Query: Given recent acid-discharge and recreationa
+  [137/205] V3_MULTI_022: 107.3s
+04:52:30 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=Given recent acid-discharge and recreational divin
+  [139/205] V3_MULTI_024: 104.4s
+  [138/205] V3_MULTI_023: 148.3s
+04:53:34 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How do the Harbor District oil-production land-use
+04:53:34 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:53:39 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: Recent 2018 wage-policy comment volume at a
+04:53:41 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How do PATH station operating rules prevent the ca
+04:53:41 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:54:10 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 31.3s error=Request timed out. prompt=Recent 2018 wage-policy comment volume at airports
+  [141/205] V3_MULTI_026: 93.1s
+  [140/205] V3_MULTI_025: 147.1s
+04:54:55 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=congestion ¡ú operational_disruption ¡ú operational_
+04:54:55 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+04:55:21 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How do the LGA operating-lease and airport-access 
+04:55:21 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [142/205] V3_MULTI_027: 131.3s
+04:55:52 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: How do the JFK New Terminal One solar-array
+04:55:53 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=How do responsible-AI and hyper-automation governa
+04:55:53 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:56:24 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 32.0s error=Request timed out. prompt=How do the JFK New Terminal One solar-array and su
+  [144/205] V3_MULTI_029: 116.6s
+  [145/205] V3_MULTI_030: 105.2s
+04:57:18 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The Holland Tunnel public hearing testimony claims
+04:57:18 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [143/205] V3_MULTI_028: 164.3s
+04:57:38 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2010 Airport Traffic Report describes JFK's 88
+04:57:38 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+04:57:52 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The Geelong port operating handbook defines 'unsaf
+04:57:52 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [146/205] V3_MULTI_031: 103.1s
+  [147/205] V3_MULTI_032: 135.8s
+  [148/205] V3_MULTI_033: 147.0s
+05:00:19 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2011 EWR Competition Plan update describes Req
+05:00:19 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [149/205] V3_MULTI_034: 134.6s
+05:01:04 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Conversion Error: Could not convert string 'POLB2015000001' to INT64 when castin), falling back to rule-based
+  [150/205] V3_MULTI_035: 139.1s
+05:01:53 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: The scoping comments response discusses how
+  [151/205] V3_MULTI_036: 126.8s
+05:02:13 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2019 Budget Book cites an $8.5B budget award-w
+05:02:13 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+05:02:24 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.9s error=Request timed out. prompt=The scoping comments response discusses how cleane
+05:02:57 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: No function matches the given name and argument types '~~(TIMESTAM), pre-empting with rule-based
+05:03:11 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "shipping_line" not found in FROM clause!
+Candid), pre-empting with rule-based
+  [152/205] V3_MULTI_037: 149.9s
+05:03:46 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2019 Budget Book discusses risks from tariffs,
+05:03:46 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [153/205] V3_MULTI_038: 130.7s
+  [154/205] V3_MULTI_039: 142.8s
+05:04:48 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The NYC DOB/PANYNJ MOU requires Certificates of Op
+05:04:48 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [155/205] V3_MULTI_040: 104.5s
+  [156/205] V3_MULTI_041: 135.4s
+  [157/205] V3_MULTI_042: 117.8s
+  [158/205] V3_MULTI_043: 112.2s
+05:07:26 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+05:07:38 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=gate_operations ¡ú congestion ¡ú operational_disrupt
+  [159/205] V3_MULTI_044: 105.7s
+  [160/205] V3_MULTI_045: 111.0s
+05:08:15 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=berth_operations ¡ú crane_operations ¡ú yard_operati
+05:08:37 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 1990 Port Master Plan describes the Ford/Melam
+05:08:37 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+05:08:53 | WARNING | online_pipeline.sql_agent | SQL_EXPLAIN: LLM SQL failed pre-check (Binder Error: Referenced column "vessel_capacity_teu" not found in FROM clause!
+), pre-empting with rule-based
+  [161/205] V3_MULTI_046: 129.5s
+  [162/205] V3_MULTI_047: 91.7s
+05:09:32 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2000 EWR Competition Plan claims an average tr
+05:09:32 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [163/205] V3_MULTI_048: 112.5s
+05:10:18 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.8s error=Request timed out. prompt=Query: The 2000 EWR Competition Plan claims an ave
+  [165/205] V3_GUARD_OOD_001: 57.7s
+05:10:48 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.8s error=Request timed out. prompt=The 2000 EWR Competition Plan claims an average tr
+05:10:54 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=What time is it now?
+05:10:54 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [166/205] V3_GUARD_OOD_002: 63.3s
+  [164/205] V3_MULTI_049: 146.4s
+05:11:33 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Who won the World Cup in 2022?
+05:11:33 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [167/205] V3_GUARD_OOD_003: 73.1s
+05:12:18 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.8s error=Request timed out. prompt=Query: Who won the World Cup in 2022?
+Required sou
+  [170/205] V3_GUARD_EMPTY_002: 61.2s
+  [169/205] V3_GUARD_EMPTY_001: 72.4s
+  [168/205] V3_GUARD_OOD_004: 115.9s
+  [171/205] V3_GUARD_EMPTY_003: 53.6s
+  [173/205] V3_GUARD_IMPOS_002: 57.5s
+  [172/205] V3_GUARD_IMPOS_001: 80.2s
+05:14:31 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [175/205] V3_GUARD_CONF_001: 60.6s
+  [176/205] V3_GUARD_CONF_002: 59.6s
+05:15:10 | ERROR   | online_pipeline.answer_synthesizer | SYNTH LLM error: APITimeoutError: Request timed out.
+  [174/205] V3_GUARD_IMPOS_003: 97.8s
+05:15:30 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=The 2023 annual report states berth 3 utilization 
+05:15:30 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [177/205] V3_GUARD_CONF_003: 58.7s
+05:16:06 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Conversion Error: Could not convert string 'POLB2015000001' to INT64 when castin), falling back to rule-based
+  [178/205] V3_GUARD_DVS_001: 126.4s
+  [180/205] V3_GUARD_DVR_001: 74.3s
+  [179/205] V3_GUARD_DVS_002: 122.5s
+  [182/205] V3_GUARD_AMB_001: 76.9s
+  [183/205] V3_GUARD_AMB_002: 84.4s
+05:19:07 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Why did Port of Virginia close permanently in 2023
+05:19:07 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [181/205] V3_GUARD_DVR_002: 120.9s
+  [184/205] V3_GUARD_AMB_003: 96.9s
+  [185/205] V3_GUARD_FALSE_001: 93.7s
+05:20:19 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 45.0s error=Request timed out. prompt=Query: What caused the 100% shutdown of all cranes
+05:20:34 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Since all vessels are now electric, what changed?
+05:20:34 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+05:20:40 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Can you update the DuckDB crane_operations table t
+05:20:40 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [186/205] V3_GUARD_FALSE_002: 116.0s
+05:21:05 | WARNING | online_pipeline.sql_agent | SQL_EXEC: LLM SQL failed (Conversion Error: Could not convert string 'POLB2015000001' to INT64 when castin), falling back to rule-based
+  [187/205] V3_GUARD_FALSE_003: 86.7s
+05:21:34 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=Please delete all rules about wind speed from the 
+05:21:34 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+  [188/205] V3_GUARD_REFUSE_001: 89.5s
+05:22:12 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [191/205] V3_META_DT_002: 36.3s
+  [190/205] V3_META_DT_001: 63.3s
+  [189/205] V3_GUARD_REFUSE_002: 96.8s
+  [192/205] V3_META_DT_003: 49.7s
+  [193/205] V3_META_DT_004: 52.3s
+  [194/205] V3_META_DT_005: 47.9s
+  [195/205] V3_META_DT_006: 43.4s
+  [196/205] V3_META_YR_001: 63.4s
+  [198/205] V3_META_YR_003: 51.9s
+  [197/205] V3_META_YR_002: 73.3s
+05:24:59 | ERROR   | online_pipeline.llm_client | LLM_CALL FAILED (attempt 1): model=qwen3.5-flash 30.0s error=Request timed out. prompt=What did the 2018 handbook specifically define for
+05:24:59 | WARNING | online_pipeline.intent_router | LLM router failed => falling back to rule-based
+05:25:33 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [200/205] V3_META_YR_005: 64.0s
+  [201/205] V3_META_CAT_001: 69.9s
+05:25:56 | WARNING | online_pipeline.answer_synthesizer | SYNTH caveat: Requested rule evidence was not retrieved from the current rule store.
+  [199/205] V3_META_YR_004: 122.2s
+  [202/205] V3_META_CAT_002: 49.8s
+  [203/205] V3_META_CAT_003: 54.1s
+  [205/205] V3_META_CAT_005: 46.3s
+  [204/205] V3_META_CAT_004: 63.0s
+
+--- Computing metrics ---
+
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 2017.32it/s]
+[1mBertModel LOAD REPORT[0m from: BAAI/bge-base-en-v1.5
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+
+======================================================================
+  ROUTING EVALUATION
+======================================================================
+  Samples evaluated: 205
+  Exact-match rate:  68.29%
+  Over-routing:      20.98%  (extra sources activated)
+  Under-routing:     3.90%  (missing sources)
+
+  Question-type accuracy: 0.00%
+  Answer-mode accuracy:   62.93%
+
+  Per-Capability Metrics:
+  Capability          P        R       F1    TP    FP    FN
+  vector          0.966    0.850    0.904    85     3    15
+  sql             0.583    0.940    0.720    63    45     4
+  rules           0.770    1.000    0.870    57    17     0
+  graph           0.826    0.905    0.864    38     8     4
+
+  Micro-avg: P=0.769  R=0.913  F1=0.835
+  Macro-avg: P=0.786  R=0.924  F1=0.840
+
+======================================================================
+  RETRIEVAL EVALUATION
+======================================================================
+
+  VECTOR (81 samples)
+    chunk_recall@5          : 0.5750
+    chunk_recall@20         : 0.6000
+    chunk_precision@5       : 0.1150
+    chunk_mrr               : 0.4775
+    chunk_ndcg@10           : 0.3551
+    chunk_samples           : 80
+    recall@5                : 0.5750
+    recall@20               : 0.6000
+    precision@5             : 0.1150
+    mrr                     : 0.4775
+    ndcg@10                 : 0.3551
+    source_recall@5         : 0.7284
+    source_recall@20        : 0.7778
+    source_precision@5      : 0.4459
+    source_mrr              : 0.6877
+    source_ndcg@10          : 1.8063
+    source_samples          : 81
+
+  SQL (67 samples)
+    table_f1                : 0.9889
+    execution_ok_rate       : 0.9403
+
+  RULES (23 samples)
+    variable_recall         : 0.3043
+    variable_precision      : 0.1884
+
+  GRAPH (42 samples)
+    entity_recall           : 0.0119
+    relationship_recall     : 0.0000
+    path_found_rate         : 0.8571
+
+  RERANKING LIFT (66 samples)
+    ndcg@5_lift             : +0.2024
+    recall@5_lift           : +0.1667
+    top1_hit_before         : +0.2727
+    top1_hit_after          : +0.5000
+    top1_lift               : +0.2273
+
+======================================================================
+  ANSWER QUALITY EVALUATION
+======================================================================
+  Samples: 205
+
+  Objective metrics:
+    Keyword coverage:    55.19%
+    Citation validity:   100.00%
+    Numerical accuracy:  52.20%
+    Embedding cosine:    0.7258  (n=205)
+    ROUGE-L F1:          0.0836
+
+  Grounding distribution: {'fully_grounded': 154, 'llm_fallback': 50, 'weakly_grounded': 1}
+
+======================================================================
+  GUARDRAIL EVALUATION
+======================================================================
+  Guardrail Type               Pass Rate  Samples
+  ------------------------------------------------
+  ambiguous_query                 33.33%        3  [FAIL]
+  doc_vs_rule_conflict            50.00%        2  [WARN]
+  doc_vs_sql_conflict            100.00%        2  [PASS]
+  empty_evidence                 100.00%        3  [PASS]
+  evidence_conflict               33.33%        3  [FAIL]
+  false_premise                    0.00%        3  [FAIL]
+  impossible_query               100.00%        3  [PASS]
+  out_of_domain                   75.00%        4  [WARN]
+  refusal_appropriate              0.00%        2  [FAIL]
+
+======================================================================
+  LATENCY EVALUATION
+======================================================================
+  Samples: 205
+
+  Stage                         mean      p50      p95      p99      max  (seconds)
+  ---------------------------------------------------------------------------
+  route_query                  18.64    17.71    30.02    30.03    30.76
+  planner                      25.03    21.67    45.01    45.78    46.12
+  retrieve_documents            0.46     0.35     0.96     2.22     2.85
+  rerank_documents              0.47     0.47     0.57     0.95     0.97
+  retrieve_rules                0.00     0.00     0.01     0.01     0.01
+  run_sql                       4.36     3.52     9.21    11.23    12.03
+  run_graph_reasoner           23.11    28.12    30.97    31.68    31.98
+  merge_evidence                0.00     0.00     0.00     0.00     0.00
+  synthesize_answer            34.16    33.59    49.92    60.02    60.02
+  end_to_end                   89.40    81.75   146.08   160.46   189.15
+  planner__query_rewrite        0.00     0.00     0.00     0.01     0.01
+  planner__plan_total          25.03    21.67    45.01    45.78    46.12
+  planner__sub_queries__llm_call    25.40    22.05    45.01    45.78    46.12
+  planner__sub_queries__rule_fallback     0.00     0.00     0.01     0.01     0.01
+  planner__sub_query__documents__method     0.00     0.00     0.00     0.00     0.00
+  planner__sub_query__sql__method     0.00     0.00     0.00     0.00     0.00
+  planner__sub_query__rules__method     0.00     0.00     0.00     0.00     0.00
+  planner__sub_query__graph__method     0.00     0.00     0.00     0.00     0.00
+
+  Iteration distribution: {1: 205}
+  Re-plan trigger rate:   0.00%
+
+  ReAct observation stats:
+    Total observations:   0
+    Avg per query:        0.00
+    Abort-replan rate:    0.00%
+    Modify-next rate:     0.00%
+
+>> Wrote C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\agent\reports\rag_v3_n205_final.json
+>> Wrote C:\Users\25389\Agent_RAG\RAG-LLM-for-Ports-main\evaluation\agent\reports\rag_v3_n205_final.md
